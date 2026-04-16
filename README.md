@@ -2,7 +2,7 @@
 
 UiTM STEP is a centralized, "Fiverr-style" marketplace developed exclusively for UiTM students. The platform aims to solve the problem of "Campus Isolation" by unifying all 34 campuses into a single digital economy, allowing students to buy and sell academic and creative services in a high-trust environment.
 
-## 🚀 Features
+## Features
 
 - **Verified Student Access:** Restricted login using `@student.uitm.edu.my` credentials.
 - **National & Local Filtering:** Toggle between "My Campus" and "All Campuses" to find physical or digital tasks.
@@ -13,14 +13,14 @@ UiTM STEP is a centralized, "Fiverr-style" marketplace developed exclusively for
     - Admin oversight for transaction moderation.
 - **Role-Based Dashboards:** Dedicated views for Buying, Selling, and System Administration.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend:** HTML5, CSS3, Tailwind CSS (via CDN), Vanilla JavaScript.
 - **Backend:** PHP 8.x (using PDO for SQL security).
 - **Database:** MySQL 8.0.
 - **Timezone:** Asia/Kuala_Lumpur.
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 ├── api/                # AJAX endpoints for real-time chat
@@ -36,7 +36,7 @@ UiTM STEP is a centralized, "Fiverr-style" marketplace developed exclusively for
 └── *.php               # Primary application pages (Marketplace, Dashboards, etc.)
 ```
 
-## ⚙️ Installation (Local Environment)
+## Installation (Local Environment)
 
 1. **Prerequisites:** Install **MAMP**, **XAMPP**, or **WampServer** on your machine.
 2. **Database Setup:**
@@ -48,7 +48,7 @@ UiTM STEP is a centralized, "Fiverr-style" marketplace developed exclusively for
    - Configure `includes/db.php` with your local database credentials.
 4. **Access:** Open your browser and navigate to `http://localhost/uitm-step`.
 
-## 🔒 Security Implementations
+## Security Implementations
 
 - **XSS Protection:** All user-generated content is escaped before rendering.
 - **SQL Injection Prevention:** Universal use of PDO Prepared Statements.
@@ -56,4 +56,4 @@ UiTM STEP is a centralized, "Fiverr-style" marketplace developed exclusively for
 - **File Upload Validation:** Strict MIME-type checking and 2MB file size limits for payment proofs.
 
 ---
-*Developed as part of the **CSC264 and ISP250 group project** for CS110 students.*
+*Developed as part of the **CSC264 and ISP250 group project** for **StepUp!**.*
