@@ -19,13 +19,21 @@ $mode = $_SESSION['mode'] ?? 'buying';
 require_once 'includes/header.php';
 ?>
 
-<div class="mb-6 flex justify-between items-center">
-    <h1 class="text-3xl font-bold text-uitmPurple">
-        <?php echo $mode === 'buying' ? 'Buying Dashboard' : 'Selling Dashboard'; ?>
-    </h1>
+<div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-fade-in-up">
+    <div>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-uitmPurple to-indigo-600 font-serif">
+            <?php echo $mode === 'buying' ? 'Buying Dashboard' : 'Selling Dashboard'; ?>
+        </h1>
+        <p class="text-gray-500 mt-1">
+            <?php echo $mode === 'buying' ? 'Track your orders and purchases.' : 'Manage your gigs and incoming orders.'; ?>
+        </p>
+    </div>
     
     <?php if ($mode === 'selling'): ?>
-        <a href="create_gig.php" class="bg-uitmGold text-uitmPurple font-bold py-2 px-4 rounded hover:bg-yellow-400 transition shadow">Create New Gig</a>
+        <a href="create_gig.php" class="bg-gradient-to-r from-uitmGold to-yellow-400 text-uitmPurple font-bold py-3 px-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-md flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+            Create New Gig
+        </a>
     <?php endif; ?>
 </div>
 
@@ -44,38 +52,51 @@ require_once 'includes/header.php';
     $orders = $stmt->fetchAll();
     ?>
     
-    <div class="bg-white rounded-lg shadow overflow-hidden">
-        <h2 class="text-xl font-bold bg-gray-50 px-6 py-4 border-b">My Orders</h2>
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden animate-fade-in-up">
+        <div class="h-1 bg-gradient-to-r from-uitmPurple to-indigo-500"></div>
+        <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+            <h2 class="text-xl font-bold text-gray-900">My Orders</h2>
+            <span class="bg-purple-100 text-uitmPurple text-xs font-bold px-3 py-1 rounded-full"><?php echo count($orders); ?> orders</span>
+        </div>
         <?php if (count($orders) > 0): ?>
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gig Title</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Seller</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                <table class="min-w-full">
+                    <thead>
+                        <tr class="bg-gray-50/70">
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Gig Title</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Seller</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Status</th>
+                            <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Action</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="divide-y divide-gray-50">
                         <?php foreach($orders as $o): ?>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?php echo escape($o['title']); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo escape($o['seller_name']); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                        <?php echo ucfirst(escape($o['status'])); ?>
+                            <tr class="hover:bg-gray-50/80 transition-colors duration-200">
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-900"><?php echo escape($o['title']); ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-500"><?php echo escape($o['seller_name']); ?></td>
+                                <td class="px-6 py-4">
+                                    <?php
+                                    $status = $o['status'];
+                                    $badge = match($status) {
+                                        'paid'      => 'bg-blue-100 text-blue-700',
+                                        'delivered' => 'bg-yellow-100 text-yellow-700',
+                                        'completed' => 'bg-green-100 text-green-700',
+                                        default     => 'bg-gray-100 text-gray-600',
+                                    };
+                                    ?>
+                                    <span class="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full <?php echo $badge; ?>">
+                                        <?php echo ucfirst(escape($status)); ?>
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <td class="px-6 py-4 text-sm font-medium">
                                     <?php if ($o['status'] === 'delivered'): ?>
                                         <form action="order_action.php" method="POST" class="inline">
                                             <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
                                             <input type="hidden" name="action" value="complete">
-                                            <button type="submit" class="text-green-600 hover:text-green-900 border border-green-600 rounded px-2 py-1 transition hover:bg-green-50">Mark Complete</button>
+                                            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold px-4 py-1.5 rounded-xl transition-all duration-300 hover:shadow-md text-xs">Mark Complete</button>
                                         </form>
                                     <?php else: ?>
-                                        <span class="text-gray-400">Wait for delivery</span>
+                                        <span class="text-gray-400 text-xs">Awaiting delivery</span>
                                     <?php endif; ?>
                                 </td>
                             </tr>
@@ -84,7 +105,11 @@ require_once 'includes/header.php';
                 </table>
             </div>
         <?php else: ?>
-            <div class="px-6 py-8 text-center text-gray-500">You haven't bought anything yet.</div>
+            <div class="px-6 py-16 text-center">
+                <svg class="w-12 h-12 text-gray-200 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                <p class="text-gray-500 font-medium">You haven't bought anything yet.</p>
+                <a href="marketplace.php" class="mt-4 inline-block bg-uitmPurple text-white font-bold px-6 py-2.5 rounded-xl hover:bg-purple-900 transition-all duration-300 text-sm">Browse Marketplace</a>
+            </div>
         <?php endif; ?>
     </div>
 
@@ -111,69 +136,90 @@ require_once 'includes/header.php';
     
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- My Gigs -->
-        <div class="bg-white rounded-lg shadow overflow-hidden">
-            <h2 class="text-xl font-bold bg-gray-50 px-6 py-4 border-b flex justify-between items-center">
-                My Active Gigs
-                <span class="bg-uitmPurple text-white text-xs px-2 py-1 rounded-full"><?php echo count($my_gigs); ?></span>
-            </h2>
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden animate-fade-in-up">
+            <div class="h-1 bg-gradient-to-r from-uitmGold to-yellow-400"></div>
+            <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-900">My Active Gigs</h2>
+                <span class="bg-purple-100 text-uitmPurple font-bold text-xs px-3 py-1 rounded-full"><?php echo count($my_gigs); ?></span>
+            </div>
             <?php if(count($my_gigs) > 0): ?>
-                <ul class="divide-y divide-gray-200">
+                <ul class="divide-y divide-gray-50">
                     <?php foreach($my_gigs as $g): ?>
-                        <li class="px-6 py-4 flex justify-between items-center hover:bg-gray-50">
+                        <li class="px-6 py-4 flex justify-between items-center hover:bg-gray-50/80 transition-colors duration-200 group">
                             <div>
-                                <h3 class="text-sm font-bold text-gray-900"><?php echo escape($g['title']); ?></h3>
-                                <p class="text-xs text-gray-500 mt-1">RM <?php echo number_format($g['price'], 2); ?> • <?php echo escape($g['category']); ?></p>
+                                <h3 class="text-sm font-bold text-gray-900 group-hover:text-uitmPurple transition-colors"><?php echo escape($g['title']); ?></h3>
+                                <p class="text-xs text-gray-400 mt-1 font-medium">RM <?php echo number_format($g['price'], 2); ?> &bull; <?php echo escape($g['category']); ?></p>
                             </div>
-                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                            <span class="px-3 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700 flex-shrink-0 ml-4">
                                 <?php echo ucfirst(escape($g['status'])); ?>
                             </span>
                         </li>
                     <?php endforeach; ?>
                 </ul>
             <?php else: ?>
-                <div class="px-6 py-8 text-center text-gray-500">You don't have any gigs yet.</div>
+                <div class="px-6 py-16 text-center">
+                    <svg class="w-12 h-12 text-gray-200 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    <p class="text-gray-500 font-medium">You don't have any gigs yet.</p>
+                    <a href="create_gig.php" class="mt-4 inline-block bg-uitmGold text-uitmPurple font-bold px-6 py-2.5 rounded-xl hover:bg-yellow-400 transition-all duration-300 text-sm">Create your first gig</a>
+                </div>
             <?php endif; ?>
         </div>
         
         <!-- Incoming Orders -->
-        <div class="bg-white rounded-lg shadow overflow-hidden">
-            <h2 class="text-xl font-bold bg-gray-50 px-6 py-4 border-b flex justify-between items-center">
-                Incoming Orders
-                <span class="bg-uitmPurple text-white text-xs px-2 py-1 rounded-full"><?php echo count($incoming_orders); ?></span>
-            </h2>
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden animate-fade-in-up" style="animation-delay:100ms;">
+            <div class="h-1 bg-gradient-to-r from-uitmPurple to-indigo-500"></div>
+            <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-900">Incoming Orders</h2>
+                <span class="bg-purple-100 text-uitmPurple font-bold text-xs px-3 py-1 rounded-full"><?php echo count($incoming_orders); ?></span>
+            </div>
             <?php if(count($incoming_orders) > 0): ?>
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Buyer</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Proof</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                    <table class="min-w-full">
+                        <thead>
+                            <tr class="bg-gray-50/70">
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Order</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Buyer</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Proof</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Action</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="divide-y divide-gray-50">
                             <?php foreach($incoming_orders as $io): ?>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-ellipsis overflow-hidden max-w-[150px]"><?php echo escape($io['title']); ?></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo escape($io['buyer_name']); ?></td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <tr class="hover:bg-gray-50/80 transition-colors duration-200">
+                                    <td class="px-6 py-4 text-sm font-semibold text-gray-900 max-w-[140px] truncate"><?php echo escape($io['title']); ?></td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-6 h-6 rounded-full bg-gradient-to-br from-uitmPurple to-indigo-600 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
+                                                <?php echo strtoupper(substr($io['buyer_name'], 0, 1)); ?>
+                                            </div>
+                                            <?php echo escape($io['buyer_name']); ?>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm">
                                         <?php if($io['payment_proof_path']): ?>
-                                            <a href="<?php echo escape($io['payment_proof_path']); ?>" target="_blank" class="text-uitmPurple hover:underline">View</a>
+                                            <a href="<?php echo escape($io['payment_proof_path']); ?>" target="_blank" class="text-uitmPurple hover:text-indigo-700 font-bold underline underline-offset-2 transition-colors">View</a>
                                         <?php else: ?>
-                                            N/A
+                                            <span class="text-gray-300">—</span>
                                         <?php endif; ?>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <td class="px-6 py-4 text-sm font-medium">
                                         <?php if ($io['status'] === 'paid'): ?>
                                             <form action="order_action.php" method="POST" class="inline">
                                                 <input type="hidden" name="order_id" value="<?php echo $io['order_id']; ?>">
                                                 <input type="hidden" name="action" value="deliver">
-                                                <button type="submit" class="text-uitmPurple hover:text-purple-900 border border-uitmPurple rounded px-2 py-1 transition hover:bg-purple-50">Mark Delivered</button>
+                                                <button type="submit" class="bg-uitmPurple hover:bg-purple-900 text-white font-bold px-4 py-1.5 rounded-xl transition-all duration-300 hover:shadow-md text-xs">Mark Delivered</button>
                                             </form>
                                         <?php else: ?>
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                                <?php echo ucfirst(escape($io['status'])); ?>
+                                            <?php
+                                            $s = $io['status'];
+                                            $b = match($s) {
+                                                'delivered' => 'bg-yellow-100 text-yellow-700',
+                                                'completed' => 'bg-green-100 text-green-700',
+                                                default     => 'bg-gray-100 text-gray-600',
+                                            };
+                                            ?>
+                                            <span class="px-3 py-1 inline-flex text-xs font-bold rounded-full <?php echo $b; ?>">
+                                                <?php echo ucfirst(escape($s)); ?>
                                             </span>
                                         <?php endif; ?>
                                     </td>
@@ -183,7 +229,10 @@ require_once 'includes/header.php';
                     </table>
                 </div>
             <?php else: ?>
-                <div class="px-6 py-8 text-center text-gray-500">No incoming orders right now.</div>
+                <div class="px-6 py-16 text-center">
+                    <svg class="w-12 h-12 text-gray-200 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+                    <p class="text-gray-500 font-medium">No incoming orders right now.</p>
+                </div>
             <?php endif; ?>
         </div>
     </div>

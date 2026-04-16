@@ -8,26 +8,26 @@ require_once 'includes/header.php';
 ?>
 
 <!-- Hero Section -->
-<div class="relative bg-black text-white h-[600px] flex items-center justify-center pt-16 mt-[-4rem]">
-    <!-- Background Image -->
+<div class="relative bg-black text-white h-[650px] flex items-center justify-center pt-16 mt-[-4rem] overflow-hidden">
+    <!-- Animated Gradient Background & Image -->
     <div class="absolute inset-0 w-full h-full">
-        <img src="assets/img/hero_bg.png" alt="Student Freelancer" class="w-full h-full object-cover opacity-50">
-        <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-uitmPurple via-[#1a0033] to-blue-900 bg-moving-gradient"></div>
+        <img src="assets/img/hero_bg.png" alt="Student Freelancer" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40 animate-pulse-slow">
     </div>
     
     <!-- Hero Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-center h-full">
-        <div class="max-w-2xl">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6 mt-16 text-white drop-shadow-md">
-                Student talent,<br> tailored for <span class="text-uitmGold font-serif italic">you.</span>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-center h-full animate-fade-in-up">
+        <div class="max-w-3xl">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight mb-6 mt-16 text-white drop-shadow-2xl tracking-tight font-serif">
+                Student talent,<br> tailored for <span class="text-transparent bg-clip-text bg-gradient-to-r from-uitmGold to-yellow-200 italic">you.</span>
             </h1>
-            <p class="text-lg md:text-xl text-gray-200 mb-8 font-medium">Our freelancers will take it from here. Top UiTM talent for your gigs.</p>
+            <p class="text-xl md:text-2xl text-gray-200 mb-10 font-medium max-w-2xl text-shadow">Our freelancers will take it from here. Discover top UiTM talent for your gigs.</p>
             
             <!-- Search Bar -->
-            <form action="marketplace.php" method="GET" class="relative group">
+            <form action="marketplace.php" method="GET" class="relative group mt-4 transform transition-all duration-300 hover:scale-[1.02]">
                 <input type="text" name="search" placeholder="Search for any service..." required
-                       class="w-full py-4 pl-4 pr-32 text-gray-900 rounded bg-white border border-transparent focus:outline-none focus:border-uitmGold shadow-lg text-lg">
-                <button type="submit" class="absolute right-1 top-1 bottom-1 bg-uitmPurple text-white px-6 py-2 rounded hover:bg-purple-900 transition-colors font-bold text-lg inline-flex items-center">
+                       class="w-full py-5 pl-6 pr-40 rounded-full glass-panel text-white placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-uitmGold shadow-2xl text-lg backdrop-blur-xl">
+                <button type="submit" class="absolute right-2 top-2 bottom-2 bg-gradient-to-r from-uitmGold to-yellow-400 text-uitmPurple px-8 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 font-bold text-lg inline-flex items-center hover:scale-105">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     Search
                 </button>
@@ -57,47 +57,52 @@ require_once 'includes/header.php';
 </div>
 
 <!-- Popular Services (Visual Cards) -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-b border-gray-100">
-    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-10">Popular services</h2>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-b border-gray-100 relative">
+    <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-uitmPurple rounded-full mix-blend-multiply filter blur-3xl opacity-5 animate-pulse-slow"></div>
+    <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-12 font-serif tracking-tight">Popular services</h2>
     
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <!-- Service Card 1 -->
-        <a href="marketplace.php?tag=Design" class="group relative block h-80 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <img src="assets/img/cat_design.jpg" alt="Graphics & Design" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-            <div class="absolute top-4 left-4 right-4">
-               <span class="text-white/90 text-sm font-medium drop-shadow-md">Build your brand</span>
-               <h3 class="text-white text-2xl font-bold mt-1 drop-shadow-md leading-tight">Logo Design <br>& Branding</h3>
+        <a href="marketplace.php?tag=Design" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+            <img src="assets/img/cat_design.jpg" alt="Graphics & Design" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#1a0033]/90 via-[#1a0033]/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
+            <div class="absolute bottom-10 left-6 right-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+               <span class="text-uitmGold text-sm font-bold uppercase tracking-wider drop-shadow-lg">Build your brand</span>
+               <h3 class="text-white text-3xl font-bold mt-2 drop-shadow-2xl leading-tight font-serif">Logo Design</h3>
             </div>
         </a>
         
         <!-- Service Card 2 -->
-        <a href="marketplace.php?tag=Programming" class="group relative block h-80 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <img src="assets/img/cat_programming.jpg" alt="Programming" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-            <div class="absolute top-4 left-4 right-4">
-               <span class="text-white/90 text-sm font-medium drop-shadow-md">Custom web solutions</span>
-               <h3 class="text-white text-2xl font-bold mt-1 drop-shadow-md leading-tight">Website <br>Development</h3>
+        <a href="marketplace.php?tag=Programming" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 delay-100">
+            <img src="assets/img/cat_programming.jpg" alt="Programming" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#1a0033]/90 via-[#1a0033]/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+             <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
+            <div class="absolute bottom-10 left-6 right-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+               <span class="text-blue-400 text-sm font-bold uppercase tracking-wider drop-shadow-lg">Custom web apps</span>
+               <h3 class="text-white text-3xl font-bold mt-2 drop-shadow-2xl leading-tight font-serif">Website <br>Dev</h3>
             </div>
         </a>
 
         <!-- Service Card 3 -->
-        <a href="marketplace.php?tag=Writing" class="group relative block h-80 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <img src="assets/img/cat_writing.jpg" alt="Writing" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-            <div class="absolute top-4 left-4 right-4">
-               <span class="text-white/90 text-sm font-medium drop-shadow-md">Ace your finals</span>
-               <h3 class="text-white text-2xl font-bold mt-1 drop-shadow-md leading-tight">Proofreading <br>& Editing</h3>
+        <a href="marketplace.php?tag=Writing" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 delay-200">
+            <img src="assets/img/cat_writing.jpg" alt="Writing" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#1a0033]/90 via-[#1a0033]/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
+            <div class="absolute bottom-10 left-6 right-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+               <span class="text-emerald-400 text-sm font-bold uppercase tracking-wider drop-shadow-lg">Ace your assignments</span>
+               <h3 class="text-white text-3xl font-bold mt-2 drop-shadow-2xl leading-tight font-serif">Proofreading</h3>
             </div>
         </a>
 
         <!-- Service Card 4 -->
-        <a href="marketplace.php?tag=Video" class="group relative block h-80 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <img src="assets/img/cat_video.jpg" alt="Video Editing" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-            <div class="absolute top-4 left-4 right-4">
-               <span class="text-white/90 text-sm font-medium drop-shadow-md">Share your story</span>
-               <h3 class="text-white text-2xl font-bold mt-1 drop-shadow-md leading-tight">Video <br>Editing</h3>
+        <a href="marketplace.php?tag=Video" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 delay-300">
+            <img src="assets/img/cat_video.jpg" alt="Video Editing" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#1a0033]/90 via-[#1a0033]/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
+            <div class="absolute bottom-10 left-6 right-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+               <span class="text-rose-400 text-sm font-bold uppercase tracking-wider drop-shadow-lg">Share your story</span>
+               <h3 class="text-white text-3xl font-bold mt-2 drop-shadow-2xl leading-tight font-serif">Video <br>Editing</h3>
             </div>
         </a>
     </div>
@@ -157,28 +162,38 @@ require_once 'includes/header.php';
 </div>c
 
 <!-- Category Icons Library (Explore) -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-gray-100">
-    <h2 class="text-3xl font-bold text-gray-900 mb-10">Explore the marketplace</h2>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-gray-100">
+    <h2 class="text-4xl font-extrabold text-gray-900 mb-12 font-serif">Explore the marketplace</h2>
     <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-        <a href="marketplace.php?tag=Programming" class="flex flex-col items-center justify-center p-6 border border-gray-200 rounded-xl hover:shadow-lg hover:border-gray-300 transition-all w-36 h-36 bg-white group">
-            <svg class="w-10 h-10 text-gray-500 group-hover:text-uitmPurple transition-colors mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-            <span class="font-medium text-sm text-center">Programming & Tech</span>
+        <a href="marketplace.php?tag=Programming" class="flex flex-col items-center justify-center p-6 border border-gray-200 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white group hover:-translate-y-2">
+            <div class="bg-gray-50 rounded-full p-4 mb-3 group-hover:bg-purple-50 transition-colors">
+                <svg class="w-8 h-8 text-gray-500 group-hover:text-uitmPurple transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+            </div>
+            <span class="font-bold text-sm text-center text-gray-700 group-hover:text-uitmPurple">Programming & Tech</span>
         </a>
-        <a href="marketplace.php?tag=Design" class="flex flex-col items-center justify-center p-6 border border-gray-200 rounded-xl hover:shadow-lg hover:border-gray-300 transition-all w-36 h-36 bg-white group">
-            <svg class="w-10 h-10 text-gray-500 group-hover:text-uitmPurple transition-colors mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-            <span class="font-medium text-sm text-center">Graphics & Design</span>
+        <a href="marketplace.php?tag=Design" class="flex flex-col items-center justify-center p-6 border border-gray-200 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white group hover:-translate-y-2">
+            <div class="bg-gray-50 rounded-full p-4 mb-3 group-hover:bg-purple-50 transition-colors">
+                <svg class="w-8 h-8 text-gray-500 group-hover:text-uitmPurple transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            </div>
+            <span class="font-bold text-sm text-center text-gray-700 group-hover:text-uitmPurple">Graphics & Design</span>
         </a>
-        <a href="marketplace.php?tag=Writing" class="flex flex-col items-center justify-center p-6 border border-gray-200 rounded-xl hover:shadow-lg hover:border-gray-300 transition-all w-36 h-36 bg-white group">
-            <svg class="w-10 h-10 text-gray-500 group-hover:text-uitmPurple transition-colors mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477-4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-            <span class="font-medium text-sm text-center">Writing & Translation</span>
+        <a href="marketplace.php?tag=Writing" class="flex flex-col items-center justify-center p-6 border border-gray-200 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white group hover:-translate-y-2">
+            <div class="bg-gray-50 rounded-full p-4 mb-3 group-hover:bg-purple-50 transition-colors">
+                <svg class="w-8 h-8 text-gray-500 group-hover:text-uitmPurple transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477-4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            </div>
+            <span class="font-bold text-sm text-center text-gray-700 group-hover:text-uitmPurple">Writing & Translation</span>
         </a>
-        <a href="marketplace.php?tag=Video" class="flex flex-col items-center justify-center p-6 border border-gray-200 rounded-xl hover:shadow-lg hover:border-gray-300 transition-all w-36 h-36 bg-white group">
-            <svg class="w-10 h-10 text-gray-500 group-hover:text-uitmPurple transition-colors mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-            <span class="font-medium text-sm text-center">Video & Animation</span>
+        <a href="marketplace.php?tag=Video" class="flex flex-col items-center justify-center p-6 border border-gray-200 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white group hover:-translate-y-2">
+            <div class="bg-gray-50 rounded-full p-4 mb-3 group-hover:bg-purple-50 transition-colors">
+                <svg class="w-8 h-8 text-gray-500 group-hover:text-uitmPurple transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+            </div>
+            <span class="font-bold text-sm text-center text-gray-700 group-hover:text-uitmPurple">Video & Animation</span>
         </a>
-        <a href="marketplace.php?tag=Tutor" class="flex flex-col items-center justify-center p-6 border border-gray-200 rounded-xl hover:shadow-lg hover:border-gray-300 transition-all w-36 h-36 bg-white group">
-            <svg class="w-10 h-10 text-gray-500 group-hover:text-uitmPurple transition-colors mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
-            <span class="font-medium text-sm text-center">Education & Tutoring</span>
+        <a href="marketplace.php?tag=Tutor" class="flex flex-col items-center justify-center p-6 border border-gray-200 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white group hover:-translate-y-2">
+            <div class="bg-gray-50 rounded-full p-4 mb-3 group-hover:bg-purple-50 transition-colors">
+                <svg class="w-8 h-8 text-gray-500 group-hover:text-uitmPurple transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+            </div>
+            <span class="font-bold text-sm text-center text-gray-700 group-hover:text-uitmPurple">Education & Tutoring</span>
         </a>
     </div>
 </div>
@@ -199,7 +214,7 @@ require_once 'includes/header.php';
                 </div>
                 <div class="p-6">
                     <h3 class="font-bold text-lg text-gray-900 mb-2">How to build a freelance portfolio while studying</h3>
-                    <p class="text-gray-500 text-sm">Discover how to leverage your college coursework to build a powerful portfolio that clients love.</p>
+                    <p class="text-gray-500 text-sm">Discover how to leverage your college coursework to build a powerful portfolio that fellow students love.</p>
                 </div>
             </a>
 
@@ -233,13 +248,14 @@ require_once 'includes/header.php';
 </div>
 
 <!-- Fat CTA -->
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-8 relative z-10 hidden sm:block">
-    <div class="bg-gradient-to-r from-gray-900 to-[#330066] rounded-2xl shadow-xl overflow-hidden">
-        <div class="px-8 py-12 md:p-16 text-center text-white">
-            <h2 class="text-3xl md:text-5xl font-bold mb-8">
-                Freelance services at your <span class="text-uitmGold italic">fingertips</span>
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-12 relative z-10 hidden sm:block delay-100">
+    <div class="bg-gradient-to-r from-[#1a0033] via-uitmPurple to-indigo-900 bg-moving-gradient rounded-3xl shadow-2xl overflow-hidden border border-white/10 ring-1 ring-white/20">
+        <div class="px-8 py-14 md:p-20 text-center text-white relative">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-white rounded-full mix-blend-overlay filter blur-3xl opacity-20 animate-pulse-slow"></div>
+            <h2 class="text-4xl md:text-6xl font-extrabold mb-8 font-serif leading-tight">
+                Freelance services at your <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-uitmGold to-yellow-200 italic">fingertips</span>
             </h2>
-            <a href="register.php" class="bg-white text-gray-900 hover:bg-gray-100 font-bold px-8 py-3 rounded text-lg transition-colors inline-block shadow-lg">Join UiTM STEP</a>
+            <a href="register.php" class="bg-white text-uitmPurple hover:bg-gray-100 font-bold px-10 py-4 rounded-full text-xl transition-all duration-300 inline-block shadow-[0_0_20px_rgba(255,215,0,0.3)] hover:shadow-[0_0_30px_rgba(255,215,0,0.5)] transform hover:-translate-y-1">Join UiTM STEP</a>
         </div>
     </div>
 </div>

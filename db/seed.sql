@@ -1,5 +1,14 @@
 USE uitm_step;
 
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE gig_tags;
+TRUNCATE TABLE orders;
+TRUNCATE TABLE messages;
+TRUNCATE TABLE gigs;
+TRUNCATE TABLE tags;
+TRUNCATE TABLE users;
+SET FOREIGN_KEY_CHECKS = 1;
+
 -- Insert Admins
 INSERT INTO users (student_id, name, email, password, campus, role) VALUES
 ('ADMIN001', 'Admin Syafiq', 'admin1@uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Shah Alam', 'admin'),
@@ -32,9 +41,22 @@ INSERT INTO gigs (seller_id, title, description, price, category, status) VALUES
 (5, 'Proofreading Essay', 'Up to 2000 words.', 15.00, 'Writing', 'active'),
 (3, 'Java Debugging', 'Fix Java assignment bugs.', 25.00, 'Tech', 'active'),
 (4, 'Custom Illustration', 'Small digital illustration.', 20.00, 'Creative', 'active'),
-(5, 'Translate English to Malay', 'Up to 1500 words.', 18.00, 'Writing', 'active');
+(5, 'Translate English to Malay', 'Up to 1500 words.', 18.00, 'Writing', 'active'),
+(6, 'Mobile App UI Design', '5 screens high-fidelity mockup in Figma.', 55.00, 'Creative', 'active'),
+(7, 'Presentation Slides Design', 'Modern and professional slides for your assessment.', 20.00, 'Creative', 'active'),
+(3, 'SQL Database Optimization', 'Improve your project database performance.', 40.00, 'Tech', 'active'),
+(4, 'Poster Design', 'Creative posters for club events or coursework.', 25.00, 'Creative', 'active'),
+(5, 'Malay Literature Tutoring', 'Deep dive into KOMSAS and literature analysis.', 20.00, 'Education', 'active'),
+(6, 'Article Writing', '1000 words article for your blog or assignment.', 30.00, 'Writing', 'active'),
+(7, 'Sound Mixing', 'Quality audio mixing for your video project.', 35.00, 'Creative', 'active'),
+(3, 'C++ Assignment Help', 'Algorithm and data structure debugging.', 30.00, 'Tech', 'active'),
+(4, 'Business Plan Template', 'Ready-to-use template for Entreprenurship projects.', 15.00, 'Writing', 'active'),
+(5, 'Lab Report Proofreading', 'Scientific report checking for accuracy.', 20.00, 'Writing', 'active'),
+(6, 'Excel Dashboard Creation', 'Visualize your data with charts and pivots.', 50.00, 'Tech', 'active'),
+(7, 'Infographic Design', 'Turn your data into beautiful visuals.', 30.00, 'Creative', 'active');
 
 -- Assign Tags to Gigs (Junction Table)
 INSERT INTO gig_tags (gig_id, tag_id) VALUES
 (1, 1), (2, 2), (3, 4), (4, 3), (5, 3), (6, 5), (7, 1), (8, 2),
-(9, 4), (10, 1), (11, 2), (12, 3), (13, 1), (14, 2), (15, 3);
+(9, 4), (10, 1), (11, 2), (12, 3), (13, 1), (14, 2), (15, 3),
+(16, 2), (17, 2), (18, 1), (19, 2), (20, 4), (21, 3), (22, 5), (23, 1), (24, 3), (25, 3), (26, 1), (27, 2);

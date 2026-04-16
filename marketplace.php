@@ -67,47 +67,62 @@ $tags = $pdo->query("SELECT name FROM tags ORDER BY name ASC")->fetchAll();
 require_once 'includes/header.php';
 ?>
 
-<div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-    <h1 class="text-3xl font-bold text-uitmPurple">Marketplace</h1>
+<div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+    <div>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-uitmPurple to-indigo-600 font-serif mb-2">Marketplace</h1>
+        <p class="text-gray-500">Discover and hire top talent from your campus.</p>
+    </div>
     
     <!-- Filter Form -->
-    <form action="marketplace.php" method="GET" class="flex flex-wrap gap-3">
-        <input type="text" name="search" placeholder="Search gigs..." value="<?php echo escape($search_query); ?>" class="px-3 py-2 border rounded focus:ring focus:border-uitmPurple">
+    <form action="marketplace.php" method="GET" class="flex flex-wrap gap-3 items-center bg-white p-2 rounded-2xl shadow-sm border border-gray-100">
+        <input type="text" name="search" placeholder="Search gigs..." value="<?php echo escape($search_query); ?>" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none w-full sm:w-auto">
         
-        <select name="campus" class="px-3 py-2 border rounded focus:ring focus:border-uitmPurple bg-white">
+        <select name="campus" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none cursor-pointer">
             <option value="local" <?php if($campus_filter === 'local') echo 'selected'; ?>>My Campus (<?php echo escape($_SESSION['campus']); ?>)</option>
             <option value="all" <?php if($campus_filter === 'all') echo 'selected'; ?>>All Campuses</option>
         </select>
         
-        <select name="tag" class="px-3 py-2 border rounded focus:ring focus:border-uitmPurple bg-white">
+        <select name="tag" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none cursor-pointer">
             <option value="">All Tags</option>
             <?php foreach ($tags as $t): ?>
                 <option value="<?php echo escape($t['name']); ?>" <?php if($tag_filter === $t['name']) echo 'selected'; ?>><?php echo escape($t['name']); ?></option>
             <?php endforeach; ?>
         </select>
         
-        <button type="submit" class="bg-uitmPurple text-white px-4 py-2 rounded hover:bg-purple-900 transition font-medium">Filter</button>
+        <button type="submit" class="bg-gradient-to-r from-uitmPurple to-indigo-900 text-white px-6 py-2.5 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 font-bold">Filter</button>
     </form>
 </div>
 
 <?php if (count($gigs) > 0): ?>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <?php $delay = 0; ?>
         <?php foreach ($gigs as $gig): ?>
-            <div class="bg-white rounded-lg shadow hover:shadow-lg transition flex flex-col overflow-hidden border border-gray-100">
-                <div class="p-5 flex-grow">
-                    <div class="text-xs font-semibold text-uitmGold uppercase tracking-wide mb-1"><?php echo escape($gig['category']); ?></div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2"><?php echo escape($gig['title']); ?></h3>
-                    <p class="text-gray-600 mb-4 line-clamp-3 text-sm"><?php echo escape($gig['description']); ?></p>
-                    <div class="text-sm text-gray-500 mb-2 flex items-center">
-                        <svg class="w-4 h-4 mr-1 pb-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
-                        <?php echo escape($gig['seller_name']); ?> (<?php echo escape($gig['campus']); ?>)
+            <div class="bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden border border-gray-100 transform hover:-translate-y-2 animate-fade-in-up" style="animation-delay: <?php echo $delay; ?>ms;">
+                <div class="p-6 flex-grow relative">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-uitmGold/20 to-transparent rounded-bl-full rounded-tr-2xl -z-10"></div>
+                    <div class="text-xs font-bold text-uitmPurple uppercase tracking-widest mb-3 bg-purple-50 inline-block px-3 py-1 rounded-full"><?php echo escape($gig['category']); ?></div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3 leading-snug hover:text-uitmPurple transition-colors cursor-pointer"><?php echo escape($gig['title']); ?></h3>
+                    <p class="text-gray-500 mb-6 line-clamp-3 leading-relaxed"><?php echo escape($gig['description']); ?></p>
+                    
+                    <div class="text-sm text-gray-600 flex items-center bg-gray-50 p-2 rounded-lg border border-gray-100 mt-auto">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-uitmPurple to-indigo-600 flex items-center justify-center text-white font-bold mr-3">
+                            <?php echo strtoupper(substr($gig['seller_name'], 0, 1)); ?>
+                        </div>
+                        <div>
+                            <span class="block font-semibold text-gray-900"><?php echo escape($gig['seller_name']); ?></span>
+                            <span class="block text-xs text-gray-500"><?php echo escape($gig['campus']); ?></span>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-gray-50 px-5 py-4 mt-auto border-t border-gray-100 flex items-center justify-between">
-                    <span class="text-lg font-bold text-uitmPurple">RM <?php echo number_format($gig['price'], 2); ?></span>
-                    <a href="gig_details.php?id=<?php echo $gig['gig_id']; ?>" class="text-sm bg-uitmPurple text-white px-3 py-1.5 rounded font-medium hover:bg-purple-900 transition">View Details</a>
+                <div class="bg-gray-50/50 px-6 py-5 mt-auto border-t border-gray-100 flex items-center justify-between">
+                    <div class="flex flex-col">
+                        <span class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Starting at</span>
+                        <span class="text-xl font-extrabold text-gray-900">RM <?php echo number_format($gig['price'], 2); ?></span>
+                    </div>
+                    <a href="gig_details.php?id=<?php echo $gig['gig_id']; ?>" class="text-sm bg-gray-900 hover:bg-uitmPurple text-white px-5 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105">View Details</a>
                 </div>
             </div>
+            <?php $delay += 100; ?>
         <?php endforeach; ?>
     </div>
 
