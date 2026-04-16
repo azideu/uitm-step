@@ -21,6 +21,7 @@ require_once 'functions.php';
             }
         }
     </script>
+    <link rel="icon" type="image/png" href="assets/img/uitm_logo.png">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="bg-gray-50 flex flex-col min-h-screen text-gray-800">
@@ -29,7 +30,10 @@ require_once 'functions.php';
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="index.php" class="text-2xl font-bold tracking-wider text-uitmGold">UiTM STEP</a>
+                    <a href="index.php" class="flex items-center space-x-2 text-2xl font-bold tracking-wider text-uitmGold">
+                        <img src="assets/img/uitm_logo.png" alt="UiTM Logo" class="h-10 w-10 object-contain rounded-md">
+                        <span>UiTM STEP</span>
+                    </a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <?php if(isset($_SESSION['user_id'])): ?>
