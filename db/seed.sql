@@ -14,7 +14,7 @@ INSERT INTO users (student_id, name, email, password, campus, role) VALUES
 ('2024801742', 'Addin Zidane', '2024801742@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin'),
 ('2024236824', 'Muhammad Zahin Shah', '2024236824@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin'),
 ('2024244864', 'Danish Daniel', '2024244864@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin'),
-('2024419672', 'Awin Amani', '2024419672@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin'),
+('2024419672', 'Awin Amani', '2024419672@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin');
 
 -- Insert Students (Password is 'password')
 INSERT INTO users (student_id, name, email, password, campus, role) VALUES
