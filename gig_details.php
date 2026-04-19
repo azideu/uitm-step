@@ -5,8 +5,8 @@ require_once 'includes/db.php';
 
 $gig_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-// Fetch gig and seller info
-$stmt = $pdo->prepare("SELECT g.*, u.name as seller_name, u.campus FROM gigs g JOIN users u ON g.seller_id = u.user_id WHERE g.gig_id = ?");
+// Fetch gig and seller info (must be active)
+$stmt = $pdo->prepare("SELECT g.*, u.name as seller_name, u.campus FROM gigs g JOIN users u ON g.seller_id = u.user_id WHERE g.gig_id = ? AND g.status = 'active'");
 $stmt->execute([$gig_id]);
 $gig = $stmt->fetch();
 

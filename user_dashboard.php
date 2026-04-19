@@ -21,7 +21,7 @@ require_once 'includes/header.php';
 
 <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-fade-in-up">
     <div>
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-uitmPurple to-indigo-600 font-serif">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-uitmPurple to-indigo-600 font-serif pb-2">
             <?php echo $mode === 'buying' ? 'Buying Dashboard' : 'Selling Dashboard'; ?>
         </h1>
         <p class="text-gray-500 mt-1">
@@ -117,7 +117,7 @@ require_once 'includes/header.php';
 
     <?php
     // Fetch active gigs
-    $stmt_gigs = $pdo->prepare("SELECT * FROM gigs WHERE seller_id = ? ORDER BY created_at DESC");
+    $stmt_gigs = $pdo->prepare("SELECT * FROM gigs WHERE seller_id = ? AND status = 'active' ORDER BY created_at DESC");
     $stmt_gigs->execute([$_SESSION['user_id']]);
     $my_gigs = $stmt_gigs->fetchAll();
 
@@ -150,9 +150,21 @@ require_once 'includes/header.php';
                                 <h3 class="text-sm font-bold text-gray-900 group-hover:text-uitmPurple transition-colors"><?php echo escape($g['title']); ?></h3>
                                 <p class="text-xs text-gray-400 mt-1 font-medium">RM <?php echo number_format($g['price'], 2); ?> &bull; <?php echo escape($g['category']); ?></p>
                             </div>
-                            <span class="px-3 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700 flex-shrink-0 ml-4">
-                                <?php echo ucfirst(escape($g['status'])); ?>
-                            </span>
+                            <div class="flex items-center gap-3">
+                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700 flex-shrink-0">
+                                    <?php echo ucfirst(escape($g['status'])); ?>
+                                </span>
+                                
+                                <form action="gig_action.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this gig? This action cannot be undone.');" class="inline">
+                                    <input type="hidden" name="gig_id" value="<?php echo $g['gig_id']; ?>">
+                                    <input type="hidden" name="action" value="delete">
+                                    <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors p-1" title="Delete Gig">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
                         </li>
                     <?php endforeach; ?>
                 </ul>
