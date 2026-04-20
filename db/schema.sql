@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL,
     campus VARCHAR(100) NOT NULL,
     role ENUM('student', 'admin') DEFAULT 'student',
+    profile_picture VARCHAR(255) DEFAULT NULL,
+    bio TEXT DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
