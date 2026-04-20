@@ -78,10 +78,12 @@ require_once 'includes/header.php';
                                     <?php
                                     $status = $o['status'];
                                     $badge = match($status) {
-                                        'paid'      => 'bg-blue-100 text-blue-700',
-                                        'delivered' => 'bg-yellow-100 text-yellow-700',
-                                        'completed' => 'bg-green-100 text-green-700',
-                                        default     => 'bg-gray-100 text-gray-600',
+                                        'pending'   => 'bg-yellow-100 text-yellow-700',
+                                        'paid'      => 'bg-blue-100   text-blue-700',
+                                        'delivered' => 'bg-indigo-100 text-indigo-700',
+                                        'complete'  => 'bg-green-100  text-green-700',
+                                        'cancelled' => 'bg-red-100    text-red-700',
+                                        default     => 'bg-gray-100   text-gray-600',
                                     };
                                     ?>
                                     <span class="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full <?php echo $badge; ?>">
@@ -90,13 +92,28 @@ require_once 'includes/header.php';
                                 </td>
                                 <td class="px-6 py-4 text-sm font-medium">
                                     <?php if ($o['status'] === 'delivered'): ?>
+                                        <!-- State Machine: buyer can only complete a DELIVERED order -->
                                         <form action="order_action.php" method="POST" class="inline">
                                             <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
                                             <input type="hidden" name="action" value="complete">
                                             <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold px-4 py-1.5 rounded-xl transition-all duration-300 hover:shadow-md text-xs">Mark Complete</button>
                                         </form>
+                                    <?php elseif ($o['status'] === 'paid'): ?>
+                                        <!-- Informational badge: order paid, waiting for seller to deliver -->
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-full bg-blue-50 text-blue-600 border border-blue-200">
+                                            <svg class="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/></svg>
+                                            Waiting for Delivery
+                                        </span>
+                                    <?php elseif ($o['status'] === 'pending'): ?>
+                                        <!-- State Machine: buyer can cancel only PENDING orders -->
+                                        <form action="order_action.php" method="POST" class="inline"
+                                              onsubmit="return confirm('Cancel this order?');">
+                                            <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
+                                            <input type="hidden" name="action" value="cancel">
+                                            <button type="submit" class="bg-red-100 hover:bg-red-200 text-red-700 font-bold px-4 py-1.5 rounded-xl transition-all duration-300 text-xs">Cancel Order</button>
+                                        </form>
                                     <?php else: ?>
-                                        <span class="text-gray-400 text-xs">Awaiting delivery</span>
+                                        <span class="text-gray-400 text-xs">—</span>
                                     <?php endif; ?>
                                 </td>
                             </tr>
@@ -225,9 +242,11 @@ require_once 'includes/header.php';
                                             <?php
                                             $s = $io['status'];
                                             $b = match($s) {
-                                                'delivered' => 'bg-yellow-100 text-yellow-700',
-                                                'completed' => 'bg-green-100 text-green-700',
-                                                default     => 'bg-gray-100 text-gray-600',
+                                                'pending'   => 'bg-yellow-100 text-yellow-700',
+                                                'delivered' => 'bg-indigo-100 text-indigo-700',
+                                                'complete'  => 'bg-green-100  text-green-700',
+                                                'cancelled' => 'bg-red-100    text-red-700',
+                                                default     => 'bg-gray-100   text-gray-600',
                                             };
                                             ?>
                                             <span class="px-3 py-1 inline-flex text-xs font-bold rounded-full <?php echo $b; ?>">

@@ -58,7 +58,6 @@ require_once 'includes/header.php';
 
 <!-- Popular Services (Visual Cards) -->
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 border-b border-gray-100 relative">
-    <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-uitmPurple rounded-full mix-blend-multiply filter blur-3xl opacity-5 animate-pulse-slow"></div>
     <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-12 font-serif tracking-tight">Popular services</h2>
     
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

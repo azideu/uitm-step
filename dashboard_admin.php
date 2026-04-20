@@ -1,68 +1,148 @@
 <?php
-// dashboard_admin.php
+// dashboard_admin.php — Admin Oversight & Dispute Resolution Panel
 require_once 'includes/auth_check.php';
 require_once 'includes/db.php';
 
-require_admin(); // Ensure only admins
+require_admin(); // Ensure only admins can access this page
 
-// Fetch all orders
+// Fetch all orders with buyer name, seller name, and payment proof
 $stmt = $pdo->query("
-    SELECT o.*, g.title, gb.name as buyer_name, gs.name as seller_name 
+    SELECT o.*, g.title,
+           gb.name  AS buyer_name,
+           gs.name  AS seller_name,
+           o.payment_proof_path
     FROM orders o
-    JOIN gigs g ON o.gig_id = g.gig_id
-    JOIN users gb ON o.buyer_id = gb.user_id
-    JOIN users gs ON g.seller_id = gs.user_id
+    JOIN gigs  g  ON o.gig_id     = g.gig_id
+    JOIN users gb ON o.buyer_id   = gb.user_id
+    JOIN users gs ON g.seller_id  = gs.user_id
     ORDER BY o.created_at DESC
 ");
 $orders = $stmt->fetchAll();
 
 $statuses = ['pending', 'paid', 'delivered', 'complete', 'cancelled'];
 
+// Helper: return Tailwind badge classes for each status
+function status_badge(string $status): string {
+    return match($status) {
+        'pending'   => 'bg-yellow-100 text-yellow-800 border border-yellow-200',
+        'paid'      => 'bg-blue-100   text-blue-800   border border-blue-200',
+        'delivered' => 'bg-indigo-100 text-indigo-800 border border-indigo-200',
+        'complete'  => 'bg-green-100  text-green-800  border border-green-200',
+        'cancelled' => 'bg-red-100    text-red-800    border border-red-200',
+        default     => 'bg-gray-100   text-gray-600',
+    };
+}
+
 require_once 'includes/header.php';
 ?>
 
-<div class="mb-6 flex justify-between items-center">
-    <h1 class="text-3xl font-bold text-uitmPurple">Admin Dashboard - All Orders</h1>
+<div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div>
+        <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-uitmPurple to-indigo-600 font-serif pb-1">Admin Dashboard</h1>
+        <p class="text-gray-500 mt-1">Full order oversight &amp; dispute resolution panel.</p>
+    </div>
+    <div class="flex gap-3">
+        <!-- Summary Badges -->
+        <?php
+        $counts = array_fill_keys($statuses, 0);
+        foreach ($orders as $o) { $counts[$o['status']] = ($counts[$o['status']] ?? 0) + 1; }
+        ?>
+        <?php foreach ($counts as $st => $count): ?>
+            <span class="px-3 py-1.5 text-xs font-bold rounded-full <?php echo status_badge($st); ?>">
+                <?php echo ucfirst($st); ?>: <?php echo $count; ?>
+            </span>
+        <?php endforeach; ?>
+    </div>
 </div>
 
-<div class="bg-white rounded-lg shadow overflow-hidden">
+<div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="h-1 bg-gradient-to-r from-uitmPurple to-indigo-500"></div>
+
     <?php if (count($orders) > 0): ?>
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gig Title</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Buyer</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Seller</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Proof</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status Override</th>
+            <table class="min-w-full">
+                <thead>
+                    <tr class="bg-gray-50/70">
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">#</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Gig Title</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Buyer</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Seller</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Payment Proof</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Current Status</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-widest">Status Override</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <?php foreach($orders as $o): ?>
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#<?php echo $o['order_id']; ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-ellipsis overflow-hidden max-w-[150px]"><?php echo escape($o['title']); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo escape($o['buyer_name']); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo escape($o['seller_name']); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                <?php if($o['payment_proof_path']): ?>
-                                    <a href="<?php echo escape($o['payment_proof_path']); ?>" target="_blank" class="text-uitmPurple hover:underline">View File</a>
+                <tbody class="divide-y divide-gray-50">
+                    <?php foreach ($orders as $o): ?>
+                        <tr class="hover:bg-gray-50/80 transition-colors duration-200">
+
+                            <!-- Order ID -->
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-400">#<?php echo $o['order_id']; ?></td>
+
+                            <!-- Gig Title -->
+                            <td class="px-6 py-4 text-sm font-semibold text-gray-900 max-w-[160px] truncate">
+                                <?php echo escape($o['title']); ?>
+                            </td>
+
+                            <!-- Buyer -->
+                            <td class="px-6 py-4 text-sm text-gray-600">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                                        <?php echo strtoupper(substr($o['buyer_name'], 0, 1)); ?>
+                                    </div>
+                                    <?php echo escape($o['buyer_name']); ?>
+                                </div>
+                            </td>
+
+                            <!-- Seller -->
+                            <td class="px-6 py-4 text-sm text-gray-600">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-purple-100 text-uitmPurple flex items-center justify-center font-bold text-xs flex-shrink-0">
+                                        <?php echo strtoupper(substr($o['seller_name'], 0, 1)); ?>
+                                    </div>
+                                    <?php echo escape($o['seller_name']); ?>
+                                </div>
+                            </td>
+
+                            <!-- Payment Proof -->
+                            <td class="px-6 py-4 text-sm">
+                                <?php if ($o['payment_proof_path']): ?>
+                                    <a href="<?php echo escape($o['payment_proof_path']); ?>" target="_blank"
+                                       class="inline-flex items-center gap-1 text-uitmPurple hover:text-indigo-700 font-bold underline underline-offset-2 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        View
+                                    </a>
                                 <?php else: ?>
-                                    <span class="text-gray-400">N/A</span>
+                                    <span class="text-gray-300 text-xs">—</span>
                                 <?php endif; ?>
                             </td>
+
+                            <!-- Current Status Badge -->
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-3 py-1 inline-flex text-xs font-bold rounded-full <?php echo status_badge($o['status']); ?>">
+                                    <?php echo ucfirst(escape($o['status'])); ?>
+                                </span>
+                            </td>
+
+                            <!-- Admin Status Override (State Machine bypass for disputes) -->
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <form action="order_action.php" method="POST" class="flex gap-2">
+                                <form action="order_action.php" method="POST" class="flex gap-2 items-center">
                                     <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
-                                    <input type="hidden" name="action" value="admin_update">
-                                    <select name="status" class="border rounded px-2 py-1 text-sm bg-white focus:outline-none focus:ring focus:border-uitmPurple">
-                                        <?php foreach($statuses as $st): ?>
-                                            <option value="<?php echo $st; ?>" <?php if($o['status'] === $st) echo 'selected'; ?>><?php echo ucfirst($st); ?></option>
+                                    <input type="hidden" name="action"   value="admin_update">
+                                    <select name="status"
+                                            class="border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-uitmPurple/40 focus:border-uitmPurple transition">
+                                        <?php foreach ($statuses as $st): ?>
+                                            <option value="<?php echo $st; ?>" <?php if ($o['status'] === $st) echo 'selected'; ?>>
+                                                <?php echo ucfirst($st); ?>
+                                            </option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <button type="submit" class="bg-uitmPurple text-white px-2 py-1 rounded text-xs font-bold hover:bg-purple-900 transition">Update</button>
+                                    <button type="submit"
+                                            class="bg-uitmPurple text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-purple-900 transition-all duration-300 hover:shadow-md">
+                                        Update
+                                    </button>
                                 </form>
                             </td>
                         </tr>
@@ -71,7 +151,12 @@ require_once 'includes/header.php';
             </table>
         </div>
     <?php else: ?>
-        <div class="px-6 py-8 text-center text-gray-500">No orders found on the platform.</div>
+        <div class="px-6 py-16 text-center">
+            <svg class="w-12 h-12 text-gray-200 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            <p class="text-gray-500 font-medium">No orders on the platform yet.</p>
+        </div>
     <?php endif; ?>
 </div>
 

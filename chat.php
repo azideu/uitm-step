@@ -16,9 +16,9 @@ $stmt_users = $pdo->prepare("
     SELECT DISTINCT u.user_id, u.name 
     FROM users u 
     JOIN messages m ON (u.user_id = m.sender_id OR u.user_id = m.receiver_id) 
-    WHERE (m.sender_id = :uid OR m.receiver_id = :uid) AND u.user_id != :uid
+    WHERE (m.sender_id = :uid1 OR m.receiver_id = :uid2) AND u.user_id != :uid3
 ");
-$stmt_users->execute(['uid' => $user_id]);
+$stmt_users->execute(['uid1' => $user_id, 'uid2' => $user_id, 'uid3' => $user_id]);
 $chatted_users = $stmt_users->fetchAll();
 
 // If coming from gig details and no prior chat, ensure they are in the list

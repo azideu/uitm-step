@@ -3,7 +3,7 @@ require_once 'config.php';
 require_once 'functions.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-uitmPurple">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +12,7 @@ require_once 'functions.php';
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#330066">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -49,9 +50,10 @@ require_once 'functions.php';
     <link rel="icon" type="image/png" href="assets/img/uitm_logo.png">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-slate-50 flex flex-col min-h-screen text-slate-800 font-sans selection:bg-uitmPurple selection:text-white">
+<body class="bg-uitmPurple flex flex-col min-h-screen text-slate-800 font-sans selection:bg-uitmPurple selection:text-white">
+    <div class="flex flex-col min-h-screen bg-slate-50">
     <!-- Navbar -->
-    <nav class="bg-glassDark backdrop-blur-md border-b border-uitmPurple/20 text-white sticky top-0 z-50 shadow-lg transition-all duration-300">
+    <nav class="bg-uitmPurple border-b border-uitmPurple/30 text-white sticky top-0 z-50 shadow-lg transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
