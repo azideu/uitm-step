@@ -17,7 +17,8 @@ $charset = 'utf8mb4';
 // 2. Check for DigitalOcean App Platform DATABASE_URL
 $db_url = getenv("DATABASE_URL") ?: ($_ENV["DATABASE_URL"] ?? ($_SERVER["DATABASE_URL"] ?? null));
 
-if ($db_url) {
+// Only parse if it looks like a valid connection string (starts with mysql://)
+if ($db_url && str_starts_with($db_url, 'mysql://')) {
     $url = parse_url($db_url);
     $host = $url["host"] ?? $host;
     $user = $url["user"] ?? $user;
