@@ -131,7 +131,7 @@ require_once 'includes/header.php';
             <div class="text-center sm:text-left text-white">
                 <h1 class="text-3xl sm:text-4xl font-bold font-serif mb-2"><?= escape($user['name']) ?></h1>
                 <p class="inline-flex items-center text-uitmGold bg-white/10 px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
-                    Student ID: <?= escape($user['student_id']) ?>
+                    <?= $_SESSION['role'] === 'admin' ? 'Admin ID' : 'Student ID' ?>: <?= escape($user['student_id']) ?>
                 </p>
                 <div class="mt-3 text-purple-200">
                     <?= escape($user['campus']) ?>
