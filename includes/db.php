@@ -2,7 +2,7 @@
 // includes/db.php using DigitalOcean Managed MySQL credentials
 
 $host = 'uitm-step-mysql-database-do-user-36196259-0.h.db.ondigitalocean.com';
-$db   = 'defaultdb';
+$db   = 'uitm_step';
 $user = 'doadmin';
 $pass = 'AVNS_c9oKaVFNMjTwVYxnDmF';
 $port = '25060';
