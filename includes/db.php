@@ -15,9 +15,10 @@ $port = '3306';
 $charset = 'utf8mb4';
 
 // 2. Check for DigitalOcean App Platform DATABASE_URL
-// This is automatically injected if you link a Managed Database to your app.
-if (getenv("DATABASE_URL")) {
-    $url = parse_url(getenv("DATABASE_URL"));
+$db_url = getenv("DATABASE_URL") ?: ($_ENV["DATABASE_URL"] ?? ($_SERVER["DATABASE_URL"] ?? null));
+
+if ($db_url) {
+    $url = parse_url($db_url);
     $host = $url["host"] ?? $host;
     $user = $url["user"] ?? $user;
     $pass = $url["pass"] ?? $pass;
@@ -53,7 +54,11 @@ try {
     // Log error for debugging
     error_log("DB Connection Error: " . $e->getMessage());
     
-    // Friendly error message for the user
+    // TEMPORARY: Show actual error to debug. REMOVE THIS once resolved for security!
+    if (str_contains($_SERVER['HTTP_HOST'] ?? '', 'digitalocean.app')) {
+        die("DEBUG: Database connection failed. Error: " . $e->getMessage() . " (Host: $host, User: $user, Port: $port, DB: $db)");
+    }
+
     die("Database connection failed. Please contact the administrator.");
 }
 ?>
