@@ -14,4 +14,15 @@ try {
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
 }
+
+// Quick snippet for includes/db.php to parse DigitalOcean's DATABASE_URL
+$url = parse_url(getenv("DATABASE_URL"));
+
+$host = $url["host"];
+$user = $url["user"];
+$pass = $url["pass"];
+$db   = substr($url["path"], 1);
+$port = $url["port"] ?? 25060; // Managed MySQL port
+
+$dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
 ?>
