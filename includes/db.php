@@ -1,18 +1,25 @@
 <?php
-// Retrieve database credentials from environment variables
-$host = getenv('DB_HOST') ?: '127.0.0.1';
-$db   = getenv('DB_NAME') ?: 'uitm_step';
-$user = getenv('DB_USER') ?: 'root';
-$pass = getenv('DB_PASS') ?: '';
-$port = getenv('DB_PORT') ?: '25060'; // DigitalOcean Managed Databases often use 25060
+// includes/db.php using DigitalOcean Managed MySQL credentials
+
+$host = 'uitm-step-mysql-database-do-user-36196259-0.h.db.ondigitalocean.com';
+$db   = 'defaultdb';
+$user = 'doadmin';
+$pass = 'AVNS_c9oKaVFNMjTwVYxnDmF';
+$port = '25060';
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
 
 try {
-    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4", $user, $pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
-} catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
+    $pdo = new PDO($dsn, $user, $pass, $options);
+} catch (\PDOException $e) {
+    error_log($e->getMessage());
+    die("Database connection failed. Please contact the administrator.");
 }
 
 // Quick snippet for includes/db.php to parse DigitalOcean's DATABASE_URL
