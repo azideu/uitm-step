@@ -10,16 +10,29 @@ ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../error.log');
 
-// Start secure session if not already started
+// 1. Load Database and Session Handler
+require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/session_db.php';
+
+// 2. Start secure session if not already started
 if (session_status() === PHP_SESSION_NONE) {
+    // Register Database Session Handler
+    $handler = new DatabaseSessionHandler($pdo);
+    session_set_save_handler($handler, true);
+
+    // Detect if we are on HTTPS
+    $is_secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') 
+                 || ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https';
+
     session_set_cookie_params([
         'lifetime' => 86400,
         'path' => '/',
         'domain' => '',
-        'secure' => false, // Set to true if using HTTPS
+        'secure' => $is_secure,
         'httponly' => true,
-        'samesite' => 'Strict'
+        'samesite' => 'Lax'
     ]);
+    
     session_start();
 }
 ?>
