@@ -37,15 +37,15 @@ function appendMessage(msg) {
     const msgDiv = document.createElement('div');
     msgDiv.dataset.msgId = msg.id;
     msgDiv.className = [
-        'max-w-[75%] rounded px-4 py-2 mb-3 shadow text-sm',
+        'chat-bubble w-fit max-w-[75%] rounded-2xl px-4 py-2.5 mb-3 shadow text-sm leading-relaxed whitespace-pre-wrap break-words',
         msg.is_mine
-            ? 'bg-uitmPurple text-white ml-auto rounded-br-none'
-            : 'bg-gray-100 text-gray-800 mr-auto rounded-bl-none',
+            ? 'chat-bubble-outgoing chat-bubble-mine bg-uitmPurple text-white ml-auto rounded-br-md'
+            : 'chat-bubble-incoming chat-bubble-theirs bg-gray-100 text-gray-900 mr-auto rounded-bl-md border border-gray-200',
     ].join(' ');
 
     msgDiv.innerHTML = `
         <div class="mb-1">${msg.content}</div>
-        <div class="text-[10px] text-right ${msg.is_mine ? 'text-purple-200' : 'text-gray-400'}">${msg.timestamp}</div>
+        <div class="text-[10px] text-right ${msg.is_mine ? 'text-purple-100' : 'text-gray-500'}">${msg.timestamp}</div>
     `;
 
     chatContainer.appendChild(msgDiv);
@@ -68,7 +68,11 @@ function loadHistory() {
     fetch(`api/fetch_messages.php?user=${receiverId}`)
         .then(res => res.json())
         .then(data => {
-            if (!data.messages || data.messages.length === 0) return;
+            if (!data.messages || data.messages.length === 0) {
+                // Ensure new messages still appear automatically via SSE
+                startStream();
+                return;
+            }
 
             chatContainer.innerHTML = ''; // clear any placeholder
 
