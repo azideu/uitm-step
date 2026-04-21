@@ -114,32 +114,44 @@ function setStatusBadge(state) {
  * @param {string}  [msg.status]   — 'sending' | 'sent' | 'delivered' (optional)
  */
 function appendMessage(msg) {
-    // Dedup guard — never render the same real ID twice
     if (msg.id > 0 && document.querySelector(`[data-msg-id="${msg.id}"]`)) return;
+
+    // Alignment wrapper — flex row so justify-end/start places the bubble
+    // correctly without relying on ml-auto/mr-auto on a w-fit block element.
+    const wrapDiv = document.createElement('div');
+    wrapDiv.className = `flex ${msg.is_mine ? 'justify-end' : 'justify-start'} mb-2`;
 
     const msgDiv = document.createElement('div');
     msgDiv.dataset.msgId = msg.id;
-    // Compact vertical padding: py-1.5 (6px each side) keeps bubbles tight for short messages
+
+    // The bubble itself is a SINGLE flex row (not two stacked divs).
+    // items-end  — timestamp aligns to the bottom of the last text line.
+    // gap-2      — breathing room between content and meta.
     msgDiv.className = [
-        'chat-bubble w-fit max-w-[75%] px-3.5 py-1.5 mb-2 shadow-sm text-sm',
-        'leading-normal whitespace-pre-wrap break-words',
+        'chat-bubble flex items-end gap-2',
+        'max-w-[75%] px-3.5 py-2 shadow-sm text-sm leading-normal',
         msg.is_mine
-            ? 'chat-bubble-outgoing chat-bubble-mine bg-uitmPurple text-white ml-auto rounded-t-2xl rounded-bl-2xl rounded-br-sm'
-            : 'chat-bubble-incoming chat-bubble-theirs bg-gray-100 text-gray-900 mr-auto rounded-t-2xl rounded-br-2xl rounded-bl-sm border border-gray-200',
+            ? 'chat-bubble-outgoing chat-bubble-mine bg-uitmPurple text-white rounded-t-2xl rounded-bl-2xl rounded-br-sm'
+            : 'chat-bubble-incoming chat-bubble-theirs bg-gray-100 text-gray-900 rounded-t-2xl rounded-br-2xl rounded-bl-sm border border-gray-200',
     ].join(' ');
 
+    const metaColor = msg.is_mine ? 'text-purple-200' : 'text-gray-400';
     const tick = msg.is_mine ? buildTick(msg.status || 'sending') : '';
 
-    // mt-0.5 gives a tiny 2px gap between content and metadata row — no mb-1
+    // flex-1 min-w-0: content grows to fill available space AND allows text
+    // to wrap correctly inside a flex item (min-w-0 is the key — without it
+    // the flex item never shrinks below its min-content width).
+    // shrink-0 self-end: meta never wraps and sits at the bottom of the row.
     msgDiv.innerHTML = `
-        <div>${msg.content}</div>
-        <div class="flex items-center justify-end gap-1 mt-0.5">
-            <span class="text-[10px] leading-none ${msg.is_mine ? 'text-purple-200' : 'text-gray-400'}">${msg.timestamp}</span>
+        <span class="flex-1 min-w-0 whitespace-pre-wrap break-words">${msg.content}</span>
+        <span class="chat-meta shrink-0 self-end flex items-center gap-0.5 text-[10px] leading-none ${metaColor} whitespace-nowrap">
+            <span class="chat-timestamp">${msg.timestamp}</span>
             ${tick}
-        </div>
+        </span>
     `;
 
-    chatContainer.appendChild(msgDiv);
+    wrapDiv.appendChild(msgDiv);
+    chatContainer.appendChild(wrapDiv);
 }
 
 /**
@@ -175,20 +187,30 @@ function updateTick(msgId, status) {
 const TYPING_INDICATOR_ID = 'chat-typing-indicator';
 
 function showTypingIndicator() {
-    if (document.getElementById(TYPING_INDICATOR_ID)) return;
+    if (document.getElementById(TYPING_INDICATOR_ID + '-wrap')) return;
+
+    const wrapDiv = document.createElement('div');
+    wrapDiv.id = TYPING_INDICATOR_ID + '-wrap';
+    wrapDiv.className = 'flex justify-start mb-2';
+
     const el = document.createElement('div');
     el.id = TYPING_INDICATOR_ID;
-    el.className = 'chat-bubble-incoming flex gap-1 items-center px-4 py-3 mb-3 bg-gray-100 border border-gray-200 w-fit rounded-t-2xl rounded-br-2xl rounded-bl-sm mr-auto';
+    el.className = 'chat-bubble-incoming flex gap-1.5 items-center px-4 py-3 bg-gray-100 border border-gray-200 rounded-t-2xl rounded-br-2xl rounded-bl-sm';
     el.innerHTML = `
         <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
         <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
         <span class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
     `;
-    chatContainer.appendChild(el);
+
+    wrapDiv.appendChild(el);
+    chatContainer.appendChild(wrapDiv);
     scrollToBottom();
 }
 
 function hideTypingIndicator() {
+    const wrap = document.getElementById(TYPING_INDICATOR_ID + '-wrap');
+    if (wrap) { wrap.remove(); return; }
+    // Fallback for legacy references
     const el = document.getElementById(TYPING_INDICATOR_ID);
     if (el) el.remove();
 }
