@@ -48,7 +48,8 @@ require_once 'functions.php';
         }
     </script>
     <link rel="icon" type="image/png" href="assets/img/uitm_logo.png">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <?php $style_version = @filemtime(__DIR__ . '/../assets/css/style.css') ?: '1'; ?>
+    <link rel="stylesheet" href="assets/css/style.css?v=<?php echo $style_version; ?>">
 </head>
 <body class="bg-uitmPurple flex flex-col min-h-screen text-slate-800 font-sans selection:bg-uitmPurple selection:text-white">
     <div class="flex flex-col min-h-screen bg-slate-50">
