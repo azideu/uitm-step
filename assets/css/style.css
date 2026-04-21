@@ -87,9 +87,7 @@
 }
 
 .chat-bubble {
-    width: fit-content;
     overflow-wrap: anywhere;
-    word-break: break-word;
 }
 
 .chat-bubble-incoming {
