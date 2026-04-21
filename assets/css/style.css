@@ -107,3 +107,21 @@
     background: #330066;
     color: #ffffff;
 }
+
+/* Scroll-to-bottom button: JS toggles .visible class */
+#scroll-btn {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+#scroll-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Delivery tick icon smooth swap */
+.tick-wrap svg {
+    display: inline-block;
+    vertical-align: middle;
+    transition: opacity 0.15s ease;
+}
