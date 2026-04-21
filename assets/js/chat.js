@@ -28,6 +28,7 @@ let lastMessageId = 0;
 
 // Reference to the active EventSource so we can close it cleanly.
 let eventSource = null;
+let pollIntervalId = null;
 
 // -------------------------------------------------------------------------
 // appendMessage — render a SINGLE message bubble
@@ -71,6 +72,7 @@ function loadHistory() {
             if (!data.messages || data.messages.length === 0) {
                 // Ensure new messages still appear automatically via SSE
                 startStream();
+                startPolling();
                 return;
             }
 
@@ -86,12 +88,41 @@ function loadHistory() {
 
             // Open the SSE stream AFTER history is loaded so the cursor is set
             startStream();
+            startPolling();
         })
         .catch(err => {
             console.error('[chat] History fetch error:', err);
             // Even if history fails, still try to open the stream
             startStream();
+            startPolling();
         });
+}
+
+function pollNewMessages() {
+    if (!receiverId) return;
+
+    fetch(`api/fetch_messages.php?user=${receiverId}`)
+        .then(res => res.json())
+        .then(data => {
+            if (!data.messages || data.messages.length === 0) return;
+
+            let hasNewMessages = false;
+            data.messages.forEach(msg => {
+                if (msg.id > lastMessageId && !document.querySelector(`[data-msg-id="${msg.id}"]`)) {
+                    appendMessage(msg);
+                    hasNewMessages = true;
+                    if (msg.id > lastMessageId) lastMessageId = msg.id;
+                }
+            });
+
+            if (hasNewMessages) scrollToBottom();
+        })
+        .catch(err => console.error('[chat] Poll fetch error:', err));
+}
+
+function startPolling() {
+    if (pollIntervalId) clearInterval(pollIntervalId);
+    pollIntervalId = setInterval(pollNewMessages, 3000);
 }
 
 // -------------------------------------------------------------------------
@@ -144,6 +175,13 @@ function closeStream() {
     }
 }
 
+function closePolling() {
+    if (pollIntervalId) {
+        clearInterval(pollIntervalId);
+        pollIntervalId = null;
+    }
+}
+
 // -------------------------------------------------------------------------
 // sendMessage — POST the message, then let SSE deliver it back
 // -------------------------------------------------------------------------
@@ -175,7 +213,10 @@ function sendMessage() {
 // user clicks a contact link (chat.php reloads the page anyway, but this
 // fires before the unload to close cleanly on the client side).
 // -------------------------------------------------------------------------
-window.addEventListener('beforeunload', closeStream);
+window.addEventListener('beforeunload', function () {
+    closeStream();
+    closePolling();
+});
 
 // -------------------------------------------------------------------------
 // Bootstrap
