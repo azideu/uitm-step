@@ -260,7 +260,7 @@ require_once 'includes/header.php';
                 $hero_cta_href = $is_logged_in ? 'marketplace.php' : 'register.php';
                 $hero_cta_text = $is_logged_in ? 'Explore Marketplace' : 'Join UiTM STEP';
             ?>
-            <a href="<?php echo escape($hero_cta_href); ?>" class="<?php echo escape($hero_cta_class); ?>"><?php echo escape($hero_cta_text); ?></a>
+            <a href="<?php echo htmlspecialchars($hero_cta_href, ENT_QUOTES, 'UTF-8'); ?>" class="<?php echo $hero_cta_class; ?>"><?php echo htmlspecialchars($hero_cta_text, ENT_QUOTES, 'UTF-8'); ?></a>
         </div>
     </div>
 </div>
