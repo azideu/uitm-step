@@ -254,7 +254,11 @@ require_once 'includes/header.php';
             <h2 class="text-4xl md:text-6xl font-extrabold mb-8 font-serif leading-tight">
                 Freelance services at your <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-uitmGold to-yellow-200 italic">fingertips</span>
             </h2>
-            <a href="register.php" class="bg-white text-uitmPurple hover:bg-gray-100 font-bold px-10 py-4 rounded-full text-xl transition-all duration-300 inline-block shadow-[0_0_20px_rgba(255,215,0,0.3)] hover:shadow-[0_0_30px_rgba(255,215,0,0.5)] transform hover:-translate-y-1">Join UiTM STEP</a>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="marketplace.php" class="bg-white text-uitmPurple hover:bg-gray-100 font-bold px-10 py-4 rounded-full text-xl transition-all duration-300 inline-block shadow-[0_0_20px_rgba(255,215,0,0.3)] hover:shadow-[0_0_30px_rgba(255,215,0,0.5)] transform hover:-translate-y-1">Explore Marketplace</a>
+            <?php else: ?>
+                <a href="register.php" class="bg-white text-uitmPurple hover:bg-gray-100 font-bold px-10 py-4 rounded-full text-xl transition-all duration-300 inline-block shadow-[0_0_20px_rgba(255,215,0,0.3)] hover:shadow-[0_0_30px_rgba(255,215,0,0.5)] transform hover:-translate-y-1">Join UiTM STEP</a>
+            <?php endif; ?>
         </div>
     </div>
 </div>
