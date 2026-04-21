@@ -16,12 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// Release session lock to prevent blocking concurrent requests
+$sender_id = $_SESSION['user_id'];
+session_write_close();
+
 // Get JSON input
 $data = json_decode(file_get_contents('php://input'), true);
 
 $receiver_id = (int)($data['receiver_id'] ?? 0);
 $content = trim($data['content'] ?? '');
-$sender_id = $_SESSION['user_id'];
 
 if ($receiver_id <= 0 || empty($content)) {
     echo json_encode(['success' => false, 'error' => 'Invalid data']);

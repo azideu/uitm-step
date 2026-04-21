@@ -66,7 +66,7 @@ require_once 'includes/header.php';
     </div>
     
     <!-- Chat Window -->
-    <div class="w-2/3 flex flex-col bg-white">
+    <div class="w-2/3 flex flex-col bg-white relative">
         <?php if($active_chat > 0 && $active_user_name): ?>
             <!-- Chat Header -->
             <div class="p-4 bg-gray-50 border-b font-bold text-gray-800 flex justify-between items-center z-10 shadow-sm">
@@ -78,13 +78,13 @@ require_once 'includes/header.php';
             </div>
             
             <!-- Chat Messages -->
-            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto chat-container bg-white relative" data-receiver="<?php echo $active_chat; ?>">
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto chat-container bg-white" data-receiver="<?php echo $active_chat; ?>">
                 <!-- Messages injected via JS -->
             </div>
 
             <!-- Scroll-to-bottom nudge (shown by JS when user scrolls up) -->
             <button id="scroll-btn" onclick="document.getElementById('chat-messages').scrollTo({top:9999999,behavior:'smooth'})"
-                class="hidden absolute bottom-20 right-6 bg-uitmPurple text-white w-9 h-9 rounded-full shadow-lg flex items-center justify-center hover:bg-purple-900 transition z-20"
+                class="absolute bottom-20 right-6 bg-uitmPurple text-white w-9 h-9 rounded-full shadow-lg flex items-center justify-center hover:bg-purple-900 transition z-20"
                 title="Scroll to latest">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </button>

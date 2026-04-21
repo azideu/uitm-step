@@ -426,7 +426,15 @@ function sendMessage() {
     const nowStamp = fmtTime(new Date());
 
     // 1. Show bubble immediately (status: 'sending' → clock icon)
-    appendMessage({ id: tempId, content, is_mine: true, timestamp: nowStamp, status: 'sending' });
+    // Escape HTML locally to match the server's escape() behavior and prevent self-XSS via innerHTML
+    const escapedContent = content
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+
+    appendMessage({ id: tempId, content: escapedContent, is_mine: true, timestamp: nowStamp, status: 'sending' });
     scrollToBottom(true);
 
     // 2. POST to server
