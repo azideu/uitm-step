@@ -93,7 +93,10 @@ require_once 'includes/header.php';
 </div>
 
 <?php if($active_chat > 0): ?>
-    <?php $chat_js_version = @filemtime(__DIR__ . '/assets/js/chat.js') ?: '1'; ?>
+    <?php
+    $chat_js_path = __DIR__ . '/assets/js/chat.js';
+    $chat_js_version = is_file($chat_js_path) ? filemtime($chat_js_path) : '1';
+    ?>
     <script src="assets/js/chat.js?v=<?php echo $chat_js_version; ?>"></script>
 <?php endif; ?>
 
