@@ -256,10 +256,11 @@ require_once 'includes/header.php';
             </h2>
             <?php
                 $hero_cta_class = 'bg-white text-uitmPurple hover:bg-gray-100 font-bold px-10 py-4 rounded-full text-xl transition-all duration-300 inline-block shadow-[0_0_20px_rgba(255,215,0,0.3)] hover:shadow-[0_0_30px_rgba(255,215,0,0.5)] transform hover:-translate-y-1';
-                $hero_cta_href = isset($_SESSION['user_id']) ? 'marketplace.php' : 'register.php';
-                $hero_cta_text = isset($_SESSION['user_id']) ? 'Explore Marketplace' : 'Join UiTM STEP';
+                $is_logged_in = isset($_SESSION['user_id']);
+                $hero_cta_href = $is_logged_in ? 'marketplace.php' : 'register.php';
+                $hero_cta_text = $is_logged_in ? 'Explore Marketplace' : 'Join UiTM STEP';
             ?>
-            <a href="<?php echo $hero_cta_href; ?>" class="<?php echo $hero_cta_class; ?>"><?php echo $hero_cta_text; ?></a>
+            <a href="<?php echo escape($hero_cta_href); ?>" class="<?php echo escape($hero_cta_class); ?>"><?php echo escape($hero_cta_text); ?></a>
         </div>
     </div>
 </div>
