@@ -32,17 +32,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (in_array($file_type, $allowed_types)) {
                 $ext = pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);
                 $file_name = 'avatar_' . $user_id . '_' . time() . '.' . $ext;
-                $upload_path = 'assets/uploads/avatars/' . $file_name;
+                $upload_dir = __DIR__ . '/assets/uploads/avatars';
+                $upload_path = $upload_dir . '/' . $file_name;
                 
-                if (move_uploaded_file($file_tmp, $upload_path)) {
-                    $profile_picture = $upload_path;
+                if (!is_dir($upload_dir) && !mkdir($upload_dir, 0755, true) && !is_dir($upload_dir)) {
+                    $errors[] = "Failed to prepare avatar upload directory.";
+                } elseif (move_uploaded_file($file_tmp, $upload_path)) {
+                    $profile_picture = 'assets/uploads/avatars/' . $file_name;
                     
                     // Delete old avatar if exists
                     $stmt = $pdo->prepare("SELECT profile_picture FROM users WHERE user_id = ?");
                     $stmt->execute([$user_id]);
                     $old_pic = $stmt->fetchColumn();
-                    if ($old_pic && file_exists($old_pic)) {
-                        unlink($old_pic);
+                    $old_pic_path = $old_pic ? __DIR__ . '/' . ltrim($old_pic, '/') : null;
+                    if ($old_pic_path && file_exists($old_pic_path)) {
+                        unlink($old_pic_path);
                     }
                 } else {
                     $errors[] = "Failed to upload avatar.";
