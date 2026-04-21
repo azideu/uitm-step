@@ -63,6 +63,16 @@ $gigs = $stmt->fetchAll();
 
 // Fetch all available tags for the filter dropdown
 $tags = $pdo->query("SELECT name FROM tags ORDER BY name ASC")->fetchAll();
+$campus_label = $_SESSION['campus'];
+$max_campus_label_length = 30;
+
+if (function_exists('mb_strlen') && function_exists('mb_substr')) {
+    if (mb_strlen($campus_label) > $max_campus_label_length) {
+        $campus_label = rtrim(mb_substr($campus_label, 0, $max_campus_label_length - 3)) . '...';
+    }
+} elseif (strlen($campus_label) > $max_campus_label_length) {
+    $campus_label = rtrim(substr($campus_label, 0, $max_campus_label_length - 3)) . '...';
+}
 
 require_once 'includes/header.php';
 ?>
@@ -78,7 +88,7 @@ require_once 'includes/header.php';
         <input type="text" name="search" placeholder="Search gigs..." value="<?php echo escape($search_query); ?>" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none w-full sm:w-auto">
         
         <select name="campus" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none cursor-pointer">
-            <option value="local" <?php if($campus_filter === 'local') echo 'selected'; ?>>My Campus (<?php echo escape($_SESSION['campus']); ?>)</option>
+            <option value="local" <?php if($campus_filter === 'local') echo 'selected'; ?>>My Campus (<?php echo escape($campus_label); ?>)</option>
             <option value="all" <?php if($campus_filter === 'all') echo 'selected'; ?>>All Campuses</option>
         </select>
         
