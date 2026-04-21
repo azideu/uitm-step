@@ -63,15 +63,15 @@ $gigs = $stmt->fetchAll();
 
 // Fetch all available tags for the filter dropdown
 $tags = $pdo->query("SELECT name FROM tags ORDER BY name ASC")->fetchAll();
-$campus_label = $_SESSION['campus'];
+$campus_label = $_SESSION['campus'] ?? '';
 $max_campus_label_length = 30;
 
 if (function_exists('mb_strlen') && function_exists('mb_substr')) {
     if (mb_strlen($campus_label) > $max_campus_label_length) {
-        $campus_label = rtrim(mb_substr($campus_label, 0, $max_campus_label_length - 3)) . '...';
+        $campus_label = mb_substr($campus_label, 0, $max_campus_label_length - 3) . '...';
     }
 } elseif (strlen($campus_label) > $max_campus_label_length) {
-    $campus_label = rtrim(substr($campus_label, 0, $max_campus_label_length - 3)) . '...';
+    $campus_label = substr($campus_label, 0, $max_campus_label_length - 3) . '...';
 }
 
 require_once 'includes/header.php';
