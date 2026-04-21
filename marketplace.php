@@ -63,7 +63,7 @@ $gigs = $stmt->fetchAll();
 
 // Fetch all available tags for the filter dropdown
 $tags = $pdo->query("SELECT name FROM tags ORDER BY name ASC")->fetchAll();
-$campus_label = $_SESSION['campus'] ?? '';
+$campus_label = (isset($_SESSION['campus']) && is_string($_SESSION['campus'])) ? $_SESSION['campus'] : '';
 $max_campus_label_length = 30;
 
 if (function_exists('mb_strlen') && function_exists('mb_substr')) {
