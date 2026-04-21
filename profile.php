@@ -66,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute([$name, $bio, $campus, $user_id]);
                 $_SESSION['name'] = $name;
             }
+            $_SESSION['campus'] = $campus;
             set_toast('success', "Profile updated successfully.");
             redirect('profile.php');
         } else {
