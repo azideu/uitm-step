@@ -71,7 +71,10 @@ require_once 'includes/header.php';
             <!-- Chat Header -->
             <div class="p-4 bg-gray-50 border-b font-bold text-gray-800 flex justify-between items-center z-10 shadow-sm">
                 <span><?php echo escape($active_user_name); ?></span>
-                <span id="chat-status-badge" class="text-[10px] font-medium text-yellow-400 transition-colors duration-300">Connecting…</span>
+                <span id="chat-status-badge" class="flex items-center gap-1.5 bg-gray-100 border border-gray-200 text-gray-600 text-xs font-medium px-2.5 py-1 rounded-full">
+                    <span id="chat-status-dot" class="inline-block w-2 h-2 rounded-full shrink-0 bg-yellow-400 animate-pulse"></span>
+                    <span id="chat-status-text">Connecting…</span>
+                </span>
             </div>
             
             <!-- Chat Messages -->

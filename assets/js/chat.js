@@ -87,18 +87,19 @@ function fmtTime(date) {
 // ---------------------------------------------------------------------------
 // DOM: connection status badge
 // ---------------------------------------------------------------------------
-const statusBadge = document.getElementById('chat-status-badge');
+const statusDot  = document.getElementById('chat-status-dot');
+const statusText = document.getElementById('chat-status-text');
 function setStatusBadge(state) {
-    if (!statusBadge) return;
+    if (!statusDot || !statusText) return;
     const map = {
-        connecting : { text: 'Connecting…', cls: 'text-yellow-400' },
-        open       : { text: 'Live',        cls: 'text-green-400'  },
-        error      : { text: 'Reconnecting…',cls:'text-orange-400' },
-        closed     : { text: 'Offline',     cls: 'text-red-400'    },
+        connecting: { dot: 'bg-yellow-400 animate-pulse', label: 'Connecting…'  },
+        open      : { dot: 'bg-green-400',                label: 'Live'          },
+        error     : { dot: 'bg-orange-400 animate-pulse', label: 'Reconnecting…' },
+        closed    : { dot: 'bg-red-400',                  label: 'Offline'       },
     };
     const s = map[state] || map.closed;
-    statusBadge.textContent  = s.text;
-    statusBadge.className    = `text-[10px] font-medium ${s.cls} transition-colors duration-300`;
+    statusDot.className  = `inline-block w-2 h-2 rounded-full shrink-0 transition-colors duration-300 ${s.dot}`;
+    statusText.textContent = s.label;
 }
 
 // ---------------------------------------------------------------------------
@@ -118,21 +119,22 @@ function appendMessage(msg) {
 
     const msgDiv = document.createElement('div');
     msgDiv.dataset.msgId = msg.id;
+    // Compact vertical padding: py-1.5 (6px each side) keeps bubbles tight for short messages
     msgDiv.className = [
-        'chat-bubble w-fit max-w-[75%] px-4 py-2.5 mb-3 shadow-sm text-sm',
-        'leading-relaxed whitespace-pre-wrap break-words',
+        'chat-bubble w-fit max-w-[75%] px-3.5 py-1.5 mb-2 shadow-sm text-sm',
+        'leading-normal whitespace-pre-wrap break-words',
         msg.is_mine
             ? 'chat-bubble-outgoing chat-bubble-mine bg-uitmPurple text-white ml-auto rounded-t-2xl rounded-bl-2xl rounded-br-sm'
             : 'chat-bubble-incoming chat-bubble-theirs bg-gray-100 text-gray-900 mr-auto rounded-t-2xl rounded-br-2xl rounded-bl-sm border border-gray-200',
     ].join(' ');
 
-    // Delivery tick icons (own messages only) — updated later by updateTick()
     const tick = msg.is_mine ? buildTick(msg.status || 'sending') : '';
 
+    // mt-0.5 gives a tiny 2px gap between content and metadata row — no mb-1
     msgDiv.innerHTML = `
-        <div class="mb-1">${msg.content}</div>
-        <div class="flex items-center justify-end gap-1">
-            <span class="text-[10px] ${msg.is_mine ? 'text-purple-200' : 'text-gray-400'}">${msg.timestamp}</span>
+        <div>${msg.content}</div>
+        <div class="flex items-center justify-end gap-1 mt-0.5">
+            <span class="text-[10px] leading-none ${msg.is_mine ? 'text-purple-200' : 'text-gray-400'}">${msg.timestamp}</span>
             ${tick}
         </div>
     `;
@@ -140,29 +142,31 @@ function appendMessage(msg) {
     chatContainer.appendChild(msgDiv);
 }
 
-/** Build the SVG tick span for a given status. */
+/**
+ * Build a delivery tick using Unicode characters — reliably visible at any size,
+ * no SVG rendering inconsistencies.
+ *   sending  → · (dimmed dot — in-flight)
+ *   sent     → ✓ (single tick — server ACK received)
+ *   delivered→ ✓✓ (double tick — rendered by recipient's client)
+ */
 function buildTick(status) {
-    // 'sending' → clock icon, 'sent' → single ✓, 'delivered' → double ✓✓
-    const icons = {
-        sending: `<svg class="tick-icon w-3 h-3 text-purple-300" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm.5 3.5v4l2.793 2.793-.707.707L7.5 8.914V4.5h1z"/>
-                  </svg>`,
-        sent    : `<svg class="tick-icon w-3 h-3 text-purple-300" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>
-                  </svg>`,
-        delivered:`<svg class="tick-icon w-3 h-3 text-purple-200" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 11.293 1.854 8.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0zm-3.5 0a.5.5 0 0 0-.708-.708L4 8.293 2.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l5-5z"/>
-                  </svg>`,
-    };
-    return `<span class="tick-wrap">${icons[status] || icons.sent}</span>`;
+    const map = { sending: '·', sent: '✓', delivered: '✓✓' };
+    const symbol = map[status] || '✓';
+    const opacityCls = status === 'sending' ? 'opacity-50' : 'opacity-90';
+    return `<span class="tick-wrap text-[11px] font-semibold leading-none text-purple-200 ${opacityCls}">${symbol}</span>`;
 }
 
-/** Update the tick icon on an already-rendered bubble after server confirms. */
+/** Swap the tick symbol and opacity on an already-rendered bubble. */
 function updateTick(msgId, status) {
     const bubble = document.querySelector(`[data-msg-id="${msgId}"]`);
     if (!bubble) return;
     const wrap = bubble.querySelector('.tick-wrap');
-    if (wrap) wrap.innerHTML = buildTick(status).replace(/<span[^>]*>|<\/span>/g, '');
+    if (!wrap) return;
+    const map = { sending: '·', sent: '✓', delivered: '✓✓' };
+    wrap.textContent = map[status] || '✓';
+    // delivered gets full opacity; sending stays dimmed
+    wrap.classList.toggle('opacity-50', status === 'sending');
+    wrap.classList.toggle('opacity-90', status !== 'sending');
 }
 
 // ---------------------------------------------------------------------------
@@ -293,16 +297,26 @@ function startStream() {
         const msgId = safeCursor(msg.id);
         if (msgId <= 0) return; // reject invalid frames
 
-        // Skip if we already rendered this id (optimistic bubble or dupe)
-        if (document.querySelector(`[data-msg-id="${msgId}"]`)) {
-            // Still advance cursor in case it was an optimistic bubble swap
-            if (msgId > lastMessageId) lastMessageId = msgId;
-            return;
-        }
-
         if (msgId > lastMessageId) lastMessageId = msgId;
 
-        // Hide typing indicator if the other person just sent a real message
+        // Race-condition guard for own messages:
+        // If we sent a message optimistically (tempId < 0) and the SSE frame
+        // arrives BEFORE the POST response has swapped the temp ID to realId,
+        // the dedup querySelector won't find it (it's stored as a negative id).
+        // → Claim the orphaned temp bubble here to prevent a duplicate render.
+        if (msg.is_mine) {
+            const tempBubble = chatContainer.querySelector('[data-msg-id^="-"]');
+            if (tempBubble) {
+                tempBubble.dataset.msgId = msgId;
+                updateTick(msgId, 'delivered');
+                return; // claimed — don't render a second bubble
+            }
+        }
+
+        // Standard dedup: skip if this id is already in the DOM
+        if (document.querySelector(`[data-msg-id="${msgId}"]`)) return;
+
+        // Hide typing indicator when receiver sends a real message
         if (!msg.is_mine) hideTypingIndicator();
 
         enqueueBubble({ ...msg, id: msgId, status: 'delivered' });
