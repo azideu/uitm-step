@@ -26,14 +26,8 @@ if ($db_url && str_starts_with($db_url, 'mysql://')) {
     $db   = isset($url["path"]) ? substr($url["path"], 1) : $db;
     $port = $url["port"] ?? 25060;
 } 
-// 3. Fallback to hardcoded DO credentials if specifically provided (previous developer added these)
-else if (str_contains($_SERVER['HTTP_HOST'] ?? '', 'digitalocean.app')) {
-    $host = 'uitm-step-mysql-database-do-user-36196259-0.h.db.ondigitalocean.com';
-    $db   = 'uitm_step';
-    $user = 'doadmin';
-    $pass = 'AVNS_c9oKaVFNMjTwVYxnDmF';
-    $port = '25060';
-}
+// 3. Fallback to local if no DATABASE_URL is present
+// (Local credentials at the top of file will be used)
 
 $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
 $options = [
