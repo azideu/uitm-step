@@ -65,7 +65,7 @@ require_once 'includes/header.php';
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2">Student Email</label>
-            <input type="email" name="email" required pattern=".*@student\.uitm\.edu\.my" title="Must be a @student.uitm.edu.my email" placeholder="2021xxxxxx@student.uitm.edu.my" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple">
+            <input type="email" name="email" required pattern=".*@student\.uitm\.edu\.my" title="Must be a @student.uitm.edu.my email" placeholder="xxxxxxxxxx@student.uitm.edu.my" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple">
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2">Password</label>
@@ -76,61 +76,61 @@ require_once 'includes/header.php';
             <select name="campus" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple">
                 <option value="" disabled selected>Select your campus</option>
                 <optgroup label="Selangor">
-                    <option value="UiTM Shah Alam">UiTM Shah Alam</option>
-                    <option value="UiTM Kampus Puncak Alam">UiTM Kampus Puncak Alam</option>
-                    <option value="UiTM Kampus Puncak Perdana">UiTM Kampus Puncak Perdana</option>
-                    <option value="UiTM Kampus Hospital Sg Buloh">UiTM Kampus Hospital Sg Buloh</option>
-                    <option value="UiTM Kampus Dengkil">UiTM Kampus Dengkil</option>
+                    <option value="UiTM Shah Alam">Shah Alam</option>
+                    <option value="UiTM Kampus Puncak Alam">Puncak Alam</option>
+                    <option value="UiTM Kampus Puncak Perdana">Puncak Perdana</option>
+                    <option value="UiTM Kampus Hospital Sg Buloh">Hospital Sg Buloh</option>
+                    <option value="UiTM Kampus Dengkil">Dengkil</option>
                 </optgroup>
                 <optgroup label="Perlis">
-                    <option value="UiTM Kampus Arau">UiTM Kampus Arau</option>
+                    <option value="UiTM Kampus Arau">Arau</option>
                 </optgroup>
                 <optgroup label="Kedah">
-                    <option value="UiTM Kampus Sungai Petani">UiTM Kampus Sungai Petani</option>
+                    <option value="UiTM Kampus Sungai Petani">Sungai Petani</option>
                 </optgroup>
                 <optgroup label="Pulau Pinang">
-                    <option value="UiTM Kampus Permatang Pauh">UiTM Kampus Permatang Pauh</option>
-                    <option value="UiTM Kampus Bertam">UiTM Kampus Bertam</option>
+                    <option value="UiTM Kampus Permatang Pauh">Permatang Pauh</option>
+                    <option value="UiTM Kampus Bertam">Bertam</option>
                 </optgroup>
                 <optgroup label="Perak">
-                    <option value="UiTM Kampus Seri Iskandar">UiTM Kampus Seri Iskandar</option>
-                    <option value="UiTM Kampus Tapah">UiTM Kampus Tapah</option>
+                    <option value="UiTM Kampus Seri Iskandar">Seri Iskandar</option>
+                    <option value="UiTM Kampus Tapah">Tapah</option>
                 </optgroup>
                 <optgroup label="Negeri Sembilan">
-                    <option value="UiTM Kampus Kuala Pilah Beting">UiTM Kampus Kuala Pilah Beting</option>
-                    <option value="UiTM Kampus Seremban 3">UiTM Kampus Seremban 3</option>
-                    <option value="UiTM Kampus Rembau">UiTM Kampus Rembau</option>
+                    <option value="UiTM Kampus Kuala Pilah Beting">Kuala Pilah Beting</option>
+                    <option value="UiTM Kampus Seremban 3">Seremban 3</option>
+                    <option value="UiTM Kampus Rembau">Rembau</option>
                 </optgroup>
                 <optgroup label="Melaka">
-                    <option value="UiTM Kampus Alor Gajah">UiTM Kampus Alor Gajah</option>
-                    <option value="UiTM Kampus Bandaraya Melaka">UiTM Kampus Bandaraya Melaka</option>
-                    <option value="UiTM Kampus Jasin">UiTM Kampus Jasin</option>
+                    <option value="UiTM Kampus Alor Gajah">Alor Gajah</option>
+                    <option value="UiTM Kampus Bandaraya Melaka">Bandaraya Melaka</option>
+                    <option value="UiTM Kampus Jasin">Jasin</option>
                 </optgroup>
                 <optgroup label="Johor">
-                    <option value="UiTM Kampus Segamat">UiTM Kampus Segamat</option>
-                    <option value="UiTM Kampus Pasir Gudang">UiTM Kampus Pasir Gudang</option>
+                    <option value="UiTM Kampus Segamat">Segamat</option>
+                    <option value="UiTM Kampus Pasir Gudang">Pasir Gudang</option>
                 </optgroup>
                 <optgroup label="Pahang">
-                    <option value="UiTM Kampus Jengka">UiTM Kampus Jengka</option>
-                    <option value="UiTM Kampus Raub">UiTM Kampus Raub</option>
+                    <option value="UiTM Kampus Jengka">Jengka</option>
+                    <option value="UiTM Kampus Raub">Raub</option>
                 </optgroup>
                 <optgroup label="Terengganu">
-                    <option value="UiTM Kampus Dungun">UiTM Kampus Dungun</option>
-                    <option value="UiTM Kampus Kuala Terengganu Cendering">UiTM Kampus Kuala Terengganu Cendering</option>
-                    <option value="UiTM Kampus Bukit Besi">UiTM Kampus Bukit Besi</option>
+                    <option value="UiTM Kampus Dungun">Dungun</option>
+                    <option value="UiTM Kampus Kuala Terengganu Cendering">Kuala Terengganu Cendering</option>
+                    <option value="UiTM Kampus Bukit Besi">Bukit Besi</option>
                 </optgroup>
                 <optgroup label="Kelantan">
-                    <option value="UiTM Kampus Machang">UiTM Kampus Machang</option>
-                    <option value="UiTM Kampus Kota Bharu">UiTM Kampus Kota Bharu</option>
+                    <option value="UiTM Kampus Machang">Machang</option>
+                    <option value="UiTM Kampus Kota Bharu">Kota Bharu</option>
                 </optgroup>
                 <optgroup label="Sabah">
-                    <option value="UiTM Kampus Kota Kinabalu">UiTM Kampus Kota Kinabalu</option>
-                    <option value="UiTM Kampus Tawau">UiTM Kampus Tawau</option>
+                    <option value="UiTM Kampus Kota Kinabalu">Kota Kinabalu</option>
+                    <option value="UiTM Kampus Tawau">Tawau</option>
                 </optgroup>
                 <optgroup label="Sarawak">
-                    <option value="UiTM Kampus Samarahan">UiTM Kampus Samarahan</option>
-                    <option value="UiTM Kampus Samarahan 2">UiTM Kampus Samarahan 2</option>
-                    <option value="UiTM Kampus Mukah">UiTM Kampus Mukah</option>
+                    <option value="UiTM Kampus Samarahan">Samarahan</option>
+                    <option value="UiTM Kampus Samarahan 2">Samarahan 2</option>
+                    <option value="UiTM Kampus Mukah">Mukah</option>
                 </optgroup>
             </select>
         </div>
