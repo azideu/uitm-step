@@ -266,13 +266,14 @@ function loadHistory() {
             chatContainer.innerHTML = '';
             const msgs = data.messages || [];
             msgs.forEach(msg => {
-                appendMessage({ ...msg, status: 'delivered' });
+                appendMessage({ ...msg, status: (msg.is_mine ? (msg.is_read ? 'delivered' : 'sent') : 'delivered') });
                 if (msg.id > lastMessageId) lastMessageId = safeCursor(msg.id);
             });
             // Force-scroll on initial load regardless of position
             scrollToBottom(true);
             startStream();
             startPolling();
+            markRead();
         })
         .catch(err => {
             console.error('[chat] History fetch error:', err);
@@ -341,11 +342,25 @@ function startStream() {
         // Hide typing indicator when receiver sends a real message
         if (!msg.is_mine) hideTypingIndicator();
 
-        enqueueBubble({ ...msg, id: msgId, status: 'delivered' });
+        enqueueBubble({ ...msg, id: msgId, status: (msg.is_mine ? (msg.is_read ? 'delivered' : 'sent') : 'delivered') });
+        if (!msg.is_mine) markRead();
     };
 
     // Named "typing" event — requires server to emit: event: typing\ndata: {}\n\n
     eventSource.addEventListener('typing', handleTypingEvent);
+
+    eventSource.addEventListener('read_receipt', function (event) {
+        let data;
+        try { data = JSON.parse(event.data); } catch(e) { return; }
+        if (data.last_read_id) {
+            document.querySelectorAll('.chat-bubble-mine').forEach(bubble => {
+                const id = parseInt(bubble.dataset.msgId, 10);
+                if (id > 0 && id <= data.last_read_id) {
+                    updateTick(id, 'delivered');
+                }
+            });
+        }
+    });
 
     eventSource.onerror = function () {
         sseState = 'error';
@@ -389,8 +404,15 @@ function pollNewMessages() {
             let hasNew = false;
             msgs.forEach(msg => {
                 const id = safeCursor(msg.id);
+                
+                // Update read status for existing bubbles
+                if (msg.is_mine && msg.is_read) {
+                    updateTick(id, 'delivered');
+                }
+
                 if (id > lastMessageId && !document.querySelector(`[data-msg-id="${id}"]`)) {
-                    enqueueBubble({ ...msg, id, status: 'delivered' });
+                    enqueueBubble({ ...msg, id, status: (msg.is_mine ? (msg.is_read ? 'delivered' : 'sent') : 'delivered') });
+                    if (!msg.is_mine) markRead();
                     if (id > lastMessageId) lastMessageId = id;
                     hasNew = true;
                 }
@@ -480,6 +502,15 @@ window.addEventListener('beforeunload', () => {
 // ---------------------------------------------------------------------------
 // Bootstrap
 // ---------------------------------------------------------------------------
+function markRead() {
+    if (!receiverId) return;
+    fetch('api/mark_read.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user: receiverId })
+    }).catch(err => console.error('[chat] markRead error:', err));
+}
+
 if (chatContainer) {
     loadHistory();
 

@@ -48,8 +48,6 @@ if ($active_chat > 0) {
 require_once 'includes/header.php';
 ?>
 
-<!-- HI -->
-
 <div class="flex h-[calc(100vh-8rem)] bg-white rounded shadow-lg overflow-hidden border">
     <!-- Contacts Sidebar -->
     <div class="w-1/3 border-r bg-gray-50 flex flex-col">

@@ -59,7 +59,7 @@ $last_id = min($last_id, PHP_INT_MAX);
 
 // --- Prepared query (compiled once, executed in a loop) --------------------
 $stmt = $pdo->prepare("
-    SELECT message_id, sender_id, content, timestamp
+    SELECT message_id, sender_id, content, is_read, timestamp
     FROM   messages
     WHERE  message_id > :last_id
       AND  (
@@ -79,6 +79,12 @@ const HEARTBEAT_TICKS    = 15;
 
 $started_at  = time();
 $tick_count  = 0;
+
+$stmt_read = $pdo->prepare("
+    SELECT MAX(message_id) FROM messages
+    WHERE sender_id = :me AND receiver_id = :other AND is_read = 1
+");
+$last_read_id_sent = 0;
 
 // ---------------------------------------------------------------------------
 // Streaming loop
@@ -115,6 +121,7 @@ while (true) {
             'id'        => $last_id,
             'content'   => escape($row['content']),   // XSS-safe
             'is_mine'   => ($row['sender_id'] == $my_id),
+            'is_read'   => (bool)$row['is_read'],
             'timestamp' => date('H:i', strtotime($row['timestamp'])),
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
@@ -124,6 +131,16 @@ while (true) {
 
         ob_flush();
         flush();
+    }
+
+    // Check for read receipts updates
+    $stmt_read->execute([':me' => $my_id, ':other' => $other_id]);
+    $current_read_id = (int)$stmt_read->fetchColumn();
+    if ($current_read_id > $last_read_id_sent) {
+        $last_read_id_sent = $current_read_id;
+        $read_payload = json_encode(['last_read_id' => $last_read_id_sent]);
+        echo "event: read_receipt\ndata: {$read_payload}\n\n";
+        ob_flush(); flush();
     }
 
     // Periodic heartbeat — a SSE comment (:) keeps the connection alive
