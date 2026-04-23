@@ -48,7 +48,7 @@ $total_gigs = $stmt->fetchColumn();
 $total_pages = ceil($total_gigs / $limit);
 
 // Fetch gigs
-$sql = "SELECT g.*, u.name as seller_name, u.campus
+$sql = "SELECT g.*, u.name as seller_name, u.campus, u.profile_picture
         FROM gigs g
         JOIN users u ON g.seller_id = u.user_id
         $join_tags
@@ -64,6 +64,7 @@ $gigs = $stmt->fetchAll();
 // Fetch all available tags for the filter dropdown
 $tags = $pdo->query("SELECT name FROM tags ORDER BY name ASC")->fetchAll();
 $campus_label = (isset($_SESSION['campus']) && is_string($_SESSION['campus'])) ? $_SESSION['campus'] : '';
+$campus_label = str_replace(['UiTM Kampus ', 'UiTM '], '', $campus_label);
 $max_campus_label_length = 30;
 
 if (function_exists('mb_strlen') && function_exists('mb_substr')) {
@@ -115,12 +116,17 @@ require_once 'includes/header.php';
                     <p class="text-gray-500 mb-6 line-clamp-3 leading-relaxed"><?php echo escape($gig['description']); ?></p>
                     
                     <div class="text-sm text-gray-600 flex items-center bg-gray-50 p-2 rounded-lg border border-gray-100 mt-auto">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-uitmPurple to-indigo-600 flex items-center justify-center text-white font-bold mr-3">
-                            <?php echo strtoupper(substr($gig['seller_name'], 0, 1)); ?>
+                        <?php
+                            $seller_avatar = $gig['profile_picture'] && file_exists($gig['profile_picture']) 
+                                ? escape($gig['profile_picture']) 
+                                : 'https://ui-avatars.com/api/?name=' . urlencode($gig['seller_name']) . '&background=330066&color=FFD700';
+                        ?>
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-uitmPurple to-indigo-600 flex items-center justify-center text-white font-bold mr-3 overflow-hidden shrink-0 border border-purple-200">
+                            <img src="<?php echo $seller_avatar; ?>" alt="<?php echo escape($gig['seller_name']); ?>" class="w-full h-full object-cover">
                         </div>
                         <div>
                             <span class="block font-semibold text-gray-900"><?php echo escape($gig['seller_name']); ?></span>
-                            <span class="block text-xs text-gray-500"><?php echo escape($gig['campus']); ?></span>
+                            <span class="block text-xs text-gray-500"><?php echo escape(str_replace(['UiTM Kampus ', 'UiTM '], '', $gig['campus'])); ?></span>
                         </div>
                     </div>
                 </div>
@@ -139,19 +145,19 @@ require_once 'includes/header.php';
     <!-- Pagination -->
     <?php if ($total_pages > 1): ?>
     <div class="mt-8 flex justify-center">
-        <nav class="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+        <nav class="inline-flex rounded-xl shadow-sm -space-x-px" aria-label="Pagination">
             <?php if($page > 1): ?>
-                <a href="?page=<?php echo $page-1; ?>&campus=<?php echo urlencode($campus_filter); ?>&tag=<?php echo urlencode($tag_filter); ?>&search=<?php echo urlencode($search_query); ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">Previous</a>
+                <a href="?page=<?php echo $page-1; ?>&campus=<?php echo urlencode($campus_filter); ?>&tag=<?php echo urlencode($tag_filter); ?>&search=<?php echo urlencode($search_query); ?>" class="relative inline-flex items-center px-4 py-2 rounded-l-xl border border-gray-200 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors">Previous</a>
             <?php endif; ?>
             
             <?php for($i = 1; $i <= $total_pages; $i++): ?>
-                <a href="?page=<?php echo $i; ?>&campus=<?php echo urlencode($campus_filter); ?>&tag=<?php echo urlencode($tag_filter); ?>&search=<?php echo urlencode($search_query); ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium <?php echo $i === $page ? 'text-uitmPurple font-bold bg-gray-100' : 'text-gray-700 hover:bg-gray-50'; ?>">
+                <a href="?page=<?php echo $i; ?>&campus=<?php echo urlencode($campus_filter); ?>&tag=<?php echo urlencode($tag_filter); ?>&search=<?php echo urlencode($search_query); ?>" class="relative inline-flex items-center px-4 py-2 border <?php echo $i === $page ? 'border-purple-300 bg-purple-50 text-uitmPurple font-bold z-10' : 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-colors'; ?> text-sm">
                     <?php echo $i; ?>
                 </a>
             <?php endfor; ?>
 
             <?php if($page < $total_pages): ?>
-                <a href="?page=<?php echo $page+1; ?>&campus=<?php echo urlencode($campus_filter); ?>&tag=<?php echo urlencode($tag_filter); ?>&search=<?php echo urlencode($search_query); ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">Next</a>
+                <a href="?page=<?php echo $page+1; ?>&campus=<?php echo urlencode($campus_filter); ?>&tag=<?php echo urlencode($tag_filter); ?>&search=<?php echo urlencode($search_query); ?>" class="relative inline-flex items-center px-4 py-2 rounded-r-xl border border-gray-200 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors">Next</a>
             <?php endif; ?>
         </nav>
     </div>
@@ -159,8 +165,8 @@ require_once 'includes/header.php';
 
 <?php else: ?>
     <!-- Empty State -->
-    <div class="bg-white rounded shadow text-center py-16 px-4">
-        <svg class="empty-state-svg text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 text-center py-16 px-4 animate-fade-in-up">
+        <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
         <h3 class="text-2xl font-bold text-gray-700 mb-2">No Gigs Found</h3>
         <p class="text-gray-500">We couldn't find any gigs in this campus or category. Try adjusting your filters!</p>
         <a href="marketplace.php" class="mt-4 inline-block text-uitmPurple hover:underline font-medium">Clear all filters</a>
