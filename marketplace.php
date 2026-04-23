@@ -117,7 +117,7 @@ require_once 'includes/header.php';
                     
                     <div class="text-sm text-gray-600 flex items-center bg-gray-50 p-2 rounded-lg border border-gray-100 mt-auto">
                         <?php
-                            $seller_avatar = $gig['profile_picture'] && file_exists($gig['profile_picture']) 
+                            $seller_avatar = !empty($gig['profile_picture']) 
                                 ? escape($gig['profile_picture']) 
                                 : 'https://ui-avatars.com/api/?name=' . urlencode($gig['seller_name']) . '&background=330066&color=FFD700';
                         ?>

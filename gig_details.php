@@ -6,7 +6,7 @@ require_once 'includes/db.php';
 $gig_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 // Fetch gig and seller info (must be active)
-$stmt = $pdo->prepare("SELECT g.*, u.name as seller_name, u.campus FROM gigs g JOIN users u ON g.seller_id = u.user_id WHERE g.gig_id = ? AND g.status = 'active'");
+$stmt = $pdo->prepare("SELECT g.*, u.name as seller_name, u.campus, u.profile_picture FROM gigs g JOIN users u ON g.seller_id = u.user_id WHERE g.gig_id = ? AND g.status = 'active'");
 $stmt->execute([$gig_id]);
 $gig = $stmt->fetch();
 
@@ -101,12 +101,17 @@ require_once 'includes/header.php';
                 
                 <!-- Seller Info Card -->
                 <div class="flex items-center gap-4 mb-8 p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-uitmPurple to-indigo-600 flex items-center justify-center text-white font-extrabold text-lg flex-shrink-0">
-                        <?php echo strtoupper(substr($gig['seller_name'], 0, 1)); ?>
+                    <?php
+                        $seller_avatar = !empty($gig['profile_picture']) 
+                            ? escape($gig['profile_picture']) 
+                            : 'https://ui-avatars.com/api/?name=' . urlencode($gig['seller_name']) . '&background=330066&color=FFD700';
+                    ?>
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-uitmPurple to-indigo-600 flex items-center justify-center text-white font-extrabold text-lg flex-shrink-0 overflow-hidden border-2 border-white shadow-sm">
+                        <img src="<?php echo $seller_avatar; ?>" alt="<?php echo escape($gig['seller_name']); ?>" class="w-full h-full object-cover">
                     </div>
                     <div>
                         <p class="font-bold text-gray-900"><?php echo escape($gig['seller_name']); ?></p>
-                        <p class="text-sm text-gray-500"><?php echo escape($gig['campus']); ?></p>
+                        <p class="text-sm text-gray-500"><?php echo escape(str_replace(['UiTM Kampus ', 'UiTM '], '', $gig['campus'])); ?></p>
                     </div>
                     <div class="ml-auto">
                         <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Available</span>
