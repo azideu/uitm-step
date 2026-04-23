@@ -5,8 +5,13 @@ require_once 'includes/db.php';
 
 $gig_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-// Fetch gig and seller info (must be active)
-$stmt = $pdo->prepare("SELECT g.*, u.name as seller_name, u.campus, u.profile_picture FROM gigs g JOIN users u ON g.seller_id = u.user_id WHERE g.gig_id = ? AND g.status = 'active'");
+// Fetch gig and seller info
+$stmt = $pdo->prepare("
+    SELECT g.*, u.name as seller_name, u.campus, u.profile_picture 
+    FROM gigs g 
+    JOIN users u ON g.seller_id = u.user_id 
+    WHERE g.gig_id = ?
+");
 $stmt->execute([$gig_id]);
 $gig = $stmt->fetch();
 
@@ -15,8 +20,27 @@ if (!$gig) {
     redirect('marketplace.php');
 }
 
+// Ensure the gig is active OR the current user has a relationship to it
+$is_seller = ($gig['seller_id'] == $_SESSION['user_id']);
+$is_admin = ($_SESSION['role'] === 'admin');
+
+// Check if user is a buyer with an active order for this gig
+$stmt_check = $pdo->prepare("SELECT 1 FROM orders WHERE gig_id = ? AND buyer_id = ? LIMIT 1");
+$stmt_check->execute([$gig_id, $_SESSION['user_id']]);
+$is_buyer = (bool)$stmt_check->fetchColumn();
+
+if ($gig['status'] !== 'active' && !$is_seller && !$is_admin && !$is_buyer) {
+    set_toast('error', 'This gig is no longer active.');
+    redirect('marketplace.php');
+}
+
 // Handle Order placement (Purchase)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'buy') {
+    // Verify CSRF Token
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        set_toast('error', 'Invalid security token.');
+        redirect("gig_details.php?id=$gig_id");
+    }
     if ($_SESSION['role'] !== 'student') {
         set_toast('error', 'Only students can buy gigs.');
     } elseif ($gig['seller_id'] == $_SESSION['user_id']) {
@@ -143,6 +167,7 @@ require_once 'includes/header.php';
                         <h3 class="text-lg font-bold text-gray-800 mb-5">Place your order</h3>
                         <form action="gig_details.php?id=<?php echo $gig_id; ?>" method="POST" enctype="multipart/form-data" class="space-y-4">
                             <input type="hidden" name="action" value="buy">
+                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                             <div>
                                 <label class="block text-sm text-gray-700 font-bold mb-2">Upload Payment Proof</label>
                                 <div class="border-2 border-dashed border-gray-200 rounded-2xl p-4 text-center hover:border-uitmPurple transition-colors cursor-pointer">

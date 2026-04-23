@@ -12,6 +12,12 @@ if ($_SESSION['role'] !== 'student') {
 $tags = $pdo->query("SELECT * FROM tags ORDER BY name ASC")->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Verify CSRF Token
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        set_toast('error', 'Invalid security token.');
+        redirect('create_gig.php');
+    }
+
     $title = trim($_POST['title'] ?? '');
     $description = trim($_POST['description'] ?? '');
     $price = (float)($_POST['price'] ?? 0);
@@ -63,6 +69,7 @@ require_once 'includes/header.php';
     <h2 class="text-2xl font-bold mb-6 text-uitmPurple">Create a New Gig</h2>
     
     <form action="create_gig.php" method="POST">
+        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2">Gig Title</label>
             <input type="text" name="title" required placeholder="I will do..." class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple">

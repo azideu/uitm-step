@@ -96,6 +96,7 @@ require_once 'includes/header.php';
                                         <form action="order_action.php" method="POST" class="inline">
                                             <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
                                             <input type="hidden" name="action" value="complete">
+                                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                             <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold px-4 py-1.5 rounded-xl transition-all duration-300 hover:shadow-md text-xs">Mark Complete</button>
                                         </form>
                                     <?php elseif ($o['status'] === 'paid'): ?>
@@ -110,6 +111,7 @@ require_once 'includes/header.php';
                                               onsubmit="return confirm('Cancel this order?');">
                                             <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
                                             <input type="hidden" name="action" value="cancel">
+                                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                             <button type="submit" class="bg-red-100 hover:bg-red-200 text-red-700 font-bold px-4 py-1.5 rounded-xl transition-all duration-300 text-xs">Cancel Order</button>
                                         </form>
                                     <?php else: ?>
@@ -175,6 +177,7 @@ require_once 'includes/header.php';
                                 <form action="gig_action.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this gig? This action cannot be undone.');" class="inline">
                                     <input type="hidden" name="gig_id" value="<?php echo $g['gig_id']; ?>">
                                     <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                     <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors p-1" title="Delete Gig">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -236,6 +239,7 @@ require_once 'includes/header.php';
                                             <form action="order_action.php" method="POST" class="inline">
                                                 <input type="hidden" name="order_id" value="<?php echo $io['order_id']; ?>">
                                                 <input type="hidden" name="action" value="deliver">
+                                                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                                 <button type="submit" class="bg-uitmPurple hover:bg-purple-900 text-white font-bold px-4 py-1.5 rounded-xl transition-all duration-300 hover:shadow-md text-xs">Mark Delivered</button>
                                             </form>
                                         <?php else: ?>

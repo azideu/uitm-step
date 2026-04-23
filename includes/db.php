@@ -49,11 +49,6 @@ try {
     // Log error for debugging
     error_log("DB Connection Error: " . $e->getMessage());
     
-    // TEMPORARY: Show actual error to debug. REMOVE THIS once resolved for security!
-    if (str_contains($_SERVER['HTTP_HOST'] ?? '', 'digitalocean.app')) {
-        die("DEBUG: Database connection failed. Error: " . $e->getMessage() . " (Host: $host, User: $user, Port: $port, DB: $db)");
-    }
-
     die("Database connection failed. Please contact the administrator.");
 }
 ?>

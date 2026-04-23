@@ -11,6 +11,12 @@ $user_id = $_SESSION['user_id'];
 
 // Handle Form Submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Verify CSRF Token
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        set_toast('error', 'Invalid security token.');
+        redirect('profile.php');
+    }
+
     if (isset($_POST['action']) && $_POST['action'] === 'update_profile') {
         $name = trim($_POST['name'] ?? '');
         $bio = trim($_POST['bio'] ?? '');
@@ -30,7 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $file_type = mime_content_type($file_tmp);
             
             if (in_array($file_type, $allowed_types)) {
-                $ext = pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);
+                $ext_map = [
+                    'image/jpeg' => 'jpg',
+                    'image/png'  => 'png',
+                    'image/gif'  => 'gif',
+                    'image/webp' => 'webp'
+                ];
+                $ext = $ext_map[$file_type];
                 $file_name = 'avatar_' . $user_id . '_' . time() . '.' . $ext;
                 $upload_dir = __DIR__ . '/assets/uploads/avatars';
                 $upload_path = $upload_dir . '/' . $file_name;
@@ -157,6 +169,7 @@ require_once 'includes/header.php';
                 <div class="p-6 sm:p-8">
                     <form action="profile.php" method="POST" enctype="multipart/form-data" class="space-y-6">
                         <input type="hidden" name="action" value="update_profile">
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                         
                         <!-- Avatar Upload -->
                         <div>
@@ -269,6 +282,7 @@ require_once 'includes/header.php';
                 <div class="p-6">
                     <form action="profile.php" method="POST" class="space-y-4">
                         <input type="hidden" name="action" value="update_password">
+                        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2" for="current_password">Current Password</label>

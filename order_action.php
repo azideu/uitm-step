@@ -20,6 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect('index.php');
 }
 
+// Verify CSRF Token
+if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+    set_toast('error', 'Invalid security token.');
+    redirect('index.php');
+}
+
 $order_id = (int)($_POST['order_id'] ?? 0);
 $action   = $_POST['action'] ?? '';
 

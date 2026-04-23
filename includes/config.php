@@ -6,7 +6,7 @@ date_default_timezone_set('Asia/Kuala_Lumpur');
 
 // Error reporting (graceful in production ideally, but for MVP we log and display)
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../error.log');
 
@@ -34,5 +34,10 @@ if (session_status() === PHP_SESSION_NONE) {
     ]);
     
     session_start();
+}
+
+// Generate CSRF token if not exists
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 ?>

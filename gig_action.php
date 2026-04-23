@@ -4,6 +4,11 @@ require_once 'includes/auth_check.php';
 require_once 'includes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Verify CSRF Token
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        set_toast('error', 'Invalid security token.');
+        redirect('user_dashboard.php?mode=selling');
+    }
     $gig_id = (int)($_POST['gig_id'] ?? 0);
     $action = $_POST['action'] ?? '';
 
@@ -23,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Check ownership or admin role
-    if ($gig['seller_id'] != $_SESSION['user_id'] && $_SESSION['role'] !== 'admin') {
+    if ((int)$gig['seller_id'] !== (int)$_SESSION['user_id'] && $_SESSION['role'] !== 'admin') {
         set_toast('error', 'Unauthorized action.');
         redirect('user_dashboard.php?mode=selling');
     }

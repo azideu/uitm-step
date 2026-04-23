@@ -131,6 +131,7 @@ require_once 'includes/header.php';
                                 <form action="order_action.php" method="POST" class="flex gap-2 items-center">
                                     <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
                                     <input type="hidden" name="action"   value="admin_update">
+                                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                     <select name="status"
                                             class="border border-gray-200 rounded-lg px-2 py-1.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-uitmPurple/40 focus:border-uitmPurple transition">
                                         <?php foreach ($statuses as $st): ?>
