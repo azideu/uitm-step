@@ -65,7 +65,7 @@ $gigs = $stmt->fetchAll();
 $tags = $pdo->query("SELECT name FROM tags ORDER BY name ASC")->fetchAll();
 $campus_label = (isset($_SESSION['campus']) && is_string($_SESSION['campus'])) ? $_SESSION['campus'] : '';
 $campus_label = str_replace(['UiTM Kampus ', 'UiTM '], '', $campus_label);
-$max_campus_label_length = 30;
+$max_campus_label_length = 20;
 
 if (function_exists('mb_strlen') && function_exists('mb_substr')) {
     if (mb_strlen($campus_label) > $max_campus_label_length) {
@@ -88,12 +88,12 @@ require_once 'includes/header.php';
     <form action="marketplace.php" method="GET" class="flex flex-wrap gap-3 items-center bg-white p-2 rounded-2xl shadow-sm border border-gray-100">
         <input type="text" name="search" placeholder="Search gigs..." value="<?php echo escape($search_query); ?>" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none w-full sm:w-auto">
         
-        <select name="campus" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none cursor-pointer">
-            <option value="local" <?php if($campus_filter === 'local') echo 'selected'; ?>>My Campus (<?php echo escape($campus_label); ?>)</option>
+        <select name="campus" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none cursor-pointer max-w-[200px]">
+            <option value="local" <?php if($campus_filter === 'local') echo 'selected'; ?>><?php echo escape($campus_label); ?></option>
             <option value="all" <?php if($campus_filter === 'all') echo 'selected'; ?>>All Campuses</option>
         </select>
         
-        <select name="tag" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none cursor-pointer">
+        <select name="tag" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none cursor-pointer max-w-[150px]">
             <option value="">All Tags</option>
             <?php foreach ($tags as $t): ?>
                 <option value="<?php echo escape($t['name']); ?>" <?php if($tag_filter === $t['name']) echo 'selected'; ?>><?php echo escape($t['name']); ?></option>
