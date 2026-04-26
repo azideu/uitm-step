@@ -38,7 +38,7 @@ if (!$payload) {
 
 $email = strtolower(trim((string)($payload['email'] ?? '')));
 $name = trim((string)($payload['name'] ?? 'UiTM Student'));
-$name = mb_substr($name, 0, 100);
+$name = substr($name, 0, 100);
 
 if (!is_uitm_student_email($email)) {
     http_response_code(403);

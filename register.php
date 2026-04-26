@@ -204,16 +204,25 @@ function handleGoogleAuthRegister(response) {
         })
     })
     .then(function (res) {
-        return res.json().then(function (data) {
-            return { ok: res.ok, data: data };
+        return res.text().then(function (text) {
+            var data = null;
+            try {
+                data = text ? JSON.parse(text) : null;
+            } catch (e) {
+                data = null;
+            }
+            return { ok: res.ok, data: data, raw: text };
         });
     })
     .then(function (result) {
-        if (result.ok && result.data.success) {
+        if (result.ok && result.data && result.data.success) {
             window.location.href = result.data.redirect || 'index.php';
             return;
         }
-        throw new Error(result.data.error || 'Google sign up failed');
+        var message = (result.data && result.data.error)
+            ? result.data.error
+            : 'Google sign up failed. Server returned an invalid response.';
+        throw new Error(message);
     })
     .catch(function (err) {
         if (!errorBox) {
