@@ -265,46 +265,4 @@ require_once 'includes/header.php';
     </div>
 </div>
 
-<!-- Fat Footer Links (Fake block just before real footer to match the design) -->
-<div class="bg-white border-t border-gray-200 pt-16 pb-8 hidden md:block">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-between gap-8">
-        <div>
-            <h4 class="font-bold text-gray-900 mb-4">Categories</h4>
-            <ul class="space-y-3 text-gray-500 text-sm">
-                <li><a href="#" class="hover:underline">Graphics & Design</a></li>
-                <li><a href="#" class="hover:underline">Digital Marketing</a></li>
-                <li><a href="#" class="hover:underline">Writing & Translation</a></li>
-                <li><a href="#" class="hover:underline">Video & Animation</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4 class="font-bold text-gray-900 mb-4">About</h4>
-            <ul class="space-y-3 text-gray-500 text-sm">
-                <li><a href="#" class="hover:underline">Careers</a></li>
-                <li><a href="#" class="hover:underline">Press & News</a></li>
-                <li><a href="#" class="hover:underline">Partnerships</a></li>
-                <li><a href="#" class="hover:underline">Privacy Policy</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4 class="font-bold text-gray-900 mb-4">Support</h4>
-            <ul class="space-y-3 text-gray-500 text-sm">
-                <li><a href="#" class="hover:underline">Help & Support</a></li>
-                <li><a href="#" class="hover:underline">Trust & Safety</a></li>
-                <li><a href="#" class="hover:underline">Selling on STEP</a></li>
-                <li><a href="#" class="hover:underline">Buying on STEP</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4 class="font-bold text-gray-900 mb-4">Community</h4>
-            <ul class="space-y-3 text-gray-500 text-sm">
-                <li><a href="#" class="hover:underline">Student Stories</a></li>
-                <li><a href="#" class="hover:underline">Campus Events</a></li>
-                <li><a href="#" class="hover:underline">Blog</a></li>
-                <li><a href="#" class="hover:underline">Forum</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
-
 <?php require_once 'includes/footer.php'; ?>
