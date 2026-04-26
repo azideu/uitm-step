@@ -33,7 +33,7 @@ if ($other_user <= 0 || $other_user === $user_id) {
 }
 
 $stmt = $pdo->prepare("
-    SELECT message_id, sender_id, content, is_read, timestamp
+    SELECT message_id, sender_id, content, status, is_read, timestamp
     FROM   messages
     WHERE  (sender_id = :me  AND receiver_id = :other)
        OR  (sender_id = :other2 AND receiver_id = :me2)
@@ -52,6 +52,7 @@ $escaped = array_map(function ($msg) use ($user_id) {
         'id'        => (int)$msg['message_id'],
         'content'   => escape($msg['content']),
         'is_mine'   => $msg['sender_id'] == $user_id,
+        'status'    => $msg['status'],
         'is_read'   => (bool)$msg['is_read'],
         'timestamp' => date('H:i', strtotime($msg['timestamp'])),
     ];

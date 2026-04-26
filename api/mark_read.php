@@ -22,8 +22,8 @@ if ($other_user <= 0 || $other_user === $me) {
 try {
     $stmt = $pdo->prepare("
         UPDATE messages 
-        SET is_read = 1 
-        WHERE receiver_id = :me AND sender_id = :other AND is_read = 0
+        SET is_read = 1, status = 'delivered'
+        WHERE receiver_id = :me AND sender_id = :other AND (is_read = 0 OR is_read IS NULL)
     ");
     $stmt->execute([
         ':me' => $me,

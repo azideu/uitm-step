@@ -266,7 +266,8 @@ function loadHistory() {
             chatContainer.innerHTML = '';
             const msgs = data.messages || [];
             msgs.forEach(msg => {
-                appendMessage({ ...msg, status: (msg.is_mine ? (msg.is_read ? 'delivered' : 'sent') : 'delivered') });
+                const status = msg.status || (msg.is_mine ? (msg.is_read ? 'delivered' : 'sent') : 'delivered');
+                appendMessage({ ...msg, status: status });
                 if (msg.id > lastMessageId) lastMessageId = safeCursor(msg.id);
             });
             // Force-scroll on initial load regardless of position
@@ -342,7 +343,8 @@ function startStream() {
         // Hide typing indicator when receiver sends a real message
         if (!msg.is_mine) hideTypingIndicator();
 
-        enqueueBubble({ ...msg, id: msgId, status: (msg.is_mine ? (msg.is_read ? 'delivered' : 'sent') : 'delivered') });
+        const status = msg.status || (msg.is_mine ? (msg.is_read ? 'delivered' : 'sent') : 'delivered');
+        enqueueBubble({ ...msg, id: msgId, status: status });
         if (!msg.is_mine) markRead();
     };
 
@@ -411,7 +413,8 @@ function pollNewMessages() {
                 }
 
                 if (id > lastMessageId && !document.querySelector(`[data-msg-id="${id}"]`)) {
-                    enqueueBubble({ ...msg, id, status: (msg.is_mine ? (msg.is_read ? 'delivered' : 'sent') : 'delivered') });
+                    const status = msg.status || (msg.is_mine ? (msg.is_read ? 'delivered' : 'sent') : 'delivered');
+                    enqueueBubble({ ...msg, id, status: status });
                     if (!msg.is_mine) markRead();
                     if (id > lastMessageId) lastMessageId = id;
                     hasNew = true;

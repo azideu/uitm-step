@@ -59,7 +59,7 @@ $last_id = min($last_id, PHP_INT_MAX);
 
 // --- Prepared query (compiled once, executed in a loop) --------------------
 $stmt = $pdo->prepare("
-    SELECT message_id, sender_id, content, is_read, timestamp
+    SELECT message_id, sender_id, content, status, is_read, timestamp
     FROM   messages
     WHERE  message_id > :last_id
       AND  (
@@ -119,8 +119,9 @@ while (true) {
 
         $payload = json_encode([
             'id'        => $last_id,
-            'content'   => escape($row['content']),   // XSS-safe
+            'content'   => escape($row['content']),
             'is_mine'   => ($row['sender_id'] == $my_id),
+            'status'    => $row['status'],
             'is_read'   => (bool)$row['is_read'],
             'timestamp' => date('H:i', strtotime($row['timestamp'])),
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
