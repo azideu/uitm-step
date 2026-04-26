@@ -80,7 +80,7 @@ require_once 'includes/header.php';
 
 <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
     <div>
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-uitmPurple to-indigo-600 dark:from-purple-300 dark:to-indigo-300 font-serif mb-2 transition-colors duration-300">Marketplace</h1>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-uitmPurple to-indigo-600 dark:from-white dark:via-purple-100 dark:to-indigo-300 font-serif mb-2 transition-colors duration-300 drop-shadow-sm">Marketplace</h1>
         <p class="text-gray-500 dark:text-slate-400 transition-colors duration-300">Discover and hire top talent from your campus.</p>
     </div>
     

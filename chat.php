@@ -121,8 +121,8 @@ require_once 'includes/header.php';
             </button>
             
             <!-- Input Area -->
-            <div class="p-4 bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-800 flex gap-3 items-end transition-colors duration-300">
-                <div class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl flex items-center overflow-hidden focus-within:ring-2 focus-within:ring-purple-100 dark:focus-within:ring-slate-700 focus-within:border-uitmPurple transition-all">
+            <div class="p-4 bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-800 flex gap-3 items-end transition-colors duration-300 relative z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] dark:shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
+                <div class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl flex items-center overflow-hidden focus-within:ring-2 focus-within:ring-purple-100 dark:focus-within:ring-slate-700 focus-within:border-uitmPurple focus-within:shadow-md transition-all">
                     <input type="text" id="chat-input" placeholder="Message..." class="w-full bg-transparent px-4 py-3 outline-none text-sm text-gray-700 dark:text-slate-200 placeholder-gray-400 dark:placeholder-slate-500" autocomplete="off" onkeypress="if(event.key === 'Enter') sendMessage()">
                 </div>
                 <button onclick="sendMessage()" class="bg-gradient-to-r from-uitmPurple to-indigo-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 hover:shadow-lg hover:scale-105 transition-all">
@@ -130,9 +130,10 @@ require_once 'includes/header.php';
                 </button>
             </div>
         <?php else: ?>
-            <div class="flex-1 flex flex-col justify-center items-center text-gray-400 dark:text-slate-500 bg-slate-50/30 dark:bg-slate-950/30 transition-colors duration-300">
-                <div class="w-24 h-24 bg-white dark:bg-slate-800 rounded-full shadow-sm border border-gray-100 dark:border-slate-700 flex items-center justify-center mb-6">
-                    <svg class="w-12 h-12 text-gray-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+            <div class="flex-1 flex flex-col justify-center items-center text-gray-400 dark:text-slate-500 bg-slate-50/30 dark:bg-slate-950/30 transition-colors duration-300 relative overflow-hidden">
+                <div class="absolute inset-0 bg-noise opacity-[0.02] mix-blend-overlay pointer-events-none z-0"></div>
+                <div class="w-24 h-24 bg-white dark:bg-slate-800 rounded-full shadow-[0_10px_30px_rgba(51,0,102,0.1)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-gray-100 dark:border-slate-700 flex items-center justify-center mb-6 animate-float relative z-10">
+                    <svg class="w-12 h-12 text-gray-300 dark:text-slate-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                 </div>
                 <h3 class="text-xl font-bold text-gray-600 dark:text-slate-400 mb-2 font-serif">Your Messages</h3>
                 <p class="text-sm">Select a conversation to start chatting securely.</p>

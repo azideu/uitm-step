@@ -12,6 +12,7 @@ require_once 'includes/header.php';
     <!-- Animated Gradient Background & Image -->
     <div class="absolute inset-0 w-full h-full">
         <div class="absolute inset-0 bg-gradient-to-br from-uitmPurple via-[#1a0033] to-blue-900 bg-moving-gradient"></div>
+        <div class="absolute inset-0 bg-noise opacity-30 mix-blend-overlay"></div>
         <img src="assets/img/hero_bg.png" alt="Student Freelancer" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40 animate-pulse-slow">
     </div>
     
@@ -62,7 +63,7 @@ require_once 'includes/header.php';
     
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <!-- Service Card 1 -->
-        <a href="marketplace.php?tag=Design" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+        <a href="marketplace.php?tag=Design" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1">
             <img src="assets/img/cat_design.jpg" alt="Graphics & Design" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
             <div class="absolute inset-0 bg-gradient-to-t from-[#1a0033]/90 via-[#1a0033]/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
@@ -73,7 +74,7 @@ require_once 'includes/header.php';
         </a>
         
         <!-- Service Card 2 -->
-        <a href="marketplace.php?tag=Programming" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 delay-100">
+        <a href="marketplace.php?tag=Programming" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:-rotate-1 delay-100">
             <img src="assets/img/cat_programming.jpg" alt="Programming" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
             <div class="absolute inset-0 bg-gradient-to-t from-[#1a0033]/90 via-[#1a0033]/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
              <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
@@ -84,7 +85,7 @@ require_once 'includes/header.php';
         </a>
 
         <!-- Service Card 3 -->
-        <a href="marketplace.php?tag=Writing" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 delay-200">
+        <a href="marketplace.php?tag=Writing" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 delay-200">
             <img src="assets/img/cat_writing.jpg" alt="Writing" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
             <div class="absolute inset-0 bg-gradient-to-t from-[#1a0033]/90 via-[#1a0033]/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
@@ -95,7 +96,7 @@ require_once 'includes/header.php';
         </a>
 
         <!-- Service Card 4 -->
-        <a href="marketplace.php?tag=Video" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 delay-300">
+        <a href="marketplace.php?tag=Video" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:-rotate-1 delay-300">
             <img src="assets/img/cat_video.jpg" alt="Video Editing" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
             <div class="absolute inset-0 bg-gradient-to-t from-[#1a0033]/90 via-[#1a0033]/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>

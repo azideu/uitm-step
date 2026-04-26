@@ -11,7 +11,7 @@ require_once 'functions.php';
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <meta name="theme-color" content="#330066">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -27,7 +27,7 @@ require_once 'functions.php';
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                         serif: ['Outfit', 'sans-serif'],
                     },
                     colors: {
@@ -62,8 +62,9 @@ require_once 'functions.php';
     ?>
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo $style_version; ?>">
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 flex flex-col min-h-screen text-slate-800 dark:text-slate-200 font-sans selection:bg-uitmPurple selection:text-white transition-colors duration-300">
-    <div class="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+<body class="bg-slate-50 dark:bg-slate-900 flex flex-col min-h-screen text-slate-800 dark:text-slate-200 font-sans selection:bg-uitmPurple selection:text-white transition-colors duration-300 relative">
+    <div class="pointer-events-none fixed inset-0 z-[100] h-full w-full bg-noise opacity-[0.03] mix-blend-overlay"></div>
+    <div class="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300 relative z-10">
     <!-- Navbar -->
     <nav class="bg-uitmPurple border-b border-uitmPurple/30 text-white sticky top-0 z-50 shadow-lg transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
