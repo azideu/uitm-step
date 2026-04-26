@@ -39,6 +39,7 @@ const receiverId    = chatContainer ? parseInt(chatContainer.dataset.receiver, 1
  *  Strictly coerced to a non-negative integer before every use. */
 let lastMessageId = 0;
 let maxKnownReadId = 0;
+const CHAT_DEBUG = true;
 
 
 /** Active EventSource reference. */
@@ -268,7 +269,9 @@ function loadHistory() {
             chatContainer.innerHTML = '';
             const msgs = data.messages || [];
             msgs.forEach(msg => {
-                const status = msg.status || (msg.is_mine ? (msg.is_read ? 'delivered' : 'sent') : 'delivered');
+                const status = msg.is_mine
+                    ? ((msg.is_read || msg.status === 'delivered') ? 'delivered' : 'sent')
+                    : 'delivered';
                 appendMessage({ ...msg, status: status });
                 if (msg.id > lastMessageId) lastMessageId = safeCursor(msg.id);
             });
@@ -334,7 +337,9 @@ function startStream() {
             const tempBubble = chatContainer.querySelector('[data-msg-id^="-"]');
             if (tempBubble) {
                 tempBubble.dataset.msgId = msgId;
-                updateTick(msgId, 'delivered');
+                // SSE ack means server persisted the message, not that it was read.
+                // Keep it as sent and wait for read_receipt/poll updates for delivered.
+                updateTick(msgId, 'sent');
                 return; // claimed — don't render a second bubble
             }
         }
@@ -345,7 +350,9 @@ function startStream() {
         // Hide typing indicator when receiver sends a real message
         if (!msg.is_mine) hideTypingIndicator();
 
-        const status = msg.status || (msg.is_mine ? (msg.is_read ? 'delivered' : 'sent') : 'delivered');
+        const status = msg.is_mine
+            ? ((msg.is_read || msg.status === 'delivered') ? 'delivered' : 'sent')
+            : 'delivered';
         enqueueBubble({ ...msg, id: msgId, status: status });
         if (!msg.is_mine) markRead();
     };
@@ -355,15 +362,27 @@ function startStream() {
 
     eventSource.addEventListener('read_receipt', function (event) {
         let data;
-        try { data = JSON.parse(event.data); } catch(e) { return; }
+        try { data = JSON.parse(event.data); } catch(e) {
+            if (CHAT_DEBUG) console.warn('[chat] Invalid read_receipt payload:', event.data);
+            return;
+        }
         if (data.last_read_id) {
             maxKnownReadId = Math.max(maxKnownReadId, data.last_read_id);
+            if (CHAT_DEBUG) {
+                console.debug('[chat] read_receipt received', {
+                    partnerId: receiverId,
+                    lastReadId: data.last_read_id,
+                    maxKnownReadId
+                });
+            }
             document.querySelectorAll('.chat-bubble-mine').forEach(bubble => {
                 const id = parseInt(bubble.dataset.msgId, 10);
                 if (id > 0 && id <= maxKnownReadId) {
                     updateTick(id, 'delivered');
                 }
             });
+        } else if (CHAT_DEBUG) {
+            console.debug('[chat] read_receipt received without last_read_id', data);
         }
     });
 
@@ -417,7 +436,9 @@ function pollNewMessages() {
                 }
 
                 if (id > lastMessageId && !document.querySelector(`[data-msg-id="${id}"]`)) {
-                    const status = msg.status || (msg.is_mine ? (msg.is_read ? 'delivered' : 'sent') : 'delivered');
+                    const status = msg.is_mine
+                        ? ((msg.is_read || msg.status === 'delivered') ? 'delivered' : 'sent')
+                        : 'delivered';
                     enqueueBubble({ ...msg, id, status: status });
                     if (!msg.is_mine) markRead();
                     if (id > lastMessageId) lastMessageId = id;
@@ -519,7 +540,24 @@ function markRead() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user: receiverId })
-    }).catch(err => console.error('[chat] markRead error:', err));
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (CHAT_DEBUG) {
+            console.debug('[chat] markRead response', {
+                partnerId: receiverId,
+                success: !!data.success,
+                updated: data.updated || 0,
+                error: data.error || null
+            });
+        }
+    })
+    .catch(err => console.error('[chat] markRead error:', err));
 }
 
 if (chatContainer) {
