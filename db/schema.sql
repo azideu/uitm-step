@@ -62,8 +62,20 @@ CREATE TABLE IF NOT EXISTS messages (
     sender_id INT NOT NULL,
     receiver_id INT NOT NULL,
     content TEXT NOT NULL,
+    status ENUM('sent','delivered') NOT NULL DEFAULT 'sent',
     is_read BOOLEAN DEFAULT FALSE,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (sender_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (receiver_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- Typing Status Table
+CREATE TABLE IF NOT EXISTS typing_status (
+    user_id    INT         NOT NULL,
+    partner_id INT         NOT NULL,
+    updated_at TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+                           ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, partner_id),
+    FOREIGN KEY (user_id)    REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (partner_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
