@@ -40,4 +40,15 @@ if (session_status() === PHP_SESSION_NONE) {
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
+
+// Google Sign-In settings (set GOOGLE_CLIENT_ID in environment for production)
+if (!defined('GOOGLE_CLIENT_ID')) {
+    define('GOOGLE_CLIENT_ID', trim((string)(getenv('GOOGLE_CLIENT_ID') ?: '')));
+}
+
+// Comma-separated list of allowed student email domains for auth.
+// Example: student.uitm.edu.my,siswa.uitm.edu.my
+if (!defined('UITM_STUDENT_EMAIL_DOMAINS')) {
+    define('UITM_STUDENT_EMAIL_DOMAINS', trim((string)(getenv('UITM_STUDENT_EMAIL_DOMAINS') ?: 'student.uitm.edu.my')));
+}
 ?>

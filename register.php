@@ -8,6 +8,8 @@ if (isset($_SESSION['user_id'])) {
     redirect('index.php');
 }
 
+$google_enabled = GOOGLE_CLIENT_ID !== '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $student_id = trim($_POST['student_id'] ?? '');
     $name = trim($_POST['name'] ?? '');
@@ -17,8 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validation
     $errors = [];
-    if (!preg_match('/^.+@student\.uitm\.edu\.my$/', $email)) {
-        $errors[] = "Email must be a @student.uitm.edu.my address.";
+    if (!is_uitm_student_email($email)) {
+        $allowed_domains = implode(', ', get_uitm_student_email_domains());
+        $errors[] = "Email must be a UiTM student email address ({$allowed_domains}).";
     }
     if (strlen($password) < 6) {
         $errors[] = "Password must be at least 6 characters.";
@@ -136,7 +139,90 @@ require_once 'includes/header.php';
         </div>
         <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-2 px-4 rounded hover:bg-purple-900 transition-colors">Register</button>
     </form>
+
+    <?php if ($google_enabled): ?>
+    <div class="my-5 flex items-center gap-3">
+        <span class="h-px bg-gray-300 flex-1"></span>
+        <span class="text-sm text-gray-500">or</span>
+        <span class="h-px bg-gray-300 flex-1"></span>
+    </div>
+
+    <p class="mb-2 text-sm text-gray-600">Select your campus above, then continue with Google.</p>
+    <div id="google-auth-error" class="hidden mb-3 rounded border border-red-200 bg-red-50 text-red-700 px-3 py-2 text-sm"></div>
+
+    <div id="g_id_onload"
+         data-client_id="<?php echo escape(GOOGLE_CLIENT_ID); ?>"
+         data-callback="handleGoogleAuthRegister"
+         data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+         data-type="standard"
+         data-shape="pill"
+         data-theme="outline"
+         data-text="signup_with"
+         data-size="large"
+         data-logo_alignment="left"
+         data-width="320">
+    </div>
+    <?php endif; ?>
+
     <p class="mt-4 text-center">Already have an account? <a href="login.php" class="text-uitmPurple hover:underline">Login here</a></p>
 </div>
+
+<?php if ($google_enabled): ?>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+function handleGoogleAuthRegister(response) {
+    const campusField = document.querySelector('select[name="campus"]');
+    const campus = (campusField && campusField.value) ? campusField.value : '';
+    const errorBox = document.getElementById('google-auth-error');
+
+    if (errorBox) {
+        errorBox.classList.add('hidden');
+        errorBox.textContent = '';
+    }
+
+    if (!campus) {
+        if (errorBox) {
+            errorBox.textContent = 'Please select your campus before Google sign up.';
+            errorBox.classList.remove('hidden');
+        } else {
+            alert('Please select your campus before Google sign up.');
+        }
+        return;
+    }
+
+    fetch('api/google_auth.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id_token: response.credential,
+            mode: 'register',
+            campus: campus
+        })
+    })
+    .then(function (res) {
+        return res.json().then(function (data) {
+            return { ok: res.ok, data: data };
+        });
+    })
+    .then(function (result) {
+        if (result.ok && result.data.success) {
+            window.location.href = result.data.redirect || 'index.php';
+            return;
+        }
+        throw new Error(result.data.error || 'Google sign up failed');
+    })
+    .catch(function (err) {
+        if (!errorBox) {
+            alert(err.message || 'Google sign up failed');
+            return;
+        }
+        errorBox.textContent = err.message || 'Google sign up failed';
+        errorBox.classList.remove('hidden');
+    });
+}
+</script>
+<?php endif; ?>
 
 <?php require_once 'includes/footer.php'; ?>

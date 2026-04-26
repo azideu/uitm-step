@@ -49,4 +49,87 @@ function display_toast() {
         unset($_SESSION['toast']);
     }
 }
+
+/**
+ * Return allowed UiTM student email domains from config.
+ * @return array<int, string>
+ */
+function get_uitm_student_email_domains() {
+    $raw = defined('UITM_STUDENT_EMAIL_DOMAINS') ? UITM_STUDENT_EMAIL_DOMAINS : 'student.uitm.edu.my';
+    $parts = array_filter(array_map('trim', explode(',', strtolower($raw))));
+    return !empty($parts) ? array_values(array_unique($parts)) : ['student.uitm.edu.my'];
+}
+
+/**
+ * Strictly validate UiTM student email by domain.
+ */
+function is_uitm_student_email($email) {
+    $email = strtolower(trim((string)$email));
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return false;
+    }
+    $atPos = strrpos($email, '@');
+    if ($atPos === false) {
+        return false;
+    }
+    $domain = substr($email, $atPos + 1);
+    return in_array($domain, get_uitm_student_email_domains(), true);
+}
+
+/**
+ * Verify Google ID token via Google's tokeninfo endpoint.
+ * Returns decoded payload array on success, null on failure.
+ *
+ * @return array<string, mixed>|null
+ */
+function verify_google_id_token($idToken, $expectedAud) {
+    $idToken = trim((string)$idToken);
+    $expectedAud = trim((string)$expectedAud);
+    if ($idToken === '' || $expectedAud === '') {
+        return null;
+    }
+
+    $url = 'https://oauth2.googleapis.com/tokeninfo?id_token=' . rawurlencode($idToken);
+    $response = false;
+
+    if (function_exists('curl_init')) {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        $response = curl_exec($ch);
+        $httpCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if ($response === false || $httpCode !== 200) {
+            return null;
+        }
+    } else {
+        $context = stream_context_create([
+            'http' => ['timeout' => 10],
+        ]);
+        $response = @file_get_contents($url, false, $context);
+        if ($response === false) {
+            return null;
+        }
+    }
+
+    $payload = json_decode($response, true);
+    if (!is_array($payload)) {
+        return null;
+    }
+
+    if (($payload['aud'] ?? '') !== $expectedAud) {
+        return null;
+    }
+
+    if (($payload['email_verified'] ?? 'false') !== 'true') {
+        return null;
+    }
+
+    if (!empty($payload['exp']) && ((int)$payload['exp'] < time())) {
+        return null;
+    }
+
+    return $payload;
+}
 ?>

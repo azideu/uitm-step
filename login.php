@@ -8,6 +8,8 @@ if (isset($_SESSION['user_id'])) {
     redirect('index.php');
 }
 
+$google_enabled = GOOGLE_CLIENT_ID !== '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
@@ -58,7 +60,75 @@ require_once 'includes/header.php';
         </div>
         <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-2 px-4 rounded hover:bg-purple-900 transition-colors">Login</button>
     </form>
+
+    <?php if ($google_enabled): ?>
+    <div class="my-5 flex items-center gap-3">
+        <span class="h-px bg-gray-300 flex-1"></span>
+        <span class="text-sm text-gray-500">or</span>
+        <span class="h-px bg-gray-300 flex-1"></span>
+    </div>
+
+    <div id="google-auth-error" class="hidden mb-3 rounded border border-red-200 bg-red-50 text-red-700 px-3 py-2 text-sm"></div>
+
+    <div id="g_id_onload"
+         data-client_id="<?php echo escape(GOOGLE_CLIENT_ID); ?>"
+         data-callback="handleGoogleAuthLogin"
+         data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+         data-type="standard"
+         data-shape="pill"
+         data-theme="outline"
+         data-text="continue_with"
+         data-size="large"
+         data-logo_alignment="left"
+         data-width="320">
+    </div>
+    <?php endif; ?>
+
     <p class="mt-4 text-center">Don't have an account? <a href="register.php" class="text-uitmPurple hover:underline">Register here</a></p>
 </div>
+
+<?php if ($google_enabled): ?>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+function handleGoogleAuthLogin(response) {
+    const errorBox = document.getElementById('google-auth-error');
+    if (errorBox) {
+        errorBox.classList.add('hidden');
+        errorBox.textContent = '';
+    }
+
+    fetch('api/google_auth.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id_token: response.credential,
+            mode: 'login'
+        })
+    })
+    .then(function (res) {
+        return res.json().then(function (data) {
+            return { ok: res.ok, data: data };
+        });
+    })
+    .then(function (result) {
+        if (result.ok && result.data.success) {
+            window.location.href = result.data.redirect || 'index.php';
+            return;
+        }
+        throw new Error(result.data.error || 'Google login failed');
+    })
+    .catch(function (err) {
+        if (!errorBox) {
+            alert(err.message || 'Google login failed');
+            return;
+        }
+        errorBox.textContent = err.message || 'Google login failed';
+        errorBox.classList.remove('hidden');
+    });
+}
+</script>
+<?php endif; ?>
 
 <?php require_once 'includes/footer.php'; ?>

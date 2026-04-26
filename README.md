@@ -55,5 +55,31 @@ UiTM STEP is a centralized, "Fiverr-style" marketplace developed exclusively for
 - **Session Security:** Implementation of `session_regenerate_id()` and HTTP-only cookies.
 - **File Upload Validation:** Strict MIME-type checking and 2MB file size limits for payment proofs.
 
+## Google Sign-In (UiTM Student Only)
+
+Google sign-in and sign-up are supported with strict server-side domain checks.
+
+Required environment variable:
+- `GOOGLE_CLIENT_ID`: Your Google OAuth Web Client ID.
+
+Optional environment variable:
+- `UITM_STUDENT_EMAIL_DOMAINS`: Comma-separated allowlist of student domains.
+   Default: `student.uitm.edu.my`
+
+Examples:
+- `UITM_STUDENT_EMAIL_DOMAINS=student.uitm.edu.my`
+- `UITM_STUDENT_EMAIL_DOMAINS=student.uitm.edu.my,siswa.uitm.edu.my`
+
+Setup checklist:
+1. Create a Google OAuth 2.0 Web Client in Google Cloud Console.
+2. Add your local and production origins to Authorized JavaScript origins.
+3. Set `GOOGLE_CLIENT_ID` in your server environment.
+4. Reload `login.php` and `register.php`.
+
+Behavior:
+- `login.php`: Google button logs in existing accounts only.
+- `register.php`: Google button creates a new student account (requires selected campus) and logs in.
+- Non-UiTM student emails are rejected by backend validation.
+
 ---
 *Developed as part of the **CSC264 and ISP250 group project** for **StepUp!**.*
