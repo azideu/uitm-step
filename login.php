@@ -61,6 +61,7 @@ require_once 'includes/header.php';
         <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-3 px-4 rounded-full shadow-md hover:shadow-lg hover:bg-purple-900 transition-all focus:ring-4 focus:ring-uitmPurple/30">Login</button>
     </form>
 
+    <?php if ($google_enabled): ?>
     <div class="my-5 flex items-center gap-3">
         <span class="h-px bg-gray-300 dark:bg-slate-700 flex-1"></span>
         <span class="text-sm text-gray-500 dark:text-slate-400">or</span>
