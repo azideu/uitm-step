@@ -65,7 +65,7 @@ require_once 'functions.php';
 <body class="bg-slate-50 dark:bg-slate-900 flex flex-col min-h-screen text-slate-800 dark:text-slate-200 font-sans selection:bg-uitmPurple selection:text-white transition-colors duration-300">
     <div class="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
     <!-- Navbar -->
-    <nav class="bg-uitmPurple dark:bg-slate-950 border-b border-uitmPurple/30 dark:border-slate-800 text-white sticky top-0 z-50 shadow-lg transition-colors duration-300">
+    <nav class="bg-uitmPurple border-b border-uitmPurple/30 text-white sticky top-0 z-50 shadow-lg transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">

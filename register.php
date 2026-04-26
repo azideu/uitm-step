@@ -55,28 +55,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once 'includes/header.php';
 ?>
 
-<div class="max-w-md mx-auto bg-white p-8 rounded shadow-lg mt-10">
-    <h2 class="text-2xl font-bold mb-6 text-center text-uitmPurple">Register for UiTM STEP</h2>
+<div class="max-w-md mx-auto bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 transition-colors duration-300 mt-10">
+    <h2 class="text-2xl font-bold mb-6 text-center text-uitmPurple dark:text-purple-300 font-serif">Register for UiTM STEP</h2>
     <form action="register.php" method="POST">
         <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Student ID</label>
-            <input type="text" name="student_id" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Student ID</label>
+            <input type="text" name="student_id" required class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Full Name</label>
-            <input type="text" name="name" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Full Name</label>
+            <input type="text" name="name" required class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Student Email</label>
-            <input type="email" name="email" required pattern=".*@student\.uitm\.edu\.my" title="Must be a @student.uitm.edu.my email" placeholder="xxxxxxxxxx@student.uitm.edu.my" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Student Email</label>
+            <input type="email" name="email" required pattern=".*@student\.uitm\.edu\.my" title="Must be a @student.uitm.edu.my email" placeholder="xxxxxxxxxx@student.uitm.edu.my" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Password</label>
-            <input type="password" name="password" required minlength="6" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Password</label>
+            <input type="password" name="password" required minlength="6" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
         </div>
         <div class="mb-6">
-            <label class="block text-gray-700 font-bold mb-2">Campus</label>
-            <select name="campus" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Campus</label>
+            <select name="campus" required class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
                 <option value="" disabled selected>Select your campus</option>
                 <optgroup label="Selangor">
                     <option value="UiTM Shah Alam">Shah Alam</option>
@@ -137,17 +137,17 @@ require_once 'includes/header.php';
                 </optgroup>
             </select>
         </div>
-        <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-2 px-4 rounded hover:bg-purple-900 transition-colors">Register</button>
+        <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-3 px-4 rounded-full shadow-md hover:shadow-lg hover:bg-purple-900 transition-all focus:ring-4 focus:ring-uitmPurple/30">Register</button>
     </form>
 
     <?php if ($google_enabled): ?>
     <div class="my-5 flex items-center gap-3">
-        <span class="h-px bg-gray-300 flex-1"></span>
-        <span class="text-sm text-gray-500">or</span>
-        <span class="h-px bg-gray-300 flex-1"></span>
+        <span class="h-px bg-gray-300 dark:bg-slate-700 flex-1"></span>
+        <span class="text-sm text-gray-500 dark:text-slate-400">or</span>
+        <span class="h-px bg-gray-300 dark:bg-slate-700 flex-1"></span>
     </div>
 
-    <p class="mb-2 text-sm text-gray-600">Select your campus above, then continue with Google.</p>
+    <p class="mb-2 text-sm text-gray-600 dark:text-slate-400">Select your campus above, then continue with Google.</p>
     <div id="google-auth-error" class="hidden mb-3 rounded border border-red-200 bg-red-50 text-red-700 px-3 py-2 text-sm"></div>
 
     <div id="g_id_onload"
@@ -168,7 +168,7 @@ require_once 'includes/header.php';
     </div>
     <?php endif; ?>
 
-    <p class="mt-4 text-center">Already have an account? <a href="login.php" class="text-uitmPurple hover:underline">Login here</a></p>
+    <p class="mt-4 text-center text-gray-600 dark:text-slate-400">Already have an account? <a href="login.php" class="text-uitmPurple dark:text-purple-400 font-bold hover:underline">Login here</a></p>
 </div>
 
 <?php if ($google_enabled): ?>

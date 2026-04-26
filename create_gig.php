@@ -65,19 +65,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once 'includes/header.php';
 ?>
 
-<div class="max-w-2xl mx-auto bg-white p-8 rounded shadow-lg">
-    <h2 class="text-2xl font-bold mb-6 text-uitmPurple">Create a New Gig</h2>
+<div class="max-w-2xl mx-auto bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 transition-colors duration-300">
+    <h2 class="text-2xl font-bold mb-6 text-uitmPurple dark:text-purple-300 font-serif">Create a New Gig</h2>
     
     <form action="create_gig.php" method="POST">
         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
         <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Gig Title</label>
-            <input type="text" name="title" required placeholder="I will do..." class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Gig Title</label>
+            <input type="text" name="title" required placeholder="I will do..." class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
         </div>
         
         <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Category</label>
-            <select name="category" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple bg-white">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Category</label>
+            <select name="category" required class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
                 <option value="Tech">Tech / Programming</option>
                 <option value="Creative">Creative / Design</option>
                 <option value="Writing">Writing / Translation</option>
@@ -88,30 +88,30 @@ require_once 'includes/header.php';
         </div>
         
         <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Price (RM)</label>
-            <input type="number" step="0.01" min="0.01" name="price" required class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Price (RM)</label>
+            <input type="number" step="0.01" min="0.01" name="price" required class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
         </div>
         
         <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2">Description</label>
-            <textarea name="description" rows="5" required placeholder="Describe your service in detail..." class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-uitmPurple"></textarea>
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Description</label>
+            <textarea name="description" rows="5" required placeholder="Describe your service in detail..." class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all"></textarea>
         </div>
         
         <div class="mb-6">
-            <label class="block text-gray-700 font-bold mb-2">Tags (Optional)</label>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Tags (Optional)</label>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
                 <?php foreach($tags as $tag): ?>
-                    <label class="inline-flex items-center">
-                        <input type="checkbox" name="tags[]" value="<?php echo $tag['tag_id']; ?>" class="rounded border-gray-300 text-uitmPurple focus:ring-uitmPurple">
-                        <span class="ml-2 text-sm text-gray-700"><?php echo escape($tag['name']); ?></span>
+                    <label class="inline-flex items-center bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700 p-2 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+                        <input type="checkbox" name="tags[]" value="<?php echo $tag['tag_id']; ?>" class="rounded border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-uitmPurple focus:ring-uitmPurple dark:focus:ring-purple-900 w-4 h-4 transition-all">
+                        <span class="ml-2 text-sm text-gray-700 dark:text-slate-300 font-medium"><?php echo escape($tag['name']); ?></span>
                     </label>
                 <?php endforeach; ?>
             </div>
         </div>
         
-        <div class="flex justify-between items-center">
-            <a href="user_dashboard.php?mode=selling" class="text-gray-600 hover:text-gray-900 font-medium">Cancel</a>
-            <button type="submit" class="bg-uitmPurple text-white font-bold py-2 px-6 rounded hover:bg-purple-900 transition shadow">Publish Gig</button>
+        <div class="flex justify-between items-center mt-8">
+            <a href="user_dashboard.php?mode=selling" class="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">Cancel</a>
+            <button type="submit" class="bg-uitmPurple text-white font-bold py-3 px-8 rounded-full hover:bg-purple-900 transition-colors shadow-md hover:shadow-lg focus:ring-4 focus:ring-uitmPurple/30">Publish Gig</button>
         </div>
     </form>
 </div>

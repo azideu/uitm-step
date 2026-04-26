@@ -51,7 +51,7 @@ require_once 'includes/header.php';
 <div class="flex h-[calc(100vh-8rem)] bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-3xl shadow-xl border border-white/50 dark:border-slate-700/50 overflow-hidden transition-colors duration-300">
     <!-- Contacts Sidebar -->
     <div class="w-1/3 md:w-1/4 border-r border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-800/50 flex flex-col transition-colors duration-300">
-        <div class="p-5 bg-gradient-to-r from-uitmPurple to-indigo-800 dark:from-slate-900 dark:to-slate-800 text-white font-bold text-lg border-b border-purple-900 dark:border-slate-700 shadow-sm flex items-center justify-between">
+        <div class="p-5 bg-gradient-to-r from-uitmPurple to-indigo-800 text-white font-bold text-lg border-b border-purple-900 dark:border-slate-700 shadow-sm flex items-center justify-between">
             <span>Chats</span>
             <svg class="w-5 h-5 text-purple-200 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
         </div>
@@ -59,7 +59,7 @@ require_once 'includes/header.php';
             <?php if(count($chatted_users) > 0): ?>
                 <?php foreach($chatted_users as $cu): ?>
                     <a href="chat.php?user=<?php echo $cu['user_id']; ?>" class="flex items-center gap-3 p-3 rounded-xl transition-all duration-300 <?php echo ($active_chat == $cu['user_id']) ? 'bg-purple-100/80 dark:bg-slate-700/80 shadow-sm border border-purple-200 dark:border-slate-600' : 'hover:bg-white dark:hover:bg-slate-700 border border-transparent'; ?>">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-uitmPurple to-indigo-600 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-inner">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-uitmPurple to-indigo-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-inner">
                             <?php echo strtoupper(substr($cu['name'], 0, 1)); ?>
                         </div>
                         <div class="overflow-hidden">
@@ -83,7 +83,7 @@ require_once 'includes/header.php';
             <!-- Chat Header -->
             <div class="px-6 py-4 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center z-10 shadow-sm transition-colors duration-300">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-uitmPurple to-indigo-600 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-uitmPurple to-indigo-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-sm">
                         <?php echo strtoupper(substr($active_user_name, 0, 1)); ?>
                     </div>
                     <div>
@@ -125,7 +125,7 @@ require_once 'includes/header.php';
                 <div class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl flex items-center overflow-hidden focus-within:ring-2 focus-within:ring-purple-100 dark:focus-within:ring-slate-700 focus-within:border-uitmPurple transition-all">
                     <input type="text" id="chat-input" placeholder="Message..." class="w-full bg-transparent px-4 py-3 outline-none text-sm text-gray-700 dark:text-slate-200 placeholder-gray-400 dark:placeholder-slate-500" autocomplete="off" onkeypress="if(event.key === 'Enter') sendMessage()">
                 </div>
-                <button onclick="sendMessage()" class="bg-gradient-to-r from-uitmPurple to-indigo-700 dark:from-slate-700 dark:to-slate-600 text-white w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 hover:shadow-lg hover:scale-105 transition-all">
+                <button onclick="sendMessage()" class="bg-gradient-to-r from-uitmPurple to-indigo-700 text-white w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 hover:shadow-lg hover:scale-105 transition-all">
                     <svg class="w-5 h-5 transform rotate-90" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
                 </button>
             </div>

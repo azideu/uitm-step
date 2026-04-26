@@ -132,7 +132,7 @@ require_once 'includes/header.php';
             <div class="px-6 py-16 text-center">
                 <svg class="w-12 h-12 text-gray-200 dark:text-slate-600 mx-auto mb-4 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                 <p class="text-gray-500 dark:text-slate-400 font-medium transition-colors duration-300">You haven't bought anything yet.</p>
-                <a href="marketplace.php" class="mt-4 inline-block bg-uitmPurple dark:bg-purple-600 text-white font-bold px-6 py-2.5 rounded-xl hover:bg-purple-900 dark:hover:bg-purple-700 transition-all duration-300 text-sm">Browse Marketplace</a>
+                <a href="marketplace.php" class="mt-4 inline-block bg-uitmPurple text-white font-bold px-6 py-2.5 rounded-xl hover:bg-purple-900 transition-all duration-300 text-sm">Browse Marketplace</a>
             </div>
         <?php endif; ?>
     </div>

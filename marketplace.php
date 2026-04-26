@@ -160,7 +160,7 @@ require_once 'includes/header.php';
                         <span class="text-xs text-gray-400 dark:text-slate-500 uppercase font-bold tracking-wider mb-1">Starting at</span>
                         <span class="text-xl font-extrabold text-gray-900 dark:text-white">RM <?php echo number_format($gig['price'], 2); ?></span>
                     </div>
-                    <a href="gig_details.php?id=<?php echo $gig['gig_id']; ?>" class="text-sm bg-gray-900 dark:bg-slate-800 hover:bg-uitmPurple dark:hover:bg-purple-600 text-white px-5 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105">View Details</a>
+                    <a href="gig_details.php?id=<?php echo $gig['gig_id']; ?>" class="text-sm bg-gray-900 dark:bg-slate-800 hover:bg-uitmPurple text-white px-5 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105">View Details</a>
                 </div>
             </div>
             <?php $delay += 100; ?>

@@ -162,9 +162,9 @@ require_once 'includes/header.php';
         
         <!-- Profile Settings Form -->
         <div class="lg:col-span-2">
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
-                <div class="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center">
-                    <h2 class="text-xl font-bold font-serif text-uitmPurple">Profile Settings</h2>
+            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-100 dark:border-slate-800 transition-colors duration-300">
+                <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 flex items-center transition-colors duration-300">
+                    <h2 class="text-xl font-bold font-serif text-uitmPurple dark:text-purple-300">Profile Settings</h2>
                 </div>
                 <div class="p-6 sm:p-8">
                     <form action="profile.php" method="POST" enctype="multipart/form-data" class="space-y-6">
@@ -173,32 +173,32 @@ require_once 'includes/header.php';
                         
                         <!-- Avatar Upload -->
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Profile Picture</label>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Profile Picture</label>
                             <div class="flex items-center space-x-4">
-                                <span class="h-12 w-12 rounded-full overflow-hidden bg-slate-100 border border-slate-200 shrink-0">
+                                <span class="h-12 w-12 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0">
                                     <img id="avatar-preview" src="<?= $avatar_path ?>" class="h-full w-full object-cover" alt="Avatar preview">
                                 </span>
-                                <input type="file" name="avatar" id="avatar-input" accept="image/png, image/jpeg, image/gif, image/webp" class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-uitmPurple hover:file:bg-purple-100 transition-all cursor-pointer">
+                                <input type="file" name="avatar" id="avatar-input" accept="image/png, image/jpeg, image/gif, image/webp" class="block w-full text-sm text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 dark:file:bg-purple-900/30 file:text-uitmPurple dark:file:text-purple-300 hover:file:bg-purple-100 dark:hover:file:bg-purple-900/50 transition-all cursor-pointer">
                             </div>
                         </div>
 
                         <!-- Name -->
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2" for="name">Full Name</label>
-                            <input type="text" name="name" id="name" value="<?= escape($user['name']) ?>" required class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-uitmPurple focus:ring-2 focus:ring-purple-200 outline-none transition-all placeholder:text-slate-400">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" for="name">Full Name</label>
+                            <input type="text" name="name" id="name" value="<?= escape($user['name']) ?>" required class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-uitmPurple dark:focus:border-purple-400 focus:ring-2 focus:ring-purple-200 dark:focus:ring-purple-900/50 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500">
                         </div>
 
                         <!-- Bio -->
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2" for="bio">Bio</label>
-                            <textarea name="bio" id="bio" rows="4" placeholder="Tell us a bit about yourself..." class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-uitmPurple focus:ring-2 focus:ring-purple-200 outline-none transition-all placeholder:text-slate-400 resize-y"><?= escape($user['bio']) ?></textarea>
-                            <p class="mt-1 text-xs text-slate-500">Brief description for your profile.</p>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" for="bio">Bio</label>
+                            <textarea name="bio" id="bio" rows="4" placeholder="Tell us a bit about yourself..." class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-uitmPurple dark:focus:border-purple-400 focus:ring-2 focus:ring-purple-200 dark:focus:ring-purple-900/50 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-y"><?= escape($user['bio']) ?></textarea>
+                            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Brief description for your profile.</p>
                         </div>
 
                         <!-- Campus -->
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2" for="campus">Campus</label>
-                            <select name="campus" id="campus" required class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-uitmPurple focus:ring-2 focus:ring-purple-200 outline-none transition-all appearance-none bg-white">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" for="campus">Campus</label>
+                            <select name="campus" id="campus" required class="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-uitmPurple dark:focus:border-purple-400 focus:ring-2 focus:ring-purple-200 dark:focus:ring-purple-900/50 outline-none transition-all appearance-none">
                                 <!-- Reusing campus optgroups -->
                                 <optgroup label="Selangor">
                                     <option value="UiTM Shah Alam">UiTM Shah Alam</option>
@@ -270,10 +270,10 @@ require_once 'includes/header.php';
 
         <!-- Security / Password Sidebar -->
         <div class="lg:col-span-1 space-y-8">
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
-                <div class="px-6 py-4 border-b border-slate-100 bg-slate-50">
-                    <h2 class="text-xl font-bold font-serif text-slate-800 flex items-center space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-uitmPurple" viewBox="0 0 20 20" fill="currentColor">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-100 dark:border-slate-800 transition-colors duration-300">
+                <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 transition-colors duration-300">
+                    <h2 class="text-xl font-bold font-serif text-slate-800 dark:text-slate-200 flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-uitmPurple dark:text-purple-400" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
                         </svg>
                         <span>Change Password</span>
@@ -285,45 +285,45 @@ require_once 'includes/header.php';
                         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2" for="current_password">Current Password</label>
-                            <input type="password" name="current_password" id="current_password" required class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-uitmPurple focus:ring-2 focus:ring-purple-200 outline-none transition-all">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" for="current_password">Current Password</label>
+                            <input type="password" name="current_password" id="current_password" required class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-uitmPurple dark:focus:border-purple-400 focus:ring-2 focus:ring-purple-200 dark:focus:ring-purple-900/50 outline-none transition-all">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2" for="new_password">New Password</label>
-                            <input type="password" name="new_password" id="new_password" required minlength="6" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-uitmPurple focus:ring-2 focus:ring-purple-200 outline-none transition-all">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" for="new_password">New Password</label>
+                            <input type="password" name="new_password" id="new_password" required minlength="6" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-uitmPurple dark:focus:border-purple-400 focus:ring-2 focus:ring-purple-200 dark:focus:ring-purple-900/50 outline-none transition-all">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2" for="confirm_password">Confirm New Password</label>
-                            <input type="password" name="confirm_password" id="confirm_password" required minlength="6" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-uitmPurple focus:ring-2 focus:ring-purple-200 outline-none transition-all">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2" for="confirm_password">Confirm New Password</label>
+                            <input type="password" name="confirm_password" id="confirm_password" required minlength="6" class="w-full px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-uitmPurple dark:focus:border-purple-400 focus:ring-2 focus:ring-purple-200 dark:focus:ring-purple-900/50 outline-none transition-all">
                         </div>
 
                         <div class="pt-2">
-                            <button type="submit" class="w-full bg-slate-800 text-white px-6 py-2.5 rounded-lg font-bold shadow hover:bg-slate-700 transition-colors focus:ring-4 focus:ring-slate-300">Update Password</button>
+                            <button type="submit" class="w-full bg-slate-800 dark:bg-slate-700 text-white px-6 py-2.5 rounded-lg font-bold shadow hover:bg-slate-700 dark:hover:bg-slate-600 transition-colors focus:ring-4 focus:ring-slate-300 dark:focus:ring-slate-800">Update Password</button>
                         </div>
                     </form>
                 </div>
             </div>
             
-            <div class="bg-yellow-50 rounded-2xl shadow p-6 border border-yellow-100 flex items-start space-x-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-600 shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <div class="bg-yellow-50 dark:bg-yellow-900/30 rounded-2xl shadow p-6 border border-yellow-100 dark:border-yellow-800/50 flex items-start space-x-4 transition-colors duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-600 dark:text-yellow-400 shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div>
-                    <h3 class="font-bold text-yellow-800">Account Security</h3>
-                    <p class="text-sm text-yellow-700 mt-1">Keep your profile updated and ensure you use a strong password for better security across the UiTM STEP platform.</p>
+                    <h3 class="font-bold text-yellow-800 dark:text-yellow-300">Account Security</h3>
+                    <p class="text-sm text-yellow-700 dark:text-yellow-400/80 mt-1">Keep your profile updated and ensure you use a strong password for better security across the UiTM STEP platform.</p>
                 </div>
             </div>
 
             <!-- Danger Zone -->
-            <div class="bg-red-50 rounded-2xl shadow p-6 border border-red-100 mt-8 flex flex-col items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <div class="bg-red-50 dark:bg-red-900/30 rounded-2xl shadow p-6 border border-red-100 dark:border-red-800/50 mt-8 flex flex-col items-center transition-colors duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-500 dark:text-red-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
-                <h3 class="font-bold text-red-800 text-lg mb-2">Ready to leave?</h3>
-                <p class="text-sm text-red-600 mb-6 text-center">You can securely log out of your account to ensure no one else can access it.</p>
-                <a href="logout.php" class="w-full text-center bg-red-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-red-700 transition-colors shadow-md hover:shadow-lg focus:ring-4 focus:ring-red-300">
+                <h3 class="font-bold text-red-800 dark:text-red-300 text-lg mb-2">Ready to leave?</h3>
+                <p class="text-sm text-red-600 dark:text-red-400 mb-6 text-center">You can securely log out of your account to ensure no one else can access it.</p>
+                <a href="logout.php" class="w-full text-center bg-red-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-red-700 transition-colors shadow-md hover:shadow-lg focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
                     Logout of UiTM STEP
                 </a>
             </div>
