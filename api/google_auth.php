@@ -38,6 +38,7 @@ if (!$payload) {
 
 $email = strtolower(trim((string)($payload['email'] ?? '')));
 $name = trim((string)($payload['name'] ?? 'UiTM Student'));
+$name = mb_substr($name, 0, 100);
 
 if (!is_uitm_student_email($email)) {
     http_response_code(403);
@@ -98,8 +99,8 @@ try {
             $studentId = generate_student_id_from_email($pdo, $email);
             $randomPasswordHash = password_hash(bin2hex(random_bytes(32)), PASSWORD_DEFAULT);
 
-            $insert = $pdo->prepare('INSERT INTO users (student_id, name, email, password, campus, role) VALUES (?, ?, ?, ?, ?, "student")');
-            $insert->execute([$studentId, $name, $email, $randomPasswordHash, $campus]);
+            $insert = $pdo->prepare('INSERT INTO users (student_id, name, email, password, campus, role) VALUES (?, ?, ?, ?, ?, ?)');
+            $insert->execute([$studentId, $name, $email, $randomPasswordHash, $campus, 'student']);
 
             $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ? LIMIT 1');
             $stmt->execute([$email]);
@@ -133,6 +134,16 @@ try {
     ]);
 } catch (Exception $e) {
     error_log('Google Auth Error: ' . $e->getMessage());
+
+    if ($e instanceof PDOException && isset($e->errorInfo[0]) && $e->errorInfo[0] === '23000') {
+        http_response_code(409);
+        echo json_encode([
+            'success' => false,
+            'error' => 'An account with this email already exists. Try Login with Google instead.'
+        ]);
+        exit;
+    }
+
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Authentication failed']);
 }

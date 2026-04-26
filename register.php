@@ -155,14 +155,16 @@ require_once 'includes/header.php';
          data-callback="handleGoogleAuthRegister"
          data-auto_prompt="false">
     </div>
-    <div class="g_id_signin"
-         data-type="standard"
-         data-shape="pill"
-         data-theme="outline"
-         data-text="signup_with"
-         data-size="large"
-         data-logo_alignment="left"
-         data-width="320">
+        <div class="flex justify-center">
+           <div class="g_id_signin"
+               data-type="standard"
+               data-shape="pill"
+               data-theme="outline"
+               data-text="signup_with"
+               data-size="large"
+               data-logo_alignment="left"
+               data-width="320">
+           </div>
     </div>
     <?php endif; ?>
 
