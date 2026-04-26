@@ -184,6 +184,18 @@ function updateTick(msgId, status) {
     wrap.classList.toggle('opacity-90', status !== 'sending');
 }
 
+/**
+ * Apply the best-known delivery state for an outgoing bubble.
+ * This is safe to call repeatedly as the message id becomes known.
+ */
+function syncOutgoingBubbleState(msgId) {
+    const bubble = document.querySelector(`[data-msg-id="${msgId}"]`);
+    if (!bubble) return false;
+
+    updateTick(msgId, msgId <= maxKnownReadId ? 'delivered' : 'sent');
+    return true;
+}
+
 // ---------------------------------------------------------------------------
 // Typing indicator
 // ---------------------------------------------------------------------------
@@ -339,7 +351,7 @@ function startStream() {
                 tempBubble.dataset.msgId = msgId;
                 // SSE ack means server persisted the message, not that it was read.
                 // Keep it as sent and wait for read_receipt/poll updates for delivered.
-                updateTick(msgId, 'sent');
+                syncOutgoingBubbleState(msgId);
                 return; // claimed — don't render a second bubble
             }
         }
@@ -505,15 +517,9 @@ function sendMessage() {
 
         // 3. Swap temp id → real message_id so SSE dedup guard fires correctly
         const realId = safeCursor(data.message_id);
-        const bubble = document.querySelector(`[data-msg-id="${tempId}"]`);
-        if (bubble) {
-            bubble.dataset.msgId = realId;
-            if (realId <= maxKnownReadId) {
-                updateTick(realId, 'delivered');
-            } else {
-                updateTick(realId, 'sent'); // upgrade clock → single ✓
-            }
-        }
+        const bubble = document.querySelector(`[data-msg-id="${tempId}"]`) || document.querySelector(`[data-msg-id="${realId}"]`);
+        if (bubble) bubble.dataset.msgId = realId;
+        syncOutgoingBubbleState(realId);
         if (realId > lastMessageId) lastMessageId = realId;
     })
     .catch(err => {
