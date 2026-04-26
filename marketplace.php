@@ -80,7 +80,7 @@ require_once 'includes/header.php';
 
 <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
     <div>
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-uitmPurple to-indigo-600 dark:from-white dark:via-purple-100 dark:to-indigo-300 font-serif mb-2 transition-colors duration-300 drop-shadow-sm">Marketplace</h1>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-uitmPurple to-indigo-600 dark:from-purple-300 dark:via-purple-400 dark:to-indigo-600 font-serif mb-2 transition-colors duration-300 drop-shadow-sm">Marketplace</h1>
         <p class="text-gray-500 dark:text-slate-400 transition-colors duration-300">Discover and hire top talent from your campus.</p>
     </div>
     
@@ -89,12 +89,12 @@ require_once 'includes/header.php';
         <input type="text" name="search" placeholder="Search gigs..." value="<?php echo escape($search_query); ?>" class="px-4 py-2.5 bg-gray-50 dark:bg-slate-800 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white dark:focus:bg-slate-700 text-slate-800 dark:text-slate-200 placeholder-gray-400 dark:placeholder-slate-500 transition-all outline-none w-full sm:w-auto">
         
         <!-- Prominent Toggle for Campus -->
-        <div class="flex items-center bg-gray-100/80 dark:bg-slate-800/80 rounded-xl p-1 shrink-0 border border-gray-200 dark:border-slate-700 transition-colors duration-300">
-            <label class="relative cursor-pointer px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $campus_filter === 'local' ? 'bg-white dark:bg-slate-700 shadow-sm text-uitmPurple dark:text-purple-300 ring-1 ring-gray-200/50 dark:ring-slate-600/50' : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200'; ?>">
+        <div class="flex items-center bg-gray-100/80 dark:bg-slate-800/50 rounded-xl p-1 shrink-0 border border-gray-200 dark:border-slate-700 transition-colors duration-300">
+            <label class="relative cursor-pointer px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $campus_filter === 'local' ? 'bg-white dark:bg-uitmPurple/30 shadow-sm text-uitmPurple dark:text-purple-300 ring-1 ring-gray-200/50 dark:ring-purple-500/20' : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200'; ?>">
                 <input type="radio" name="campus" value="local" class="sr-only" onchange="this.form.submit()" <?php if($campus_filter === 'local') echo 'checked'; ?>>
                 <?php echo escape($campus_label); ?>
             </label>
-            <label class="relative cursor-pointer px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $campus_filter === 'all' ? 'bg-white dark:bg-slate-700 shadow-sm text-uitmPurple dark:text-purple-300 ring-1 ring-gray-200/50 dark:ring-slate-600/50' : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200'; ?>">
+            <label class="relative cursor-pointer px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $campus_filter === 'all' ? 'bg-white dark:bg-uitmPurple/30 shadow-sm text-uitmPurple dark:text-purple-300 ring-1 ring-gray-200/50 dark:ring-purple-500/20' : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200'; ?>">
                 <input type="radio" name="campus" value="all" class="sr-only" onchange="this.form.submit()" <?php if($campus_filter === 'all') echo 'checked'; ?>>
                 All Campuses
             </label>
