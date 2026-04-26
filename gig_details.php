@@ -104,27 +104,27 @@ require_once 'includes/header.php';
 
 <div class="max-w-5xl mx-auto animate-fade-in-up">
     <!-- Breadcrumb -->
-    <nav class="mb-6 text-sm text-gray-400 font-medium">
-        <a href="marketplace.php" class="hover:text-uitmPurple transition-colors">Marketplace</a>
+    <nav class="mb-6 text-sm text-gray-400 dark:text-slate-500 font-medium transition-colors duration-300">
+        <a href="marketplace.php" class="hover:text-uitmPurple dark:hover:text-purple-400 transition-colors">Marketplace</a>
         <span class="mx-2">›</span>
-        <span class="text-gray-700"><?php echo escape($gig['category']); ?></span>
+        <span class="text-gray-700 dark:text-slate-300"><?php echo escape($gig['category']); ?></span>
     </nav>
 
     <div class="flex flex-col lg:flex-row gap-8">
         <!-- Left: Gig Info -->
-        <div class="flex-grow bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="flex-grow bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300">
             <!-- Header gradient band -->
             <div class="h-2 bg-gradient-to-r from-uitmPurple via-indigo-600 to-blue-700 bg-moving-gradient"></div>
             
             <div class="p-8 md:p-10">
-                <span class="inline-block bg-purple-100 text-uitmPurple px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
+                <span class="inline-block bg-purple-100 dark:bg-purple-900/30 text-uitmPurple dark:text-purple-300 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6 transition-colors duration-300">
                     <?php echo escape($gig['category']); ?>
                 </span>
                 
-                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-5 leading-tight font-serif"><?php echo escape($gig['title']); ?></h1>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-5 leading-tight font-serif transition-colors duration-300"><?php echo escape($gig['title']); ?></h1>
                 
                 <!-- Seller Info Card -->
-                <div class="flex items-center gap-4 mb-8 p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                <div class="flex items-center gap-4 mb-8 p-4 bg-gray-50 dark:bg-slate-800/50 rounded-2xl border border-gray-100 dark:border-slate-700 transition-colors duration-300">
                     <?php
                         $seller_avatar = !empty($gig['profile_picture']) 
                             ? escape($gig['profile_picture']) 
@@ -134,19 +134,19 @@ require_once 'includes/header.php';
                         <img src="<?php echo $seller_avatar; ?>" alt="<?php echo escape($gig['seller_name']); ?>" class="w-full h-full object-cover">
                     </div>
                     <div>
-                        <p class="font-bold text-gray-900"><?php echo escape($gig['seller_name']); ?></p>
-                        <p class="text-sm text-gray-500"><?php echo escape(str_replace(['UiTM Kampus ', 'UiTM '], '', $gig['campus'])); ?></p>
+                        <p class="font-bold text-gray-900 dark:text-white transition-colors duration-300"><?php echo escape($gig['seller_name']); ?></p>
+                        <p class="text-sm text-gray-500 dark:text-slate-400 transition-colors duration-300"><?php echo escape(str_replace(['UiTM Kampus ', 'UiTM '], '', $gig['campus'])); ?></p>
                     </div>
                     <div class="ml-auto">
-                        <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">Available</span>
+                        <span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-bold px-3 py-1 rounded-full transition-colors duration-300">Available</span>
                     </div>
                 </div>
                 
-                <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
-                    <svg class="w-5 h-5 text-uitmPurple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <h2 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-3 flex items-center gap-2 transition-colors duration-300">
+                    <svg class="w-5 h-5 text-uitmPurple dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     About this Gig
                 </h2>
-                <p class="text-gray-600 whitespace-pre-line leading-relaxed text-base">
+                <p class="text-gray-600 dark:text-slate-400 whitespace-pre-line leading-relaxed text-base transition-colors duration-300">
                     <?php echo escape($gig['description']); ?>
                 </p>
             </div>
@@ -154,7 +154,7 @@ require_once 'includes/header.php';
         
         <!-- Right: Order Panel -->
         <div class="lg:w-80 xl:w-96 flex-shrink-0">
-            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden sticky top-24">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden sticky top-24 transition-colors duration-300">
                 <!-- Price header -->
                 <div class="bg-gradient-to-br from-[#1a0033] to-uitmPurple p-8 text-center text-white">
                     <div class="text-sm uppercase tracking-widest text-white/70 font-bold mb-2">Starting Price</div>
@@ -164,18 +164,18 @@ require_once 'includes/header.php';
                 
                 <div class="p-6">
                     <?php if($_SESSION['role'] === 'student' && $gig['seller_id'] != $_SESSION['user_id']): ?>
-                        <h3 class="text-lg font-bold text-gray-800 mb-5">Place your order</h3>
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 transition-colors duration-300">Place your order</h3>
                         <form action="gig_details.php?id=<?php echo $gig_id; ?>" method="POST" enctype="multipart/form-data" class="space-y-4">
                             <input type="hidden" name="action" value="buy">
                             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                             <div>
-                                <label class="block text-sm text-gray-700 font-bold mb-2 flex items-center gap-1.5">
-                                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                <label class="block text-sm text-gray-700 dark:text-slate-300 font-bold mb-2 flex items-center gap-1.5 transition-colors duration-300">
+                                    <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                                     Secure Upload Payment Proof
                                 </label>
-                                <div class="border-2 border-dashed border-gray-200 rounded-2xl p-5 text-center bg-gray-50 hover:bg-white hover:border-uitmPurple transition-all cursor-pointer group relative">
-                                    <input type="file" id="payment_proof_input" name="payment_proof" accept=".jpg,.jpeg,.png,.pdf" required class="block w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-purple-100 file:text-uitmPurple hover:file:bg-purple-200 transition-all cursor-pointer relative z-10">
-                                    <div class="mt-3 text-xs text-gray-400 flex items-center justify-center gap-1">
+                                <div class="border-2 border-dashed border-gray-200 dark:border-slate-700 rounded-2xl p-5 text-center bg-gray-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:border-uitmPurple dark:hover:border-purple-500 transition-all cursor-pointer group relative">
+                                    <input type="file" id="payment_proof_input" name="payment_proof" accept=".jpg,.jpeg,.png,.pdf" required class="block w-full text-sm text-gray-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-purple-100 dark:file:bg-purple-900/30 file:text-uitmPurple dark:file:text-purple-300 hover:file:bg-purple-200 dark:hover:file:bg-purple-900/50 transition-all cursor-pointer relative z-10">
+                                    <div class="mt-3 text-xs text-gray-400 dark:text-slate-500 flex items-center justify-center gap-1">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                                         Bank transfer receipt (JPG, PNG, PDF · Max 2MB)
                                     </div>
@@ -187,26 +187,26 @@ require_once 'includes/header.php';
                             </button>
                         </form>
                         
-                        <div class="mt-4 border-t border-gray-100 pt-4">
-                            <a href="chat.php?user=<?php echo $gig['seller_id']; ?>" class="w-full border-2 border-uitmPurple/30 text-uitmPurple hover:bg-purple-50 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
+                        <div class="mt-4 border-t border-gray-100 dark:border-slate-800 pt-4 transition-colors duration-300">
+                            <a href="chat.php?user=<?php echo $gig['seller_id']; ?>" class="w-full border-2 border-uitmPurple/30 dark:border-purple-500/30 text-uitmPurple dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                                 Contact Seller
                             </a>
                         </div>
                     <?php elseif($gig['seller_id'] == $_SESSION['user_id']): ?>
-                        <div class="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-4 rounded-2xl text-center font-medium flex flex-col items-center gap-2">
-                            <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div class="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 px-4 py-4 rounded-2xl text-center font-medium flex flex-col items-center gap-2 transition-colors duration-300">
+                            <svg class="w-8 h-8 text-blue-400 dark:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             This is your own gig.
                         </div>
                     <?php endif; ?>
                     
                     <!-- Trust badges -->
                     <div class="mt-6 space-y-3">
-                        <div class="flex items-center gap-3 text-sm text-gray-500">
+                        <div class="flex items-center gap-3 text-sm text-gray-500 dark:text-slate-400 transition-colors duration-300">
                             <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                             Verified UiTM student seller
                         </div>
-                        <div class="flex items-center gap-3 text-sm text-gray-500">
+                        <div class="flex items-center gap-3 text-sm text-gray-500 dark:text-slate-400 transition-colors duration-300">
                             <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                             Direct campus peer support
                         </div>

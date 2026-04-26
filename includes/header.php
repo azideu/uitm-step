@@ -3,7 +3,7 @@ require_once 'config.php';
 require_once 'functions.php';
 ?>
 <!DOCTYPE html>
-<html lang="en" class="bg-uitmPurple">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,15 @@ require_once 'functions.php';
     <meta name="theme-color" content="#330066">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // Check local storage for dark mode preference before Tailwind loads
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -54,10 +62,10 @@ require_once 'functions.php';
     ?>
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo $style_version; ?>">
 </head>
-<body class="bg-uitmPurple flex flex-col min-h-screen text-slate-800 font-sans selection:bg-uitmPurple selection:text-white">
-    <div class="flex flex-col min-h-screen bg-slate-50">
+<body class="bg-slate-50 dark:bg-slate-900 flex flex-col min-h-screen text-slate-800 dark:text-slate-200 font-sans selection:bg-uitmPurple selection:text-white transition-colors duration-300">
+    <div class="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
     <!-- Navbar -->
-    <nav class="bg-uitmPurple border-b border-uitmPurple/30 text-white sticky top-0 z-50 shadow-lg transition-all duration-300">
+    <nav class="bg-uitmPurple dark:bg-slate-950 border-b border-uitmPurple/30 dark:border-slate-800 text-white sticky top-0 z-50 shadow-lg transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -67,6 +75,14 @@ require_once 'functions.php';
                     </a>
                 </div>
                 <div class="flex items-center space-x-4">
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-white/10 transition-colors focus:outline-none" aria-label="Toggle Dark Mode">
+                        <!-- Sun Icon (shows in dark mode) -->
+                        <svg class="w-5 h-5 hidden dark:block text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <!-- Moon Icon (shows in light mode) -->
+                        <svg class="w-5 h-5 block dark:hidden text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                    
                     <?php if(isset($_SESSION['user_id'])): ?>
                         <?php if($_SESSION['role'] === 'student'): ?>
                             <!-- Toggle switch handled by session or link depending on context -->
@@ -129,3 +145,15 @@ require_once 'functions.php';
     <main class="flex-grow w-full">
     <?php endif; ?>
         <?php display_toast(); ?>
+
+    <script>
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+    </script>
