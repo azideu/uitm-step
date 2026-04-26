@@ -11,7 +11,7 @@ require_once 'functions.php';
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <meta name="theme-color" content="#330066">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -28,7 +28,7 @@ require_once 'functions.php';
                 extend: {
                     fontFamily: {
                         sans: ['Manrope', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
+                        serif: ['Outfit', 'sans-serif'],
                     },
                     colors: {
                         uitmPurple: '#330066',
