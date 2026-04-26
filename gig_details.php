@@ -169,14 +169,21 @@ require_once 'includes/header.php';
                             <input type="hidden" name="action" value="buy">
                             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                             <div>
-                                <label class="block text-sm text-gray-700 font-bold mb-2">Upload Payment Proof</label>
-                                <div class="border-2 border-dashed border-gray-200 rounded-2xl p-4 text-center hover:border-uitmPurple transition-colors cursor-pointer">
-                                    <input type="file" id="payment_proof_input" name="payment_proof" accept=".jpg,.jpeg,.png,.pdf" required class="block w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-purple-100 file:text-uitmPurple hover:file:bg-purple-200 transition-all">
-                                    <p class="text-xs text-gray-400 mt-2">JPG, PNG, or PDF · Max 2MB</p>
+                                <label class="block text-sm text-gray-700 font-bold mb-2 flex items-center gap-1.5">
+                                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                    Secure Upload Payment Proof
+                                </label>
+                                <div class="border-2 border-dashed border-gray-200 rounded-2xl p-5 text-center bg-gray-50 hover:bg-white hover:border-uitmPurple transition-all cursor-pointer group relative">
+                                    <input type="file" id="payment_proof_input" name="payment_proof" accept=".jpg,.jpeg,.png,.pdf" required class="block w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-purple-100 file:text-uitmPurple hover:file:bg-purple-200 transition-all cursor-pointer relative z-10">
+                                    <div class="mt-3 text-xs text-gray-400 flex items-center justify-center gap-1">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                                        Bank transfer receipt (JPG, PNG, PDF · Max 2MB)
+                                    </div>
                                 </div>
                             </div>
-                            <button type="submit" class="w-full bg-gradient-to-r from-uitmPurple to-indigo-800 text-white font-bold py-4 px-6 rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 shadow-md text-base">
-                                Submit Order
+                            <button type="submit" class="w-full bg-gradient-to-r from-uitmPurple to-indigo-800 text-white font-bold py-4 px-6 rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 shadow-md text-base flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Verify & Submit Order
                             </button>
                         </form>
                         

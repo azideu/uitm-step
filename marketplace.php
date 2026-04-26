@@ -88,10 +88,17 @@ require_once 'includes/header.php';
     <form action="marketplace.php" method="GET" class="flex flex-wrap gap-3 items-center bg-white p-2 rounded-2xl shadow-sm border border-gray-100">
         <input type="text" name="search" placeholder="Search gigs..." value="<?php echo escape($search_query); ?>" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none w-full sm:w-auto">
         
-        <select name="campus" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none cursor-pointer max-w-[200px]">
-            <option value="local" <?php if($campus_filter === 'local') echo 'selected'; ?>><?php echo escape($campus_label); ?></option>
-            <option value="all" <?php if($campus_filter === 'all') echo 'selected'; ?>>All Campuses</option>
-        </select>
+        <!-- Prominent Toggle for Campus -->
+        <div class="flex items-center bg-gray-100/80 rounded-xl p-1 shrink-0 border border-gray-200">
+            <label class="relative cursor-pointer px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $campus_filter === 'local' ? 'bg-white shadow-sm text-uitmPurple ring-1 ring-gray-200/50' : 'text-gray-500 hover:text-gray-800'; ?>">
+                <input type="radio" name="campus" value="local" class="sr-only" onchange="this.form.submit()" <?php if($campus_filter === 'local') echo 'checked'; ?>>
+                <?php echo escape($campus_label); ?>
+            </label>
+            <label class="relative cursor-pointer px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $campus_filter === 'all' ? 'bg-white shadow-sm text-uitmPurple ring-1 ring-gray-200/50' : 'text-gray-500 hover:text-gray-800'; ?>">
+                <input type="radio" name="campus" value="all" class="sr-only" onchange="this.form.submit()" <?php if($campus_filter === 'all') echo 'checked'; ?>>
+                All Campuses
+            </label>
+        </div>
         
         <select name="tag" class="px-4 py-2.5 bg-gray-50 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white transition-all outline-none cursor-pointer max-w-[150px]">
             <option value="">All Tags</option>
@@ -109,10 +116,25 @@ require_once 'includes/header.php';
         <?php $delay = 0; ?>
         <?php foreach ($gigs as $gig): ?>
             <div class="bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden border border-gray-100 transform hover:-translate-y-2 animate-fade-in-up" style="animation-delay: <?php echo $delay; ?>ms;">
-                <div class="p-6 flex-grow relative">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-uitmGold/20 to-transparent rounded-bl-full rounded-tr-2xl -z-10"></div>
-                    <div class="text-xs font-bold text-uitmPurple uppercase tracking-widest mb-3 bg-purple-50 inline-block px-3 py-1 rounded-full"><?php echo escape($gig['category']); ?></div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3 leading-snug hover:text-uitmPurple transition-colors cursor-pointer"><?php echo escape($gig['title']); ?></h3>
+                <!-- Thumbnail Image -->
+                <?php
+                    $cat = strtolower($gig['category']);
+                    $thumb = 'assets/img/cat_programming.jpg'; // fallback
+                    if (strpos($cat, 'design') !== false) $thumb = 'assets/img/cat_design.jpg';
+                    elseif (strpos($cat, 'video') !== false) $thumb = 'assets/img/cat_video.jpg';
+                    elseif (strpos($cat, 'writing') !== false || strpos($cat, 'essay') !== false || strpos($cat, 'proofreading') !== false) $thumb = 'assets/img/cat_writing.jpg';
+                    elseif (strpos($cat, 'programming') !== false || strpos($cat, 'tech') !== false) $thumb = 'assets/img/cat_programming.jpg';
+                ?>
+                <div class="h-48 w-full bg-gray-200 relative overflow-hidden group">
+                    <img src="<?php echo $thumb; ?>" alt="<?php echo escape($gig['category']); ?>" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-3 left-4">
+                        <span class="text-xs font-bold text-white uppercase tracking-widest bg-uitmPurple/80 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-sm border border-white/10"><?php echo escape($gig['category']); ?></span>
+                    </div>
+                </div>
+
+                <div class="p-6 flex-grow flex flex-col">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2 leading-snug hover:text-uitmPurple transition-colors cursor-pointer font-serif line-clamp-2"><?php echo escape($gig['title']); ?></h3>
                     <p class="text-gray-500 mb-6 line-clamp-3 leading-relaxed"><?php echo escape($gig['description']); ?></p>
                     
                     <div class="text-sm text-gray-600 flex items-center bg-gray-50 p-2 rounded-lg border border-gray-100 mt-auto">
@@ -121,12 +143,15 @@ require_once 'includes/header.php';
                                 ? escape($gig['profile_picture']) 
                                 : 'https://ui-avatars.com/api/?name=' . urlencode($gig['seller_name']) . '&background=330066&color=FFD700';
                         ?>
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-uitmPurple to-indigo-600 flex items-center justify-center text-white font-bold mr-3 overflow-hidden shrink-0 border border-purple-200">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-uitmPurple to-indigo-600 flex items-center justify-center text-white font-bold mr-3 overflow-hidden shrink-0 border-2 border-white shadow-sm ring-2 ring-purple-100">
                             <img src="<?php echo $seller_avatar; ?>" alt="<?php echo escape($gig['seller_name']); ?>" class="w-full h-full object-cover">
                         </div>
                         <div>
-                            <span class="block font-semibold text-gray-900"><?php echo escape($gig['seller_name']); ?></span>
-                            <span class="block text-xs text-gray-500"><?php echo escape(str_replace(['UiTM Kampus ', 'UiTM '], '', $gig['campus'])); ?></span>
+                            <span class="block font-bold text-gray-900 text-sm"><?php echo escape($gig['seller_name']); ?></span>
+                            <span class="flex items-center text-xs text-gray-500 mt-0.5 font-medium">
+                                <svg class="w-3.5 h-3.5 text-green-500 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                <?php echo escape(str_replace(['UiTM Kampus ', 'UiTM '], '', $gig['campus'])); ?>
+                            </span>
                         </div>
                     </div>
                 </div>
