@@ -38,6 +38,8 @@ const receiverId    = chatContainer ? parseInt(chatContainer.dataset.receiver, 1
 /** Highest message_id the client has seen — used as SSE cursor.
  *  Strictly coerced to a non-negative integer before every use. */
 let lastMessageId = 0;
+let maxKnownReadId = 0;
+
 
 /** Active EventSource reference. */
 let eventSource = null;
@@ -355,9 +357,10 @@ function startStream() {
         let data;
         try { data = JSON.parse(event.data); } catch(e) { return; }
         if (data.last_read_id) {
+            maxKnownReadId = Math.max(maxKnownReadId, data.last_read_id);
             document.querySelectorAll('.chat-bubble-mine').forEach(bubble => {
                 const id = parseInt(bubble.dataset.msgId, 10);
-                if (id > 0 && id <= data.last_read_id) {
+                if (id > 0 && id <= maxKnownReadId) {
                     updateTick(id, 'delivered');
                 }
             });
@@ -408,7 +411,8 @@ function pollNewMessages() {
                 const id = safeCursor(msg.id);
                 
                 // Update read status for existing bubbles
-                if (msg.is_mine && msg.is_read) {
+                if (msg.is_mine && (msg.is_read || msg.status === 'delivered')) {
+                    maxKnownReadId = Math.max(maxKnownReadId, id);
                     updateTick(id, 'delivered');
                 }
 
@@ -483,7 +487,11 @@ function sendMessage() {
         const bubble = document.querySelector(`[data-msg-id="${tempId}"]`);
         if (bubble) {
             bubble.dataset.msgId = realId;
-            updateTick(realId, 'sent'); // upgrade clock → single ✓
+            if (realId <= maxKnownReadId) {
+                updateTick(realId, 'delivered');
+            } else {
+                updateTick(realId, 'sent'); // upgrade clock → single ✓
+            }
         }
         if (realId > lastMessageId) lastMessageId = realId;
     })
