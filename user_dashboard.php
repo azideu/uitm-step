@@ -19,7 +19,7 @@ $mode = $_SESSION['mode'] ?? 'buying';
 require_once 'includes/header.php';
 ?>
 
-<div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-fade-in-up transition-colors duration-300">
+<div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards;">
     <div>
         <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r <?php echo $mode === 'buying' ? 'from-indigo-700 to-blue-500 dark:from-indigo-400 dark:to-blue-300' : 'from-emerald-600 to-teal-400 dark:from-emerald-400 dark:to-teal-300'; ?> font-serif pb-2">
             <?php echo $mode === 'buying' ? 'Buying Dashboard' : 'Selling Dashboard'; ?>
@@ -52,7 +52,7 @@ require_once 'includes/header.php';
     $orders = $stmt->fetchAll();
     ?>
     
-    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up transition-colors duration-300">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards;">
         <div class="h-1 bg-gradient-to-r from-indigo-500 to-blue-500"></div>
         <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between transition-colors duration-300">
             <h2 class="text-xl font-bold text-gray-900 dark:text-white">My Purchases</h2>
@@ -160,7 +160,7 @@ require_once 'includes/header.php';
     
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- My Gigs -->
-        <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up transition-colors duration-300">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards;">
             <div class="h-1 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
             <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between transition-colors duration-300">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white">My Active Gigs</h2>
@@ -203,7 +203,7 @@ require_once 'includes/header.php';
         </div>
         
         <!-- Incoming Orders -->
-        <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up transition-colors duration-300" style="animation-delay:100ms;">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-delay:100ms; animation-fill-mode: forwards;">
             <div class="h-1 bg-gradient-to-r from-teal-400 to-emerald-500"></div>
             <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between transition-colors duration-300">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white">Incoming Orders</h2>

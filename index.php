@@ -16,7 +16,7 @@ require_once 'includes/header.php';
     </div>
     
     <!-- Hero Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-center h-full animate-fade-in-up">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-center h-full animate-fade-in-up opacity-0" style="animation-fill-mode: forwards;">
         <div class="max-w-3xl">
             <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight mb-6 mt-16 text-white drop-shadow-2xl tracking-tight font-serif">
                 Student talent,<br> tailored for <span class="text-transparent bg-clip-text bg-gradient-to-r from-uitmGold to-yellow-200 italic">you.</span>

@@ -115,7 +115,7 @@ require_once 'includes/header.php';
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <?php $delay = 0; ?>
         <?php foreach ($gigs as $gig): ?>
-            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden border border-gray-100 dark:border-slate-800 transform hover:-translate-y-2 animate-fade-in-up" style="animation-delay: <?php echo $delay; ?>ms;">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden border border-gray-100 dark:border-slate-800 transform hover:-translate-y-2 animate-fade-in-up opacity-0" style="animation-delay: <?php echo $delay; ?>ms; animation-fill-mode: forwards;">
                 <!-- Thumbnail Image -->
                 <?php
                     $cat = strtolower($gig['category']);
