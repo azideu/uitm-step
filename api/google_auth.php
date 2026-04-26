@@ -75,6 +75,30 @@ function generate_student_id_from_email(PDO $pdo, string $email): string {
     }
 }
 
+/**
+ * Normalize display names from providers
+ */
+function normalize_display_name(string $name): string {
+    $name = trim($name);
+    if ($name === '') {
+        return 'UiTM Student';
+    }
+
+    $parts = preg_split('/(\s+|-|\')/', strtolower($name), -1, PREG_SPLIT_DELIM_CAPTURE);
+    if (!is_array($parts)) {
+        return $name;
+    }
+
+    foreach ($parts as $i => $part) {
+        if ($part === '' || preg_match('/^(\s+|-|\')$/', $part)) {
+            continue;
+        }
+        $parts[$i] = strtoupper(substr($part, 0, 1)) . substr($part, 1);
+    }
+
+    return implode('', $parts);
+}
+
 try {
     $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ? LIMIT 1');
     $stmt->execute([$email]);
@@ -97,6 +121,7 @@ try {
             }
 
             $studentId = generate_student_id_from_email($pdo, $email);
+            $name = normalize_display_name($name);
             $randomPasswordHash = password_hash(bin2hex(random_bytes(32)), PASSWORD_DEFAULT);
 
             $insert = $pdo->prepare('INSERT INTO users (student_id, name, email, password, campus, role) VALUES (?, ?, ?, ?, ?, ?)');
