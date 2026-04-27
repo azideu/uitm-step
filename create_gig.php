@@ -47,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mime_type = finfo_file($finfo, $tmp_path);
-            finfo_close($finfo);
             
             $allowed_mimes = ['image/jpeg', 'image/png', 'image/webp'];
             if (!in_array($mime_type, $allowed_mimes)) {

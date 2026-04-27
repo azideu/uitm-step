@@ -61,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             // MIME Type Check
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $mime_type = finfo_file($finfo, $tmp_path);
-            finfo_close($finfo);
             
             $allowed_mimes = ['image/jpeg', 'image/png', 'application/pdf'];
             if (!in_array($mime_type, $allowed_mimes)) {
