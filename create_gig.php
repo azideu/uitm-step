@@ -24,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = trim($_POST['category'] ?? '');
     $selected_tags = $_POST['tags'] ?? [];
 
+    $youtube_url = trim($_POST['youtube_url'] ?? '');
+
     $errors = [];
     if (empty($title) || empty($description) || empty($category)) {
         $errors[] = "Please fill all required fields.";
@@ -32,13 +34,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Price must be a positive number.";
     }
 
+    // Handle Image Upload
+    $image_url = null;
+    if (isset($_FILES['gig_image']) && $_FILES['gig_image']['error'] === UPLOAD_ERR_OK) {
+        require_once 'includes/storage.php';
+        
+        $tmp_path = $_FILES['gig_image']['tmp_name'];
+        $file_size = $_FILES['gig_image']['size'];
+        
+        if ($file_size > 5 * 1024 * 1024) {
+            $errors[] = "Image size exceeds 5MB limit.";
+        } else {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime_type = finfo_file($finfo, $tmp_path);
+            finfo_close($finfo);
+            
+            $allowed_mimes = ['image/jpeg', 'image/png', 'image/webp'];
+            if (!in_array($mime_type, $allowed_mimes)) {
+                $errors[] = 'Invalid file type. Only JPG, PNG, and WEBP allowed.';
+            } else {
+                $ext = 'jpg';
+                if ($mime_type === 'image/png') $ext = 'png';
+                if ($mime_type === 'image/webp') $ext = 'webp';
+                
+                $new_filename = uniqid('gig_', true) . '.' . $ext;
+                $uploaded_path = Storage::upload($tmp_path, 'gigs/' . $new_filename, $mime_type);
+                
+                if ($uploaded_path) {
+                    $image_url = $uploaded_path;
+                } else {
+                    $errors[] = "Failed to upload image.";
+                }
+            }
+        }
+    }
+
     if (empty($errors)) {
         try {
             $pdo->beginTransaction();
             
             // Insert Gig
-            $stmt = $pdo->prepare("INSERT INTO gigs (seller_id, title, description, price, category, status) VALUES (?, ?, ?, ?, ?, 'active')");
-            $stmt->execute([$_SESSION['user_id'], $title, $description, $price, $category]);
+            $stmt = $pdo->prepare("INSERT INTO gigs (seller_id, title, description, price, category, status, image_url, youtube_url) VALUES (?, ?, ?, ?, ?, 'active', ?, ?)");
+            $stmt->execute([$_SESSION['user_id'], $title, $description, $price, $category, $image_url, $youtube_url]);
             $gig_id = $pdo->lastInsertId();
 
             // Insert Tags into Junction Table
@@ -68,7 +105,7 @@ require_once 'includes/header.php';
 <div class="max-w-2xl mx-auto bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 transition-colors duration-300">
     <h2 class="text-2xl font-bold mb-6 text-uitmPurple dark:text-purple-300 font-serif">Create a New Gig</h2>
     
-    <form action="create_gig.php" method="POST">
+    <form action="create_gig.php" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
         <div class="mb-4">
             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Gig Title</label>
@@ -95,6 +132,18 @@ require_once 'includes/header.php';
         <div class="mb-4">
             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Description</label>
             <textarea name="description" rows="5" required placeholder="Describe your service in detail..." class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all"></textarea>
+        </div>
+        
+        <div class="mb-4">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Gig Image (Optional)</label>
+            <input type="file" name="gig_image" accept="image/jpeg, image/png, image/webp" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
+            <p class="text-sm text-gray-500 mt-1">Upload a catchy image for your gig. Max 5MB (JPG, PNG, WEBP).</p>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">YouTube Video URL (Optional)</label>
+            <input type="url" name="youtube_url" placeholder="https://www.youtube.com/watch?v=..." class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
+            <p class="text-sm text-gray-500 mt-1">Embed a YouTube video showcasing your service.</p>
         </div>
         
         <div class="mb-6">

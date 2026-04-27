@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Gigs Table
 CREATE TABLE IF NOT EXISTS gigs (
     gig_id INT AUTO_INCREMENT PRIMARY KEY,
     seller_id INT NOT NULL,
@@ -25,6 +24,8 @@ CREATE TABLE IF NOT EXISTS gigs (
     price DECIMAL(10,2) NOT NULL,
     category VARCHAR(100) NOT NULL,
     status ENUM('active', 'inactive') DEFAULT 'active',
+    image_url VARCHAR(255) DEFAULT NULL,
+    youtube_url VARCHAR(255) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (seller_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
