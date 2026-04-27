@@ -76,14 +76,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             
             // Safe rename
             $new_filename = uniqid('receipt_', true) . '.' . $ext;
-            $upload_path = __DIR__ . '/uploads/' . basename($new_filename);
+            require_once 'includes/storage.php';
+            $uploaded_path = Storage::upload($tmp_path, 'receipts/' . $new_filename, $mime_type);
             
-            if (move_uploaded_file($tmp_path, $upload_path)) {
+            if ($uploaded_path) {
                 // Insert Order
-                $db_upload_path = 'uploads/' . basename($new_filename);
                 $stmt = $pdo->prepare("INSERT INTO orders (buyer_id, gig_id, status, payment_proof_path) VALUES (?, ?, 'paid', ?)");
                 try {
-                    $stmt->execute([$_SESSION['user_id'], $gig_id, $db_upload_path]);
+                    $stmt->execute([$_SESSION['user_id'], $gig_id, $uploaded_path]);
                     set_toast('success', 'Order placed successfully!');
                     redirect('user_dashboard.php?mode=buying');
                 } catch (\Exception $e) {

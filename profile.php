@@ -43,22 +43,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'image/webp' => 'webp'
                 ];
                 $ext = $ext_map[$file_type];
-                $file_name = 'avatar_' . $user_id . '_' . time() . '.' . $ext;
-                $upload_dir = __DIR__ . '/assets/uploads/avatars';
-                $upload_path = $upload_dir . '/' . $file_name;
+                require_once 'includes/storage.php';
+                $uploaded_path = Storage::upload($file_tmp, 'avatars/' . $file_name, $file_type);
                 
-                if (!is_dir($upload_dir) && !mkdir($upload_dir, 0755, true) && !is_dir($upload_dir)) {
-                    $errors[] = "Failed to prepare avatar upload directory.";
-                } elseif (move_uploaded_file($file_tmp, $upload_path)) {
-                    $profile_picture = 'assets/uploads/avatars/' . $file_name;
+                if ($uploaded_path) {
+                    $profile_picture = $uploaded_path;
                     
-                    // Delete old avatar if exists
+                    // Delete old avatar if it was local (Spaces files don't need manual unlinking here usually, but we check)
                     $stmt = $pdo->prepare("SELECT profile_picture FROM users WHERE user_id = ?");
                     $stmt->execute([$user_id]);
                     $old_pic = $stmt->fetchColumn();
-                    $old_pic_path = $old_pic ? __DIR__ . '/' . ltrim($old_pic, '/') : null;
-                    if ($old_pic_path && file_exists($old_pic_path)) {
-                        unlink($old_pic_path);
+                    if ($old_pic && strpos($old_pic, 'http') === false) {
+                        $old_pic_path = __DIR__ . '/' . ltrim($old_pic, '/');
+                        if (file_exists($old_pic_path)) {
+                            unlink($old_pic_path);
+                        }
                     }
                 } else {
                     $errors[] = "Failed to upload avatar.";
