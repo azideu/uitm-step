@@ -11,9 +11,20 @@ if (isset($_SESSION['user_id'])) {
 $google_enabled = GOOGLE_CLIENT_ID !== '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $student_id = trim($_POST['student_id'] ?? '');
-    $name = trim($_POST['name'] ?? '');
     $email = trim($_POST['email'] ?? '');
+    $student_id = '';
+    
+    // Extract Student ID from Email (10 digits before @)
+    if (strpos($email, '@') !== false) {
+        $parts = explode('@', $email);
+        $prefix = $parts[0];
+        // Match first 10 digits
+        if (preg_match('/^\d{10}/', $prefix, $matches)) {
+            $student_id = $matches[0];
+        }
+    }
+
+    $name = trim($_POST['name'] ?? '');
     $password = $_POST['password'] ?? '';
     $campus = trim($_POST['campus'] ?? '');
 
@@ -22,6 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!is_uitm_student_email($email)) {
         $allowed_domains = implode(', ', get_uitm_student_email_domains());
         $errors[] = "Email must be a UiTM student email address ({$allowed_domains}).";
+    }
+    if (empty($student_id)) {
+        $errors[] = "Could not extract a valid 10-digit Student ID from your email.";
     }
     if (strlen($password) < 6) {
         $errors[] = "Password must be at least 6 characters.";
@@ -59,16 +73,16 @@ require_once 'includes/header.php';
     <h2 class="text-2xl font-bold mb-6 text-center text-uitmPurple dark:text-purple-300 font-serif">Register for UiTM STEP</h2>
     <form action="register.php" method="POST">
         <div class="mb-4">
-            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Student ID</label>
-            <input type="text" name="student_id" required class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Student Email</label>
+            <input type="email" name="email" id="email_input" required pattern=".*@student\.uitm\.edu\.my" title="Must be a @student.uitm.edu.my email" placeholder="xxxxxxxxxx@student.uitm.edu.my" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Student ID (Auto-extracted)</label>
+            <input type="text" id="student_id_display" readonly placeholder="Enter email first..." class="w-full px-4 py-3 bg-gray-50 dark:bg-slate-800/50 text-gray-500 dark:text-slate-400 border border-gray-200 dark:border-slate-700 rounded-lg cursor-not-allowed focus:outline-none">
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Full Name</label>
             <input type="text" name="name" required class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Student Email</label>
-            <input type="email" name="email" required pattern=".*@student\.uitm\.edu\.my" title="Must be a @student.uitm.edu.my email" placeholder="xxxxxxxxxx@student.uitm.edu.my" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
         </div>
         <div class="mb-4">
             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Password</label>
@@ -171,9 +185,21 @@ require_once 'includes/header.php';
     <p class="mt-4 text-center text-gray-600 dark:text-slate-400">Already have an account? <a href="login.php" class="text-uitmPurple dark:text-purple-400 font-bold hover:underline">Login here</a></p>
 </div>
 
-<?php if ($google_enabled): ?>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
+document.getElementById('email_input').addEventListener('input', function(e) {
+    const email = e.target.value;
+    const studentIdDisplay = document.getElementById('student_id_display');
+    
+    // Extract first 10 digits before @
+    const match = email.split('@')[0].match(/^\d{10}/);
+    if (match) {
+        studentIdDisplay.value = match[0];
+    } else {
+        studentIdDisplay.value = '';
+    }
+});
+
+<?php if ($google_enabled): ?>
 function handleGoogleAuthRegister(response) {
     const campusField = document.querySelector('select[name="campus"]');
     const campus = (campusField && campusField.value) ? campusField.value : '';
