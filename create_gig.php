@@ -91,9 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } catch (\Exception $e) {
             $pdo->rollBack();
             error_log("Gig Creation Error: " . $e->getMessage());
-            set_toast('error', "Failed to create gig. Database error logged.");
-            // For development, you might want to show the message:
-            // set_toast('error', "Failed: " . $e->getMessage());
+            set_toast('error', "Database Error: " . $e->getMessage());
         }
     } else {
         set_toast('error', implode("<br>", $errors));
