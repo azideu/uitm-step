@@ -141,23 +141,91 @@ require_once 'includes/header.php';
                     </div>
                 </div>
                 
-                <?php if (!empty($gig['image_url']) || !empty($gig['youtube_url'])): ?>
-                    <div class="mb-8 space-y-6">
-                        <?php if (!empty($gig['image_url'])): ?>
-                            <div class="rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-slate-800">
-                                <img src="<?php echo escape($gig['image_url']); ?>" alt="Gig Image" class="w-full h-auto object-cover max-h-96">
-                            </div>
-                        <?php endif; ?>
+                <?php 
+                $media_items = [];
+                if (!empty($gig['youtube_url'])) {
+                    if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $gig['youtube_url'], $matches)) {
+                        $media_items[] = ['type' => 'youtube', 'content' => 'https://www.youtube.com/embed/' . $matches[1]];
+                    }
+                }
+                if (!empty($gig['image_url'])) {
+                    $media_items[] = ['type' => 'image', 'content' => escape($gig['image_url'])];
+                }
+                ?>
+
+                <?php if (!empty($media_items)): ?>
+                    <div class="mb-8 relative group">
+                        <div id="gig-media-slider" class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-slate-800 transition-colors duration-300">
+                            <?php foreach ($media_items as $index => $item): ?>
+                                <div class="media-slide absolute inset-0 transition-opacity duration-500 <?php echo $index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'; ?>" data-index="<?php echo $index; ?>">
+                                    <?php if ($item['type'] === 'youtube'): ?>
+                                        <iframe class="w-full h-full" src="<?php echo $item['content']; ?>?enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <?php else: ?>
+                                        <img src="<?php echo $item['content']; ?>" alt="Gig Image" class="w-full h-full object-cover">
+                                    <?php endif; ?>
+                                </div>
+                            <?php endforeach; ?>
+
+                            <?php if (count($media_items) > 1): ?>
+                                <!-- Navigation Arrows -->
+                                <button onclick="changeSlide(-1)" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                                </button>
+                                <button onclick="changeSlide(1)" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                </button>
+
+                                <!-- Navigation Dots -->
+                                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                                    <?php foreach ($media_items as $index => $item): ?>
+                                        <button onclick="goToSlide(<?php echo $index; ?>)" class="slider-dot w-2.5 h-2.5 rounded-full transition-all <?php echo $index === 0 ? 'bg-white w-6' : 'bg-white/50'; ?>" data-index="<?php echo $index; ?>"></button>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                         
-                        <?php if (!empty($gig['youtube_url'])): 
-                            if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $gig['youtube_url'], $matches)) {
-                                $embed_url = 'https://www.youtube.com/embed/' . $matches[1];
-                            ?>
-                            <div class="rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-slate-800 aspect-w-16 aspect-h-9">
-                                <iframe class="w-full h-64 md:h-96" src="<?php echo $embed_url; ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
-                            <?php } ?>
-                        <?php endif; ?>
+                        <script>
+                            let currentSlide = 0;
+                            const slides = document.querySelectorAll('.media-slide');
+                            const dots = document.querySelectorAll('.slider-dot');
+                            const totalSlides = slides.length;
+
+                            function updateSlider() {
+                                slides.forEach((slide, i) => {
+                                    if (i === currentSlide) {
+                                        slide.classList.remove('opacity-0', 'z-0');
+                                        slide.classList.add('opacity-100', 'z-10');
+                                    } else {
+                                        slide.classList.add('opacity-0', 'z-0');
+                                        slide.classList.remove('opacity-100', 'z-10');
+                                        // Pause YouTube videos when sliding away
+                                        const iframe = slide.querySelector('iframe');
+                                        if (iframe) {
+                                            iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                                        }
+                                    }
+                                });
+                                dots.forEach((dot, i) => {
+                                    if (i === currentSlide) {
+                                        dot.classList.add('bg-white', 'w-6');
+                                        dot.classList.remove('bg-white/50');
+                                    } else {
+                                        dot.classList.remove('bg-white', 'w-6');
+                                        dot.classList.add('bg-white/50');
+                                    }
+                                });
+                            }
+
+                            function changeSlide(direction) {
+                                currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+                                updateSlider();
+                            }
+
+                            function goToSlide(index) {
+                                currentSlide = index;
+                                updateSlider();
+                            }
+                        </script>
                     </div>
                 <?php endif; ?>
 

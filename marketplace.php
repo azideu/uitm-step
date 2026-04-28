@@ -116,20 +116,60 @@ require_once 'includes/header.php';
         <?php $delay = 0; ?>
         <?php foreach ($gigs as $gig): ?>
             <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden border border-gray-100 dark:border-slate-800 transform hover:-translate-y-2 animate-fade-in-up opacity-0" style="animation-delay: <?php echo $delay; ?>ms; animation-fill-mode: forwards;">
-                <!-- Thumbnail Image -->
-                <?php
-                    $cat = strtolower($gig['category']);
-                    $thumb = 'assets/img/cat_programming.jpg'; // fallback
-                    if (strpos($cat, 'design') !== false) $thumb = 'assets/img/cat_design.jpg';
-                    elseif (strpos($cat, 'video') !== false) $thumb = 'assets/img/cat_video.jpg';
-                    elseif (strpos($cat, 'writing') !== false || strpos($cat, 'essay') !== false || strpos($cat, 'proofreading') !== false) $thumb = 'assets/img/cat_writing.jpg';
-                    elseif (strpos($cat, 'programming') !== false || strpos($cat, 'tech') !== false) $thumb = 'assets/img/cat_programming.jpg';
-                ?>
-                <div class="h-48 w-full bg-gray-200 relative overflow-hidden group">
-                    <img src="<?php echo $thumb; ?>" alt="<?php echo escape($gig['category']); ?>" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                    <div class="absolute bottom-3 left-4">
-                        <span class="text-xs font-bold text-white uppercase tracking-widest bg-uitmPurple/80 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-sm border border-white/10"><?php echo escape($gig['category']); ?></span>
+                <!-- Thumbnail / Slider -->
+                <div class="w-full aspect-video bg-gray-200 dark:bg-slate-800 relative overflow-hidden group">
+                    <?php
+                        $media_items = [];
+                        if (!empty($gig['youtube_url'])) {
+                            if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i', $gig['youtube_url'], $matches)) {
+                                $media_items[] = ['type' => 'youtube', 'content' => 'https://www.youtube.com/embed/' . $matches[1]];
+                            }
+                        }
+                        if (!empty($gig['image_url'])) {
+                            $media_items[] = ['type' => 'image', 'content' => escape($gig['image_url'])];
+                        }
+
+                        // Default fallback if no media
+                        if (empty($media_items)) {
+                            $cat = strtolower($gig['category']);
+                            $thumb = 'assets/img/cat_programming.jpg'; 
+                            if (strpos($cat, 'design') !== false) $thumb = 'assets/img/cat_design.jpg';
+                            elseif (strpos($cat, 'video') !== false) $thumb = 'assets/img/cat_video.jpg';
+                            elseif (strpos($cat, 'writing') !== false) $thumb = 'assets/img/cat_writing.jpg';
+                            $media_items[] = ['type' => 'image', 'content' => $thumb];
+                        }
+                    ?>
+                    
+                    <div id="slider-<?php echo $gig['gig_id']; ?>" class="h-full w-full relative">
+                        <?php foreach ($media_items as $index => $item): ?>
+                            <div class="card-slide absolute inset-0 transition-opacity duration-300 <?php echo $index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'; ?>" data-index="<?php echo $index; ?>">
+                                <?php if ($item['type'] === 'youtube'): ?>
+                                    <!-- Use thumbnail for card to keep it lightweight, or iframe with pointer-events-none -->
+                                    <iframe class="w-full h-full pointer-events-none" src="<?php echo $item['content']; ?>?controls=0&mute=1&loop=1" frameborder="0"></iframe>
+                                <?php else: ?>
+                                    <img src="<?php echo $item['content']; ?>" alt="<?php echo escape($gig['title']); ?>" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <?php if (count($media_items) > 1): ?>
+                            <!-- Small Dots for Card Slider -->
+                            <div class="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <?php foreach ($media_items as $index => $item): ?>
+                                    <div class="w-1.5 h-1.5 rounded-full bg-white/80 shadow-sm <?php echo $index === 0 ? 'w-3' : ''; ?>"></div>
+                                <?php endforeach; ?>
+                            </div>
+                            <!-- Hover overlays to switch slides -->
+                            <div class="absolute inset-0 z-30 flex">
+                                <div class="flex-1 cursor-pointer" onmouseenter="setCardSlide(<?php echo $gig['gig_id']; ?>, 0)"></div>
+                                <div class="flex-1 cursor-pointer" onmouseenter="setCardSlide(<?php echo $gig['gig_id']; ?>, 1)"></div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+                    <div class="absolute bottom-3 left-4 pointer-events-none z-20">
+                        <span class="text-[10px] font-bold text-white uppercase tracking-widest bg-uitmPurple/80 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-white/10 shadow-sm"><?php echo escape($gig['category']); ?></span>
                     </div>
                 </div>
 
@@ -197,5 +237,33 @@ require_once 'includes/header.php';
         <a href="marketplace.php" class="mt-4 inline-block text-uitmPurple dark:text-purple-400 hover:underline font-medium">Clear all filters</a>
     </div>
 <?php endif; ?>
+
+<script>
+function setCardSlide(gigId, index) {
+    const slider = document.getElementById('slider-' + gigId);
+    if (!slider) return;
+    
+    const slides = slider.querySelectorAll('.card-slide');
+    const dots = slider.querySelectorAll('.w-1\\.5');
+    
+    slides.forEach((slide, i) => {
+        if (i === index) {
+            slide.classList.remove('opacity-0', 'z-0');
+            slide.classList.add('opacity-100', 'z-10');
+        } else {
+            slide.classList.add('opacity-0', 'z-0');
+            slide.classList.remove('opacity-100', 'z-10');
+        }
+    });
+    
+    dots.forEach((dot, i) => {
+        if (i === index) {
+            dot.classList.add('w-3');
+        } else {
+            dot.classList.remove('w-3');
+        }
+    });
+}
+</script>
 
 <?php require_once 'includes/footer.php'; ?>
