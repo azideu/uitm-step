@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'image/webp' => 'webp'
                 ];
                 $ext = $ext_map[$file_type];
+                $file_name = 'avatar_' . $user_id . '_' . time() . '.' . $ext;
                 require_once 'includes/storage.php';
                 $uploaded_path = Storage::upload($file_tmp, 'avatars/' . $file_name, $file_type);
                 
@@ -122,9 +123,20 @@ $stmt = $pdo->prepare("SELECT * FROM users WHERE user_id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
-$avatar_path = $user['profile_picture'] && file_exists($user['profile_picture']) 
-    ? escape($user['profile_picture']) 
-    : 'https://ui-avatars.com/api/?name=' . urlencode($user['name']) . '&background=330066&color=FFD700';
+$stored_pic = $user['profile_picture'] ?? '';
+if ($stored_pic) {
+    if (strpos($stored_pic, 'http') === 0) {
+        // Cloud URL — use directly
+        $avatar_path = escape($stored_pic);
+    } elseif (file_exists(__DIR__ . '/' . ltrim($stored_pic, '/'))) {
+        // Local relative path
+        $avatar_path = escape($stored_pic);
+    } else {
+        $avatar_path = 'https://ui-avatars.com/api/?name=' . urlencode($user['name']) . '&background=330066&color=FFD700';
+    }
+} else {
+    $avatar_path = 'https://ui-avatars.com/api/?name=' . urlencode($user['name']) . '&background=330066&color=FFD700';
+}
 
 require_once 'includes/header.php';
 ?>
