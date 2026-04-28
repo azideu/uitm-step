@@ -185,6 +185,10 @@ require_once 'includes/header.php';
     <p class="mt-4 text-center text-gray-600 dark:text-slate-400">Already have an account? <a href="login.php" class="text-uitmPurple dark:text-purple-400 font-bold hover:underline">Login here</a></p>
 </div>
 
+<?php if ($google_enabled): ?>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<?php endif; ?>
+
 <script>
 document.getElementById('email_input').addEventListener('input', function(e) {
     const email = e.target.value;
@@ -259,7 +263,7 @@ function handleGoogleAuthRegister(response) {
         errorBox.classList.remove('hidden');
     });
 }
-</script>
 <?php endif; ?>
+</script>
 
 <?php require_once 'includes/footer.php'; ?>
