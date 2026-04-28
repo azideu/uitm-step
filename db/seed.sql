@@ -1,6 +1,7 @@
 USE uitm_step;
 
 SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE sessions;
 TRUNCATE TABLE gig_tags;
 TRUNCATE TABLE orders;
 TRUNCATE TABLE messages;
