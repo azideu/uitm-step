@@ -7,14 +7,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verify CSRF Token
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         set_toast('error', 'Invalid security token.');
-        redirect('user_dashboard.php?mode=selling');
+        redirect('user_dashboard?mode=selling');
     }
     $gig_id = (int)($_POST['gig_id'] ?? 0);
     $action = $_POST['action'] ?? '';
 
     if ($gig_id <= 0) {
         set_toast('error', 'Invalid gig ID.');
-        redirect('user_dashboard.php?mode=selling');
+        redirect('user_dashboard?mode=selling');
     }
 
     // Fetch gig details to check ownership
@@ -24,13 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$gig) {
         set_toast('error', 'Gig not found.');
-        redirect('user_dashboard.php?mode=selling');
+        redirect('user_dashboard?mode=selling');
     }
 
     // Check ownership or admin role
     if ((int)$gig['seller_id'] !== (int)$_SESSION['user_id'] && $_SESSION['role'] !== 'admin') {
         set_toast('error', 'Unauthorized action.');
-        redirect('user_dashboard.php?mode=selling');
+        redirect('user_dashboard?mode=selling');
     }
 
     try {
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error_log($e->getMessage());
     }
 
-    redirect('user_dashboard.php?mode=selling');
+    redirect('user_dashboard?mode=selling');
 } else {
-    redirect('index.php');
+    redirect('home');
 }

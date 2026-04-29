@@ -20,5 +20,5 @@ session_start();
 
 require_once 'includes/functions.php';
 set_toast('info', 'You have been logged out.');
-redirect('login.php');
+redirect('login');
 ?>

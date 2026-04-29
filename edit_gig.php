@@ -12,13 +12,13 @@ $gig = $stmt->fetch();
 
 if (!$gig) {
     set_toast('error', 'Gig not found.');
-    redirect('marketplace.php');
+    redirect('marketplace');
 }
 
 // Only the owner or admin can edit
 if ($gig['seller_id'] != $_SESSION['user_id'] && $_SESSION['role'] !== 'admin') {
     set_toast('error', 'You do not have permission to edit this gig.');
-    redirect('marketplace.php');
+    redirect('marketplace');
 }
 
 // Fetch available tags
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verify CSRF Token
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         set_toast('error', 'Invalid security token.');
-        redirect("edit_gig.php?id=$gig_id");
+        redirect("edit_gig?id=$gig_id");
     }
 
     $title = trim($_POST['title'] ?? '');
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $pdo->commit();
             set_toast('success', "Gig updated successfully!");
-            redirect("gig_details.php?id=$gig_id");
+            redirect("gig_details?id=$gig_id");
         } catch (\Exception $e) {
             $pdo->rollBack();
             error_log("Gig Update Error: " . $e->getMessage());
@@ -123,7 +123,7 @@ require_once 'includes/header.php';
 <div class="max-w-2xl mx-auto bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 transition-colors duration-300">
     <h2 class="text-2xl font-bold mb-6 text-uitmPurple dark:text-purple-300 font-serif">Edit Your Gig</h2>
     
-    <form action="edit_gig.php?id=<?php echo $gig_id; ?>" method="POST" enctype="multipart/form-data">
+    <form action="edit_gig?id=<?php echo $gig_id; ?>" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
         
         <div class="mb-4">
@@ -185,7 +185,7 @@ require_once 'includes/header.php';
         </div>
         
         <div class="flex justify-between items-center mt-8">
-            <a href="gig_details.php?id=<?php echo $gig_id; ?>" class="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">Cancel</a>
+            <a href="gig_details?id=<?php echo $gig_id; ?>" class="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">Cancel</a>
             <button type="submit" class="bg-uitmPurple text-white font-bold py-3 px-8 rounded-full hover:bg-purple-900 transition-colors shadow-md hover:shadow-lg focus:ring-4 focus:ring-uitmPurple/30">Update Gig</button>
         </div>
     </form>

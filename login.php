@@ -5,7 +5,7 @@ require_once 'includes/db.php';
 require_once 'includes/functions.php';
 
 if (isset($_SESSION['user_id'])) {
-    redirect('index.php');
+    redirect('home');
 }
 
 $google_enabled = GOOGLE_CLIENT_ID !== '';
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             set_toast('success', "Welcome back, " . escape($user['name']) . "!");
-            redirect('index.php');
+            redirect('home');
         } else {
             set_toast('error', 'Invalid email or password.');
         }
@@ -88,7 +88,7 @@ require_once 'includes/header.php';
     </div>
     <?php endif; ?>
 
-    <p class="mt-4 text-center text-gray-600 dark:text-slate-400">Don't have an account? <a href="register.php" class="text-uitmPurple dark:text-purple-400 font-bold hover:underline">Register here</a></p>
+    <p class="mt-4 text-center text-gray-600 dark:text-slate-400">Don't have an account? <a href="register" class="text-uitmPurple dark:text-purple-400 font-bold hover:underline">Register here</a></p>
 </div>
 
 <?php if ($google_enabled): ?>

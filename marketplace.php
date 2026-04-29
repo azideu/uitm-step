@@ -85,7 +85,7 @@ require_once 'includes/header.php';
     </div>
     
     <!-- Filter Form -->
-    <form action="marketplace.php" method="GET" class="flex flex-wrap gap-3 items-center bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 transition-colors duration-300">
+    <form action="marketplace" method="GET" class="flex flex-wrap gap-3 items-center bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 transition-colors duration-300">
         <input type="text" name="search" placeholder="Search gigs..." value="<?php echo escape($search_query); ?>" class="px-4 py-2.5 bg-gray-50 dark:bg-slate-800 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white dark:focus:bg-slate-700 text-slate-800 dark:text-slate-200 placeholder-gray-400 dark:placeholder-slate-500 transition-all outline-none w-full sm:w-auto">
         
         <!-- Prominent Toggle for Campus -->
@@ -200,7 +200,7 @@ require_once 'includes/header.php';
                         <span class="text-xs text-gray-400 dark:text-slate-500 uppercase font-bold tracking-wider mb-1">Starting at</span>
                         <span class="text-xl font-extrabold text-gray-900 dark:text-white">RM <?php echo number_format($gig['price'], 2); ?></span>
                     </div>
-                    <a href="gig_details.php?id=<?php echo $gig['gig_id']; ?>" class="text-sm bg-gray-900 dark:bg-slate-800 hover:bg-uitmPurple text-white px-5 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105">View Details</a>
+                    <a href="gig_details?id=<?php echo $gig['gig_id']; ?>" class="text-sm bg-gray-900 dark:bg-slate-800 hover:bg-uitmPurple text-white px-5 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105">View Details</a>
                 </div>
             </div>
             <?php $delay += 100; ?>
@@ -234,7 +234,7 @@ require_once 'includes/header.php';
         <svg class="w-16 h-16 text-gray-300 dark:text-slate-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
         <h3 class="text-2xl font-bold text-gray-700 dark:text-slate-300 mb-2">No Gigs Found</h3>
         <p class="text-gray-500 dark:text-slate-500">We couldn't find any gigs in this campus or category. Try adjusting your filters!</p>
-        <a href="marketplace.php" class="mt-4 inline-block text-uitmPurple dark:text-purple-400 hover:underline font-medium">Clear all filters</a>
+        <a href="marketplace" class="mt-4 inline-block text-uitmPurple dark:text-purple-400 hover:underline font-medium">Clear all filters</a>
     </div>
 <?php endif; ?>
 

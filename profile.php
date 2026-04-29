@@ -4,7 +4,7 @@ require_once 'includes/db.php';
 require_once 'includes/functions.php';
 
 if (!isset($_SESSION['user_id'])) {
-    redirect('login.php');
+    redirect('login');
 }
 
 $user_id = $_SESSION['user_id'];
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verify CSRF Token
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         set_toast('error', 'Invalid security token.');
-        redirect('profile.php');
+        redirect('profile');
     }
 
     if (isset($_POST['action']) && $_POST['action'] === 'update_profile') {
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $_SESSION['campus'] = $campus;
             set_toast('success', "Profile updated successfully.");
-            redirect('profile.php');
+            redirect('profile');
         } else {
             set_toast('error', implode('<br>', $errors));
         }
@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE user_id = ?");
                 $stmt->execute([$hashed_pw, $user_id]);
                 set_toast('success', "Password updated successfully.");
-                redirect('profile.php');
+                redirect('profile');
             } else {
                 set_toast('error', "Incorrect current password.");
             }
@@ -177,7 +177,7 @@ require_once 'includes/header.php';
                     <h2 class="text-xl font-bold font-serif text-uitmPurple dark:text-purple-300">Profile Settings</h2>
                 </div>
                 <div class="p-6 sm:p-8">
-                    <form action="profile.php" method="POST" enctype="multipart/form-data" class="space-y-6">
+                    <form action="profile" method="POST" enctype="multipart/form-data" class="space-y-6">
                         <input type="hidden" name="action" value="update_profile">
                         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                         
@@ -290,7 +290,7 @@ require_once 'includes/header.php';
                     </h2>
                 </div>
                 <div class="p-6">
-                    <form action="profile.php" method="POST" class="space-y-4">
+                    <form action="profile" method="POST" class="space-y-4">
                         <input type="hidden" name="action" value="update_password">
                         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 
@@ -333,7 +333,7 @@ require_once 'includes/header.php';
                 </svg>
                 <h3 class="font-bold text-red-800 dark:text-red-300 text-lg mb-2">Ready to leave?</h3>
                 <p class="text-sm text-red-600 dark:text-red-400 mb-6 text-center">You can securely log out of your account to ensure no one else can access it.</p>
-                <a href="logout.php" class="w-full text-center bg-red-600 text-white font-bold py-3 px-4 rounded-md hover:bg-red-700 transition-colors shadow-sm">
+                <a href="logout" class="w-full text-center bg-red-600 text-white font-bold py-3 px-4 rounded-md hover:bg-red-700 transition-colors shadow-sm">
                     Logout of UiTM STEP
                 </a>
             </div>

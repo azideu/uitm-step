@@ -5,7 +5,7 @@ require_once 'includes/db.php';
 require_once 'includes/functions.php';
 
 if (isset($_SESSION['user_id'])) {
-    redirect('index.php');
+    redirect('home');
 }
 
 $google_enabled = GOOGLE_CLIENT_ID !== '';
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $stmt->execute([$student_id, $name, $email, $hashed_pw, $campus]);
                 set_toast('success', "Registration successful. Please login.");
-                redirect('login.php');
+                redirect('login');
             } catch (\Exception $e) {
                 set_toast('error', "Registration failed.");
                 error_log($e->getMessage());
@@ -182,7 +182,7 @@ require_once 'includes/header.php';
     </div>
     <?php endif; ?>
 
-    <p class="mt-4 text-center text-gray-600 dark:text-slate-400">Already have an account? <a href="login.php" class="text-uitmPurple dark:text-purple-400 font-bold hover:underline">Login here</a></p>
+    <p class="mt-4 text-center text-gray-600 dark:text-slate-400">Already have an account? <a href="login" class="text-uitmPurple dark:text-purple-400 font-bold hover:underline">Login here</a></p>
 </div>
 
 <?php if ($google_enabled): ?>

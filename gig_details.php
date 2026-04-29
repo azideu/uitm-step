@@ -17,7 +17,7 @@ $gig = $stmt->fetch();
 
 if (!$gig) {
     set_toast('error', 'Gig not found.');
-    redirect('marketplace.php');
+    redirect('marketplace');
 }
 
 // Ensure the gig is active OR the current user has a relationship to it
@@ -31,7 +31,7 @@ $is_buyer = (bool)$stmt_check->fetchColumn();
 
 if ($gig['status'] !== 'active' && !$is_seller && !$is_admin && !$is_buyer) {
     set_toast('error', 'This gig is no longer active.');
-    redirect('marketplace.php');
+    redirect('marketplace');
 }
 
 // Handle Order placement (Purchase)
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     // Verify CSRF Token
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         set_toast('error', 'Invalid security token.');
-        redirect("gig_details.php?id=$gig_id");
+        redirect("gig_details?id=$gig_id");
     }
     if ($_SESSION['role'] !== 'student') {
         set_toast('error', 'Only students can buy gigs.');
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $max_size = 2 * 1024 * 1024;
             if ($file_size > $max_size) {
                 set_toast('error', 'File size exceeds 2MB limit.');
-                redirect("gig_details.php?id=$gig_id");
+                redirect("gig_details?id=$gig_id");
             }
             
             // MIME Type Check
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $allowed_mimes = ['image/jpeg', 'image/png', 'application/pdf'];
             if (!in_array($mime_type, $allowed_mimes)) {
                 set_toast('error', 'Invalid file type. Only JPG, PNG, and PDF allowed.');
-                redirect("gig_details.php?id=$gig_id");
+                redirect("gig_details?id=$gig_id");
             }
             
             // File extension
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 try {
                     $stmt->execute([$_SESSION['user_id'], $gig_id, $uploaded_path]);
                     set_toast('success', 'Order placed successfully!');
-                    redirect('user_dashboard.php?mode=buying');
+                    redirect('user_dashboard?mode=buying');
                 } catch (\Exception $e) {
                     set_toast('error', 'Error creating order.');
                     error_log($e->getMessage());
@@ -104,7 +104,7 @@ require_once 'includes/header.php';
 <div class="max-w-5xl mx-auto animate-fade-in-up">
     <!-- Breadcrumb -->
     <nav class="mb-6 text-sm text-gray-400 dark:text-slate-500 font-medium transition-colors duration-300">
-        <a href="marketplace.php" class="hover:text-uitmPurple dark:hover:text-purple-400 transition-colors">Marketplace</a>
+        <a href="marketplace" class="hover:text-uitmPurple dark:hover:text-purple-400 transition-colors">Marketplace</a>
         <span class="mx-2">›</span>
         <span class="text-gray-700 dark:text-slate-300"><?php echo escape($gig['category']); ?></span>
     </nav>
@@ -252,7 +252,7 @@ require_once 'includes/header.php';
                 <div class="p-6">
                     <?php if($_SESSION['role'] === 'student' && $gig['seller_id'] != $_SESSION['user_id']): ?>
                         <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 transition-colors duration-300">Place your order</h3>
-                        <form action="gig_details.php?id=<?php echo $gig_id; ?>" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        <form action="gig_details?id=<?php echo $gig_id; ?>" method="POST" enctype="multipart/form-data" class="space-y-4">
                             <input type="hidden" name="action" value="buy">
                             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                             <div>
@@ -275,7 +275,7 @@ require_once 'includes/header.php';
                         </form>
                         
                         <div class="mt-4 border-t border-gray-100 dark:border-slate-800 pt-4 transition-colors duration-300">
-                            <a href="chat.php?user=<?php echo $gig['seller_id']; ?>" class="w-full border-2 border-uitmPurple/30 dark:border-purple-500/30 text-uitmPurple dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
+                            <a href="chat?user=<?php echo $gig['seller_id']; ?>" class="w-full border-2 border-uitmPurple/30 dark:border-purple-500/30 text-uitmPurple dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                                 Contact Seller
                             </a>
@@ -286,7 +286,7 @@ require_once 'includes/header.php';
                             This is your own gig.
                         </div>
                         <div class="mt-4">
-                            <a href="edit_gig.php?id=<?php echo $gig_id; ?>" class="w-full bg-white dark:bg-slate-800 border-2 border-uitmPurple text-uitmPurple dark:text-purple-400 hover:bg-uitmPurple hover:text-white dark:hover:bg-purple-900 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
+                            <a href="edit_gig?id=<?php echo $gig_id; ?>" class="w-full bg-white dark:bg-slate-800 border-2 border-uitmPurple text-uitmPurple dark:text-purple-400 hover:bg-uitmPurple hover:text-white dark:hover:bg-purple-900 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                 Edit Gig Details
                             </a>

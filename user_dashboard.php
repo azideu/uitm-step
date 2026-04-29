@@ -4,14 +4,14 @@ require_once 'includes/auth_check.php';
 require_once 'includes/db.php';
 
 if ($_SESSION['role'] !== 'student') {
-    redirect('index.php');
+    redirect('home');
 }
 
 // Toggle Mode
 if (isset($_GET['mode']) && in_array($_GET['mode'], ['buying', 'selling'])) {
     $_SESSION['mode'] = $_GET['mode'];
     // redirect to clear query param
-    redirect('user_dashboard.php');
+    redirect('user_dashboard');
 }
 
 $mode = $_SESSION['mode'] ?? 'buying';
@@ -30,7 +30,7 @@ require_once 'includes/header.php';
     </div>
     
     <?php if ($mode === 'selling'): ?>
-        <a href="create_gig.php" class="bg-emerald-500 text-white font-bold py-3 px-6 rounded-md hover:bg-emerald-600 transition-all duration-300 shadow-sm flex items-center gap-2">
+        <a href="create_gig" class="bg-emerald-500 text-white font-bold py-3 px-6 rounded-md hover:bg-emerald-600 transition-all duration-300 shadow-sm flex items-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
             Create New Gig
         </a>
@@ -69,14 +69,14 @@ require_once 'includes/header.php';
                             </div>
                             <div class="flex-shrink-0">
                                 <?php if ($o['status'] === 'delivered'): ?>
-                                    <form action="order_action.php" method="POST" class="inline">
+                                    <form action="order_action" method="POST" class="inline">
                                         <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
                                         <input type="hidden" name="action" value="complete">
                                         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                         <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl transition-all shadow-sm text-sm flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Mark Complete</button>
                                     </form>
                                 <?php elseif ($o['status'] === 'pending'): ?>
-                                    <form action="order_action.php" method="POST" class="inline" onsubmit="return confirm('Cancel this order?');">
+                                    <form action="order_action" method="POST" class="inline" onsubmit="return confirm('Cancel this order?');">
                                         <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
                                         <input type="hidden" name="action" value="cancel">
                                         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
@@ -132,7 +132,7 @@ require_once 'includes/header.php';
             <div class="px-6 py-16 text-center">
                 <svg class="w-12 h-12 text-gray-200 dark:text-slate-600 mx-auto mb-4 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                 <p class="text-gray-500 dark:text-slate-400 font-medium transition-colors duration-300">You haven't bought anything yet.</p>
-                <a href="marketplace.php" class="mt-4 inline-block bg-uitmPurple text-white font-bold px-6 py-2.5 rounded-xl hover:bg-purple-900 transition-all duration-300 text-sm">Browse Marketplace</a>
+                <a href="marketplace" class="mt-4 inline-block bg-uitmPurple text-white font-bold px-6 py-2.5 rounded-xl hover:bg-purple-900 transition-all duration-300 text-sm">Browse Marketplace</a>
             </div>
         <?php endif; ?>
     </div>
@@ -179,13 +179,13 @@ require_once 'includes/header.php';
                                     <?php echo ucfirst(escape($g['status'])); ?>
                                 </span>
                                 
-                                <a href="edit_gig.php?id=<?php echo $g['gig_id']; ?>" class="text-gray-400 hover:text-indigo-500 transition-colors p-1" title="Edit Gig">
+                                <a href="edit_gig?id=<?php echo $g['gig_id']; ?>" class="text-gray-400 hover:text-indigo-500 transition-colors p-1" title="Edit Gig">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
                                 </a>
 
-                                <form action="gig_action.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this gig? This action cannot be undone.');" class="inline">
+                                <form action="gig_action" method="POST" onsubmit="return confirm('Are you sure you want to delete this gig? This action cannot be undone.');" class="inline">
                                     <input type="hidden" name="gig_id" value="<?php echo $g['gig_id']; ?>">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
@@ -203,7 +203,7 @@ require_once 'includes/header.php';
                 <div class="px-6 py-16 text-center">
                     <svg class="w-12 h-12 text-gray-200 dark:text-slate-600 mx-auto mb-4 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                     <p class="text-gray-500 dark:text-slate-400 font-medium transition-colors duration-300">You don't have any gigs yet.</p>
-                    <a href="create_gig.php" class="mt-4 inline-block bg-emerald-500 text-white font-bold px-6 py-2.5 rounded-xl hover:bg-emerald-600 transition-all duration-300 text-sm">Create your first gig</a>
+                    <a href="create_gig" class="mt-4 inline-block bg-emerald-500 text-white font-bold px-6 py-2.5 rounded-xl hover:bg-emerald-600 transition-all duration-300 text-sm">Create your first gig</a>
                 </div>
             <?php endif; ?>
         </div>
@@ -247,7 +247,7 @@ require_once 'includes/header.php';
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium">
                                         <?php if ($io['status'] === 'paid'): ?>
-                                            <form action="order_action.php" method="POST" class="inline">
+                                            <form action="order_action" method="POST" class="inline">
                                                 <input type="hidden" name="order_id" value="<?php echo $io['order_id']; ?>">
                                                 <input type="hidden" name="action" value="deliver">
                                                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">

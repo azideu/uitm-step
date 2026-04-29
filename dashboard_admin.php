@@ -128,7 +128,7 @@ require_once 'includes/header.php';
 
                             <!-- Admin Status Override (State Machine bypass for disputes) -->
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <form action="order_action.php" method="POST" class="flex gap-2 items-center">
+                                <form action="order_action" method="POST" class="flex gap-2 items-center">
                                     <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
                                     <input type="hidden" name="action"   value="admin_update">
                                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">

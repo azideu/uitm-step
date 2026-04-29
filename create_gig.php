@@ -5,7 +5,7 @@ require_once 'includes/db.php';
 
 // Only students can create gigs
 if ($_SESSION['role'] !== 'student') {
-    redirect('index.php');
+    redirect('home');
 }
 
 // Fetch available tags
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verify CSRF Token
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         set_toast('error', 'Invalid security token.');
-        redirect('create_gig.php');
+        redirect('create_gig');
     }
 
     $title = trim($_POST['title'] ?? '');
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $pdo->commit();
             set_toast('success', "Gig created successfully!");
-            redirect('user_dashboard.php?mode=selling');
+            redirect('user_dashboard?mode=selling');
         } catch (\Exception $e) {
             $pdo->rollBack();
             error_log("Gig Creation Error: " . $e->getMessage());
@@ -104,7 +104,7 @@ require_once 'includes/header.php';
 <div class="max-w-2xl mx-auto bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 transition-colors duration-300">
     <h2 class="text-2xl font-bold mb-6 text-uitmPurple dark:text-purple-300 font-serif">Create a New Gig</h2>
     
-    <form action="create_gig.php" method="POST" enctype="multipart/form-data">
+    <form action="create_gig" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
         <div class="mb-4">
             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Gig Title</label>
@@ -158,7 +158,7 @@ require_once 'includes/header.php';
         </div>
         
         <div class="flex justify-between items-center mt-8">
-            <a href="user_dashboard.php?mode=selling" class="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">Cancel</a>
+            <a href="user_dashboard?mode=selling" class="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">Cancel</a>
             <button type="submit" class="bg-uitmPurple text-white font-bold py-3 px-8 rounded-full hover:bg-purple-900 transition-colors shadow-md hover:shadow-lg focus:ring-4 focus:ring-uitmPurple/30">Publish Gig</button>
         </div>
     </form>

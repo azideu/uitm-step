@@ -25,7 +25,7 @@ require_once 'includes/header.php';
             <p class="text-xl md:text-2xl text-gray-200 mb-10 font-medium max-w-2xl">Our freelancers will take it from here. Discover top UiTM talent for your gigs.</p>
             
             <!-- Search Bar -->
-            <form action="marketplace.php" method="GET" class="relative group mt-4 transform transition-all duration-300">
+            <form action="marketplace" method="GET" class="relative group mt-4 transform transition-all duration-300">
                 <input type="text" name="search" placeholder="Search for any service..." required
                        class="w-full py-5 pl-6 pr-40 rounded-lg bg-white text-black placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-uitmGold shadow-md text-lg">
                 <button type="submit" class="absolute right-2 top-2 bottom-2 bg-uitmGold text-uitmPurple px-8 py-2 rounded-md shadow-sm hover:bg-yellow-400 transition-all duration-300 font-bold text-lg inline-flex items-center">
@@ -37,10 +37,10 @@ require_once 'includes/header.php';
             <!-- Popular Links -->
             <div class="mt-8 flex flex-wrap items-center gap-3 text-sm text-gray-300 font-medium">
                 <span>Popular:</span>
-                <a href="marketplace.php?tag=Programming" class="border border-white/50 rounded-full px-4 py-1 hover:bg-white hover:text-black transition-colors">Programming</a>
-                <a href="marketplace.php?tag=Design" class="border border-white/50 rounded-full px-4 py-1 hover:bg-white hover:text-black transition-colors">Design</a>
-                <a href="marketplace.php?tag=Writing" class="border border-white/50 rounded-full px-4 py-1 hover:bg-white hover:text-black transition-colors">Writing</a>
-                <a href="marketplace.php?tag=Video" class="border border-white/50 rounded-full px-4 py-1 hover:bg-white hover:text-black transition-colors">Video Editing</a>
+                <a href="marketplace?tag=Programming" class="border border-white/50 rounded-full px-4 py-1 hover:bg-white hover:text-black transition-colors">Programming</a>
+                <a href="marketplace?tag=Design" class="border border-white/50 rounded-full px-4 py-1 hover:bg-white hover:text-black transition-colors">Design</a>
+                <a href="marketplace?tag=Writing" class="border border-white/50 rounded-full px-4 py-1 hover:bg-white hover:text-black transition-colors">Writing</a>
+                <a href="marketplace?tag=Video" class="border border-white/50 rounded-full px-4 py-1 hover:bg-white hover:text-black transition-colors">Video Editing</a>
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@ require_once 'includes/header.php';
     
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <!-- Service Card 1 -->
-        <a href="marketplace.php?tag=Design" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1">
+        <a href="marketplace?tag=Design" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1">
             <img src="assets/img/cat_design.jpg" alt="Graphics & Design" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
             <div class="absolute inset-0 bg-uitmPurple/60 opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
             <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
@@ -74,7 +74,7 @@ require_once 'includes/header.php';
         </a>
         
         <!-- Service Card 2 -->
-        <a href="marketplace.php?tag=Programming" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:-rotate-1 delay-100">
+        <a href="marketplace?tag=Programming" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:-rotate-1 delay-100">
             <img src="assets/img/cat_programming.jpg" alt="Programming" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
             <div class="absolute inset-0 bg-uitmPurple/60 opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
              <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
@@ -85,7 +85,7 @@ require_once 'includes/header.php';
         </a>
 
         <!-- Service Card 3 -->
-        <a href="marketplace.php?tag=Writing" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 delay-200">
+        <a href="marketplace?tag=Writing" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 delay-200">
             <img src="assets/img/cat_writing.jpg" alt="Writing" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
             <div class="absolute inset-0 bg-uitmPurple/60 opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
             <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
@@ -96,7 +96,7 @@ require_once 'includes/header.php';
         </a>
 
         <!-- Service Card 4 -->
-        <a href="marketplace.php?tag=Video" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:-rotate-1 delay-300">
+        <a href="marketplace?tag=Video" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:-rotate-1 delay-300">
             <img src="assets/img/cat_video.jpg" alt="Video Editing" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
             <div class="absolute inset-0 bg-uitmPurple/60 opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
             <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
@@ -165,31 +165,31 @@ require_once 'includes/header.php';
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-gray-100 dark:border-slate-800 transition-colors duration-300">
     <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-12 font-serif">Explore the marketplace</h2>
     <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-        <a href="marketplace.php?tag=Programming" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
+        <a href="marketplace?tag=Programming" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
             <div class="bg-gray-50 dark:bg-slate-700 rounded-full p-4 mb-3 group-hover:bg-purple-50 dark:group-hover:bg-uitmPurple/20 transition-colors">
                 <svg class="w-8 h-8 text-gray-500 dark:text-slate-400 group-hover:text-uitmPurple dark:group-hover:text-purple-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
             </div>
             <span class="font-bold text-sm text-center text-gray-700 dark:text-slate-200 group-hover:text-uitmPurple dark:group-hover:text-purple-300">Programming & Tech</span>
         </a>
-        <a href="marketplace.php?tag=Design" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
+        <a href="marketplace?tag=Design" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
             <div class="bg-gray-50 dark:bg-slate-700 rounded-full p-4 mb-3 group-hover:bg-purple-50 dark:group-hover:bg-uitmPurple/20 transition-colors">
                 <svg class="w-8 h-8 text-gray-500 dark:text-slate-400 group-hover:text-uitmPurple dark:group-hover:text-purple-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
             </div>
             <span class="font-bold text-sm text-center text-gray-700 dark:text-slate-200 group-hover:text-uitmPurple dark:group-hover:text-purple-300">Graphics & Design</span>
         </a>
-        <a href="marketplace.php?tag=Writing" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
+        <a href="marketplace?tag=Writing" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
             <div class="bg-gray-50 dark:bg-slate-700 rounded-full p-4 mb-3 group-hover:bg-purple-50 dark:group-hover:bg-uitmPurple/20 transition-colors">
                 <svg class="w-8 h-8 text-gray-500 dark:text-slate-400 group-hover:text-uitmPurple dark:group-hover:text-purple-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477-4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
             </div>
             <span class="font-bold text-sm text-center text-gray-700 dark:text-slate-200 group-hover:text-uitmPurple dark:group-hover:text-purple-300">Writing & Translation</span>
         </a>
-        <a href="marketplace.php?tag=Video" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
+        <a href="marketplace?tag=Video" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
             <div class="bg-gray-50 dark:bg-slate-700 rounded-full p-4 mb-3 group-hover:bg-purple-50 dark:group-hover:bg-uitmPurple/20 transition-colors">
                 <svg class="w-8 h-8 text-gray-500 dark:text-slate-400 group-hover:text-uitmPurple dark:group-hover:text-purple-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
             </div>
             <span class="font-bold text-sm text-center text-gray-700 dark:text-slate-200 group-hover:text-uitmPurple dark:group-hover:text-purple-300">Video & Animation</span>
         </a>
-        <a href="marketplace.php?tag=Tutor" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
+        <a href="marketplace?tag=Tutor" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
             <div class="bg-gray-50 dark:bg-slate-700 rounded-full p-4 mb-3 group-hover:bg-purple-50 dark:group-hover:bg-uitmPurple/20 transition-colors">
                 <svg class="w-8 h-8 text-gray-500 dark:text-slate-400 group-hover:text-uitmPurple dark:group-hover:text-purple-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
             </div>
@@ -257,7 +257,7 @@ require_once 'includes/header.php';
             <?php
                 $hero_cta_class = 'bg-white text-uitmPurple hover:bg-gray-100 font-bold px-10 py-4 rounded-md text-xl transition-all duration-300 inline-block shadow-md hover:shadow-lg transform hover:-translate-y-0.5';
                 $is_logged_in = isset($_SESSION['user_id']);
-                $hero_cta_href = $is_logged_in ? 'marketplace.php' : 'register.php';
+                $hero_cta_href = $is_logged_in ? 'marketplace' : 'register';
                 $hero_cta_text = $is_logged_in ? 'Explore Marketplace' : 'Join UiTM STEP';
             ?>
             <a href="<?php echo htmlspecialchars($hero_cta_href, ENT_QUOTES, 'UTF-8'); ?>" class="<?php echo $hero_cta_class; ?>"><?php echo htmlspecialchars($hero_cta_text, ENT_QUOTES, 'UTF-8'); ?></a>

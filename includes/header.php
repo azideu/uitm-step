@@ -70,7 +70,7 @@ require_once 'functions.php';
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="index.php" class="flex items-center space-x-2 text-2xl font-bold tracking-wider text-uitmGold hover:scale-105 transition-transform duration-300 font-serif">
+                    <a href="home" class="flex items-center space-x-2 text-2xl font-bold tracking-wider text-uitmGold hover:scale-105 transition-transform duration-300 font-serif">
                         <img src="assets/img/uitm_logo.png" alt="UiTM Logo" class="h-10 w-10 object-contain rounded-md shadow-sm">
                         <span class="drop-shadow-sm">UiTM STEP</span>
                     </a>
@@ -90,25 +90,25 @@ require_once 'functions.php';
                             <?php $current_mode = $_SESSION['mode'] ?? 'buying'; ?>
                             <div class="group relative inline-block">
                             <?php if($current_mode === 'buying'): ?>
-                                <a href="user_dashboard.php?mode=selling" class="bg-uitmGold text-uitmPurple px-4 py-1.5 rounded-md font-bold text-sm shadow-sm hover:bg-yellow-400 transition-all duration-300 transform group-hover:-translate-y-0.5">Switch to Selling</a>
+                                <a href="user_dashboard?mode=selling" class="bg-uitmGold text-uitmPurple px-4 py-1.5 rounded-md font-bold text-sm shadow-sm hover:bg-yellow-400 transition-all duration-300 transform group-hover:-translate-y-0.5">Switch to Selling</a>
                             <?php else: ?>
-                                <a href="user_dashboard.php?mode=buying" class="bg-uitmGold text-uitmPurple px-4 py-1.5 rounded-md font-bold text-sm shadow-sm hover:bg-yellow-400 transition-all duration-300 transform group-hover:-translate-y-0.5">Switch to Buying</a>
+                                <a href="user_dashboard?mode=buying" class="bg-uitmGold text-uitmPurple px-4 py-1.5 rounded-md font-bold text-sm shadow-sm hover:bg-yellow-400 transition-all duration-300 transform group-hover:-translate-y-0.5">Switch to Buying</a>
                             <?php endif; ?>
                             </div>
                             
-                            <a href="marketplace.php" class="hover:text-uitmGold hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors flex items-center space-x-1">
+                            <a href="marketplace" class="hover:text-uitmGold hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors flex items-center space-x-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
                                 </svg>
                                 <span>Marketplace</span>
                             </a>
-                            <a href="chat.php" class="hover:text-uitmGold hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors flex items-center space-x-1">
+                            <a href="chat" class="hover:text-uitmGold hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors flex items-center space-x-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd" />
                                 </svg>
                                 <span>Chat</span>
                             </a>
-                            <a href="profile.php" class="hover:text-uitmGold hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors flex items-center space-x-1">
+                            <a href="profile" class="hover:text-uitmGold hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors flex items-center space-x-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                                 </svg>
@@ -117,13 +117,13 @@ require_once 'functions.php';
                         <?php endif; ?>
                         
                         <?php if($_SESSION['role'] === 'admin'): ?>
-                            <a href="dashboard_admin.php" class="hover:text-uitmGold hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors flex items-center space-x-1">
+                            <a href="dashboard_admin" class="hover:text-uitmGold hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors flex items-center space-x-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                                 </svg>
                                 <span>Dashboard</span>
                             </a>
-                            <a href="profile.php" class="hover:text-uitmGold hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors flex items-center space-x-1">
+                            <a href="profile" class="hover:text-uitmGold hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors flex items-center space-x-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                                 </svg>
@@ -132,8 +132,8 @@ require_once 'functions.php';
                         <?php endif; ?>
                         
                     <?php else: ?>
-                        <a href="login.php" class="hover:text-uitmGold px-3 py-2 rounded-md font-medium transition-colors">Login</a>
-                        <a href="register.php" class="bg-uitmGold text-uitmPurple px-5 py-2 rounded-md font-bold shadow-sm hover:bg-yellow-400 hover:scale-105 transition-all duration-300">Register</a>
+                        <a href="login" class="hover:text-uitmGold px-3 py-2 rounded-md font-medium transition-colors">Login</a>
+                        <a href="register" class="bg-uitmGold text-uitmPurple px-5 py-2 rounded-md font-bold shadow-sm hover:bg-yellow-400 hover:scale-105 transition-all duration-300">Register</a>
                     <?php endif; ?>
                 </div>
             </div>
