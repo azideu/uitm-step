@@ -505,25 +505,33 @@ function sendMessage() {
         headers: { 'Content-Type': 'application/json' },
         body   : JSON.stringify({ receiver_id: receiverId, content }),
     })
-    .then(res => res.json())
+    .then(async res => {
+        if (!res.ok) {
+            throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        return res.json();
+    })
     .then(data => {
         if (!data.success) {
-            // Roll back optimistic bubble, restore input
-            document.querySelector(`[data-msg-id="${tempId}"]`)?.remove();
-            inputField.value = content;
-            alert(data.error || 'Message failed to send. Please try again.');
-            return;
+            throw new Error(data.error || 'Message failed to send. Please try again.');
         }
 
-        // 3. Swap temp id → real message_id so SSE dedup guard fires correctly
+        // 3. Swap temp id -> real message_id so SSE dedup guard fires correctly
         const realId = safeCursor(data.message_id);
-        const bubble = document.querySelector(`[data-msg-id="${tempId}"]`) || document.querySelector(`[data-msg-id="${realId}"]`);
-        if (bubble) bubble.dataset.msgId = realId;
-        syncOutgoingBubbleState(realId);
+        const bubble = document.querySelector(`[data-msg-id="${tempId}"]`);
+        
+        if (bubble) {
+            bubble.dataset.msgId = realId;
+            syncOutgoingBubbleState(realId);
+        }
+        
         if (realId > lastMessageId) lastMessageId = realId;
     })
     .catch(err => {
         console.error('[chat] Send error:', err);
+        // Show the actual error to help debug online issues
+        alert('Chat Error: ' + err.message);
+        
         document.querySelector(`[data-msg-id="${tempId}"]`)?.remove();
         inputField.value = content;
     });
