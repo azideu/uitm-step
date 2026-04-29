@@ -27,7 +27,7 @@ require_once 'includes/header.php';
             <!-- Search Bar -->
             <form action="marketplace.php" method="GET" class="relative group mt-4 transform transition-all duration-300">
                 <input type="text" name="search" placeholder="Search for any service..." required
-                       class="w-full py-5 pl-6 pr-40 rounded-lg glass-panel text-black placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-uitmGold shadow-md text-lg">
+                       class="w-full py-5 pl-6 pr-40 rounded-lg bg-white text-black placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-uitmGold shadow-md text-lg">
                 <button type="submit" class="absolute right-2 top-2 bottom-2 bg-uitmGold text-uitmPurple px-8 py-2 rounded-md shadow-sm hover:bg-yellow-400 transition-all duration-300 font-bold text-lg inline-flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     Search
