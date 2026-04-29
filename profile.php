@@ -143,9 +143,8 @@ require_once 'includes/header.php';
 
 <div class="max-w-6xl mx-auto space-y-8 animate-fade-in-up pb-12">
     <!-- Hero Header -->
-    <div class="relative bg-gradient-to-br from-uitmPurple to-purple-900 rounded-3xl p-8 sm:p-12 overflow-hidden shadow-2xl">
-        <div class="absolute -right-20 -top-20 w-64 h-64 bg-uitmGold rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow"></div>
-        <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow font-serif"></div>
+    <div class="relative bg-uitmPurple rounded-2xl p-8 sm:p-12 overflow-hidden shadow-xl border border-uitmPurple/30">
+        <div class="absolute inset-0 bg-noise opacity-10"></div>
         
         <div class="relative z-10 flex flex-col sm:flex-row items-center gap-8">
             <div class="relative group">
@@ -158,7 +157,7 @@ require_once 'includes/header.php';
             </div>
             <div class="text-center sm:text-left text-white">
                 <h1 class="text-3xl sm:text-4xl font-bold font-serif mb-2"><?= escape($user['name']) ?></h1>
-                <p class="inline-flex items-center text-uitmGold bg-white/10 px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
+                <p class="inline-flex items-center text-uitmGold bg-white/10 px-3 py-1 rounded-md text-sm font-medium border border-white/10">
                     <?= $_SESSION['role'] === 'admin' ? 'Admin ID' : 'Student ID' ?>: <?= escape($user['student_id']) ?>
                 </p>
                 <div class="mt-3 text-purple-200">
@@ -272,7 +271,7 @@ require_once 'includes/header.php';
                         </div>
 
                         <div class="pt-4 flex justify-end">
-                            <button type="submit" class="bg-uitmPurple text-white px-8 py-3 rounded-full font-bold shadow-md hover:bg-purple-900 transition-colors hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-uitmPurple/30">Save Profile</button>
+                            <button type="submit" class="bg-uitmPurple text-white px-8 py-3 rounded-md font-bold shadow-sm hover:bg-purple-900 transition-colors">Save Profile</button>
                         </div>
                     </form>
                 </div>
@@ -334,7 +333,7 @@ require_once 'includes/header.php';
                 </svg>
                 <h3 class="font-bold text-red-800 dark:text-red-300 text-lg mb-2">Ready to leave?</h3>
                 <p class="text-sm text-red-600 dark:text-red-400 mb-6 text-center">You can securely log out of your account to ensure no one else can access it.</p>
-                <a href="logout.php" class="w-full text-center bg-red-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-red-700 transition-colors shadow-md hover:shadow-lg focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+                <a href="logout.php" class="w-full text-center bg-red-600 text-white font-bold py-3 px-4 rounded-md hover:bg-red-700 transition-colors shadow-sm">
                     Logout of UiTM STEP
                 </a>
             </div>

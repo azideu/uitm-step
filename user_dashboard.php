@@ -21,7 +21,7 @@ require_once 'includes/header.php';
 
 <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards;">
     <div>
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r <?php echo $mode === 'buying' ? 'from-indigo-700 to-blue-500 dark:from-indigo-400 dark:to-blue-300' : 'from-emerald-600 to-teal-400 dark:from-emerald-400 dark:to-teal-300'; ?> font-serif pb-2">
+        <h1 class="text-4xl sm:text-5xl font-extrabold <?php echo $mode === 'buying' ? 'text-indigo-700 dark:text-indigo-400' : 'text-emerald-600 dark:text-emerald-400'; ?> font-serif pb-2">
             <?php echo $mode === 'buying' ? 'Buying Dashboard' : 'Selling Dashboard'; ?>
         </h1>
         <p class="text-gray-500 dark:text-slate-400 mt-1 transition-colors duration-300">
@@ -30,7 +30,7 @@ require_once 'includes/header.php';
     </div>
     
     <?php if ($mode === 'selling'): ?>
-        <a href="create_gig.php" class="bg-gradient-to-r from-emerald-500 to-teal-400 text-white font-bold py-3 px-6 rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 shadow-md flex items-center gap-2">
+        <a href="create_gig.php" class="bg-emerald-500 text-white font-bold py-3 px-6 rounded-md hover:bg-emerald-600 transition-all duration-300 shadow-sm flex items-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
             Create New Gig
         </a>
@@ -52,11 +52,11 @@ require_once 'includes/header.php';
     $orders = $stmt->fetchAll();
     ?>
     
-    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards;">
-        <div class="h-1 bg-gradient-to-r from-indigo-500 to-blue-500"></div>
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards;">
+        <div class="h-1 bg-indigo-500"></div>
         <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between transition-colors duration-300">
             <h2 class="text-xl font-bold text-gray-900 dark:text-white">My Purchases</h2>
-            <span class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs font-bold px-3 py-1 rounded-full border border-indigo-100 dark:border-indigo-800/50"><?php echo count($orders); ?> orders</span>
+            <span class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs font-bold px-3 py-1 rounded-md border border-indigo-100 dark:border-indigo-800/50"><?php echo count($orders); ?> orders</span>
         </div>
         <?php if (count($orders) > 0): ?>
             <div class="p-6 space-y-6">
@@ -160,11 +160,11 @@ require_once 'includes/header.php';
     
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- My Gigs -->
-        <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards;">
-            <div class="h-1 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards;">
+            <div class="h-1 bg-emerald-500"></div>
             <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between transition-colors duration-300">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white">My Active Gigs</h2>
-                <span class="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-bold text-xs px-3 py-1 rounded-full border border-emerald-100 dark:border-emerald-800/50"><?php echo count($my_gigs); ?></span>
+                <span class="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-bold text-xs px-3 py-1 rounded-md border border-emerald-100 dark:border-emerald-800/50"><?php echo count($my_gigs); ?></span>
             </div>
             <?php if(count($my_gigs) > 0): ?>
                 <ul class="divide-y divide-gray-50 dark:divide-slate-800">
@@ -175,7 +175,7 @@ require_once 'includes/header.php';
                                 <p class="text-xs text-gray-400 dark:text-slate-400 mt-1 font-medium">RM <?php echo number_format($g['price'], 2); ?> &bull; <?php echo escape($g['category']); ?></p>
                             </div>
                             <div class="flex items-center gap-3">
-                                <span class="px-3 py-1 text-xs font-bold rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex-shrink-0">
+                                <span class="px-3 py-1 text-xs font-bold rounded-md bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 flex-shrink-0">
                                     <?php echo ucfirst(escape($g['status'])); ?>
                                 </span>
                                 
@@ -209,11 +209,11 @@ require_once 'includes/header.php';
         </div>
         
         <!-- Incoming Orders -->
-        <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-delay:100ms; animation-fill-mode: forwards;">
-            <div class="h-1 bg-gradient-to-r from-teal-400 to-emerald-500"></div>
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-delay:100ms; animation-fill-mode: forwards;">
+            <div class="h-1 bg-emerald-500"></div>
             <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between transition-colors duration-300">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white">Incoming Orders</h2>
-                <span class="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-bold text-xs px-3 py-1 rounded-full border border-emerald-100 dark:border-emerald-800/50"><?php echo count($incoming_orders); ?></span>
+                <span class="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-bold text-xs px-3 py-1 rounded-md border border-emerald-100 dark:border-emerald-800/50"><?php echo count($incoming_orders); ?></span>
             </div>
             <?php if(count($incoming_orders) > 0): ?>
                 <div class="overflow-x-auto">
@@ -232,7 +232,7 @@ require_once 'includes/header.php';
                                     <td class="px-6 py-4 text-sm font-semibold text-gray-900 dark:text-white max-w-[140px] truncate"><?php echo escape($io['title']); ?></td>
                                     <td class="px-6 py-4 text-sm text-gray-500 dark:text-slate-400">
                                         <div class="flex items-center gap-2">
-                                            <div class="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-500 to-teal-400 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
+                                            <div class="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
                                                 <?php echo strtoupper(substr($io['buyer_name'], 0, 1)); ?>
                                             </div>
                                             <?php echo escape($io['buyer_name']); ?>
@@ -264,7 +264,7 @@ require_once 'includes/header.php';
                                                 default     => 'bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300',
                                             };
                                             ?>
-                                            <span class="px-3 py-1 inline-flex text-xs font-bold rounded-full <?php echo $b; ?> transition-colors duration-300">
+                                            <span class="px-3 py-1 inline-flex text-xs font-bold rounded-md <?php echo $b; ?> transition-colors duration-300">
                                                 <?php echo ucfirst(escape($s)); ?>
                                             </span>
                                         <?php endif; ?>

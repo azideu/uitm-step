@@ -90,9 +90,9 @@ require_once 'functions.php';
                             <?php $current_mode = $_SESSION['mode'] ?? 'buying'; ?>
                             <div class="group relative inline-block">
                             <?php if($current_mode === 'buying'): ?>
-                                <a href="user_dashboard.php?mode=selling" class="bg-uitmGold text-uitmPurple px-4 py-1.5 rounded-full font-bold text-sm shadow-md hover:bg-yellow-400 hover:shadow-lg transition-all duration-300 transform group-hover:-translate-y-0.5">Switch to Selling</a>
+                                <a href="user_dashboard.php?mode=selling" class="bg-uitmGold text-uitmPurple px-4 py-1.5 rounded-md font-bold text-sm shadow-sm hover:bg-yellow-400 transition-all duration-300 transform group-hover:-translate-y-0.5">Switch to Selling</a>
                             <?php else: ?>
-                                <a href="user_dashboard.php?mode=buying" class="bg-uitmGold text-uitmPurple px-4 py-1.5 rounded-full font-bold text-sm shadow-md hover:bg-yellow-400 hover:shadow-lg transition-all duration-300 transform group-hover:-translate-y-0.5">Switch to Buying</a>
+                                <a href="user_dashboard.php?mode=buying" class="bg-uitmGold text-uitmPurple px-4 py-1.5 rounded-md font-bold text-sm shadow-sm hover:bg-yellow-400 transition-all duration-300 transform group-hover:-translate-y-0.5">Switch to Buying</a>
                             <?php endif; ?>
                             </div>
                             
@@ -133,7 +133,7 @@ require_once 'functions.php';
                         
                     <?php else: ?>
                         <a href="login.php" class="hover:text-uitmGold px-3 py-2 rounded-md font-medium transition-colors">Login</a>
-                        <a href="register.php" class="bg-gradient-to-r from-uitmGold to-yellow-400 text-uitmPurple px-5 py-2 rounded-full font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">Register</a>
+                        <a href="register.php" class="bg-uitmGold text-uitmPurple px-5 py-2 rounded-md font-bold shadow-sm hover:bg-yellow-400 hover:scale-105 transition-all duration-300">Register</a>
                     <?php endif; ?>
                 </div>
             </div>

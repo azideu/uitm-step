@@ -38,7 +38,7 @@ require_once 'includes/header.php';
 
 <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
     <div>
-        <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-uitmPurple to-indigo-600 dark:from-purple-400 dark:to-indigo-400 font-serif pb-1">Admin Dashboard</h1>
+        <h1 class="text-4xl font-extrabold text-uitmPurple dark:text-purple-300 font-serif pb-1">Admin Dashboard</h1>
         <p class="text-gray-500 dark:text-slate-400 mt-1 transition-colors duration-300">Full order oversight &amp; dispute resolution panel.</p>
     </div>
     <div class="flex gap-3">
@@ -48,15 +48,15 @@ require_once 'includes/header.php';
         foreach ($orders as $o) { $counts[$o['status']] = ($counts[$o['status']] ?? 0) + 1; }
         ?>
         <?php foreach ($counts as $st => $count): ?>
-            <span class="px-3 py-1.5 text-xs font-bold rounded-full <?php echo status_badge($st); ?>">
+            <span class="px-3 py-1.5 text-xs font-bold rounded-md <?php echo status_badge($st); ?>">
                 <?php echo ucfirst($st); ?>: <?php echo $count; ?>
             </span>
         <?php endforeach; ?>
     </div>
 </div>
 
-<div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300">
-    <div class="h-1 bg-gradient-to-r from-uitmPurple to-indigo-500"></div>
+<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300">
+    <div class="h-1 bg-uitmPurple"></div>
 
     <?php if (count($orders) > 0): ?>
         <div class="overflow-x-auto">
@@ -121,7 +121,7 @@ require_once 'includes/header.php';
 
                             <!-- Current Status Badge -->
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-3 py-1 inline-flex text-xs font-bold rounded-full <?php echo status_badge($o['status']); ?>">
+                                <span class="px-3 py-1 inline-flex text-xs font-bold rounded-md <?php echo status_badge($o['status']); ?>">
                                     <?php echo ucfirst(escape($o['status'])); ?>
                                 </span>
                             </td>

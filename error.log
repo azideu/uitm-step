@@ -1,1 +1,236 @@
 [27-Apr-2026 15:24:24 Asia/Kuala_Lumpur] DB Connection Error: SQLSTATE[HY000] [2002] No such file or directory
+[29-Apr-2026 11:01:30 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:01:30 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/stream_messages.php:61
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/stream_messages.php(61): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/stream_messages.php on line 61
+[29-Apr-2026 11:01:54 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:01:54 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/stream_messages.php:61
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/stream_messages.php(61): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/stream_messages.php on line 61
+[29-Apr-2026 11:02:00 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:00 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/stream_messages.php:61
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/stream_messages.php(61): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/stream_messages.php on line 61
+[29-Apr-2026 11:02:03 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:07 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:10 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:13 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:16 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:19 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:22 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:24 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:27 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:31 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:34 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:37 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:40 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:42 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:46 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:49 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:51 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:55 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:02:58 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:01 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:04 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:07 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:10 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:13 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:16 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:19 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:22 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:25 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:28 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:31 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:34 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:37 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:40 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:43 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:46 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:49 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:03:52 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:04:21 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:04:21 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:04:22 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php:37
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php(37): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/fetch_messages.php on line 37
+[29-Apr-2026 11:04:22 Asia/Kuala_Lumpur] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'status' in 'field list' in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/stream_messages.php:61
+Stack trace:
+#0 /Applications/XAMPP/xamppfiles/htdocs/STEP/api/stream_messages.php(61): PDO->prepare('\n    SELECT mes...')
+#1 {main}
+  thrown in /Applications/XAMPP/xamppfiles/htdocs/STEP/api/stream_messages.php on line 61

@@ -80,7 +80,7 @@ require_once 'includes/header.php';
 
 <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
     <div>
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-uitmPurple to-indigo-600 dark:from-purple-300 dark:via-purple-400 dark:to-indigo-600 font-serif mb-2 transition-colors duration-300 drop-shadow-sm">Marketplace</h1>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-uitmPurple dark:text-white font-serif mb-2 transition-colors duration-300">Marketplace</h1>
         <p class="text-gray-500 dark:text-slate-400 transition-colors duration-300">Discover and hire top talent from your campus.</p>
     </div>
     
@@ -107,7 +107,7 @@ require_once 'includes/header.php';
             <?php endforeach; ?>
         </select>
         
-        <button type="submit" class="bg-gradient-to-r from-uitmPurple to-indigo-900 text-white px-6 py-2.5 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 font-bold">Filter</button>
+        <button type="submit" class="bg-uitmPurple text-white px-6 py-2.5 rounded-xl hover:bg-indigo-900 transition-all duration-300 font-bold shadow-sm">Filter</button>
     </form>
 </div>
 
@@ -167,7 +167,7 @@ require_once 'includes/header.php';
                         <?php endif; ?>
                     </div>
 
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+                    <div class="absolute inset-0 bg-uitmPurple/20 pointer-events-none"></div>
                     <div class="absolute bottom-3 left-4 pointer-events-none z-20">
                         <span class="text-[10px] font-bold text-white uppercase tracking-widest bg-uitmPurple/80 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-white/10 shadow-sm"><?php echo escape($gig['category']); ?></span>
                     </div>
@@ -183,7 +183,7 @@ require_once 'includes/header.php';
                                 ? escape($gig['profile_picture']) 
                                 : 'https://ui-avatars.com/api/?name=' . urlencode($gig['seller_name']) . '&background=330066&color=FFD700';
                         ?>
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-uitmPurple to-indigo-600 flex items-center justify-center text-white font-bold mr-3 overflow-hidden shrink-0 border-2 border-white shadow-sm ring-2 ring-purple-100">
+                        <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold mr-3 overflow-hidden shrink-0 border-2 border-white shadow-sm">
                             <img src="<?php echo $seller_avatar; ?>" alt="<?php echo escape($gig['seller_name']); ?>" class="w-full h-full object-cover">
                         </div>
                         <div>

@@ -151,7 +151,7 @@ require_once 'includes/header.php';
                 </optgroup>
             </select>
         </div>
-        <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-3 px-4 rounded-full shadow-md hover:shadow-lg hover:bg-purple-900 transition-all focus:ring-4 focus:ring-uitmPurple/30">Register</button>
+        <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-3 px-4 rounded-md shadow-sm hover:bg-purple-900 transition-all">Register</button>
     </form>
 
     <?php if ($google_enabled): ?>
@@ -172,7 +172,7 @@ require_once 'includes/header.php';
         <div class="flex justify-center">
            <div class="g_id_signin"
                data-type="standard"
-               data-shape="pill"
+               data-shape="rectangular"
                data-theme="outline"
                data-text="signup_with"
                data-size="large"

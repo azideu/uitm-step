@@ -113,7 +113,7 @@ require_once 'includes/header.php';
         <!-- Left: Gig Info -->
         <div class="flex-grow bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300">
             <!-- Header gradient band -->
-            <div class="h-2 bg-gradient-to-r from-uitmPurple via-indigo-600 to-blue-700 bg-moving-gradient"></div>
+            <div class="h-2 bg-uitmPurple"></div>
             
             <div class="p-8 md:p-10">
                 <span class="inline-block bg-purple-100 dark:bg-purple-900/30 text-uitmPurple dark:text-purple-300 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6 transition-colors duration-300">
@@ -129,7 +129,7 @@ require_once 'includes/header.php';
                             ? escape($gig['profile_picture']) 
                             : 'https://ui-avatars.com/api/?name=' . urlencode($gig['seller_name']) . '&background=330066&color=FFD700';
                     ?>
-                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-uitmPurple to-indigo-600 flex items-center justify-center text-white font-extrabold text-lg flex-shrink-0 overflow-hidden border-2 border-white shadow-sm">
+                    <div class="w-12 h-12 rounded-full bg-uitmPurple flex items-center justify-center text-white font-extrabold text-lg flex-shrink-0 overflow-hidden border-2 border-white shadow-sm">
                         <img src="<?php echo $seller_avatar; ?>" alt="<?php echo escape($gig['seller_name']); ?>" class="w-full h-full object-cover">
                     </div>
                     <div>
@@ -243,7 +243,7 @@ require_once 'includes/header.php';
         <div class="lg:w-80 xl:w-96 flex-shrink-0">
             <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden sticky top-24 transition-colors duration-300">
                 <!-- Price header -->
-                <div class="bg-gradient-to-br from-[#1a0033] to-uitmPurple p-8 text-center text-white">
+                <div class="bg-uitmPurple p-8 text-center text-white">
                     <div class="text-sm uppercase tracking-widest text-white/70 font-bold mb-2">Starting Price</div>
                     <div class="text-5xl font-extrabold tracking-tight font-serif">RM <?php echo number_format($gig['price'], 2); ?></div>
                     <div class="text-white/60 text-sm mt-2">One-time fee</div>
@@ -268,7 +268,7 @@ require_once 'includes/header.php';
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="w-full bg-gradient-to-r from-uitmPurple to-indigo-800 text-white font-bold py-4 px-6 rounded-2xl hover:shadow-xl hover:scale-[1.02] transition-all duration-300 shadow-md text-base flex items-center justify-center gap-2">
+                            <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-4 px-6 rounded-md shadow-sm hover:bg-purple-900 transition-all duration-300 text-base flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 Verify & Submit Order
                             </button>
