@@ -285,6 +285,12 @@ require_once 'includes/header.php';
                             <svg class="w-8 h-8 text-blue-400 dark:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             This is your own gig.
                         </div>
+                        <div class="mt-4">
+                            <a href="edit_gig.php?id=<?php echo $gig_id; ?>" class="w-full bg-white dark:bg-slate-800 border-2 border-uitmPurple text-uitmPurple dark:text-purple-400 hover:bg-uitmPurple hover:text-white dark:hover:bg-purple-900 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                Edit Gig Details
+                            </a>
+                        </div>
                     <?php endif; ?>
                     
                     <!-- Trust badges -->
