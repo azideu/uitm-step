@@ -14,4 +14,4 @@ RewriteRule ^(.+)\.php$ /$1 [R=301,L]
 # 4. Internally rewrite clean URLs to .php files
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^([^/]+)$ $1.php [NC,L]
+RewriteRule ^(.+)$ $1.php [NC,L]

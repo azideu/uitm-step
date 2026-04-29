@@ -71,7 +71,7 @@ require_once 'includes/header.php';
 
 <div class="max-w-md mx-auto bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 transition-colors duration-300 mt-10">
     <h2 class="text-2xl font-bold mb-6 text-center text-uitmPurple dark:text-purple-300 font-serif">Register for UiTM STEP</h2>
-    <form action="register.php" method="POST">
+    <form action="register" method="POST">
         <div class="mb-4">
             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Student Email</label>
             <input type="email" name="email" id="email_input" required pattern=".*@student\.uitm\.edu\.my" title="Must be a @student.uitm.edu.my email" placeholder="xxxxxxxxxx@student.uitm.edu.my" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
@@ -224,7 +224,7 @@ function handleGoogleAuthRegister(response) {
         return;
     }
 
-    fetch('api/google_auth.php', {
+    fetch('api/google_auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -246,7 +246,7 @@ function handleGoogleAuthRegister(response) {
     })
     .then(function (result) {
         if (result.ok && result.data && result.data.success) {
-            window.location.href = result.data.redirect || 'index.php';
+            window.location.href = result.data.redirect || 'home';
             return;
         }
         var message = (result.data && result.data.error)

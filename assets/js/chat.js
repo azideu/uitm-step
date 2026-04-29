@@ -272,7 +272,7 @@ function loadHistory() {
     // Release session lock before a long-lived AJAX call
     // (session_write_close is already called in stream_messages.php;
     //  fetch_messages.php closes it too after reading user_id)
-    fetch(`api/fetch_messages.php?user=${receiverId}`)
+    fetch(`api/fetch_messages?user=${receiverId}`)
         .then(res => {
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             return res.json();
@@ -314,7 +314,7 @@ function startStream() {
     sseRetryCount = 0;
     setStatusBadge('connecting');
 
-    const url = `api/stream_messages.php?user=${receiverId}&last_id=${cursor}`;
+    const url = `api/stream_messages?user=${receiverId}&last_id=${cursor}`;
     eventSource = new EventSource(url);
 
     eventSource.onopen = function () {
@@ -433,7 +433,7 @@ function closeStream() {
 function pollNewMessages() {
     if (!receiverId) return;
 
-    fetch(`api/fetch_messages.php?user=${receiverId}`)
+    fetch(`api/fetch_messages?user=${receiverId}`)
         .then(res => res.json())
         .then(data => {
             const msgs = data.messages || [];
@@ -500,7 +500,7 @@ function sendMessage() {
     scrollToBottom(true);
 
     // 2. POST to server
-    fetch('api/send_message.php', {
+    fetch('api/send_message', {
         method : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body   : JSON.stringify({ receiver_id: receiverId, content }),
@@ -542,7 +542,7 @@ window.addEventListener('beforeunload', () => {
 // ---------------------------------------------------------------------------
 function markRead() {
     if (!receiverId) return;
-    fetch('api/mark_read.php', {
+    fetch('api/mark_read', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user: receiverId })
