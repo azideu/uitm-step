@@ -32,10 +32,11 @@ if ($receiver_id <= 0 || empty($content)) {
 }
 
 // Insert message
-$stmt = $pdo->prepare("INSERT INTO messages (sender_id, receiver_id, content) VALUES (?, ?, ?)");
-if ($stmt->execute([$sender_id, $receiver_id, $content])) {
+try {
+    $stmt = $pdo->prepare("INSERT INTO messages (sender_id, receiver_id, content) VALUES (?, ?, ?)");
+    $stmt->execute([$sender_id, $receiver_id, $content]);
     echo json_encode(['success' => true, 'message_id' => (int)$pdo->lastInsertId()]);
-} else {
-    echo json_encode(['success' => false, 'error' => 'Database error']);
+} catch (Exception $e) {
+    echo json_encode(['success' => false, 'error' => 'Database error: ' . $e->getMessage()]);
 }
 ?>
