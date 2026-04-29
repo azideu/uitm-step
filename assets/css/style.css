@@ -64,46 +64,56 @@
 @keyframes chatBubbleInFromLeft {
     from {
         opacity: 0;
-        transform: translate3d(-8px, 0, 0);
+        transform: translate3d(-20px, 10px, 0) rotate(-2deg);
     }
     to {
         opacity: 1;
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0) rotate(0);
     }
 }
 
 @keyframes chatBubbleInFromRight {
     from {
         opacity: 0;
-        transform: translate3d(8px, 0, 0);
+        transform: translate3d(20px, 10px, 0) rotate(2deg);
     }
     to {
         opacity: 1;
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0) rotate(0);
     }
 }
 
 .chat-bubble {
     overflow-wrap: anywhere;
-    border-radius: 12px;
+    border-radius: var(--border-radius-sharp);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-family: var(--font-ui);
+    padding: 12px 16px;
 }
 
 .chat-bubble-incoming {
-    animation: chatBubbleInFromLeft 0.2s ease-out both;
+    animation: chatBubbleInFromLeft 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    background: rgba(255,255,255,0.05);
+    border-left: 4px solid var(--color-accent);
+    color: var(--color-fg);
 }
 
 .chat-bubble-outgoing {
-    animation: chatBubbleInFromRight 0.2s ease-out both;
+    animation: chatBubbleInFromRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    background: var(--color-bg);
+    border: 1px solid var(--color-accent);
+    box-shadow: 3px 3px 0px var(--color-accent);
+    color: var(--color-fg);
 }
 
 .chat-bubble-mine::selection {
-    background: rgba(255, 255, 255, 0.95);
-    color: #330066;
+    background: var(--color-accent);
+    color: #000;
 }
 
 .chat-bubble-theirs::selection {
-    background: #330066;
-    color: #ffffff;
+    background: var(--color-accent);
+    color: #000;
 }
 
 /* Scroll-to-bottom button: JS toggles .visible class */
