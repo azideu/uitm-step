@@ -161,7 +161,7 @@ require_once 'includes/header.php';
         <span class="h-px bg-gray-300 dark:bg-slate-700 flex-1"></span>
     </div>
 
-    <p class="mb-2 text-sm text-gray-600 dark:text-slate-400">Select your campus above, then continue with Google.</p>
+    <p class="mb-2 text-sm text-gray-600 dark:text-slate-400">Continue with Google to sign up quickly.</p>
     <div id="google-auth-error" class="hidden mb-3 rounded border border-red-200 bg-red-50 text-red-700 px-3 py-2 text-sm"></div>
 
     <div id="g_id_onload"
@@ -205,24 +205,7 @@ document.getElementById('email_input').addEventListener('input', function(e) {
 
 <?php if ($google_enabled): ?>
 function handleGoogleAuthRegister(response) {
-    const campusField = document.querySelector('select[name="campus"]');
-    const campus = (campusField && campusField.value) ? campusField.value : '';
-    const errorBox = document.getElementById('google-auth-error');
-
-    if (errorBox) {
-        errorBox.classList.add('hidden');
-        errorBox.textContent = '';
-    }
-
-    if (!campus) {
-        if (errorBox) {
-            errorBox.textContent = 'Please select your campus before Google sign up.';
-            errorBox.classList.remove('hidden');
-        } else {
-            alert('Please select your campus before Google sign up.');
-        }
-        return;
-    }
+    const campus = '';
 
     fetch('api/google_auth', {
         method: 'POST',

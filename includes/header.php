@@ -1,6 +1,14 @@
 <?php
 require_once 'config.php';
 require_once 'functions.php';
+
+// Enforce campus selection if missing
+if (isset($_SESSION['user_id']) && empty($_SESSION['campus'])) {
+    $current_page = basename($_SERVER['PHP_SELF']);
+    if ($current_page !== 'complete_registration.php' && $current_page !== 'logout.php') {
+        redirect('complete_registration');
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">

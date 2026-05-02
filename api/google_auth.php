@@ -114,11 +114,8 @@ try {
         }
     } else {
         if (!$user) {
-            if ($campus === '') {
-                http_response_code(400);
-                echo json_encode(['success' => false, 'error' => 'Campus is required for registration']);
-                exit;
-            }
+            // Campus is now optional during Google registration
+            // It will be prompted later if missing
 
             $studentId = generate_student_id_from_email($pdo, $email);
             $name = normalize_display_name($name);
@@ -152,9 +149,14 @@ try {
         $_SESSION['mode'] = 'buying';
     }
 
+    $redirect = 'home';
+    if (empty($user['campus'])) {
+        $redirect = 'complete_registration';
+    }
+
     echo json_encode([
         'success' => true,
-        'redirect' => 'index.php',
+        'redirect' => $redirect,
         'name' => $user['name']
     ]);
 } catch (Exception $e) {
