@@ -1,85 +1,111 @@
-### **UiTM STEP (Student Talent Exchange Platform)**
+![UiTM STEP Banner](/Users/nadia.ak/Downloads/STEP.png)
 
-UiTM STEP is a centralized, "Fiverr-style" marketplace developed exclusively for UiTM students. The platform aims to solve the problem of "Campus Isolation" by unifying all 34 campuses into a single digital economy, allowing students to buy and sell academic and creative services in a high-trust environment.
+# UiTM STEP (Student Talent Exchange Platform)
 
-## Features
+> **Unifying the UiTM Ecosystem through a High-Trust, Academic-Elite Marketplace.**
 
-- **Verified Student Access:** Restricted login using `@student.uitm.edu.my` credentials.
-- **National & Local Filtering:** Toggle between "My Campus" and "All Campuses" to find physical or digital tasks.
-- **Dynamic Marketplace:** Pagination-supported grid view of services with category and tag-based filtering.
-- **Real-Time Messaging:** AJAX-powered chat system for seamless buyer-seller communication.
-- **Secure Transaction Workflow:** - Buyers upload bank transfer proof (JPG, PNG, PDF).
-    - Sellers manage gig lifecycles (Active, Delivered).
-    - Admin oversight for transaction moderation.
-- **Role-Based Dashboards:** Dedicated views for Buying, Selling, and System Administration.
+[![PHP Version](https://img.shields.io/badge/PHP-8.x-777bb4?style=for-the-badge&logo=php)](https://www.php.net/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479a1?style=for-the-badge&logo=mysql)](https://www.mysql.com/)
+[![Deployment](https://img.shields.io/badge/DigitalOcean-Droplet-0080FF?style=for-the-badge&logo=digitalocean)](https://www.digitalocean.com/)
 
-## Tech Stack
+---
 
-- **Frontend:** HTML5, CSS3, Tailwind CSS (via CDN), Vanilla JavaScript.
-- **Backend:** PHP 8.x (using PDO for SQL security).
-- **Database:** MySQL 8.0.
-- **Timezone:** Asia/Kuala_Lumpur.
+## The Vision
+
+UiTM STEP is a centralized, "Fiverr-style" marketplace exclusively for the **34 campuses** of Universiti Teknologi MARA. By leveraging a high-trust digital economy, the platform eliminates "Campus Isolation," allowing students to exchange academic, creative, and technical services regardless of geographical location.
+
+### Core Pillars
+- **Verified Trust:** Mandatory `@student.uitm.edu.my` authentication.
+- **National Reach:** Toggle between local campus proximity and nationwide digital tasking.
+- **Trust-Based Transactions:** Manual payment verification for secure student-to-student settlements.
+
+---
+
+## Key Features
+
+### Dynamic Marketplace
+- **Intelligent Filtering:** Toggle between "My Campus" and "All Campuses."
+- **Niche Categories:** Specifically curated for student needs (Design, Programming, Tutoring, Delivery).
+- **Responsive Grid:** Optimized for mobile and desktop browsing.
+
+### Real-Time Messaging
+- **SSE-Powered Chat:** Low-latency communication using Server-Sent Events (SSE).
+- **Contextual Orders:** Message sellers directly from gig listings.
+
+### Secure Transaction Workflow
+- **Verified Payments:** Buyers upload bank transfer or DuitNow proofs for verification.
+- **Lifecycle Management:** Gigs move from *Active* → *Delivered* → *Completed* with verified status tracking.
+- **Admin Oversight:** Centralized moderation dashboard for conflict resolution.
+
+---
+
+## Tech Stack & Infrastructure
+
+| Component | Technology | Role |
+| :--- | :--- | :--- |
+| **Backend** | PHP 8.x (PDO) | Core Logic & API |
+| **Frontend** | HTML5, CSS3, Vanilla JS | UI/UX & Interactions |
+| **Styling** | Tailwind CSS (CDN) | Modern, Responsive Design |
+| **Database** | MySQL 8.0 | Structured Data Persistence |
+| **Storage** | DigitalOcean Spaces | S3-Compatible Persistent Storage |
+| **Hosting** | DigitalOcean Droplet | Ubuntu/LAMP Stack Environment |
+
+---
 
 ## Project Structure
 
 ```text
-├── api/                # AJAX endpoints for real-time chat
+├── api/                # SSE Streamers & AJAX Endpoints
 ├── assets/
-│   ├── css/            # Custom UI styling
-│   ├── img/            # Marketplace category & hero assets
-│   └── js/             # Frontend logic & chat polling
+│   ├── css/            # Premium "Academic-Elite" Styling
+│   ├── img/            # Static Assets & Category Icons
+│   └── js/             # Real-time polling & UI logic
 ├── db/
-│   ├── schema.sql      # Database table definitions
-│   └── seed.sql        # Demo data (Admins, Students, Gigs)
-├── includes/           # Core configurations, DB connection, & functions
-├── uploads/            # Secure directory for payment proofs
-└── *.php               # Primary application pages (Marketplace, Dashboards, etc.)
+│   ├── schema.sql      # Core table structures
+│   └── seed.sql        # Demo students, gigs, and admins
+├── includes/           # DB Drivers, S3 Logic, & Helpers
+├── uploads/            # Local high-performance cache
+└── *.php               # Core View Controllers (Marketplace, Profile, etc.)
 ```
 
-## Installation (Local Environment)
+---
 
-1. **Prerequisites:** Install **MAMP**, **XAMPP**, or **WampServer** on your machine.
-2. **Database Setup:**
-   - Open `phpMyAdmin`.
-   - Create a new database named `uitm_step`.
-   - Import `db/schema.sql` first, followed by `db/seed.sql` for demo data.
-3. **Application Setup:**
-   - Clone this repository into your `htdocs` or `www` directory.
-   - Configure `includes/db.php` with your local database credentials.
-4. **Access:** Open your browser and navigate to `http://localhost/uitm-step`.
+## Installation & Setup
 
-## Security Implementations
+### Local Environment
+1. **Prerequisites:** Install XAMPP with PHP 8.0+.
+2. **Database:**
+   - Create database `uitm_step`.
+   - Import `db/schema.sql` then `db/seed.sql`.
+3. **Config:** Update `includes/db.php` with your local credentials.
+4. **Access:** Navigate to `http://localhost/STEP`.
 
-- **XSS Protection:** All user-generated content is escaped before rendering.
-- **SQL Injection Prevention:** Universal use of PDO Prepared Statements.
-- **Session Security:** Implementation of `session_regenerate_id()` and HTTP-only cookies.
-- **File Upload Validation:** Strict MIME-type checking and 2MB file size limits for payment proofs.
-
-## Google Sign-In (UiTM Student Only)
-
-Google sign-in and sign-up are supported with strict server-side domain checks.
-
-Required environment variable:
-- `GOOGLE_CLIENT_ID`: Your Google OAuth Web Client ID.
-
-Optional environment variable:
-- `UITM_STUDENT_EMAIL_DOMAINS`: Comma-separated allowlist of student domains.
-   Default: `student.uitm.edu.my`
-
-Examples:
-- `UITM_STUDENT_EMAIL_DOMAINS=student.uitm.edu.my`
-- `UITM_STUDENT_EMAIL_DOMAINS=student.uitm.edu.my,siswa.uitm.edu.my`
-
-Setup checklist:
-1. Create a Google OAuth 2.0 Web Client in Google Cloud Console.
-2. Add your local and production origins to Authorized JavaScript origins.
-3. Set `GOOGLE_CLIENT_ID` in your server environment.
-4. Reload `login.php` and `register.php`.
-
-Behavior:
-- `login.php`: Google button logs in existing accounts only.
-- `register.php`: Google button creates a new student account (requires selected campus) and logs in.
-- Non-UiTM student emails are rejected by backend validation.
+### Production Deployment
+1. **Infrastructure:** Provision a DigitalOcean Droplet (Ubuntu 22.04+).
+2. **Secrets:** Use `.env` for:
+   - `DB_PASS`, `GOOGLE_CLIENT_ID`.
+3. **Storage:** Configure S3 credentials in `includes/storage.php`.
+4. **SSL:** Ensure `certbot` is configured for HTTPS.
 
 ---
-*Developed as part of the **CSC264 and ISP250 group project** for **StepUp!**.*
+
+## Security Protocol
+
+- **Universal PDO:** 100% protection against SQL Injection via prepared statements.
+- **XSS Mitigation:** Comprehensive HTML escaping for all user-generated content.
+- **OAuth 2.0:** Secure Google Authentication with domain-level filtering.
+- **File Integrity:** MIME-type validation and restricted execution permissions on `/uploads`.
+
+---
+
+## Google Sign-In Behavior
+- **Account Linking:** Matches existing student emails.
+- **Registration Deferral:** New users are created instantly; campus selection is handled post-login via `complete_registration.php`.
+- **Domain Restricted:** Only `@student.uitm.edu.my` and approved subdomains allowed.
+
+---
+
+<div align="center">
+  <p><i>Developed as part of the <b>CSC264 and ISP250 group project</b> for <b>StepUp!</b>.</i></p>
+  <img src="https://img.shields.io/badge/Status-Stable-success?style=flat-square" />
+</div>
