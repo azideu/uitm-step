@@ -68,12 +68,31 @@ function is_uitm_student_email($email) {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return false;
     }
+
     $atPos = strrpos($email, '@');
     if ($atPos === false) {
         return false;
     }
+    
+    $localPart = substr($email, 0, $atPos);
     $domain = substr($email, $atPos + 1);
-    return in_array($domain, get_uitm_student_email_domains(), true);
+
+    // Check domain
+    if (!in_array($domain, get_uitm_student_email_domains(), true)) {
+        return false;
+    }
+
+    // Strict 10-digit check
+    if (!preg_match('/^\d{10}$/', $localPart)) {
+        return false;
+    }
+
+    // DNS MX Check
+    if (!checkdnsrr($domain, 'MX')) {
+        return false;
+    }
+
+    return true;
 }
 
 /**

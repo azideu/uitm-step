@@ -49,11 +49,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors[] = "Email or Student ID already exists.";
         } else {
             $hashed_pw = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("INSERT INTO users (student_id, name, email, password, campus, role) VALUES (?, ?, ?, ?, ?, 'student')");
+            $otp = (string)rand(100000, 999999);
+            $stmt = $pdo->prepare("INSERT INTO users (student_id, name, email, password, campus, role, is_verified, otp_code) VALUES (?, ?, ?, ?, ?, 'student', 0, ?)");
             try {
-                $stmt->execute([$student_id, $name, $email, $hashed_pw, $campus]);
-                set_toast('success', "Registration successful. Please login.");
-                redirect('login');
+                $stmt->execute([$student_id, $name, $email, $hashed_pw, $campus, $otp]);
+                
+                $_SESSION['verify_email'] = $email;
+
+                // Always show OTP in toast for testing purposes (even on production)
+                set_toast('info', "DEBUG MODE: Your verification code is <b>$otp</b> (This would normally be sent to your email).");
+                
+                redirect('verify_email');
             } catch (\Exception $e) {
                 set_toast('error', "Registration failed.");
                 error_log($e->getMessage());

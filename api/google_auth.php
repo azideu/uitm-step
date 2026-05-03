@@ -121,7 +121,7 @@ try {
             $name = normalize_display_name($name);
             $randomPasswordHash = password_hash(bin2hex(random_bytes(32)), PASSWORD_DEFAULT);
 
-            $insert = $pdo->prepare('INSERT INTO users (student_id, name, email, password, campus, role) VALUES (?, ?, ?, ?, ?, ?)');
+            $insert = $pdo->prepare('INSERT INTO users (student_id, name, email, password, campus, role, is_verified) VALUES (?, ?, ?, ?, ?, ?, 1)');
             $insert->execute([$studentId, $name, $email, $randomPasswordHash, $campus, 'student']);
 
             $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ? LIMIT 1');
@@ -134,6 +134,12 @@ try {
         http_response_code(500);
         echo json_encode(['success' => false, 'error' => 'Unable to authenticate user']);
         exit;
+    }
+
+    if (isset($user['is_verified']) && $user['is_verified'] == 0) {
+        $update = $pdo->prepare('UPDATE users SET is_verified = 1, otp_code = NULL WHERE user_id = ?');
+        $update->execute([$user['user_id']]);
+        $user['is_verified'] = 1;
     }
 
     // Session fixation mitigation

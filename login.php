@@ -20,6 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user['password'])) {
+            if (isset($user['is_verified']) && $user['is_verified'] == 0) {
+                $_SESSION['verify_email'] = $email;
+                set_toast('info', 'Please verify your email before logging in.');
+                redirect('verify_email');
+            }
+
             // Mitigate Session Fixation
             session_regenerate_id(true);
 
