@@ -1,12 +1,13 @@
-![UiTM STEP Banner](assets/img/banner.png)
+![UiTM STEP banner](assets/img/banner.png)
 
 # UiTM STEP (Student Talent Exchange Platform)
 
-> **Unifying the UiTM Ecosystem through a High-Trust, Academic-Elite Marketplace.**
-
+[![Website](https://img.shields.io/badge/Website-uitmstep.app-6B46C1?style=for-the-badge)](https://uitmstep.app)
 [![PHP Version](https://img.shields.io/badge/PHP-8.x-777bb4?style=for-the-badge&logo=php)](https://www.php.net/)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479a1?style=for-the-badge&logo=mysql)](https://www.mysql.com/)
 [![Deployment](https://img.shields.io/badge/DigitalOcean-Droplet-0080FF?style=for-the-badge&logo=digitalocean)](https://www.digitalocean.com/)
+
+> **Unifying the UiTM Ecosystem through a High-Trust, Academic-Elite Marketplace.**
 
 ---
 
@@ -78,7 +79,7 @@ UiTM STEP is a centralized, "Fiverr-style" marketplace exclusively for the **34 
    - Create database `uitm_step`.
    - Import `db/schema.sql` then `db/seed.sql`.
 3. **Config:** Update `includes/db.php` with your local credentials.
-4. **Access:** Navigate to `http://localhost/STEP`.
+4. **Access:** Navigate to `http://localhost/STEP` or visit the live app at [uitmstep.app](https://uitmstep.app).
 
 ### Production Deployment
 1. **Infrastructure:** Provision a DigitalOcean Droplet (Ubuntu 22.04+).
