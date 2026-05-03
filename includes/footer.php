@@ -63,6 +63,7 @@
         </div>
     </footer>
     </div>
+    <?php display_toast(); ?>
     <script src="assets/js/app.js"></script>
 </body>
 </html>

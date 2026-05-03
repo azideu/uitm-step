@@ -43,7 +43,7 @@ function display_toast() {
             $color = 'bg-red-500';
         }
         
-        echo "<div id='toast' class='fixed bottom-5 right-5 text-white px-6 py-3 rounded shadow-lg $color transition-opacity duration-300'>$msg</div>";
+        echo "<div id='toast' class='fixed bottom-5 right-5 text-white px-6 py-3 rounded shadow-lg $color transition-opacity duration-300 z-[9999]'>$msg</div>";
         echo "<script>setTimeout(() => { document.getElementById('toast').style.opacity = '0'; setTimeout(()=> {document.getElementById('toast').remove();}, 300); }, 3000);</script>";
         
         unset($_SESSION['toast']);

@@ -153,7 +153,7 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus'])) {
     <?php else: ?>
     <main class="flex-grow w-full">
     <?php endif; ?>
-        <?php display_toast(); ?>
+
 
     <script>
         function toggleDarkMode() {
