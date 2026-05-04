@@ -16,7 +16,7 @@
 UiTM STEP is a centralized, "Fiverr-style" marketplace exclusively for the **34 campuses** of Universiti Teknologi MARA. By leveraging a high-trust digital economy, the platform eliminates "Campus Isolation," allowing students to exchange academic, creative, and technical services regardless of geographical location.
 
 ### Core Pillars
-- **Verified Trust:** Mandatory `@student.uitm.edu.my` authentication.
+- **Verified Trust:** Mandatory `@student.uitm.edu.my` authentication with OTP email verification.
 - **National Reach:** Toggle between local campus proximity and nationwide digital tasking.
 - **Trust-Based Transactions:** Manual payment verification for secure student-to-student settlements.
 
@@ -56,17 +56,20 @@ UiTM STEP is a centralized, "Fiverr-style" marketplace exclusively for the **34 
 ## Project Structure
 
 ```text
-├── api/                # SSE Streamers & AJAX Endpoints
+├── admin/              # Centralized moderation & oversight
+├── api/                # Core business logic, SSE Streamers & AJAX Endpoints
 ├── assets/
-│   ├── css/            # Premium "Academic-Elite" Styling
+│   ├── css/            # Premium "Academic-Elite" Styling with deep shadows
 │   ├── img/            # Static Assets & Category Icons
 │   └── js/             # Real-time polling & UI logic
 ├── db/
 │   ├── schema.sql      # Core table structures
 │   └── seed.sql        # Demo students, gigs, and admins
-├── includes/           # DB Drivers, S3 Logic, & Helpers
+├── gigs/               # Gig lifecycle (Create, Edit, Details)
+├── includes/           # DB Drivers, Config, Auth Checks, & Helpers
 ├── uploads/            # Local high-performance cache
-└── *.php               # Core View Controllers (Marketplace, Profile, etc.)
+├── .htaccess           # Clean URL routing & rewrite logic
+└── *.php               # Core View Controllers (Marketplace, Profile, Auth)
 ```
 
 ---
@@ -94,8 +97,9 @@ UiTM STEP is a centralized, "Fiverr-style" marketplace exclusively for the **34 
 
 - **Universal PDO:** 100% protection against SQL Injection via prepared statements.
 - **XSS Mitigation:** Comprehensive HTML escaping for all user-generated content.
-- **OAuth 2.0:** Secure Google Authentication with domain-level filtering.
+- **OAuth 2.0 & OTP:** Secure Google Authentication with domain-level filtering and manual OTP flows.
 - **File Integrity:** MIME-type validation and restricted execution permissions on `/uploads`.
+- **Centralized Routing:** Secure subdirectory resolution and pathing via `.htaccess` and `ROOT_URL` configurations.
 
 ---
 
