@@ -27,8 +27,8 @@ require_once 'includes/header.php';
             <!-- Search Bar -->
             <form action="marketplace" method="GET" class="relative group mt-4 transform transition-all duration-300">
                 <input type="text" name="search" placeholder="Search for any service..." required
-                       class="w-full py-5 pl-6 pr-40 rounded-lg bg-white text-black placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-uitmGold shadow-md text-lg">
-                <button type="submit" class="absolute right-2 top-2 bottom-2 bg-uitmGold text-uitmPurple px-8 py-2 rounded-md shadow-sm hover:bg-yellow-400 transition-all duration-300 font-bold text-lg inline-flex items-center">
+                       class="w-full py-5 pl-6 pr-40 rounded-lg bg-white text-black placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-uitmGold shadow-2xl text-lg">
+                <button type="submit" class="absolute right-2 top-2 bottom-2 bg-uitmGold text-uitmPurple px-8 py-2 rounded-md shadow-xl hover:bg-yellow-400 transition-all duration-300 font-bold text-lg inline-flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     Search
                 </button>
@@ -63,45 +63,45 @@ require_once 'includes/header.php';
     
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <!-- Service Card 1 -->
-        <a href="marketplace?tag=Design" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1">
+        <a href="marketplace?tag=Design" class="group relative block h-80 rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1">
             <img src="assets/img/cat_design.jpg" alt="Graphics & Design" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
             <div class="absolute inset-0 bg-uitmPurple/60 opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
             <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
             <div class="absolute bottom-10 left-6 right-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-               <span class="text-uitmGold text-sm font-bold uppercase tracking-wider drop-shadow-lg">Build your brand</span>
+               <span class="text-uitmGold text-sm font-bold uppercase tracking-wider drop-shadow-2xl">Build your brand</span>
                <h3 class="text-white text-3xl font-bold mt-2 drop-shadow-2xl leading-tight font-serif">Logo Design</h3>
             </div>
         </a>
         
         <!-- Service Card 2 -->
-        <a href="marketplace?tag=Programming" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:-rotate-1 delay-100">
+        <a href="marketplace?tag=Programming" class="group relative block h-80 rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:-rotate-1 delay-100">
             <img src="assets/img/cat_programming.jpg" alt="Programming" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
             <div class="absolute inset-0 bg-uitmPurple/60 opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
              <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
             <div class="absolute bottom-10 left-6 right-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-               <span class="text-blue-400 text-sm font-bold uppercase tracking-wider drop-shadow-lg">Custom web apps</span>
+               <span class="text-blue-400 text-sm font-bold uppercase tracking-wider drop-shadow-2xl">Custom web apps</span>
                <h3 class="text-white text-3xl font-bold mt-2 drop-shadow-2xl leading-tight font-serif">Website <br>Dev</h3>
             </div>
         </a>
 
         <!-- Service Card 3 -->
-        <a href="marketplace?tag=Writing" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 delay-200">
+        <a href="marketplace?tag=Writing" class="group relative block h-80 rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 delay-200">
             <img src="assets/img/cat_writing.jpg" alt="Writing" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
             <div class="absolute inset-0 bg-uitmPurple/60 opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
             <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
             <div class="absolute bottom-10 left-6 right-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-               <span class="text-emerald-400 text-sm font-bold uppercase tracking-wider drop-shadow-lg">Ace your assignments</span>
+               <span class="text-emerald-400 text-sm font-bold uppercase tracking-wider drop-shadow-2xl">Ace your assignments</span>
                <h3 class="text-white text-3xl font-bold mt-2 drop-shadow-2xl leading-tight font-serif">Proofreading</h3>
             </div>
         </a>
 
         <!-- Service Card 4 -->
-        <a href="marketplace?tag=Video" class="group relative block h-80 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:-rotate-1 delay-300">
+        <a href="marketplace?tag=Video" class="group relative block h-80 rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] transition-all duration-500 transform hover:-translate-y-3 hover:-rotate-1 delay-300">
             <img src="assets/img/cat_video.jpg" alt="Video Editing" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out">
             <div class="absolute inset-0 bg-uitmPurple/60 opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
             <div class="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-2xl transition-colors duration-500"></div>
             <div class="absolute bottom-10 left-6 right-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-               <span class="text-rose-400 text-sm font-bold uppercase tracking-wider drop-shadow-lg">Share your story</span>
+               <span class="text-rose-400 text-sm font-bold uppercase tracking-wider drop-shadow-2xl">Share your story</span>
                <h3 class="text-white text-3xl font-bold mt-2 drop-shadow-2xl leading-tight font-serif">Video <br>Editing</h3>
             </div>
         </a>
@@ -208,7 +208,7 @@ require_once 'includes/header.php';
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Article 1 -->
-            <a href="#" class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow hover:shadow-lg transition block border border-gray-100 dark:border-slate-700">
+            <a href="#" class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition block border border-gray-100 dark:border-slate-700">
                 <div class="h-48 overflow-hidden">
                     <img src="assets/img/guide_portfolio.jpg" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
                 </div>
@@ -219,9 +219,9 @@ require_once 'includes/header.php';
             </a>
 
             <!-- Article 2 -->
-            <a href="#" class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow hover:shadow-lg transition block border border-gray-100 dark:border-slate-700">
+            <a href="#" class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition block border border-gray-100 dark:border-slate-700">
                 <div class="h-48 overflow-hidden bg-gray-100 dark:bg-slate-700 flex items-center justify-center p-6">
-                    <div class="w-full h-full rounded shadow-sm bg-uitmPurple relative">
+                    <div class="w-full h-full rounded shadow-xl bg-uitmPurple relative">
                         <div class="absolute inset-2 bg-white dark:bg-slate-800 rounded flex items-center justify-center">
                             <span class="text-2xl font-bold text-uitmPurple dark:text-purple-300">Pricing 101</span>
                         </div>
@@ -234,7 +234,7 @@ require_once 'includes/header.php';
             </a>
 
             <!-- Article 3 -->
-            <a href="#" class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow hover:shadow-lg transition block border border-gray-100 dark:border-slate-700">
+            <a href="#" class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition block border border-gray-100 dark:border-slate-700">
                 <div class="h-48 overflow-hidden">
                     <img src="assets/img/guide_time.jpg" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
                 </div>
@@ -255,7 +255,7 @@ require_once 'includes/header.php';
                 Freelance services at your <br><span class="text-uitmGold italic">fingertips</span>
             </h2>
             <?php
-                $hero_cta_class = 'bg-white text-uitmPurple hover:bg-gray-100 font-bold px-10 py-4 rounded-md text-xl transition-all duration-300 inline-block shadow-md hover:shadow-lg transform hover:-translate-y-0.5';
+                $hero_cta_class = 'bg-white text-uitmPurple hover:bg-gray-100 font-bold px-10 py-4 rounded-md text-xl transition-all duration-300 inline-block shadow-2xl hover:shadow-2xl transform hover:-translate-y-0.5';
                 $is_logged_in = isset($_SESSION['user_id']);
                 $hero_cta_href = $is_logged_in ? 'marketplace' : 'register';
                 $hero_cta_text = $is_logged_in ? 'Explore Marketplace' : 'Join UiTM STEP';

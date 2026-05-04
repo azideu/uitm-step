@@ -1,5 +1,10 @@
 <?php
 // includes/config.php
+$base_dir = dirname($_SERVER['SCRIPT_NAME']);
+if (strpos($base_dir, '/admin') !== false || strpos($base_dir, '/api') !== false || strpos($base_dir, '/gigs') !== false) {
+    $base_dir = dirname($base_dir);
+}
+define('ROOT_URL', rtrim($base_dir, '/') . '/');
 
 // Set default timezone
 date_default_timezone_set('Asia/Kuala_Lumpur');

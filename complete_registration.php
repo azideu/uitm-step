@@ -103,7 +103,7 @@ require_once 'includes/header.php';
                 </optgroup>
             </select>
         </div>
-        <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-3 px-4 rounded-md shadow-sm hover:bg-purple-900 transition-all">Complete Registration</button>
+        <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-3 px-4 rounded-md shadow-xl hover:bg-purple-900 transition-all">Complete Registration</button>
     </form>
 </div>
 

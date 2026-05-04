@@ -85,16 +85,16 @@ require_once 'includes/header.php';
     </div>
     
     <!-- Filter Form -->
-    <form action="marketplace" method="GET" class="flex flex-wrap gap-3 items-center bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 transition-colors duration-300">
+    <form action="marketplace" method="GET" class="flex flex-wrap gap-3 items-center bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 transition-colors duration-300">
         <input type="text" name="search" placeholder="Search gigs..." value="<?php echo escape($search_query); ?>" class="px-4 py-2.5 bg-gray-50 dark:bg-slate-800 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white dark:focus:bg-slate-700 text-slate-800 dark:text-slate-200 placeholder-gray-400 dark:placeholder-slate-500 transition-all outline-none w-full sm:w-auto">
         
         <!-- Prominent Toggle for Campus -->
         <div class="flex items-center bg-gray-100/80 dark:bg-slate-800/50 rounded-xl p-1 shrink-0 border border-gray-200 dark:border-slate-700 transition-colors duration-300">
-            <label class="relative cursor-pointer px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $campus_filter === 'local' ? 'bg-white dark:bg-uitmPurple/30 shadow-sm text-uitmPurple dark:text-purple-300 ring-1 ring-gray-200/50 dark:ring-purple-500/20' : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200'; ?>">
+            <label class="relative cursor-pointer px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $campus_filter === 'local' ? 'bg-white dark:bg-uitmPurple/30 shadow-xl text-uitmPurple dark:text-purple-300 ring-1 ring-gray-200/50 dark:ring-purple-500/20' : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200'; ?>">
                 <input type="radio" name="campus" value="local" class="sr-only" onchange="this.form.submit()" <?php if($campus_filter === 'local') echo 'checked'; ?>>
                 <?php echo escape($campus_label); ?>
             </label>
-            <label class="relative cursor-pointer px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $campus_filter === 'all' ? 'bg-white dark:bg-uitmPurple/30 shadow-sm text-uitmPurple dark:text-purple-300 ring-1 ring-gray-200/50 dark:ring-purple-500/20' : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200'; ?>">
+            <label class="relative cursor-pointer px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $campus_filter === 'all' ? 'bg-white dark:bg-uitmPurple/30 shadow-xl text-uitmPurple dark:text-purple-300 ring-1 ring-gray-200/50 dark:ring-purple-500/20' : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200'; ?>">
                 <input type="radio" name="campus" value="all" class="sr-only" onchange="this.form.submit()" <?php if($campus_filter === 'all') echo 'checked'; ?>>
                 All Campuses
             </label>
@@ -107,7 +107,7 @@ require_once 'includes/header.php';
             <?php endforeach; ?>
         </select>
         
-        <button type="submit" class="bg-uitmPurple text-white px-6 py-2.5 rounded-xl hover:bg-indigo-900 transition-all duration-300 font-bold shadow-sm">Filter</button>
+        <button type="submit" class="bg-uitmPurple text-white px-6 py-2.5 rounded-xl hover:bg-indigo-900 transition-all duration-300 font-bold shadow-xl">Filter</button>
     </form>
 </div>
 
@@ -115,7 +115,7 @@ require_once 'includes/header.php';
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <?php $delay = 0; ?>
         <?php foreach ($gigs as $gig): ?>
-            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden border border-gray-100 dark:border-slate-800 transform hover:-translate-y-2 animate-fade-in-up opacity-0" style="animation-delay: <?php echo $delay; ?>ms; animation-fill-mode: forwards;">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col overflow-hidden border border-gray-100 dark:border-slate-800 transform hover:-translate-y-2 animate-fade-in-up opacity-0" style="animation-delay: <?php echo $delay; ?>ms; animation-fill-mode: forwards;">
                 <!-- Thumbnail / Slider -->
                 <div class="w-full aspect-video bg-gray-200 dark:bg-slate-800 relative overflow-hidden group">
                     <?php
@@ -156,7 +156,7 @@ require_once 'includes/header.php';
                             <!-- Small Dots for Card Slider -->
                             <div class="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <?php foreach ($media_items as $index => $item): ?>
-                                    <div class="w-1.5 h-1.5 rounded-full bg-white/80 shadow-sm <?php echo $index === 0 ? 'w-3' : ''; ?>"></div>
+                                    <div class="w-1.5 h-1.5 rounded-full bg-white/80 shadow-xl <?php echo $index === 0 ? 'w-3' : ''; ?>"></div>
                                 <?php endforeach; ?>
                             </div>
                             <!-- Hover overlays to switch slides -->
@@ -169,7 +169,7 @@ require_once 'includes/header.php';
 
                     <div class="absolute inset-0 bg-uitmPurple/20 pointer-events-none"></div>
                     <div class="absolute bottom-3 left-4 pointer-events-none z-20">
-                        <span class="text-[10px] font-bold text-white uppercase tracking-widest bg-uitmPurple/80 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-white/10 shadow-sm"><?php echo escape($gig['category']); ?></span>
+                        <span class="text-[10px] font-bold text-white uppercase tracking-widest bg-uitmPurple/80 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-white/10 shadow-xl"><?php echo escape($gig['category']); ?></span>
                     </div>
                 </div>
 
@@ -183,7 +183,7 @@ require_once 'includes/header.php';
                                 ? escape($gig['profile_picture']) 
                                 : 'https://ui-avatars.com/api/?name=' . urlencode($gig['seller_name']) . '&background=330066&color=FFD700';
                         ?>
-                        <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold mr-3 overflow-hidden shrink-0 border-2 border-white shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold mr-3 overflow-hidden shrink-0 border-2 border-white shadow-xl">
                             <img src="<?php echo $seller_avatar; ?>" alt="<?php echo escape($gig['seller_name']); ?>" class="w-full h-full object-cover">
                         </div>
                         <div>
@@ -200,7 +200,7 @@ require_once 'includes/header.php';
                         <span class="text-xs text-gray-400 dark:text-slate-500 uppercase font-bold tracking-wider mb-1">Starting at</span>
                         <span class="text-xl font-extrabold text-gray-900 dark:text-white">RM <?php echo number_format($gig['price'], 2); ?></span>
                     </div>
-                    <a href="gig_details?id=<?php echo $gig['gig_id']; ?>" class="text-sm bg-gray-900 dark:bg-slate-800 hover:bg-uitmPurple text-white px-5 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105">View Details</a>
+                    <a href="<?php echo ROOT_URL; ?>gigs/details?id=<?php echo $gig['gig_id']; ?>" class="text-sm bg-gray-900 dark:bg-slate-800 hover:bg-uitmPurple text-white px-5 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-2xl hover:shadow-2xl transform hover:scale-105">View Details</a>
                 </div>
             </div>
             <?php $delay += 100; ?>
@@ -210,7 +210,7 @@ require_once 'includes/header.php';
     <!-- Pagination -->
     <?php if ($total_pages > 1): ?>
     <div class="mt-8 flex justify-center">
-        <nav class="inline-flex rounded-xl shadow-sm -space-x-px" aria-label="Pagination">
+        <nav class="inline-flex rounded-xl shadow-xl -space-x-px" aria-label="Pagination">
             <?php if($page > 1): ?>
                 <a href="?page=<?php echo $page-1; ?>&campus=<?php echo urlencode($campus_filter); ?>&tag=<?php echo urlencode($tag_filter); ?>&search=<?php echo urlencode($search_query); ?>" class="relative inline-flex items-center px-4 py-2 rounded-l-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-gray-500 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors">Previous</a>
             <?php endif; ?>
@@ -230,7 +230,7 @@ require_once 'includes/header.php';
 
 <?php else: ?>
     <!-- Empty State -->
-    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 text-center py-16 px-4 animate-fade-in-up transition-colors duration-300">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 text-center py-16 px-4 animate-fade-in-up transition-colors duration-300">
         <svg class="w-16 h-16 text-gray-300 dark:text-slate-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
         <h3 class="text-2xl font-bold text-gray-700 dark:text-slate-300 mb-2">No Gigs Found</h3>
         <p class="text-gray-500 dark:text-slate-500">We couldn't find any gigs in this campus or category. Try adjusting your filters!</p>

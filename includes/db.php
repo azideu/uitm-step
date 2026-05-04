@@ -7,7 +7,7 @@
  */
 
 // 1. Default fallback credentials (Local/XAMPP)
-$host = 'localhost';
+$host = '127.0.0.1';
 $db   = 'uitm_step';
 $user = 'root';
 $pass = ''; 

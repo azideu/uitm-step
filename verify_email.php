@@ -50,7 +50,7 @@ require_once 'includes/header.php';
             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2" for="otp">Verification Code</label>
             <input type="text" name="otp" id="otp" required maxlength="6" pattern="\d{6}" title="6-digit code" placeholder="123456" class="w-full text-center tracking-widest text-xl px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
         </div>
-        <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-3 px-4 rounded-md shadow-sm hover:bg-purple-900 transition-all">Verify Now</button>
+        <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-3 px-4 rounded-md shadow-xl hover:bg-purple-900 transition-all">Verify Now</button>
     </form>
 
     <p class="mt-6 text-center text-sm text-gray-500 dark:text-slate-400">

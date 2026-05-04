@@ -51,14 +51,14 @@ require_once 'includes/header.php';
 <div class="flex h-[calc(100vh-8rem)] bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-3xl shadow-xl border border-white/50 dark:border-slate-700/50 overflow-hidden transition-colors duration-300">
     <!-- Contacts Sidebar -->
     <div class="w-1/3 md:w-1/4 border-r border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-800/50 flex flex-col transition-colors duration-300">
-        <div class="p-5 bg-uitmPurple text-white font-bold text-lg border-b border-purple-900 dark:border-slate-700 shadow-sm flex items-center justify-between">
+        <div class="p-5 bg-uitmPurple text-white font-bold text-lg border-b border-purple-900 dark:border-slate-700 shadow-xl flex items-center justify-between">
             <span>Chats</span>
             <svg class="w-5 h-5 text-purple-200 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
         </div>
         <div class="overflow-y-auto flex-1 p-2 space-y-1">
             <?php if(count($chatted_users) > 0): ?>
                 <?php foreach($chatted_users as $cu): ?>
-                    <a href="chat?user=<?php echo $cu['user_id']; ?>" class="flex items-center gap-3 p-3 rounded-xl transition-all duration-300 <?php echo ($active_chat == $cu['user_id']) ? 'bg-purple-100/80 dark:bg-slate-700/80 shadow-sm border border-purple-200 dark:border-slate-600' : 'hover:bg-white dark:hover:bg-slate-700 border border-transparent'; ?>">
+                    <a href="chat?user=<?php echo $cu['user_id']; ?>" class="flex items-center gap-3 p-3 rounded-xl transition-all duration-300 <?php echo ($active_chat == $cu['user_id']) ? 'bg-purple-100/80 dark:bg-slate-700/80 shadow-xl border border-purple-200 dark:border-slate-600' : 'hover:bg-white dark:hover:bg-slate-700 border border-transparent'; ?>">
                         <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-inner">
                             <?php echo strtoupper(substr($cu['name'], 0, 1)); ?>
                         </div>
@@ -81,9 +81,9 @@ require_once 'includes/header.php';
     <div class="w-2/3 md:w-3/4 flex flex-col relative bg-white dark:bg-slate-900 bg-opacity-90 dark:bg-opacity-90 transition-colors duration-300">
         <?php if($active_chat > 0 && $active_user_name): ?>
             <!-- Chat Header -->
-            <div class="px-6 py-4 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center z-10 shadow-sm transition-colors duration-300">
+            <div class="px-6 py-4 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center z-10 shadow-xl transition-colors duration-300">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-xl">
                         <?php echo strtoupper(substr($active_user_name, 0, 1)); ?>
                     </div>
                     <div>
@@ -97,11 +97,11 @@ require_once 'includes/header.php';
                 
                 <!-- Quick-Action Panel -->
                 <div class="flex gap-2">
-                    <a href="user_dashboard?mode=buying" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 text-xs font-bold rounded-lg transition-colors border border-indigo-200 dark:border-indigo-800">
+                    <a href="dashboard?mode=buying" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 text-xs font-bold rounded-lg transition-colors border border-indigo-200 dark:border-indigo-800">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                         Upload Proof
                     </a>
-                    <a href="user_dashboard?mode=selling" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-xs font-bold rounded-lg transition-colors border border-emerald-200 dark:border-emerald-800">
+                    <a href="dashboard?mode=selling" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-xs font-bold rounded-lg transition-colors border border-emerald-200 dark:border-emerald-800">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                         Deliver Order
                     </a>
@@ -115,14 +115,14 @@ require_once 'includes/header.php';
 
             <!-- Scroll-to-bottom nudge -->
             <button id="scroll-btn" onclick="document.getElementById('chat-messages').scrollTo({top:9999999,behavior:'smooth'})"
-                class="absolute bottom-24 right-6 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-uitmPurple dark:text-purple-300 w-10 h-10 rounded-full shadow-lg flex items-center justify-center hover:bg-gray-50 dark:hover:bg-slate-700 hover:scale-105 transition-all z-20"
+                class="absolute bottom-24 right-6 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-uitmPurple dark:text-purple-300 w-10 h-10 rounded-full shadow-2xl flex items-center justify-center hover:bg-gray-50 dark:hover:bg-slate-700 hover:scale-105 transition-all z-20"
                 title="Scroll to latest">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
             </button>
             
             <!-- Input Area -->
             <div class="p-4 bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-800 flex gap-3 items-end transition-colors duration-300 relative z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] dark:shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
-                <div class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl flex items-center overflow-hidden focus-within:ring-2 focus-within:ring-purple-100 dark:focus-within:ring-slate-700 focus-within:border-uitmPurple focus-within:shadow-md transition-all">
+                <div class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl flex items-center overflow-hidden focus-within:ring-2 focus-within:ring-purple-100 dark:focus-within:ring-slate-700 focus-within:border-uitmPurple focus-within:shadow-2xl transition-all">
                     <input type="text" id="chat-input" placeholder="Message..." class="w-full bg-transparent px-4 py-3 outline-none text-sm text-gray-700 dark:text-slate-200 placeholder-gray-400 dark:placeholder-slate-500" autocomplete="off" onkeypress="if(event.key === 'Enter') sendMessage()">
                 </div>
                 <button onclick="sendMessage()" class="bg-uitmPurple text-white w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 hover:bg-indigo-700 transition-all">

@@ -271,7 +271,7 @@ require_once 'includes/header.php';
                         </div>
 
                         <div class="pt-4 flex justify-end">
-                            <button type="submit" class="bg-uitmPurple text-white px-8 py-3 rounded-md font-bold shadow-sm hover:bg-purple-900 transition-colors">Save Profile</button>
+                            <button type="submit" class="bg-uitmPurple text-white px-8 py-3 rounded-md font-bold shadow-xl hover:bg-purple-900 transition-colors">Save Profile</button>
                         </div>
                     </form>
                 </div>
@@ -310,13 +310,13 @@ require_once 'includes/header.php';
                         </div>
 
                         <div class="pt-2">
-                            <button type="submit" class="w-full bg-slate-800 dark:bg-slate-700 text-white px-6 py-2.5 rounded-lg font-bold shadow hover:bg-slate-700 dark:hover:bg-slate-600 transition-colors focus:ring-4 focus:ring-slate-300 dark:focus:ring-slate-800">Update Password</button>
+                            <button type="submit" class="w-full bg-slate-800 dark:bg-slate-700 text-white px-6 py-2.5 rounded-lg font-bold shadow-xl hover:bg-slate-700 dark:hover:bg-slate-600 transition-colors focus:ring-4 focus:ring-slate-300 dark:focus:ring-slate-800">Update Password</button>
                         </div>
                     </form>
                 </div>
             </div>
             
-            <div class="bg-yellow-50 dark:bg-yellow-900/30 rounded-2xl shadow p-6 border border-yellow-100 dark:border-yellow-800/50 flex items-start space-x-4 transition-colors duration-300">
+            <div class="bg-yellow-50 dark:bg-yellow-900/30 rounded-2xl shadow-xl p-6 border border-yellow-100 dark:border-yellow-800/50 flex items-start space-x-4 transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-600 dark:text-yellow-400 shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -327,13 +327,13 @@ require_once 'includes/header.php';
             </div>
 
             <!-- Danger Zone -->
-            <div class="bg-red-50 dark:bg-red-900/30 rounded-2xl shadow p-6 border border-red-100 dark:border-red-800/50 mt-8 flex flex-col items-center transition-colors duration-300">
+            <div class="bg-red-50 dark:bg-red-900/30 rounded-2xl shadow-xl p-6 border border-red-100 dark:border-red-800/50 mt-8 flex flex-col items-center transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-500 dark:text-red-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
                 <h3 class="font-bold text-red-800 dark:text-red-300 text-lg mb-2">Ready to leave?</h3>
                 <p class="text-sm text-red-600 dark:text-red-400 mb-6 text-center">You can securely log out of your account to ensure no one else can access it.</p>
-                <a href="logout" class="w-full text-center bg-red-600 text-white font-bold py-3 px-4 rounded-md hover:bg-red-700 transition-colors shadow-sm">
+                <a href="logout" class="w-full text-center bg-red-600 text-white font-bold py-3 px-4 rounded-md hover:bg-red-700 transition-colors shadow-xl">
                     Logout of UiTM STEP
                 </a>
             </div>

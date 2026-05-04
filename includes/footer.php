@@ -5,7 +5,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-12">
                 <div class="md:col-span-2">
                     <div class="flex items-center mb-5">
-                        <div class="w-10 h-10 bg-uitmPurple rounded-lg flex items-center justify-center mr-3 shadow-lg border border-slate-200 dark:border-white/10">
+                        <div class="w-10 h-10 bg-uitmPurple rounded-lg flex items-center justify-center mr-3 shadow-2xl border border-slate-200 dark:border-white/10">
                             <span class="text-white font-bold text-xl font-serif">S</span>
                         </div>
                         <span class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight font-serif">UiTM STEP</span>

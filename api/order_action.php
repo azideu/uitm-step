@@ -13,8 +13,8 @@
 // logical errors such as a buyer "completing" an order that was never
 // delivered, or a seller marking an unconfirmed order as delivered.
 // =====================================================================
-require_once 'includes/auth_check.php';
-require_once 'includes/db.php';
+require_once '../includes/auth_check.php';
+require_once '../includes/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect('home');
@@ -64,19 +64,19 @@ try {
         // Security: only the seller of this specific gig may deliver
         if ($seller_id !== $user_id || $role !== 'student') {
             set_toast('error', 'Unauthorized action.');
-            redirect('user_dashboard?mode=selling');
+            redirect('dashboard?mode=selling');
         }
 
         // State Machine guard: can only deliver a PAID order
         if ($current_status !== 'paid') {
             set_toast('error', 'You can only deliver an order that has been paid.');
-            redirect('user_dashboard?mode=selling');
+            redirect('dashboard?mode=selling');
         }
 
         $pdo->prepare("UPDATE orders SET status = 'delivered' WHERE order_id = ?")
             ->execute([$order_id]);
         set_toast('success', 'Order marked as delivered! The buyer will confirm completion.');
-        redirect('user_dashboard?mode=selling');
+        redirect('dashboard?mode=selling');
     }
 
     // ------------------------------------------------------------------
@@ -86,20 +86,20 @@ try {
         // Security: only the buyer of this specific order may complete it
         if ($buyer_id !== $user_id || $role !== 'student') {
             set_toast('error', 'Unauthorized action.');
-            redirect('user_dashboard?mode=buying');
+            redirect('dashboard?mode=buying');
         }
 
         // State Machine guard: order MUST be delivered before completion.
         // This prevents bypassing the delivery step entirely.
         if ($current_status !== 'delivered') {
             set_toast('error', 'You can only complete an order after the seller has marked it as delivered.');
-            redirect('user_dashboard?mode=buying');
+            redirect('dashboard?mode=buying');
         }
 
         $pdo->prepare("UPDATE orders SET status = 'complete' WHERE order_id = ?")
             ->execute([$order_id]);
         set_toast('success', 'Order marked as complete! Thank you.');
-        redirect('user_dashboard?mode=buying');
+        redirect('dashboard?mode=buying');
     }
 
     // ------------------------------------------------------------------
@@ -109,20 +109,20 @@ try {
         // Security: only the buyer may self-cancel
         if ($buyer_id !== $user_id || $role !== 'student') {
             set_toast('error', 'Unauthorized action.');
-            redirect('user_dashboard?mode=buying');
+            redirect('dashboard?mode=buying');
         }
 
         // State Machine guard: buyers may only cancel PENDING orders.
         // Once payment has been confirmed (paid), only an admin can intervene.
         if ($current_status !== 'pending') {
             set_toast('error', 'You can only cancel an order while it is still pending.');
-            redirect('user_dashboard?mode=buying');
+            redirect('dashboard?mode=buying');
         }
 
         $pdo->prepare("UPDATE orders SET status = 'cancelled' WHERE order_id = ?")
             ->execute([$order_id]);
         set_toast('success', 'Order cancelled.');
-        redirect('user_dashboard?mode=buying');
+        redirect('dashboard?mode=buying');
     }
 
     // ------------------------------------------------------------------

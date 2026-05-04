@@ -1,7 +1,7 @@
 <?php
 // dashboard_admin.php — Admin Oversight & Dispute Resolution Panel
-require_once 'includes/auth_check.php';
-require_once 'includes/db.php';
+require_once '../includes/auth_check.php';
+require_once '../includes/db.php';
 
 require_admin(); // Ensure only admins can access this page
 
@@ -33,7 +33,7 @@ function status_badge(string $status): string {
     };
 }
 
-require_once 'includes/header.php';
+require_once '../includes/header.php';
 ?>
 
 <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -55,7 +55,7 @@ require_once 'includes/header.php';
     </div>
 </div>
 
-<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300">
+<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300">
     <div class="h-1 bg-uitmPurple"></div>
 
     <?php if (count($orders) > 0): ?>
@@ -128,7 +128,7 @@ require_once 'includes/header.php';
 
                             <!-- Admin Status Override (State Machine bypass for disputes) -->
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <form action="order_action" method="POST" class="flex gap-2 items-center">
+                                <form action="../api/order_action" method="POST" class="flex gap-2 items-center">
                                     <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
                                     <input type="hidden" name="action"   value="admin_update">
                                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
@@ -141,7 +141,7 @@ require_once 'includes/header.php';
                                         <?php endforeach; ?>
                                     </select>
                                     <button type="submit"
-                                            class="bg-uitmPurple text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-purple-900 transition-all duration-300 hover:shadow-md">
+                                            class="bg-uitmPurple text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-purple-900 transition-all duration-300 hover:shadow-2xl">
                                         Update
                                     </button>
                                 </form>
@@ -161,4 +161,4 @@ require_once 'includes/header.php';
     <?php endif; ?>
 </div>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once '../includes/footer.php'; ?>

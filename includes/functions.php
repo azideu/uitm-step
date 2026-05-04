@@ -13,6 +13,9 @@ function escape($string) {
  * Redirect and exit
  */
 function redirect($url) {
+    if (!str_starts_with($url, 'http') && !str_starts_with($url, '/')) {
+        $url = ROOT_URL . $url;
+    }
     header("Location: $url");
     exit;
 }
@@ -34,7 +37,7 @@ function display_toast() {
     if (isset($_SESSION['toast'])) {
         $toast = $_SESSION['toast'];
         $type = $toast['type'];
-        $msg = escape($toast['message']);
+        $msg = $toast['message'];
         
         $color = 'bg-blue-500';
         if ($type === 'success') {
@@ -43,7 +46,7 @@ function display_toast() {
             $color = 'bg-red-500';
         }
         
-        echo "<div id='toast' class='fixed bottom-5 right-5 text-white px-6 py-3 rounded shadow-lg $color transition-opacity duration-300 z-[9999]'>$msg</div>";
+        echo "<div id='toast' class='fixed bottom-5 right-5 text-white px-6 py-3 rounded shadow-2xl $color transition-opacity duration-300 z-[9999]'>$msg</div>";
         echo "<script>setTimeout(() => { document.getElementById('toast').style.opacity = '0'; setTimeout(()=> {document.getElementById('toast').remove();}, 300); }, 3000);</script>";
         
         unset($_SESSION['toast']);

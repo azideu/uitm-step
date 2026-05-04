@@ -1,7 +1,7 @@
 <?php
-// gig_details.php
-require_once 'includes/auth_check.php';
-require_once 'includes/db.php';
+// details.php
+require_once '../includes/auth_check.php';
+require_once '../includes/db.php';
 
 $gig_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     // Verify CSRF Token
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         set_toast('error', 'Invalid security token.');
-        redirect("gig_details?id=$gig_id");
+        redirect("details?id=$gig_id");
     }
     if ($_SESSION['role'] !== 'student') {
         set_toast('error', 'Only students can buy gigs.');
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $max_size = 2 * 1024 * 1024;
             if ($file_size > $max_size) {
                 set_toast('error', 'File size exceeds 2MB limit.');
-                redirect("gig_details?id=$gig_id");
+                redirect("details?id=$gig_id");
             }
             
             // MIME Type Check
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $allowed_mimes = ['image/jpeg', 'image/png', 'application/pdf'];
             if (!in_array($mime_type, $allowed_mimes)) {
                 set_toast('error', 'Invalid file type. Only JPG, PNG, and PDF allowed.');
-                redirect("gig_details?id=$gig_id");
+                redirect("details?id=$gig_id");
             }
             
             // File extension
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             
             // Safe rename
             $new_filename = uniqid('receipt_', true) . '.' . $ext;
-            require_once 'includes/storage.php';
+            require_once '../includes/storage.php';
             $uploaded_path = Storage::upload($tmp_path, 'receipts/' . $new_filename, $mime_type);
             
             if ($uploaded_path) {
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 try {
                     $stmt->execute([$_SESSION['user_id'], $gig_id, $uploaded_path]);
                     set_toast('success', 'Order placed successfully!');
-                    redirect('user_dashboard?mode=buying');
+                    redirect('dashboard?mode=buying');
                 } catch (\Exception $e) {
                     set_toast('error', 'Error creating order.');
                     error_log($e->getMessage());
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
-require_once 'includes/header.php';
+require_once '../includes/header.php';
 ?>
 
 <div class="max-w-5xl mx-auto animate-fade-in-up">
@@ -111,7 +111,7 @@ require_once 'includes/header.php';
 
     <div class="flex flex-col lg:flex-row gap-8">
         <!-- Left: Gig Info -->
-        <div class="flex-grow bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300">
+        <div class="flex-grow bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300">
             <!-- Header gradient band -->
             <div class="h-2 bg-uitmPurple"></div>
             
@@ -129,7 +129,7 @@ require_once 'includes/header.php';
                             ? escape($gig['profile_picture']) 
                             : 'https://ui-avatars.com/api/?name=' . urlencode($gig['seller_name']) . '&background=330066&color=FFD700';
                     ?>
-                    <div class="w-12 h-12 rounded-full bg-uitmPurple flex items-center justify-center text-white font-extrabold text-lg flex-shrink-0 overflow-hidden border-2 border-white shadow-sm">
+                    <div class="w-12 h-12 rounded-full bg-uitmPurple flex items-center justify-center text-white font-extrabold text-lg flex-shrink-0 overflow-hidden border-2 border-white shadow-xl">
                         <img src="<?php echo $seller_avatar; ?>" alt="<?php echo escape($gig['seller_name']); ?>" class="w-full h-full object-cover">
                     </div>
                     <div>
@@ -155,7 +155,7 @@ require_once 'includes/header.php';
 
                 <?php if (!empty($media_items)): ?>
                     <div class="mb-8 relative group">
-                        <div id="gig-media-slider" class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-slate-800 transition-colors duration-300">
+                        <div id="gig-media-slider" class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-gray-100 dark:border-slate-800 transition-colors duration-300">
                             <?php foreach ($media_items as $index => $item): ?>
                                 <div class="media-slide absolute inset-0 transition-opacity duration-500 <?php echo $index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'; ?>" data-index="<?php echo $index; ?>">
                                     <?php if ($item['type'] === 'youtube'): ?>
@@ -241,7 +241,7 @@ require_once 'includes/header.php';
         
         <!-- Right: Order Panel -->
         <div class="lg:w-80 xl:w-96 flex-shrink-0">
-            <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 overflow-hidden sticky top-24 transition-colors duration-300">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden sticky top-24 transition-colors duration-300">
                 <!-- Price header -->
                 <div class="bg-uitmPurple p-8 text-center text-white">
                     <div class="text-sm uppercase tracking-widest text-white/70 font-bold mb-2">Starting Price</div>
@@ -252,7 +252,7 @@ require_once 'includes/header.php';
                 <div class="p-6">
                     <?php if($_SESSION['role'] === 'student' && $gig['seller_id'] != $_SESSION['user_id']): ?>
                         <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 transition-colors duration-300">Place your order</h3>
-                        <form action="gig_details?id=<?php echo $gig_id; ?>" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        <form action="details?id=<?php echo $gig_id; ?>" method="POST" enctype="multipart/form-data" class="space-y-4">
                             <input type="hidden" name="action" value="buy">
                             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                             <div>
@@ -268,7 +268,7 @@ require_once 'includes/header.php';
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-4 px-6 rounded-md shadow-sm hover:bg-purple-900 transition-all duration-300 text-base flex items-center justify-center gap-2">
+                            <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-4 px-6 rounded-md shadow-xl hover:bg-purple-900 transition-all duration-300 text-base flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 Verify & Submit Order
                             </button>
@@ -286,7 +286,7 @@ require_once 'includes/header.php';
                             This is your own gig.
                         </div>
                         <div class="mt-4">
-                            <a href="edit_gig?id=<?php echo $gig_id; ?>" class="w-full bg-white dark:bg-slate-800 border-2 border-uitmPurple text-uitmPurple dark:text-purple-400 hover:bg-uitmPurple hover:text-white dark:hover:bg-purple-900 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
+                            <a href="<?php echo ROOT_URL; ?>gigs/edit?id=<?php echo $gig_id; ?>" class="w-full bg-white dark:bg-slate-800 border-2 border-uitmPurple text-uitmPurple dark:text-purple-400 hover:bg-uitmPurple hover:text-white dark:hover:bg-purple-900 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                 Edit Gig Details
                             </a>
@@ -310,4 +310,4 @@ require_once 'includes/header.php';
     </div>
 </div>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once '../includes/footer.php'; ?>
