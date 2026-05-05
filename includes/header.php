@@ -94,15 +94,12 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus'])) {
                     
                     <?php if(isset($_SESSION['user_id'])): ?>
                         <?php if($_SESSION['role'] === 'student'): ?>
-                            <!-- Toggle switch handled by session or link depending on context -->
-                            <?php $current_mode = $_SESSION['mode'] ?? 'buying'; ?>
-                            <div class="group relative inline-block">
-                            <?php if($current_mode === 'buying'): ?>
-                                <a href="<?php echo ROOT_URL; ?>dashboard?mode=selling" class="bg-uitmGold text-uitmPurple px-4 py-1.5 rounded-md font-bold text-sm shadow-xl hover:bg-yellow-400 transition-all duration-300 transform group-hover:-translate-y-0.5">Switch to Selling</a>
-                            <?php else: ?>
-                                <a href="<?php echo ROOT_URL; ?>dashboard?mode=buying" class="bg-uitmGold text-uitmPurple px-4 py-1.5 rounded-md font-bold text-sm shadow-xl hover:bg-yellow-400 transition-all duration-300 transform group-hover:-translate-y-0.5">Switch to Buying</a>
-                            <?php endif; ?>
-                            </div>
+                            <a href="<?php echo ROOT_URL; ?>dashboard" class="hover:text-uitmGold hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors flex items-center space-x-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                </svg>
+                                <span>Dashboard</span>
+                            </a>
                             
                             <a href="<?php echo ROOT_URL; ?>marketplace" class="hover:text-uitmGold hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors flex items-center space-x-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

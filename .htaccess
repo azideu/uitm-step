@@ -1,10 +1,14 @@
+Options -MultiViews
 RewriteEngine On
-RewriteBase /
+# RewriteBase /STEP/ # Uncomment this only if you experience routing issues on XAMPP
 
-# 1. Map /home to index.php
+# Map home to index.php
 RewriteRule ^home$ index.php [NC,L]
 
-# 4. Internally rewrite clean URLs to .php files
+# Map profile to profile.php
+RewriteRule ^profile$ profile.php [NC,L]
+
+# Internally rewrite clean URLs to .php files
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^(.+)$ $1.php [NC,L]

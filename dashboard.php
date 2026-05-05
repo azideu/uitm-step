@@ -29,12 +29,23 @@ require_once 'includes/header.php';
         </p>
     </div>
     
-    <?php if ($mode === 'selling'): ?>
-        <a href="<?php echo ROOT_URL; ?>gigs/create" class="bg-emerald-500 text-white font-bold py-3 px-6 rounded-md hover:bg-emerald-600 transition-all duration-300 shadow-xl flex items-center gap-2">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-            Create New Gig
+    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <?php if ($mode === 'selling'): ?>
+            <a href="<?php echo ROOT_URL; ?>gigs/create" class="bg-emerald-500 text-white font-bold py-2.5 px-5 rounded-lg hover:bg-emerald-600 transition-all duration-300 shadow-xl flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                Create New Gig
+            </a>
+        <?php endif; ?>
+        <?php $toggle_mode = ($mode === 'buying' ? 'selling' : 'buying'); ?>
+        <a href="?mode=<?php echo $toggle_mode; ?>" class="bg-gray-100 dark:bg-slate-800 p-1 rounded-xl flex items-center shadow-inner hover:opacity-80 transition-opacity">
+            <span class="px-4 py-2 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $mode === 'buying' ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow' : 'text-gray-500 dark:text-slate-400'; ?>">
+                Buying
+            </span>
+            <span class="px-4 py-2 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $mode === 'selling' ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow' : 'text-gray-500 dark:text-slate-400'; ?>">
+                Selling
+            </span>
         </a>
-    <?php endif; ?>
+    </div>
 </div>
 
 <?php if ($mode === 'buying'): ?>
