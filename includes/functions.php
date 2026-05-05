@@ -10,13 +10,21 @@ function escape($string) {
 }
 
 /**
+ * Resolves a path to a full URL using ROOT_URL if relative.
+ */
+function asset_url($path) {
+    if (empty($path)) return '';
+    if (str_starts_with($path, 'http') || str_starts_with($path, 'data:') || str_starts_with($path, '/')) {
+        return $path;
+    }
+    return ROOT_URL . ltrim($path, '/');
+}
+
+/**
  * Redirect and exit
  */
 function redirect($url) {
-    if (!str_starts_with($url, 'http') && !str_starts_with($url, '/')) {
-        $url = ROOT_URL . $url;
-    }
-    header("Location: $url");
+    header("Location: " . asset_url($url));
     exit;
 }
 

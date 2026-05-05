@@ -158,7 +158,7 @@ require_once '../includes/header.php';
             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Gig Image (Leave blank to keep current)</label>
             <?php if ($gig['image_url']): ?>
                 <div class="mb-2">
-                    <img src="<?php echo escape($gig['image_url']); ?>" alt="Current Image" class="w-32 h-20 object-cover rounded-lg border border-gray-200 dark:border-slate-700">
+                    <img src="<?php echo asset_url($gig['image_url']); ?>" alt="Current Image" class="w-32 h-20 object-cover rounded-lg border border-gray-200 dark:border-slate-700">
                 </div>
             <?php endif; ?>
             <input type="file" name="gig_image" accept="image/jpeg, image/png, image/webp" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">
@@ -185,7 +185,7 @@ require_once '../includes/header.php';
         </div>
         
         <div class="flex justify-between items-center mt-8">
-            <a href="details?id=<?php echo $gig_id; ?>" class="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">Cancel</a>
+            <a href="<?php echo ROOT_URL; ?>gigs/details?id=<?php echo $gig_id; ?>" class="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">Cancel</a>
             <button type="submit" class="bg-uitmPurple text-white font-bold py-3 px-8 rounded-full hover:bg-purple-900 transition-colors shadow-2xl hover:shadow-2xl focus:ring-4 focus:ring-uitmPurple/30">Update Gig</button>
         </div>
     </form>

@@ -158,7 +158,7 @@ require_once '../includes/header.php';
         </div>
         
         <div class="flex justify-between items-center mt-8">
-            <a href="dashboard?mode=selling" class="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">Cancel</a>
+            <a href="<?php echo ROOT_URL; ?>dashboard?mode=selling" class="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white font-medium transition-colors">Cancel</a>
             <button type="submit" class="bg-uitmPurple text-white font-bold py-3 px-8 rounded-full hover:bg-purple-900 transition-colors shadow-2xl hover:shadow-2xl focus:ring-4 focus:ring-uitmPurple/30">Publish Gig</button>
         </div>
     </form>

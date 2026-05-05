@@ -251,7 +251,7 @@ require_once 'includes/header.php';
                                     </td>
                                     <td class="px-6 py-4 text-sm">
                                         <?php if($io['payment_proof_path']): ?>
-                                            <a href="<?php echo escape($io['payment_proof_path']); ?>" target="_blank" class="text-emerald-600 hover:text-emerald-800 font-bold underline underline-offset-2 transition-colors">View</a>
+                                            <a href="<?php echo asset_url($io['payment_proof_path']); ?>" target="_blank" class="text-emerald-600 hover:text-emerald-800 font-bold underline underline-offset-2 transition-colors">View</a>
                                         <?php else: ?>
                                             <span class="text-gray-300">—</span>
                                         <?php endif; ?>

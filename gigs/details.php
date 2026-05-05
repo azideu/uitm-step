@@ -104,7 +104,7 @@ require_once '../includes/header.php';
 <div class="max-w-5xl mx-auto animate-fade-in-up">
     <!-- Breadcrumb -->
     <nav class="mb-6 text-sm text-gray-400 dark:text-slate-500 font-medium transition-colors duration-300">
-        <a href="marketplace" class="hover:text-uitmPurple dark:hover:text-purple-400 transition-colors">Marketplace</a>
+        <a href="<?php echo ROOT_URL; ?>marketplace" class="hover:text-uitmPurple dark:hover:text-purple-400 transition-colors">Marketplace</a>
         <span class="mx-2">›</span>
         <span class="text-gray-700 dark:text-slate-300"><?php echo escape($gig['category']); ?></span>
     </nav>
@@ -126,7 +126,7 @@ require_once '../includes/header.php';
                 <div class="flex items-center gap-4 mb-8 p-4 bg-gray-50 dark:bg-slate-800/50 rounded-2xl border border-gray-100 dark:border-slate-700 transition-colors duration-300">
                     <?php
                         $seller_avatar = !empty($gig['profile_picture']) 
-                            ? escape($gig['profile_picture']) 
+                            ? asset_url($gig['profile_picture']) 
                             : 'https://ui-avatars.com/api/?name=' . urlencode($gig['seller_name']) . '&background=330066&color=FFD700';
                     ?>
                     <div class="w-12 h-12 rounded-full bg-uitmPurple flex items-center justify-center text-white font-extrabold text-lg flex-shrink-0 overflow-hidden border-2 border-white shadow-xl">
@@ -149,7 +149,7 @@ require_once '../includes/header.php';
                     }
                 }
                 if (!empty($gig['image_url'])) {
-                    $media_items[] = ['type' => 'image', 'content' => escape($gig['image_url'])];
+                    $media_items[] = ['type' => 'image', 'content' => asset_url($gig['image_url'])];
                 }
                 ?>
 
@@ -275,7 +275,7 @@ require_once '../includes/header.php';
                         </form>
                         
                         <div class="mt-4 border-t border-gray-100 dark:border-slate-800 pt-4 transition-colors duration-300">
-                            <a href="chat?user=<?php echo $gig['seller_id']; ?>" class="w-full border-2 border-uitmPurple/30 dark:border-purple-500/30 text-uitmPurple dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
+                            <a href="<?php echo ROOT_URL; ?>chat?user=<?php echo $gig['seller_id']; ?>" class="w-full border-2 border-uitmPurple/30 dark:border-purple-500/30 text-uitmPurple dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                                 Contact Seller
                             </a>

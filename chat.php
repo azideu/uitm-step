@@ -13,7 +13,7 @@ $active_chat = isset($_GET['user']) ? (int)$_GET['user'] : 0;
 
 // Fetch unique users the current user has chatted with
 $stmt_users = $pdo->prepare("
-    SELECT DISTINCT u.user_id, u.name 
+    SELECT DISTINCT u.user_id, u.name, u.profile_picture 
     FROM users u 
     JOIN messages m ON (u.user_id = m.sender_id OR u.user_id = m.receiver_id) 
     WHERE (m.sender_id = :uid1 OR m.receiver_id = :uid2) AND u.user_id != :uid3
@@ -30,7 +30,7 @@ if ($active_chat > 0) {
         }
     }
     if (!$found) {
-        $stmt = $pdo->prepare("SELECT user_id, name FROM users WHERE user_id = ?");
+        $stmt = $pdo->prepare("SELECT user_id, name, profile_picture FROM users WHERE user_id = ?");
         $stmt->execute([$active_chat]);
         $new_user = $stmt->fetch();
         if ($new_user) array_unshift($chatted_users, $new_user);
@@ -39,10 +39,15 @@ if ($active_chat > 0) {
 
 // Fetch active chat user info
 $active_user_name = '';
+$active_user_pic = '';
 if ($active_chat > 0) {
-    $stmt = $pdo->prepare("SELECT name FROM users WHERE user_id = ?");
+    $stmt = $pdo->prepare("SELECT name, profile_picture FROM users WHERE user_id = ?");
     $stmt->execute([$active_chat]);
-    $active_user_name = $stmt->fetchColumn();
+    $u = $stmt->fetch();
+    if ($u) {
+        $active_user_name = $u['name'];
+        $active_user_pic = $u['profile_picture'];
+    }
 }
 
 require_once 'includes/header.php';
@@ -59,8 +64,12 @@ require_once 'includes/header.php';
             <?php if(count($chatted_users) > 0): ?>
                 <?php foreach($chatted_users as $cu): ?>
                     <a href="chat?user=<?php echo $cu['user_id']; ?>" class="flex items-center gap-3 p-3 rounded-xl transition-all duration-300 <?php echo ($active_chat == $cu['user_id']) ? 'bg-purple-100/80 dark:bg-slate-700/80 shadow-xl border border-purple-200 dark:border-slate-600' : 'hover:bg-white dark:hover:bg-slate-700 border border-transparent'; ?>">
-                        <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-inner">
-                            <?php echo strtoupper(substr($cu['name'], 0, 1)); ?>
+                        <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-inner overflow-hidden">
+                            <?php if (!empty($cu['profile_picture'])): ?>
+                                <img src="<?php echo asset_url($cu['profile_picture']); ?>" alt="" class="w-full h-full object-cover">
+                            <?php else: ?>
+                                <?php echo strtoupper(substr($cu['name'], 0, 1)); ?>
+                            <?php endif; ?>
                         </div>
                         <div class="overflow-hidden">
                             <h4 class="font-bold text-gray-900 dark:text-white truncate text-sm"><?php echo escape($cu['name']); ?></h4>
@@ -83,8 +92,12 @@ require_once 'includes/header.php';
             <!-- Chat Header -->
             <div class="px-6 py-4 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center z-10 shadow-xl transition-colors duration-300">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-xl">
-                        <?php echo strtoupper(substr($active_user_name, 0, 1)); ?>
+                    <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-xl overflow-hidden">
+                        <?php if (!empty($active_user_pic)): ?>
+                            <img src="<?php echo asset_url($active_user_pic); ?>" alt="" class="w-full h-full object-cover">
+                        <?php else: ?>
+                            <?php echo strtoupper(substr($active_user_name, 0, 1)); ?>
+                        <?php endif; ?>
                     </div>
                     <div>
                         <h3 class="font-bold text-gray-900 dark:text-white"><?php echo escape($active_user_name); ?></h3>

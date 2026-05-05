@@ -124,19 +124,9 @@ $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
 $stored_pic = $user['profile_picture'] ?? '';
-if ($stored_pic) {
-    if (strpos($stored_pic, 'http') === 0) {
-        // Cloud URL — use directly
-        $avatar_path = escape($stored_pic);
-    } elseif (file_exists(__DIR__ . '/' . ltrim($stored_pic, '/'))) {
-        // Local relative path
-        $avatar_path = escape($stored_pic);
-    } else {
-        $avatar_path = 'https://ui-avatars.com/api/?name=' . urlencode($user['name']) . '&background=330066&color=FFD700';
-    }
-} else {
-    $avatar_path = 'https://ui-avatars.com/api/?name=' . urlencode($user['name']) . '&background=330066&color=FFD700';
-}
+$avatar_path = !empty($stored_pic) 
+    ? asset_url($stored_pic) 
+    : 'https://ui-avatars.com/api/?name=' . urlencode($user['name']) . '&background=330066&color=FFD700';
 
 require_once 'includes/header.php';
 ?>

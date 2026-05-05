@@ -126,7 +126,7 @@ require_once 'includes/header.php';
                             }
                         }
                         if (!empty($gig['image_url'])) {
-                            $media_items[] = ['type' => 'image', 'content' => escape($gig['image_url'])];
+                            $media_items[] = ['type' => 'image', 'content' => asset_url($gig['image_url'])];
                         }
 
                         // Default fallback if no media
@@ -136,7 +136,7 @@ require_once 'includes/header.php';
                             if (strpos($cat, 'design') !== false) $thumb = 'assets/img/cat_design.jpg';
                             elseif (strpos($cat, 'video') !== false) $thumb = 'assets/img/cat_video.jpg';
                             elseif (strpos($cat, 'writing') !== false) $thumb = 'assets/img/cat_writing.jpg';
-                            $media_items[] = ['type' => 'image', 'content' => $thumb];
+                            $media_items[] = ['type' => 'image', 'content' => asset_url($thumb)];
                         }
                     ?>
                     
@@ -180,7 +180,7 @@ require_once 'includes/header.php';
                     <div class="text-sm text-gray-600 dark:text-slate-400 flex items-center bg-gray-50 dark:bg-slate-800 p-2 rounded-lg border border-gray-100 dark:border-slate-700 mt-auto transition-colors duration-300">
                         <?php
                             $seller_avatar = !empty($gig['profile_picture']) 
-                                ? escape($gig['profile_picture']) 
+                                ? asset_url($gig['profile_picture']) 
                                 : 'https://ui-avatars.com/api/?name=' . urlencode($gig['seller_name']) . '&background=330066&color=FFD700';
                         ?>
                         <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold mr-3 overflow-hidden shrink-0 border-2 border-white shadow-xl">
