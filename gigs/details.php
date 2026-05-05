@@ -304,10 +304,184 @@ require_once '../includes/header.php';
                             Direct campus peer support
                         </div>
                     </div>
+
+                    <?php if($_SESSION['role'] === 'student' && $gig['seller_id'] != $_SESSION['user_id']): ?>
+                    <!-- Report Seller -->
+                    <div class="mt-6 pt-5 border-t border-gray-100 dark:border-slate-800 transition-colors duration-300">
+                        <button
+                            id="open-report-modal-btn"
+                            onclick="openReportModal()"
+                            class="w-full flex items-center justify-center gap-2 text-xs text-gray-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 font-medium py-2 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 border border-transparent hover:border-red-200 dark:hover:border-red-800/50 transition-all duration-300 group"
+                        >
+                            <svg class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
+                            </svg>
+                            Report this seller
+                        </button>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<?php if($_SESSION['role'] === 'student' && $gig['seller_id'] != $_SESSION['user_id']): ?>
+<!-- =====================================================================
+     REPORT SELLER MODAL
+     ===================================================================== -->
+<div
+    id="report-modal-overlay"
+    onclick="if(event.target===this) closeReportModal()"
+    class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"
+    aria-modal="true"
+    role="dialog"
+    aria-labelledby="report-modal-title"
+>
+    <div
+        id="report-modal-panel"
+        class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-gray-100 dark:border-slate-800 overflow-hidden transform scale-95 transition-all duration-300"
+    >
+        <!-- Red accent bar -->
+        <div class="h-1.5 bg-gradient-to-r from-red-500 to-rose-600"></div>
+
+        <div class="p-8">
+            <!-- Header -->
+            <div class="flex items-start justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 id="report-modal-title" class="text-lg font-extrabold text-gray-900 dark:text-white">Report Seller</h2>
+                        <p class="text-sm text-gray-500 dark:text-slate-400">Reporting: <span class="font-bold text-gray-700 dark:text-slate-300"><?php echo escape($gig['seller_name']); ?></span></p>
+                    </div>
+                </div>
+                <button onclick="closeReportModal()" class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-400 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300 transition-colors" aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Info banner -->
+            <div class="mb-5 flex gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-2xl p-4">
+                <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <p class="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
+                    Reports are reviewed by UiTM STEP admins within 24–48 hours. False or malicious reports may result in action against your account.
+                </p>
+            </div>
+
+            <!-- Form -->
+            <form action="<?php echo ROOT_URL; ?>api/report_action" method="POST" id="report-form">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                <input type="hidden" name="reported_id" value="<?php echo $gig['seller_id']; ?>">
+                <input type="hidden" name="redirect_to" value="<?php echo ROOT_URL; ?>gigs/details?id=<?php echo $gig_id; ?>">
+
+                <!-- Reason -->
+                <div class="mb-5">
+                    <label for="report-reason" class="block text-sm font-bold text-gray-700 dark:text-slate-300 mb-2">
+                        Reason for report <span class="text-red-500">*</span>
+                    </label>
+                    <div class="grid grid-cols-1 gap-2" id="reason-options">
+                        <?php
+                        $reasons = [
+                            'scam'                  => ['label' => 'Scam / Fraud',                  'icon' => '🚨'],
+                            'fake_payment_proof'    => ['label' => 'Fake Payment Proof',            'icon' => '📄'],
+                            'non_delivery'          => ['label' => 'Did Not Deliver Work',          'icon' => '📦'],
+                            'harassment'            => ['label' => 'Harassment / Threats',          'icon' => '⚠️'],
+                            'inappropriate_content' => ['label' => 'Inappropriate Gig Content',     'icon' => '🚫'],
+                            'other'                 => ['label' => 'Other',                         'icon' => '💬'],
+                        ];
+                        foreach ($reasons as $value => $meta):
+                        ?>
+                        <label class="reason-card flex items-center gap-3 p-3 rounded-xl border-2 border-gray-100 dark:border-slate-700 cursor-pointer hover:border-red-300 dark:hover:border-red-700 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all duration-200 has-[:checked]:border-red-500 has-[:checked]:bg-red-50 dark:has-[:checked]:bg-red-900/20 dark:has-[:checked]:border-red-600">
+                            <input type="radio" name="reason" value="<?php echo $value; ?>" class="sr-only" required>
+                            <span class="text-base leading-none"><?php echo $meta['icon']; ?></span>
+                            <span class="text-sm font-semibold text-gray-700 dark:text-slate-300"><?php echo $meta['label']; ?></span>
+                        </label>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div class="mb-6">
+                    <label for="report-details" class="block text-sm font-bold text-gray-700 dark:text-slate-300 mb-2">
+                        Additional details <span class="text-gray-400 font-normal">(optional)</span>
+                    </label>
+                    <textarea
+                        id="report-details"
+                        name="details"
+                        rows="3"
+                        maxlength="1000"
+                        placeholder="Describe what happened in as much detail as possible..."
+                        class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-red-400/40 focus:border-red-400 dark:focus:ring-red-800/40 dark:focus:border-red-700 transition-all resize-none"
+                    ></textarea>
+                    <p class="text-xs text-gray-400 dark:text-slate-500 mt-1 text-right"><span id="char-count">0</span>/1000</p>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeReportModal()" class="flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-400 font-bold text-sm hover:bg-gray-50 dark:hover:bg-slate-800 transition-all duration-300">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-bold text-sm shadow-lg hover:shadow-red-200 dark:hover:shadow-red-900/30 transition-all duration-300 flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
+                        </svg>
+                        Submit Report
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const reportOverlay = document.getElementById('report-modal-overlay');
+    const reportPanel   = document.getElementById('report-modal-panel');
+    const detailsTextarea = document.getElementById('report-details');
+    const charCount       = document.getElementById('char-count');
+
+    function openReportModal() {
+        reportOverlay.classList.remove('opacity-0', 'pointer-events-none');
+        reportPanel.classList.remove('scale-95');
+        reportPanel.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeReportModal() {
+        reportOverlay.classList.add('opacity-0', 'pointer-events-none');
+        reportPanel.classList.remove('scale-100');
+        reportPanel.classList.add('scale-95');
+        document.body.style.overflow = '';
+    }
+
+    // Keyboard close
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeReportModal();
+    });
+
+    // Character counter
+    detailsTextarea.addEventListener('input', function() {
+        charCount.textContent = this.value.length;
+    });
+
+    // Radio card visual selection
+    document.querySelectorAll('.reason-card input[type="radio"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            document.querySelectorAll('.reason-card').forEach(function(card) {
+                card.classList.remove('border-red-500', 'bg-red-50', 'dark:bg-red-900/20', 'dark:border-red-600');
+            });
+            if (this.checked) {
+                this.closest('.reason-card').classList.add('border-red-500', 'bg-red-50');
+            }
+        });
+    });
+</script>
+<?php endif; ?>
+
 <?php require_once '../includes/footer.php'; ?>
+

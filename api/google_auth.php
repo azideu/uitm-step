@@ -136,7 +136,14 @@ try {
         exit;
     }
 
+    if ($user['role'] === 'banned') {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'error' => 'Your account has been banned due to a violation of our terms.']);
+        exit;
+    }
+
     if (isset($user['is_verified']) && $user['is_verified'] == 0) {
+
         $update = $pdo->prepare('UPDATE users SET is_verified = 1, otp_code = NULL WHERE user_id = ?');
         $update->execute([$user['user_id']]);
         $user['is_verified'] = 1;

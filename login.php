@@ -32,8 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 redirect('verify_email');
             }
 
+            // Check if user is banned
+            if ($user['role'] === 'banned') {
+                set_toast('error', 'Your account has been banned due to a violation of our terms.');
+                redirect('login');
+            }
+
             // Mitigate Session Fixation
             session_regenerate_id(true);
+
 
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['role'] = $user['role'];
