@@ -10,12 +10,15 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     campus VARCHAR(100) NOT NULL,
-    role ENUM('student', 'admin') DEFAULT 'student',
+    role ENUM('student', 'admin', 'banned') DEFAULT 'student',
     profile_picture VARCHAR(255) DEFAULT NULL,
     bio TEXT DEFAULT NULL,
+    is_verified TINYINT(1) DEFAULT 0,
+    otp_code VARCHAR(10) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Gigs Table
 CREATE TABLE IF NOT EXISTS gigs (
     gig_id INT AUTO_INCREMENT PRIMARY KEY,
     seller_id INT NOT NULL,
@@ -56,6 +59,32 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREIGN KEY (buyer_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (gig_id) REFERENCES gigs(gig_id) ON DELETE CASCADE
 );
+
+-- Reports Table
+CREATE TABLE IF NOT EXISTS reports (
+    report_id INT AUTO_INCREMENT PRIMARY KEY,
+    reporter_id INT NOT NULL,
+    reported_id INT NOT NULL,
+    reason ENUM('scam', 'fake_payment_proof', 'non_delivery', 'harassment', 'inappropriate_content', 'other') NOT NULL,
+    details TEXT,
+    status ENUM('pending', 'reviewed', 'dismissed', 'banned') DEFAULT 'pending',
+    admin_note TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (reporter_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (reported_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- Ban Appeals Table
+CREATE TABLE IF NOT EXISTS ban_appeals (
+    appeal_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    content TEXT NOT NULL,
+    status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    admin_note TEXT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
 
 -- Messages Table
 CREATE TABLE IF NOT EXISTS messages (

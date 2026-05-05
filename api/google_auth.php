@@ -137,8 +137,13 @@ try {
     }
 
     if ($user['role'] === 'banned') {
-        http_response_code(403);
-        echo json_encode(['success' => false, 'error' => 'Your account has been banned due to a violation of our terms.']);
+        // Set session so they can see the banned page and appeal
+        session_regenerate_id(true);
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['role'] = $user['role'];
+        $_SESSION['name'] = $user['name'];
+        
+        echo json_encode(['success' => true, 'redirect' => 'banned']);
         exit;
     }
 

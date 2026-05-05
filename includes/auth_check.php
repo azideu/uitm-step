@@ -24,9 +24,11 @@ if (!$user) {
 
 if ($user['role'] === 'banned') {
     // User was banned mid-session
-    session_destroy();
-    set_toast('error', 'Your account has been banned due to a violation of our terms.');
-    redirect('login');
+    $current_page = basename($_SERVER['PHP_SELF']);
+    if ($current_page !== 'banned.php' && $current_page !== 'logout.php') {
+        set_toast('error', 'Your account has been suspended.');
+        redirect('banned');
+    }
 }
 
 

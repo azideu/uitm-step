@@ -30,7 +30,21 @@ CREATE TABLE IF NOT EXISTS reports (
 )
 ";
 
+// Migration 3: Create ban_appeals table
+$migrations[] = "
+CREATE TABLE IF NOT EXISTS ban_appeals (
+    appeal_id     INT AUTO_INCREMENT PRIMARY KEY,
+    user_id       INT NOT NULL,
+    content       TEXT NOT NULL,
+    status        ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    admin_note    TEXT DEFAULT NULL,
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+)
+";
+
 echo "<h2 style='font-family:monospace'>Running Migrations...</h2><pre>";
+
 
 foreach ($migrations as $i => $sql) {
     try {

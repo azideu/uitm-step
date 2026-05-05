@@ -363,6 +363,128 @@ require_once '../includes/header.php';
     <?php endif; ?>
 </div>
 
+<!-- =====================================================================
+     SECTION 3: ACCOUNT APPEALS
+     ===================================================================== -->
+<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mt-10">
+    <div class="h-1 bg-gradient-to-r from-indigo-500 to-purple-600"></div>
+    <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+            Account Appeals
+        </h2>
+        <?php
+        $stmt_appeals = $pdo->query("
+            SELECT a.*, u.name, u.email 
+            FROM ban_appeals a 
+            JOIN users u ON a.user_id = u.user_id 
+            ORDER BY a.created_at DESC
+        ");
+        $appeals = $stmt_appeals->fetchAll();
+        $pending_appeals = array_filter($appeals, fn($a) => $a['status'] === 'pending');
+        ?>
+        <div class="flex items-center gap-3">
+            <?php if (count($pending_appeals) > 0): ?>
+                <span class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 font-bold text-xs px-3 py-1 rounded-md border border-indigo-200 dark:border-indigo-800/50">
+                    <?php echo count($pending_appeals); ?> pending
+                </span>
+            <?php endif; ?>
+            <span class="bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-slate-400 font-bold text-xs px-3 py-1 rounded-md"><?php echo count($appeals); ?> total</span>
+        </div>
+    </div>
+
+    <?php if (count($appeals) > 0): ?>
+        <div class="divide-y divide-gray-50 dark:divide-slate-800">
+            <?php foreach ($appeals as $app): ?>
+                <div class="p-6 hover:bg-gray-50/70 dark:hover:bg-slate-800/50 transition-colors duration-200">
+                    <div class="flex flex-col lg:flex-row lg:items-start gap-6">
+                        
+                        <div class="flex-grow min-w-0">
+                            <div class="flex flex-wrap items-center gap-2 mb-4">
+                                <span class="text-xs font-bold text-gray-400 dark:text-slate-500">#APPEAL-<?php echo $app['appeal_id']; ?></span>
+                                <?php
+                                $as = $app['status'];
+                                $ab = match($as) {
+                                    'pending'  => 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300',
+                                    'approved' => 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300',
+                                    'rejected' => 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300',
+                                    default    => 'bg-gray-100 text-gray-500',
+                                };
+                                ?>
+                                <span class="px-2.5 py-0.5 rounded-md text-xs font-bold <?php echo $ab; ?>">
+                                    <?php echo ucfirst($as); ?>
+                                </span>
+                                <span class="text-xs text-gray-400 dark:text-slate-500 ml-auto">
+                                    Submitted <?php echo date('d M Y, H:i', strtotime($app['created_at'])); ?>
+                                </span>
+                            </div>
+
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center font-bold text-slate-500">
+                                    <?php echo strtoupper(substr($app['name'], 0, 1)); ?>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-gray-800 dark:text-white"><?php echo escape($app['name']); ?></p>
+                                    <p class="text-xs text-gray-500 dark:text-slate-500"><?php echo escape($app['email']); ?></p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 dark:bg-slate-800/40 rounded-2xl p-4 border border-slate-100 dark:border-slate-700 mb-4">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Student's Statement</p>
+                                <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line"><?php echo escape($app['content']); ?></p>
+                            </div>
+
+                            <?php if ($app['admin_note']): ?>
+                                <div class="bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl p-4 border border-indigo-100 dark:border-indigo-800/50">
+                                    <p class="text-xs font-bold text-indigo-500 uppercase tracking-widest mb-2">Admin Response</p>
+                                    <p class="text-sm text-indigo-800 dark:text-indigo-300 italic">"<?php echo escape($app['admin_note']); ?>"</p>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <?php if ($app['status'] === 'pending'): ?>
+                            <div class="lg:w-64 flex-shrink-0">
+                                <form action="appeal_action" method="POST" class="bg-gray-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-gray-100 dark:border-slate-700 space-y-4"
+                                      onsubmit="return confirm('Are you sure? Approving will instantly restore this user\'s access.');">
+                                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                                    <input type="hidden" name="appeal_id" value="<?php echo $app['appeal_id']; ?>">
+
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-2">Response Note</label>
+                                        <textarea name="admin_note" rows="3" maxlength="500" 
+                                                  placeholder="Explain the decision to the student..."
+                                                  class="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 transition resize-none"></textarea>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 gap-2">
+                                        <button type="submit" name="action" value="approve"
+                                                class="w-full py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white text-xs font-bold shadow-lg transition-all">
+                                            ✅ Approve & Unban
+                                        </button>
+                                        <button type="submit" name="action" value="reject"
+                                                class="w-full py-2.5 rounded-xl bg-white dark:bg-slate-700 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800/50 text-xs font-bold hover:bg-red-50 transition-all">
+                                            ❌ Reject Appeal
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        <?php endif; ?>
+
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <div class="px-6 py-16 text-center text-gray-400">
+            <svg class="w-12 h-12 mx-auto mb-4 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+            <p class="font-medium">No account appeals to display.</p>
+        </div>
+    <?php endif; ?>
+</div>
+
 <?php require_once '../includes/footer.php'; ?>
+
 
 
