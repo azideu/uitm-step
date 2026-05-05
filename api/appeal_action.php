@@ -15,7 +15,8 @@ if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST
 }
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'banned') {
-    redirect('home');
+    set_toast('error', 'You must be logged in as a suspended user to submit an appeal.');
+    redirect('banned');
 }
 
 $user_id = (int)$_SESSION['user_id'];

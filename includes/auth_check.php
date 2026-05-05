@@ -22,6 +22,9 @@ if (!$user) {
     redirect('login');
 }
 
+// Sync session role with database in case of updates (like banning)
+$_SESSION['role'] = $user['role'];
+
 if ($user['role'] === 'banned') {
     // User was banned mid-session
     $current_page = basename($_SERVER['PHP_SELF']);
