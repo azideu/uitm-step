@@ -340,17 +340,16 @@ require_once '../includes/header.php';
 >
     <div
         id="report-modal-panel"
-        class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-gray-100 dark:border-slate-800 overflow-hidden transform scale-95 transition-all duration-300"
+        class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border-x border-b border-gray-100 dark:border-slate-800 overflow-hidden transform scale-95 transition-all duration-300"
     >
-        <!-- Red accent bar -->
-        <div class="h-1.5 bg-gradient-to-r from-red-500 to-rose-600"></div>
+        <div class="h-1.5 bg-gradient-to-r from-red-500 to-rose-600 rounded-t-2xl border-x border-gray-100 dark:border-slate-800"></div>
 
         <div class="p-8">
             <!-- Header -->
             <div class="flex items-start justify-between mb-6">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-2xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
-                        <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
                         </svg>
                     </div>
@@ -369,7 +368,7 @@ require_once '../includes/header.php';
                 <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                <p class="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
+                <p class="text-xs text-amber-700 dark:text-amber-300 leading-relaxed font-medium">
                     Reports are reviewed by UiTM STEP admins within 24–48 hours. False or malicious reports may result in action against your account.
                 </p>
             </div>
@@ -382,25 +381,27 @@ require_once '../includes/header.php';
 
                 <!-- Reason -->
                 <div class="mb-5">
-                    <label for="report-reason" class="block text-sm font-bold text-gray-700 dark:text-slate-300 mb-2">
+                    <label class="block text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-3">
                         Reason for report <span class="text-red-500">*</span>
                     </label>
                     <div class="grid grid-cols-1 gap-2" id="reason-options">
                         <?php
                         $reasons = [
-                            'scam'                  => ['label' => 'Scam / Fraud',                  'icon' => '🚨'],
-                            'fake_payment_proof'    => ['label' => 'Fake Payment Proof',            'icon' => '📄'],
-                            'non_delivery'          => ['label' => 'Did Not Deliver Work',          'icon' => '📦'],
-                            'harassment'            => ['label' => 'Harassment / Threats',          'icon' => '⚠️'],
-                            'inappropriate_content' => ['label' => 'Inappropriate Gig Content',     'icon' => '🚫'],
-                            'other'                 => ['label' => 'Other',                         'icon' => '💬'],
+                            'scam'                  => ['label' => 'Scam / Fraud',                  'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'],
+                            'fake_payment_proof'    => ['label' => 'Fake Payment Proof',            'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>'],
+                            'non_delivery'          => ['label' => 'Did Not Deliver Work',          'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>'],
+                            'harassment'            => ['label' => 'Harassment / Threats',          'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'],
+                            'inappropriate_content' => ['label' => 'Inappropriate Gig Content',     'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636"></path></svg>'],
+                            'other'                 => ['label' => 'Other',                         'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>'],
                         ];
                         foreach ($reasons as $value => $meta):
                         ?>
-                        <label class="reason-card flex items-center gap-3 p-3 rounded-xl border-2 border-gray-100 dark:border-slate-700 cursor-pointer hover:border-red-300 dark:hover:border-red-700 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all duration-200 has-[:checked]:border-red-500 has-[:checked]:bg-red-50 dark:has-[:checked]:bg-red-900/20 dark:has-[:checked]:border-red-600">
+                        <label class="reason-card flex items-center gap-3 p-3 rounded-xl border border-gray-100 dark:border-slate-800 cursor-pointer hover:border-red-300 dark:hover:border-red-700 hover:bg-red-50/50 dark:hover:bg-red-900/10 transition-all duration-200 has-[:checked]:border-red-500 has-[:checked]:bg-red-50 dark:has-[:checked]:bg-red-900/20 dark:has-[:checked]:border-red-600 group">
                             <input type="radio" name="reason" value="<?php echo $value; ?>" class="sr-only" required>
-                            <span class="text-base leading-none"><?php echo $meta['icon']; ?></span>
-                            <span class="text-sm font-semibold text-gray-700 dark:text-slate-300"><?php echo $meta['label']; ?></span>
+                            <span class="w-8 h-8 rounded-lg bg-gray-50 dark:bg-slate-800 flex items-center justify-center text-gray-400 group-hover:text-red-500 transition-colors group-has-[:checked]:bg-red-100 dark:group-has-[:checked]:bg-red-900/40 group-has-[:checked]:text-red-600">
+                                <?php echo $meta['icon']; ?>
+                            </span>
+                            <span class="text-sm font-bold text-gray-700 dark:text-slate-300"><?php echo $meta['label']; ?></span>
                         </label>
                         <?php endforeach; ?>
                     </div>

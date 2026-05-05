@@ -2,8 +2,30 @@
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/functions.php';
 
-// Enforce campus selection if missing
-if (isset($_SESSION['user_id']) && empty($_SESSION['campus'])) {
+// Lightweight role sync for logged-in users (to handle unbanning/role changes)
+if (isset($_SESSION['user_id'])) {
+    $stmt = $pdo->prepare("SELECT role, campus FROM users WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $u_sync = $stmt->fetch();
+    if ($u_sync) {
+        $_SESSION['role'] = $u_sync['role'];
+        $_SESSION['campus'] = $u_sync['campus']; // Also sync campus for the check below
+
+        // Global ban enforcement (for public pages like index.php that don't use auth_check.php)
+        if ($_SESSION['role'] === 'banned') {
+            $current_page = basename($_SERVER['PHP_SELF']);
+            if ($current_page !== 'banned.php' && $current_page !== 'logout.php') {
+                redirect('banned');
+            }
+        }
+    } else {
+        session_destroy();
+        redirect('login');
+    }
+}
+
+// Enforce campus selection if missing (exclude banned users)
+if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['role'] ?? '') !== 'banned') {
     $current_page = basename($_SERVER['PHP_SELF']);
     if ($current_page !== 'complete_registration.php' && $current_page !== 'logout.php') {
         redirect('complete_registration');

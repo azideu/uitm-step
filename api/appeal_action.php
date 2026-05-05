@@ -31,11 +31,17 @@ if (empty($content)) {
 $content = mb_substr($content, 0, 2000);
 
 try {
-    // Check if they already have a pending appeal
-    $stmt = $pdo->prepare("SELECT appeal_id FROM ban_appeals WHERE user_id = ? AND status = 'pending' LIMIT 1");
+    // Check if they already have an appeal record (One-shot rule)
+    $stmt = $pdo->prepare("SELECT status FROM ban_appeals WHERE user_id = ? LIMIT 1");
     $stmt->execute([$user_id]);
-    if ($stmt->fetch()) {
-        set_toast('info', 'You already have a pending appeal under review.');
+    $existing = $stmt->fetch();
+    
+    if ($existing) {
+        if ($existing['status'] === 'pending') {
+            set_toast('info', 'You already have a pending appeal under review.');
+        } else {
+            set_toast('error', 'Your final appeal has already been processed. Decisions are permanent.');
+        }
         redirect('banned');
     }
 
