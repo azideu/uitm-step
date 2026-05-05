@@ -3,6 +3,11 @@ require_once __DIR__ . '/../includes/config.php';
 
 $migrations = [];
 
+// Migration 0: Update users table for verification and banning
+$migrations[] = "ALTER TABLE users ADD COLUMN is_verified TINYINT(1) DEFAULT 0 AFTER role";
+$migrations[] = "ALTER TABLE users ADD COLUMN otp_code VARCHAR(10) DEFAULT NULL AFTER is_verified";
+$migrations[] = "ALTER TABLE users MODIFY COLUMN role ENUM('student', 'admin', 'banned') DEFAULT 'student'";
+
 // Migration 1: Add image & youtube columns to gigs
 $migrations[] = "ALTER TABLE gigs ADD COLUMN image_url VARCHAR(255) DEFAULT NULL AFTER status";
 $migrations[] = "ALTER TABLE gigs ADD COLUMN youtube_url VARCHAR(255) DEFAULT NULL AFTER image_url";
