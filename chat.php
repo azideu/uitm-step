@@ -109,7 +109,27 @@ require_once 'includes/header.php';
             </div>
             
             <!-- Chat Messages -->
-            <div id="chat-messages" class="flex-1 p-6 overflow-y-auto chat-container bg-slate-50/50 dark:bg-slate-950/50 transition-colors duration-300" data-receiver="<?php echo $active_chat; ?>">
+            <div id="chat-messages" class="flex-1 p-6 overflow-y-auto chat-container bg-slate-50/50 dark:bg-slate-950/50 transition-colors duration-300 relative" data-receiver="<?php echo $active_chat; ?>">
+                
+                <!-- Safety Tip Banner (Hidden by default) -->
+                <div id="safety-tip-banner" class="hidden sticky top-0 z-30 mb-6 animate-fade-in-down">
+                    <div class="bg-yellow-50/90 dark:bg-yellow-900/20 backdrop-blur-md border border-yellow-200/50 dark:border-yellow-800/50 rounded-2xl p-4 shadow-xl flex items-start gap-4">
+                        <div class="w-10 h-10 bg-yellow-400 dark:bg-yellow-600 rounded-xl flex items-center justify-center shrink-0 shadow-lg shadow-yellow-400/20">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 17c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-yellow-800 dark:text-yellow-300 mb-1">Stay Safe on UiTM STEP!</h4>
+                            <p class="text-xs text-yellow-700/80 dark:text-yellow-400/70 leading-relaxed">
+                                We noticed a mention of external messaging (WhatsApp, Telegram, Discord). 
+                                <span class="font-bold">Always keep transactions and chats within STEP</span> to stay protected by our Trust &amp; Safety guarantee.
+                            </p>
+                        </div>
+                        <button onclick="document.getElementById('safety-tip-banner').remove()" class="text-yellow-600 hover:text-yellow-800 dark:text-yellow-500 transition-colors p-1">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Messages injected via JS -->
             </div>
 

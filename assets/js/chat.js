@@ -119,6 +119,18 @@ function setStatusBadge(state) {
 function appendMessage(msg) {
     if (msg.id > 0 && document.querySelector(`[data-msg-id="${msg.id}"]`)) return;
 
+    // --- Safety Tip Logic ---
+    const keywords = ['whatsapp', 'telegram', 'discord', 'outside', 'contact', 'number', 'phone', 'wasap', 'ws', 'tele'];
+    const contentLower = msg.content.toLowerCase();
+    const banner = document.getElementById('safety-tip-banner');
+    
+    if (banner && banner.classList.contains('hidden')) {
+        if (keywords.some(k => contentLower.includes(k))) {
+            banner.classList.remove('hidden');
+        }
+    }
+    // ------------------------
+
     // Alignment wrapper — flex row so justify-end/start places the bubble
     // correctly without relying on ml-auto/mr-auto on a w-fit block element.
     const wrapDiv = document.createElement('div');
@@ -126,6 +138,7 @@ function appendMessage(msg) {
 
     const msgDiv = document.createElement('div');
     msgDiv.dataset.msgId = msg.id;
+
 
     // The bubble itself is a SINGLE flex row (not two stacked divs).
     // items-end  — timestamp aligns to the bottom of the last text line.
