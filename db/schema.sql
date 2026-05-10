@@ -86,6 +86,24 @@ CREATE TABLE IF NOT EXISTS ban_appeals (
 );
 
 
+-- Reviews Table
+CREATE TABLE IF NOT EXISTS reviews (
+    review_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    gig_id INT NOT NULL,
+    buyer_id INT NOT NULL,
+    seller_id INT NOT NULL,
+    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    review_text TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_order_review (order_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
+    FOREIGN KEY (gig_id) REFERENCES gigs(gig_id) ON DELETE CASCADE,
+    FOREIGN KEY (buyer_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (seller_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
 -- Messages Table
 CREATE TABLE IF NOT EXISTS messages (
     message_id INT AUTO_INCREMENT PRIMARY KEY,

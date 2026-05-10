@@ -34,6 +34,51 @@ if ($gig['status'] !== 'active' && !$is_seller && !$is_admin && !$is_buyer) {
     redirect('marketplace');
 }
 
+// Fetch all reviews for this gig (with error handling for missing table)
+$reviews = [];
+$completed_order_for_review = null;
+
+// Check if reviews table exists
+try {
+    $checkTableStmt = $pdo->query("SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'reviews' LIMIT 1");
+    $tableExists = $checkTableStmt->fetchColumn() !== false;
+    
+    if ($tableExists) {
+        $stmt_reviews = $pdo->prepare("
+            SELECT r.*, u.name as reviewer_name, u.profile_picture
+            FROM reviews r
+            JOIN users u ON r.buyer_id = u.user_id
+            WHERE r.gig_id = ?
+            ORDER BY r.created_at DESC
+        ");
+        $stmt_reviews->execute([$gig_id]);
+        $reviews = $stmt_reviews->fetchAll();
+
+        // Check if current user (buyer) has a paid, delivered or completed order that can be reviewed
+        if ($_SESSION['role'] === 'student' && !$is_seller) {
+            $stmt_my_order = $pdo->prepare("
+                SELECT o.* FROM orders o
+                WHERE o.gig_id = ?
+                  AND o.buyer_id = ?
+                  AND o.payment_proof_path IS NOT NULL
+                  AND o.payment_proof_path != ''
+                  AND TRIM(o.payment_proof_path) != ''
+                  AND o.status IN ('paid','delivered','complete')
+                  AND NOT EXISTS (SELECT 1 FROM reviews WHERE order_id = o.order_id)
+                ORDER BY o.created_at DESC
+                LIMIT 1
+            ");
+            $stmt_my_order->execute([$gig_id, $_SESSION['user_id']]);
+            $completed_order_for_review = $stmt_my_order->fetch();
+        }
+    }
+} catch (\Exception $e) {
+    // Reviews table might not exist yet - this is fine
+    error_log("Reviews fetch error (safe to ignore): " . $e->getMessage());
+    $reviews = [];
+    $completed_order_for_review = null;
+}
+
 // Handle Order placement (Purchase)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'buy') {
     // Verify CSRF Token
@@ -48,52 +93,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     } else {
         // Handle File Upload
         if (isset($_FILES['payment_proof']) && $_FILES['payment_proof']['error'] === UPLOAD_ERR_OK) {
-            $tmp_path = $_FILES['payment_proof']['tmp_name'];
-            $file_size = $_FILES['payment_proof']['size'];
-            
-            // 2MB Limit
-            $max_size = 2 * 1024 * 1024;
-            if ($file_size > $max_size) {
-                set_toast('error', 'File size exceeds 2MB limit.');
-                redirect("details?id=$gig_id");
-            }
-            
-            // MIME Type Check
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $mime_type = finfo_file($finfo, $tmp_path);
-            
-            $allowed_mimes = ['image/jpeg', 'image/png', 'application/pdf'];
-            if (!in_array($mime_type, $allowed_mimes)) {
-                set_toast('error', 'Invalid file type. Only JPG, PNG, and PDF allowed.');
-                redirect("details?id=$gig_id");
-            }
-            
-            // File extension
-            $ext = 'jpg';
-            if ($mime_type === 'image/png') $ext = 'png';
-            if ($mime_type === 'application/pdf') $ext = 'pdf';
-            
-            // Safe rename
-            $new_filename = uniqid('receipt_', true) . '.' . $ext;
-            require_once '../includes/storage.php';
-            $uploaded_path = Storage::upload($tmp_path, 'receipts/' . $new_filename, $mime_type);
-            
-            if ($uploaded_path) {
-                // Insert Order
-                $stmt = $pdo->prepare("INSERT INTO orders (buyer_id, gig_id, status, payment_proof_path) VALUES (?, ?, 'paid', ?)");
-                try {
-                    $stmt->execute([$_SESSION['user_id'], $gig_id, $uploaded_path]);
-                    set_toast('success', 'Order placed successfully!');
-                    redirect('dashboard?mode=buying');
-                } catch (\Exception $e) {
-                    set_toast('error', 'Error creating order.');
-                    error_log($e->getMessage());
+            try {
+                $tmp_path = $_FILES['payment_proof']['tmp_name'];
+                $file_size = $_FILES['payment_proof']['size'];
+                
+                // 2MB Limit
+                $max_size = 2 * 1024 * 1024;
+                if ($file_size > $max_size) {
+                    set_toast('error', 'File size exceeds 2MB limit.');
+                    redirect("details?id=$gig_id");
                 }
-            } else {
-                set_toast('error', 'Failed to save uploaded file.');
+                
+                // MIME Type Check
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mime_type = finfo_file($finfo, $tmp_path);
+                finfo_close($finfo);
+                
+                $allowed_mimes = ['image/jpeg', 'image/png', 'application/pdf'];
+                if (!in_array($mime_type, $allowed_mimes)) {
+                    set_toast('error', 'Invalid file type. Only JPG, PNG, and PDF allowed.');
+                    redirect("details?id=$gig_id");
+                }
+                
+                // File extension
+                $ext = 'jpg';
+                if ($mime_type === 'image/png') $ext = 'png';
+                if ($mime_type === 'application/pdf') $ext = 'pdf';
+                
+                // Safe rename
+                $new_filename = uniqid('receipt_', true) . '.' . $ext;
+                require_once '../includes/storage.php';
+                $uploaded_path = Storage::upload($tmp_path, 'receipts/' . $new_filename, $mime_type);
+                
+                if ($uploaded_path) {
+                    // Insert Order
+                    $stmt = $pdo->prepare("INSERT INTO orders (buyer_id, gig_id, status, payment_proof_path) VALUES (?, ?, 'paid', ?)");
+                    try {
+                        $stmt->execute([$_SESSION['user_id'], $gig_id, $uploaded_path]);
+                        set_toast('success', 'Order placed successfully!');
+                        redirect('dashboard?mode=buying');
+                    } catch (\Exception $e) {
+                        error_log("Order insertion error: " . $e->getMessage());
+                        error_log("Stack trace: " . $e->getTraceAsString());
+                        set_toast('error', 'Error creating order: ' . $e->getMessage());
+                        redirect("details?id=$gig_id");
+                    }
+                } else {
+                    set_toast('error', 'Failed to save uploaded file.');
+                    redirect("details?id=$gig_id");
+                }
+            } catch (\Exception $e) {
+                error_log("File upload error: " . $e->getMessage());
+                error_log("Stack trace: " . $e->getTraceAsString());
+                set_toast('error', 'Error processing file upload.');
+                redirect("details?id=$gig_id");
             }
         } else {
             set_toast('error', 'Please upload a valid payment proof.');
+            redirect("details?id=$gig_id");
         }
     }
 }
@@ -325,6 +382,276 @@ require_once '../includes/header.php';
         </div>
     </div>
 </div>
+
+<!-- =====================================================================
+     REVIEWS SECTION
+     ===================================================================== -->
+<div class="max-w-5xl mx-auto mt-12 mb-12 animate-fade-in-up">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300">
+        <!-- Header -->
+        <div class="h-2 bg-blue-500"></div>
+        <div class="p-8 md:p-10">
+            <h2 class="text-2xl font-extrabold text-gray-900 dark:text-white mb-8 flex items-center gap-3 transition-colors duration-300">
+                <svg class="w-7 h-7 text-blue-500 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                </svg>
+                Reviews & Ratings
+            </h2>
+
+            <!-- Review Form (always show, but conditionally enabled) -->
+            <div class="mb-10 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-2xl">
+                <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 flex items-center gap-2 transition-colors duration-300">
+                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m0 0h6m-6-6H6m0 0H0"></path>
+                    </svg>
+                    Share Your Experience
+                </h3>
+
+                <?php if (!$completed_order_for_review): ?>
+                <div class="mb-5 p-4 bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            You can leave a review after submitting payment proof for your order.
+                        </p>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <form action="<?php echo ROOT_URL; ?>api/review_action" method="POST" id="review-form" class="space-y-5 <?php echo !$completed_order_for_review ? 'opacity-50 pointer-events-none' : ''; ?>">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                    <?php if ($completed_order_for_review): ?>
+                    <input type="hidden" name="order_id" value="<?php echo $completed_order_for_review['order_id']; ?>">
+                    <input type="hidden" name="gig_id" value="<?php echo $gig_id; ?>">
+                    <?php endif; ?>
+
+                    <!-- Rating Stars -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 dark:text-slate-300 mb-3">
+                            Your Rating <span class="text-red-500">*</span>
+                        </label>
+                        <div class="flex gap-3">
+                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <label class="cursor-pointer group">
+                                <input type="radio" name="rating" value="<?php echo $i; ?>" required class="sr-only rating-input" data-rating="<?php echo $i; ?>" <?php echo !$completed_order_for_review ? 'disabled' : ''; ?>>
+                                <svg class="w-10 h-10 text-gray-300 dark:text-slate-600 group-hover:text-amber-400 transition-colors duration-200 rating-star" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                            </label>
+                            <?php endfor; ?>
+                        </div>
+                        <div id="rating-text" class="mt-2 text-xs text-gray-500 dark:text-slate-400 font-medium">Select a rating</div>
+                    </div>
+
+                    <!-- Review Text -->
+                    <div>
+                        <label for="review_text" class="block text-sm font-bold text-gray-700 dark:text-slate-300 mb-2">
+                            Your Review <span class="text-red-500">*</span>
+                            <span class="text-gray-400 font-normal ml-2 text-xs">(10-1000 characters)</span>
+                        </label>
+                        <textarea
+                            id="review_text"
+                            name="review_text"
+                            rows="4"
+                            minlength="10"
+                            maxlength="1000"
+                            placeholder="Share your experience with this gig. Was the seller professional? Did they deliver quality work? How was the communication?"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-blue-400 dark:focus:ring-blue-800/40 dark:focus:border-blue-700 transition-all resize-none"
+                            required
+                            <?php echo !$completed_order_for_review ? 'disabled' : ''; ?>
+                        ></textarea>
+                        <div class="mt-2 flex justify-between items-center">
+                            <p class="text-xs text-gray-400 dark:text-slate-500">
+                                <span id="char-count">0</span>/1000 characters
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <?php if ($completed_order_for_review): ?>
+                    <div class="flex gap-3 pt-4">
+                        <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-200 dark:hover:shadow-blue-900/30 flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                            </svg>
+                            Submit Review
+                        </button>
+                    </div>
+                    <?php endif; ?>
+                </form>
+
+                <script>
+                    const ratingInputs = document.querySelectorAll('.rating-input');
+                    const ratingText = document.getElementById('rating-text');
+                    const ratingStars = document.querySelectorAll('.rating-star');
+                    const reviewTextarea = document.getElementById('review_text');
+                    const charCount = document.getElementById('char-count');
+
+                    const ratingLabels = {
+                        1: '😞 Poor - Not satisfied',
+                        2: '😐 Fair - Could be better',
+                        3: '😊 Good - Satisfied',
+                        4: '😄 Very Good - Highly satisfied',
+                        5: '😍 Excellent - Outstanding'
+                    };
+
+                    ratingInputs.forEach((input, index) => {
+                        input.addEventListener('change', function() {
+                            const rating = this.value;
+                            ratingText.textContent = ratingLabels[rating];
+
+                            // Update star fill
+                            ratingStars.forEach((star, starIndex) => {
+                                if (starIndex < rating) {
+                                    star.setAttribute('fill', 'currentColor');
+                                    star.classList.remove('text-gray-300', 'dark:text-slate-600');
+                                    star.classList.add('text-amber-400');
+                                } else {
+                                    star.setAttribute('fill', 'none');
+                                    star.classList.add('text-gray-300', 'dark:text-slate-600');
+                                    star.classList.remove('text-amber-400');
+                                }
+                            });
+                        });
+
+                        // Hover effect
+                        input.parentElement.addEventListener('mouseenter', function() {
+                            ratingStars.forEach((star, starIndex) => {
+                                if (starIndex < index + 1) {
+                                    star.classList.add('text-amber-400');
+                                    star.classList.remove('text-gray-300', 'dark:text-slate-600');
+                                } else {
+                                    star.classList.remove('text-amber-400');
+                                    star.classList.add('text-gray-300', 'dark:text-slate-600');
+                                }
+                            });
+                        });
+                    });
+
+                    document.getElementById('rating-text').parentElement.addEventListener('mouseleave', function() {
+                        const checked = document.querySelector('.rating-input:checked');
+                        if (checked) {
+                            const rating = checked.value;
+                            ratingStars.forEach((star, starIndex) => {
+                                if (starIndex < rating) {
+                                    star.setAttribute('fill', 'currentColor');
+                                    star.classList.remove('text-gray-300', 'dark:text-slate-600');
+                                    star.classList.add('text-amber-400');
+                                } else {
+                                    star.setAttribute('fill', 'none');
+                                    star.classList.add('text-gray-300', 'dark:text-slate-600');
+                                    star.classList.remove('text-amber-400');
+                                }
+                            });
+                        }
+                    });
+
+                    // Character counter
+                    reviewTextarea.addEventListener('input', function() {
+                        charCount.textContent = this.value.length;
+                    });
+                </script>
+            </div>
+
+            <!-- Reviews Display -->
+            <?php if (!empty($reviews)): ?>
+                <div class="space-y-5">
+                    <?php 
+                    $total_rating = 0;
+                    foreach ($reviews as $review) {
+                        $total_rating += $review['rating'];
+                    }
+                    $average_rating = number_format($total_rating / count($reviews), 1);
+                    ?>
+                    
+                    <!-- Average Rating Summary -->
+                    <div class="mb-8 p-6 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-800/50 rounded-2xl">
+                        <div class="flex items-center gap-8">
+                            <div class="flex flex-col items-center">
+                                <div class="text-4xl font-extrabold text-amber-600 dark:text-amber-400"><?php echo $average_rating; ?></div>
+                                <div class="flex gap-1 mt-2">
+                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <svg class="w-4 h-4 <?php echo $i <= round($average_rating) ? 'fill-amber-400 text-amber-400' : 'text-gray-300 dark:text-slate-600'; ?>" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <?php endfor; ?>
+                                </div>
+                                <div class="text-xs text-gray-600 dark:text-slate-400 mt-2 font-medium"><?php echo count($reviews); ?> <?php echo count($reviews) === 1 ? 'review' : 'reviews'; ?></div>
+                            </div>
+                            
+                            <!-- Rating Distribution -->
+                            <div class="flex-1">
+                                <?php 
+                                $rating_distribution = array_count_values(array_column($reviews, 'rating'));
+                                for ($i = 5; $i >= 1; $i--):
+                                    $count = $rating_distribution[$i] ?? 0;
+                                    $percentage = (count($reviews) > 0) ? ($count / count($reviews)) * 100 : 0;
+                                ?>
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="text-xs font-bold text-gray-600 dark:text-slate-400 w-6"><?php echo $i; ?></span>
+                                    <div class="flex-1 bg-gray-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
+                                        <div class="bg-amber-400 h-full rounded-full" style="width: <?php echo $percentage; ?>%"></div>
+                                    </div>
+                                    <span class="text-xs font-medium text-gray-600 dark:text-slate-400 w-10 text-right"><?php echo $count; ?></span>
+                                </div>
+                                <?php endfor; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Individual Reviews -->
+                    <div class="space-y-5">
+                        <?php foreach ($reviews as $review): ?>
+                        <div class="p-6 border border-gray-100 dark:border-slate-800 rounded-2xl hover:shadow-md dark:hover:shadow-slate-900 transition-all duration-300">
+                            <!-- Review Header -->
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-3 flex-1">
+                                    <?php
+                                        $reviewer_avatar = !empty($review['profile_picture']) 
+                                            ? asset_url($review['profile_picture']) 
+                                            : 'https://ui-avatars.com/api/?name=' . urlencode($review['reviewer_name']) . '&background=330066&color=FFD700';
+                                    ?>
+                                    <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white dark:border-slate-800 shadow-md flex-shrink-0">
+                                        <img src="<?php echo $reviewer_avatar; ?>" alt="<?php echo escape($review['reviewer_name']); ?>" class="w-full h-full object-cover">
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-gray-900 dark:text-white text-sm"><?php echo escape($review['reviewer_name']); ?></p>
+                                        <p class="text-xs text-gray-500 dark:text-slate-400"><?php echo date('M d, Y', strtotime($review['created_at'])); ?></p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Rating Stars -->
+                                <div class="flex gap-1">
+                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <svg class="w-4 h-4 <?php echo $i <= $review['rating'] ? 'fill-amber-400 text-amber-400' : 'text-gray-300 dark:text-slate-600'; ?>" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                    <?php endfor; ?>
+                                </div>
+                            </div>
+
+                            <!-- Review Text -->
+                            <p class="text-gray-700 dark:text-slate-300 text-sm leading-relaxed"><?php echo escape($review['review_text']); ?></p>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php else: ?>
+                <!-- No Reviews State -->
+                <div class="text-center py-12">
+                    <svg class="w-16 h-16 text-gray-300 dark:text-slate-700 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                    </svg>
+                    <p class="text-gray-500 dark:text-slate-400 font-medium">No reviews yet</p>
+                    <p class="text-sm text-gray-400 dark:text-slate-500 mt-1">Be the first to review this gig!</p>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
 
 <?php if($_SESSION['role'] === 'student' && $gig['seller_id'] != $_SESSION['user_id']): ?>
 <!-- =====================================================================

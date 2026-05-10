@@ -1,9 +1,15 @@
 <?php
 // includes/storage.php
-require_once __DIR__ . '/../vendor/autoload.php';
+// Check if vendor/autoload exists, if not skip AWS SDK loading
+$autoload_path = __DIR__ . '/../vendor/autoload.php';
+if (file_exists($autoload_path)) {
+    require_once $autoload_path;
+}
 
-use Aws\S3\S3Client;
-use Aws\Exception\AwsException;
+// Use statements are optional depending on AWS SDK availability
+if (class_exists('Aws\S3\S3Client')) {
+    // AWS SDK is available, we can use it
+}
 
 class Storage {
     private static $isSpacesConfigured = false;
@@ -21,16 +27,21 @@ class Storage {
             $region = explode('.', $endpoint)[0];
             
             try {
-                self::$s3 = new S3Client([
-                    'version' => 'latest',
-                    'region'  => $region,
-                    'endpoint' => "https://" . $endpoint,
-                    'credentials' => [
-                        'key'    => $key,
-                        'secret' => $secret,
-                    ],
-                    'use_path_style_endpoint' => false,
-                ]);
+                if (class_exists('Aws\S3\S3Client')) {
+                    self::$s3 = new S3Client([
+                        'version' => 'latest',
+                        'region'  => $region,
+                        'endpoint' => "https://" . $endpoint,
+                        'credentials' => [
+                            'key'    => $key,
+                            'secret' => $secret,
+                        ],
+                        'use_path_style_endpoint' => false,
+                    ]);
+                } else {
+                    error_log("AWS SDK not installed. Falling back to local storage.");
+                    self::$isSpacesConfigured = false;
+                }
             } catch (Exception $e) {
                 error_log("Failed to initialize S3 Client: " . $e->getMessage());
                 self::$isSpacesConfigured = false;
@@ -48,7 +59,7 @@ class Storage {
     public static function upload($tmpFilePath, $destinationPath, $mimeType = 'application/octet-stream') {
         self::init();
         
-        if (self::$isSpacesConfigured) {
+        if (self::$isSpacesConfigured && class_exists('Aws\S3\S3Client')) {
             $bucket = getenv('DO_SPACES_BUCKET') ?: '';
             
             try {
@@ -61,20 +72,43 @@ class Storage {
                 ]);
                 
                 return $result['ObjectURL'];
-            } catch (AwsException $e) {
+            } catch (Exception $e) {
                 error_log("DigitalOcean Spaces Upload Error: " . $e->getMessage());
-                return false;
+                // Fallback to local storage on error
+                return self::uploadLocal($tmpFilePath, $destinationPath);
             }
         } else {
             // Local fallback
+            return self::uploadLocal($tmpFilePath, $destinationPath);
+        }
+    }
+    
+    /**
+     * Upload file to local storage
+     * @param string $tmpFilePath
+     * @param string $destinationPath
+     * @return string|false
+     */
+    private static function uploadLocal($tmpFilePath, $destinationPath) {
+        try {
             $fullPath = __DIR__ . '/../uploads/' . ltrim($destinationPath, '/');
             $dir = dirname($fullPath);
+            
             if (!is_dir($dir)) {
-                mkdir($dir, 0755, true);
+                if (!mkdir($dir, 0755, true)) {
+                    error_log("Failed to create directory: $dir");
+                    return false;
+                }
             }
+            
             if (move_uploaded_file($tmpFilePath, $fullPath)) {
                 return 'uploads/' . ltrim($destinationPath, '/');
             }
+            
+            error_log("Failed to move uploaded file from $tmpFilePath to $fullPath");
+            return false;
+        } catch (Exception $e) {
+            error_log("Local upload error: " . $e->getMessage());
             return false;
         }
     }

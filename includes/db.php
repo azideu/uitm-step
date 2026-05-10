@@ -11,7 +11,7 @@ $host = '127.0.0.1';
 $db   = 'uitm_step';
 $user = 'root';
 $pass = ''; 
-$port = '3306';
+$port = '3307';
 $charset = 'utf8mb4';
 
 // 2. Check for DigitalOcean App Platform DATABASE_URL
