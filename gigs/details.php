@@ -105,9 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 }
                 
                 // MIME Type Check
-                $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $mime_type = finfo_file($finfo, $tmp_path);
-                finfo_close($finfo);
+                $finfo = new finfo(FILEINFO_MIME_TYPE);
+                $mime_type = $finfo->file($tmp_path);
                 
                 $allowed_mimes = ['image/jpeg', 'image/png', 'application/pdf'];
                 if (!in_array($mime_type, $allowed_mimes)) {
@@ -464,7 +463,7 @@ require_once '../includes/header.php';
                         ></textarea>
                         <div class="mt-2 flex justify-between items-center">
                             <p class="text-xs text-gray-400 dark:text-slate-500">
-                                <span id="char-count">0</span>/1000 characters
+                                <span id="review-char-count">0</span>/1000 characters
                             </p>
                         </div>
                     </div>
@@ -487,7 +486,7 @@ require_once '../includes/header.php';
                     const ratingText = document.getElementById('rating-text');
                     const ratingStars = document.querySelectorAll('.rating-star');
                     const reviewTextarea = document.getElementById('review_text');
-                    const charCount = document.getElementById('char-count');
+                    const reviewCharCount = document.getElementById('review-char-count');
 
                     const ratingLabels = {
                         1: '😞 Poor - Not satisfied',
@@ -550,7 +549,7 @@ require_once '../includes/header.php';
 
                     // Character counter
                     reviewTextarea.addEventListener('input', function() {
-                        charCount.textContent = this.value.length;
+                        reviewCharCount.textContent = this.value.length;
                     });
                 </script>
             </div>
@@ -747,7 +746,7 @@ require_once '../includes/header.php';
                         placeholder="Describe what happened in as much detail as possible..."
                         class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-red-400/40 focus:border-red-400 dark:focus:ring-red-800/40 dark:focus:border-red-700 transition-all resize-none"
                     ></textarea>
-                    <p class="text-xs text-gray-400 dark:text-slate-500 mt-1 text-right"><span id="char-count">0</span>/1000</p>
+                    <p class="text-xs text-gray-400 dark:text-slate-500 mt-1 text-right"><span id="report-char-count">0</span>/1000</p>
                 </div>
 
                 <!-- Actions -->
@@ -771,7 +770,7 @@ require_once '../includes/header.php';
     const reportOverlay = document.getElementById('report-modal-overlay');
     const reportPanel   = document.getElementById('report-modal-panel');
     const detailsTextarea = document.getElementById('report-details');
-    const charCount       = document.getElementById('char-count');
+    const reportCharCount = document.getElementById('report-char-count');
 
     function openReportModal() {
         reportOverlay.classList.remove('opacity-0', 'pointer-events-none');
@@ -794,7 +793,7 @@ require_once '../includes/header.php';
 
     // Character counter
     detailsTextarea.addEventListener('input', function() {
-        charCount.textContent = this.value.length;
+        reportCharCount.textContent = this.value.length;
     });
 
     // Radio card visual selection
