@@ -28,7 +28,7 @@ class Storage {
             
             try {
                 if (class_exists('Aws\S3\S3Client')) {
-                    self::$s3 = new S3Client([
+                    self::$s3 = new \Aws\S3\S3Client([
                         'version' => 'latest',
                         'region'  => $region,
                         'endpoint' => "https://" . $endpoint,
