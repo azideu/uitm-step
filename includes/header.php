@@ -101,8 +101,7 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <a href="<?php echo ROOT_URL; ?>home" class="flex items-center space-x-2 text-2xl font-bold tracking-wider text-uitmGold hover:scale-105 transition-transform duration-300 font-serif">
-                        <img src="<?php echo ROOT_URL; ?>assets/img/STEP.svg" alt="UiTM Logo" class="h-14 w-14 object-contain rounded-md shadow-xl">
-                        <span class="drop-shadow-xl">UiTM STEP</span>
+                        <img src="<?php echo ROOT_URL; ?>assets/img/STEP.svg" alt="UiTM Logo" class="h-14 w-14 object-contain">
                     </a>
                 </div>
                 <div class="flex items-center space-x-4">
