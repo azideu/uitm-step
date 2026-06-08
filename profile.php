@@ -30,41 +30,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Handle Avatar Upload
         $profile_picture = null;
-        if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
-            $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-            $file_tmp = $_FILES['avatar']['tmp_name'];
-            $file_type = mime_content_type($file_tmp);
-            
-            if (in_array($file_type, $allowed_types)) {
-                $ext_map = [
-                    'image/jpeg' => 'jpg',
-                    'image/png'  => 'png',
-                    'image/gif'  => 'gif',
-                    'image/webp' => 'webp'
-                ];
-                $ext = $ext_map[$file_type];
-                $file_name = 'avatar_' . $user_id . '_' . time() . '.' . $ext;
-                require_once 'includes/storage.php';
-                $uploaded_path = Storage::upload($file_tmp, 'avatars/' . $file_name, $file_type);
+        if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] !== UPLOAD_ERR_NO_FILE) {
+            if ($_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+                $allowed_types = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                $file_tmp = $_FILES['avatar']['tmp_name'];
                 
-                if ($uploaded_path) {
-                    $profile_picture = $uploaded_path;
-                    
-                    // Delete old avatar if it was local (Spaces files don't need manual unlinking here usually, but we check)
-                    $stmt = $pdo->prepare("SELECT profile_picture FROM users WHERE user_id = ?");
-                    $stmt->execute([$user_id]);
-                    $old_pic = $stmt->fetchColumn();
-                    if ($old_pic && strpos($old_pic, 'http') === false) {
-                        $old_pic_path = __DIR__ . '/' . ltrim($old_pic, '/');
-                        if (file_exists($old_pic_path)) {
-                            unlink($old_pic_path);
-                        }
-                    }
+                // Add explicit size limit (e.g. 5MB)
+                $max_size = 5 * 1024 * 1024;
+                if ($_FILES['avatar']['size'] > $max_size) {
+                    $errors[] = "Image size exceeds 5MB limit.";
                 } else {
-                    $errors[] = "Failed to upload avatar.";
+                    $file_type = mime_content_type($file_tmp);
+                    
+                    if (in_array($file_type, $allowed_types)) {
+                        $ext_map = [
+                            'image/jpeg' => 'jpg',
+                            'image/png'  => 'png',
+                            'image/gif'  => 'gif',
+                            'image/webp' => 'webp'
+                        ];
+                        $ext = $ext_map[$file_type];
+                        $file_name = 'avatar_' . $user_id . '_' . time() . '.' . $ext;
+                        require_once 'includes/storage.php';
+                        $uploaded_path = Storage::upload($file_tmp, 'avatars/' . $file_name, $file_type);
+                        
+                        if ($uploaded_path) {
+                            $profile_picture = $uploaded_path;
+                            
+                            // Delete old avatar if it was local
+                            $stmt = $pdo->prepare("SELECT profile_picture FROM users WHERE user_id = ?");
+                            $stmt->execute([$user_id]);
+                            $old_pic = $stmt->fetchColumn();
+                            if ($old_pic && strpos($old_pic, 'http') === false) {
+                                $old_pic_path = __DIR__ . '/' . ltrim($old_pic, '/');
+                                if (file_exists($old_pic_path)) {
+                                    unlink($old_pic_path);
+                                }
+                            }
+                        } else {
+                            $errors[] = "Failed to upload avatar to storage.";
+                        }
+                    } else {
+                        $errors[] = "Invalid image type. Only JPG, PNG, GIF, and WEBP are allowed.";
+                    }
                 }
             } else {
-                $errors[] = "Invalid image type. Only JPG, PNG, GIF, and WEBP are allowed.";
+                // Handle PHP upload errors (like UPLOAD_ERR_INI_SIZE)
+                if ($_FILES['avatar']['error'] === UPLOAD_ERR_INI_SIZE) {
+                    $errors[] = "The uploaded file exceeds the maximum allowed size (check server limits).";
+                } else {
+                    $errors[] = "File upload error code: " . $_FILES['avatar']['error'];
+                }
             }
         }
 
@@ -340,20 +356,107 @@ require_once 'includes/header.php';
             campusSelect.value = userCampus;
         }
 
-        // Avatar Upload Preview
+        // Avatar Upload Preview and Compression
         const avatarInput = document.getElementById('avatar-input');
         const avatarPreview = document.getElementById('avatar-preview');
         
-        avatarInput.addEventListener('change', function() {
+        avatarInput.addEventListener('change', async function() {
             const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.addEventListener('load', function() {
-                    avatarPreview.src = this.result;
-                });
-                reader.readAsDataURL(file);
+            if (!file) return;
+
+            // Immediate preview for better UX
+            const previewUrl = URL.createObjectURL(file);
+            avatarPreview.src = previewUrl;
+
+            // Compress if file is > 1.5MB and is an image
+            const MAX_SIZE = 1.5 * 1024 * 1024;
+            if (file.size > MAX_SIZE && file.type.startsWith('image/')) {
+                const submitBtn = document.querySelector('form[action="profile"] button[type="submit"]');
+                try {
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Compressing...';
+                    }
+
+                    // Compress to max 800px dimension and 80% JPEG quality
+                    const compressedFile = await compressImage(file, 800, 0.8);
+                    
+                    // Replace the file in the input
+                    const dt = new DataTransfer();
+                    dt.items.add(compressedFile);
+                    this.files = dt.files;
+                    
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Save Profile';
+                    }
+                } catch (e) {
+                    console.error('Image compression failed:', e);
+                    // Re-enable submit button to allow standard server-side limits to handle it
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Save Profile';
+                    }
+                }
             }
         });
+
+        /**
+         * Compress an image file using Canvas API
+         */
+        function compressImage(file, maxDimension, quality) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > maxDimension) {
+                                height = Math.round((height * maxDimension) / width);
+                                width = maxDimension;
+                            }
+                        } else {
+                            if (height > maxDimension) {
+                                width = Math.round((width * maxDimension) / height);
+                                height = maxDimension;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        canvas.toBlob(
+                            (blob) => {
+                                if (!blob) {
+                                    reject(new Error('Canvas is empty'));
+                                    return;
+                                }
+                                // Rename with .jpg to match the new mime type
+                                const newName = file.name.replace(/\.[^/.]+$/, "") + ".jpg";
+                                const newFile = new File([blob], newName, {
+                                    type: 'image/jpeg',
+                                    lastModified: Date.now()
+                                });
+                                resolve(newFile);
+                            },
+                            'image/jpeg',
+                            quality
+                        );
+                    };
+                    img.onerror = () => reject(new Error('Failed to load image'));
+                    img.src = e.target.result;
+                };
+                reader.onerror = () => reject(new Error('Failed to read file'));
+                reader.readAsDataURL(file);
+            });
+        }
     });
 </script>
 
