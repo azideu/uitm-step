@@ -85,11 +85,13 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
             }
         }
     </script>
-    <link rel="icon" type="image/svg+xml" href="<?php echo ROOT_URL; ?>assets/img/STEP.svg">
     <?php
+    $logo_path = __DIR__ . '/../assets/img/STEP.svg';
+    $logo_version = is_file($logo_path) ? filemtime($logo_path) : '1';
     $style_path = __DIR__ . '/../assets/css/style.css';
     $style_version = is_file($style_path) ? filemtime($style_path) : '1';
     ?>
+    <link rel="icon" type="image/svg+xml" href="<?php echo ROOT_URL; ?>assets/img/STEP.svg?v=<?php echo $logo_version; ?>">
     <link rel="stylesheet" href="<?php echo ROOT_URL; ?>assets/css/style.css?v=<?php echo $style_version; ?>">
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 flex flex-col min-h-screen text-slate-800 dark:text-slate-200 font-sans selection:bg-uitmPurple selection:text-white transition-colors duration-300 relative">
@@ -101,7 +103,7 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <a href="<?php echo ROOT_URL; ?>home" class="flex items-center space-x-2 text-2xl font-bold tracking-wider text-uitmGold hover:scale-105 transition-transform duration-300 font-serif">
-                        <img src="<?php echo ROOT_URL; ?>assets/img/STEP.svg" alt="UiTM Logo" class="h-14 w-14 object-contain">
+                        <img src="<?php echo ROOT_URL; ?>assets/img/STEP.svg?v=<?php echo $logo_version; ?>" alt="UiTM Logo" class="h-14 w-14 object-contain">
                     </a>
                 </div>
                 <div class="flex items-center space-x-4">
