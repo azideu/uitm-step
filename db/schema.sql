@@ -127,3 +127,11 @@ CREATE TABLE IF NOT EXISTS typing_status (
     FOREIGN KEY (user_id)    REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (partner_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
+
+-- Sessions Table
+CREATE TABLE IF NOT EXISTS sessions (
+    id VARCHAR(128) NOT NULL PRIMARY KEY,
+    data BLOB NOT NULL,
+    last_access INT NOT NULL
+);
+
