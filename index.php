@@ -161,6 +161,87 @@ require_once 'includes/header.php';
     </div>
 </div>
 
+<!-- putting the thing here first -->
+<!-- Testimonials Section -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 font-serif tracking-tight">
+            What <span class="bg-gradient-to-r from-uitmPurple to-purple-600 bg-clip-text text-transparent dark:from-purple-400 dark:to-pink-400">Students Love</span> About STEP
+        </h2>
+        <p class="text-gray-500 dark:text-slate-400 text-lg max-w-2xl mx-auto">
+            Feedback from fellow students on using our platform and its interface.
+        </p>
+        <div class="w-24 h-1 bg-uitmGold mx-auto mt-4 rounded-full"></div>
+    </div>
+
+    <?php
+    $site_testimonials = [
+        [
+            'rating' => 5,
+            'review_text' => 'The interface of this website is incredibly clean and modern! Navigating between gigs is fast and seamless. Easily the best student portal I have ever used.',
+            'name' => 'Faris Kamaruddin',
+            'role' => 'Student Freelancer (FSKM)',
+            'bg_class' => 'from-purple-500/5 to-indigo-500/5'
+        ],
+        [
+            'rating' => 5,
+            'review_text' => 'I love the dark mode option! The design looks very premium, especially with the subtle micro-animations and smooth transitions. Incredible user experience!',
+            'name' => 'Sarah Adriana',
+            'role' => 'Client / Student (FSSR)',
+            'bg_class' => 'from-pink-500/5 to-rose-500/5'
+        ],
+        [
+            'rating' => 5,
+            'review_text' => 'Creating my freelance profile and showcasing my programming services was super easy. The step-by-step onboarding and styling options are top-tier.',
+            'name' => 'Daniel Hakim',
+            'role' => 'Web Developer student (UiTM Shah Alam)',
+            'bg_class' => 'from-blue-500/5 to-teal-500/5'
+        ]
+    ];
+    ?>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <?php foreach ($site_testimonials as $t): ?>
+            <div class="relative bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-slate-800 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group overflow-hidden">
+                <!-- Decorative background glow on hover -->
+                <div class="absolute inset-0 bg-gradient-to-br <?php echo $t['bg_class']; ?> opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                
+                <!-- Quote Icon -->
+                <div class="absolute top-6 right-8 text-uitmPurple/10 dark:text-purple-400/10 group-hover:scale-110 transition-transform duration-500">
+                    <svg class="w-16 h-16 fill-currentColor" viewBox="0 0 24 24">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    </svg>
+                </div>
+
+                <!-- Stars -->
+                <div class="flex gap-1 mb-6">
+                    <?php for ($i = 1; $i <= $t['rating']; $i++): ?>
+                        <svg class="w-5 h-5 text-uitmGold fill-uitmGold" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                    <?php endfor; ?>
+                </div>
+                
+                <!-- Review Text -->
+                <p class="text-gray-600 dark:text-slate-300 text-base leading-relaxed mb-6 relative z-10 italic">
+                    "<?php echo escape($t['review_text']); ?>"
+                </p>
+                
+                <!-- Reviewer Info -->
+                <div class="flex items-center gap-4 relative z-10 pt-4 border-t border-gray-50 dark:border-slate-800">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-uitmPurple to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
+                        <?php echo strtoupper(substr($t['name'], 0, 1)); ?>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 dark:text-white text-base group-hover:text-uitmPurple dark:group-hover:text-purple-300 transition-colors"><?php echo escape($t['name']); ?></h4>
+                        <p class="text-xs text-gray-400 dark:text-slate-500 font-medium"><?php echo escape($t['role']); ?></p>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
 <!-- Category Icons Library (Explore) -->
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-gray-100 dark:border-slate-800 transition-colors duration-300">
     <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-12 font-serif">Explore the marketplace</h2>
