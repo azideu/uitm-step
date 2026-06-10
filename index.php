@@ -161,17 +161,18 @@ require_once 'includes/header.php';
     </div>
 </div>
 
-<!-- putting the thing here first -->
 <!-- Testimonials Section -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div class="text-center mb-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative overflow-hidden">
+    <!-- Subtle Section Background Glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="text-center mb-16 relative z-10">
         <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 font-serif tracking-tight">
-            What <span class="bg-gradient-to-r from-uitmPurple to-purple-600 bg-clip-text text-transparent dark:from-purple-400 dark:to-pink-400">Students Love</span> About STEP
+            What <span class="text-uitmPurple dark:text-purple-400">Students Love</span> About STEP
         </h2>
-        <p class="text-gray-500 dark:text-slate-400 text-lg max-w-2xl mx-auto">
-            Feedback from fellow students on using our platform and its interface.
+        <p class="text-gray-500 dark:text-slate-400 text-lg max-w-2xl mx-auto font-medium">
+            Feedback from fellow students on using our platform, its interface, and the quality of gigs.
         </p>
-        <div class="w-24 h-1 bg-uitmGold mx-auto mt-4 rounded-full"></div>
     </div>
 
     <?php
@@ -179,66 +180,161 @@ require_once 'includes/header.php';
         [
             'rating' => 5,
             'review_text' => 'The interface of this website is incredibly clean and modern! Navigating between gigs is fast and seamless. Easily the best student portal I have ever used.',
-            'name' => 'Faris Kamaruddin',
-            'role' => 'Student Freelancer (FSKM)',
-            'bg_class' => 'from-purple-500/5 to-indigo-500/5'
+            'name' => 'Ammar Danish',
+            'role' => 'Student Freelancer (Kuala Terengganu)',
+            'glow_from' => 'from-purple-500',
+            'glow_to' => 'to-indigo-500',
+            'text_hover' => 'group-hover:text-purple-600 dark:group-hover:text-purple-400'
         ],
         [
             'rating' => 5,
             'review_text' => 'I love the dark mode option! The design looks very premium, especially with the subtle micro-animations and smooth transitions. Incredible user experience!',
-            'name' => 'Sarah Adriana',
-            'role' => 'Client / Student (FSSR)',
-            'bg_class' => 'from-pink-500/5 to-rose-500/5'
+            'name' => 'Ainun Nadiah',
+            'role' => 'Client / Student (Raub)',
+            'glow_from' => 'from-pink-500',
+            'glow_to' => 'to-rose-500',
+            'text_hover' => 'group-hover:text-pink-600 dark:group-hover:text-pink-400'
         ],
         [
             'rating' => 5,
             'review_text' => 'Creating my freelance profile and showcasing my programming services was super easy. The step-by-step onboarding and styling options are top-tier.',
-            'name' => 'Daniel Hakim',
-            'role' => 'Web Developer student (UiTM Shah Alam)',
-            'bg_class' => 'from-blue-500/5 to-teal-500/5'
+            'name' => 'Putera Mikhail Fallon',
+            'role' => 'Web Developer Student (Shah Alam)',
+            'glow_from' => 'from-blue-500',
+            'glow_to' => 'to-teal-500',
+            'text_hover' => 'group-hover:text-blue-600 dark:group-hover:text-blue-400'
+        ],
+        [
+            'rating' => 5,
+            'review_text' => 'As a student seller, this platform has changed my life. I was able to secure 5 local programming projects within my campus during finals week alone!',
+            'name' => 'Adam Khairi',
+            'role' => 'Freelancer Student (Jasin)',
+            'glow_from' => 'from-amber-500',
+            'glow_to' => 'to-orange-500',
+            'text_hover' => 'group-hover:text-amber-600 dark:group-hover:text-amber-400'
+        ],
+        [
+            'rating' => 5,
+            'review_text' => 'Ordering a logo for my student association was incredibly fast. The seller was friendly, local, and knew exactly what our faculty guidelines required. Highly recommended!',
+            'name' => 'Siti Aliya',
+            'role' => 'Client / Student (Puncak Alam)',
+            'glow_from' => 'from-emerald-500',
+            'glow_to' => 'to-teal-500',
+            'text_hover' => 'group-hover:text-emerald-600 dark:group-hover:text-emerald-400'
+        ],
+        [
+            'rating' => 5,
+            'review_text' => 'STEP makes peer-to-peer transactions within campus super secure. No more worrying about payment issues or scams. Every transaction is fast and transparent.',
+            'name' => 'Firas Faiq',
+            'role' => 'Video Editor (Seri Iskandar)',
+            'glow_from' => 'from-rose-500',
+            'glow_to' => 'to-purple-600',
+            'text_hover' => 'group-hover:text-rose-600 dark:group-hover:text-rose-400'
         ]
     ];
-    ?>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <?php foreach ($site_testimonials as $t): ?>
-            <div class="relative bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-slate-800 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group overflow-hidden">
-                <!-- Decorative background glow on hover -->
-                <div class="absolute inset-0 bg-gradient-to-br <?php echo $t['bg_class']; ?> opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                
-                <!-- Quote Icon -->
-                <div class="absolute top-6 right-8 text-uitmPurple/10 dark:text-purple-400/10 group-hover:scale-110 transition-transform duration-500">
-                    <svg class="w-16 h-16 fill-currentColor" viewBox="0 0 24 24">
-                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                    </svg>
-                </div>
-
-                <!-- Stars -->
-                <div class="flex gap-1 mb-6">
-                    <?php for ($i = 1; $i <= $t['rating']; $i++): ?>
-                        <svg class="w-5 h-5 text-uitmGold fill-uitmGold" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+    if (!function_exists('render_testimonial_card')) {
+        function render_testimonial_card($t) {
+            ?>
+            <!-- Card Wrapper with 1px Gradient Border on Hover -->
+            <div class="group relative p-[1.5px] rounded-3xl bg-gradient-to-br from-gray-200/60 to-gray-100/60 dark:from-slate-850/60 dark:to-slate-900/40 hover:<?php echo $t['glow_from']; ?> hover:<?php echo $t['glow_to']; ?> transition-all duration-500 hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] hover:-translate-y-2 h-full flex flex-col w-[350px] md:w-[400px] flex-shrink-0">
+                <!-- Main Card Body -->
+                <div class="relative bg-white dark:bg-slate-900 rounded-[23px] p-8 h-full flex flex-col justify-between overflow-hidden flex-grow border border-transparent dark:border-slate-800/30">
+                    <!-- Subtle Glow Spot on Hover -->
+                    <div class="absolute -right-12 -top-12 w-40 h-40 rounded-full bg-gradient-to-br <?php echo $t['glow_from']; ?> <?php echo $t['glow_to']; ?> opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 blur-3xl transition-all duration-700 pointer-events-none"></div>
+                    
+                    <!-- Quote Icon Decoration -->
+                    <div class="absolute top-8 right-8 text-uitmPurple/5 dark:text-purple-400/5 group-hover:text-uitmPurple/10 dark:group-hover:text-purple-400/10 transition-colors duration-500 pointer-events-none">
+                        <svg class="w-14 h-14 fill-current" viewBox="0 0 24 24">
+                            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
                         </svg>
-                    <?php endfor; ?>
-                </div>
-                
-                <!-- Review Text -->
-                <p class="text-gray-600 dark:text-slate-300 text-base leading-relaxed mb-6 relative z-10 italic">
-                    "<?php echo escape($t['review_text']); ?>"
-                </p>
-                
-                <!-- Reviewer Info -->
-                <div class="flex items-center gap-4 relative z-10 pt-4 border-t border-gray-50 dark:border-slate-800">
-                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-uitmPurple to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
-                        <?php echo strtoupper(substr($t['name'], 0, 1)); ?>
                     </div>
+
                     <div>
-                        <h4 class="font-bold text-gray-900 dark:text-white text-base group-hover:text-uitmPurple dark:group-hover:text-purple-300 transition-colors"><?php echo escape($t['name']); ?></h4>
-                        <p class="text-xs text-gray-400 dark:text-slate-500 font-medium"><?php echo escape($t['role']); ?></p>
+                        <!-- Stars & Verified Badge Row -->
+                        <div class="flex items-center justify-between mb-6 relative z-10">
+                            <div class="flex gap-0.5">
+                                <?php for ($i = 1; $i <= $t['rating']; $i++): ?>
+                                    <svg class="w-4.5 h-4.5 text-uitmGold fill-current transform group-hover:scale-110 transition-transform duration-300" style="transition-delay: <?php echo ($i * 75); ?>ms" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                    </svg>
+                                <?php endfor; ?>
+                            </div>
+                            <span class="inline-flex items-center gap-1 text-[10px] font-bold tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 px-2.5 py-0.5 rounded-full border border-emerald-100/50 dark:border-emerald-900/30 uppercase">
+                                <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                                </svg>
+                                Verified Student
+                            </span>
+                        </div>
+                        
+                        <!-- Review Text -->
+                        <blockquote class="text-slate-600 dark:text-slate-300 text-[15px] leading-relaxed mb-8 relative z-10 italic font-medium whitespace-normal">
+                            "<?php echo escape($t['review_text']); ?>"
+                        </blockquote>
+                    </div>
+                    
+                    <!-- Reviewer Info -->
+                    <div class="flex items-center gap-4 relative z-10 pt-5 border-t border-slate-100 dark:border-slate-800/80 mt-auto">
+                        <!-- Avatar with Glowing Border -->
+                        <div class="relative flex-shrink-0">
+                            <!-- Glow Behind Avatar -->
+                            <div class="absolute -inset-0.5 bg-gradient-to-tr <?php echo $t['glow_from']; ?> <?php echo $t['glow_to']; ?> rounded-full blur opacity-30 group-hover:opacity-75 transition duration-500"></div>
+                            <!-- Avatar Circle -->
+                            <div class="relative w-11 h-11 rounded-full bg-gradient-to-br from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-700 flex items-center justify-center text-white font-extrabold text-base border border-white/10 shadow-md">
+                                <?php echo strtoupper(substr($t['name'], 0, 1)); ?>
+                            </div>
+                        </div>
+                        <div class="min-w-0">
+                            <h4 class="font-bold text-gray-900 dark:text-white text-sm tracking-tight truncate <?php echo $t['text_hover']; ?> transition-colors duration-300">
+                                <?php echo escape($t['name']); ?>
+                            </h4>
+                            <p class="text-xs text-gray-400 dark:text-slate-500 font-semibold truncate mt-0.5">
+                                <?php echo escape($t['role']); ?>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
+            <?php
+        }
+    }
+    ?>
+
+    <style>
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-50% - 12px)); }
+    }
+    .animate-marquee {
+        animation: marquee 35s linear infinite;
+    }
+    .animate-marquee:hover {
+        animation-play-state: paused;
+    }
+    </style>
+
+    <div class="relative w-full overflow-hidden mt-8">
+        <!-- Gradient Overlays for smooth fading edges -->
+        <div class="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-slate-50 via-slate-50/80 to-transparent dark:from-slate-900 dark:via-slate-900/80 to-transparent z-20 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-slate-50 via-slate-50/80 to-transparent dark:from-slate-900 dark:via-slate-900/80 to-transparent z-20 pointer-events-none"></div>
+
+        <!-- Scrolling Flex Container -->
+        <div class="flex gap-6 py-8 w-max animate-marquee relative z-10">
+            <!-- First loop of testimonials -->
+            <div class="flex gap-6 flex-shrink-0">
+                <?php foreach ($site_testimonials as $t) {
+                    render_testimonial_card($t);
+                } ?>
+            </div>
+
+            <!-- Second loop of testimonials (identical duplicate for infinite seamless loop) -->
+            <div class="flex gap-6 flex-shrink-0" aria-hidden="true">
+                <?php foreach ($site_testimonials as $t) {
+                    render_testimonial_card($t);
+                } ?>
+            </div>
+        </div>
     </div>
 </div>
 
