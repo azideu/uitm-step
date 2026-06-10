@@ -57,7 +57,7 @@
                 <p>&copy; <?php echo date('Y'); ?> UiTM STEP. Exclusively for UiTM students. All rights reserved.</p>
                 <div class="mt-4 md:mt-0 flex space-x-6">
                     <a href="privacy" class="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Service</a>
+                    <a href="terms" class="hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Service</a>
                 </div>
             </div>
         </div>
