@@ -1,4 +1,4 @@
-![UiTM STEP banner](assets/img/banner.png)
+![UiTM STEP banner](assets/img/STEP.svg)
 
 # UiTM STEP (Student Talent Exchange Platform)
 
