@@ -46,6 +46,42 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
+// Rate limiting for all POST requests (applies to all input fields/forms)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $rate_limit = 10; // max requests
+    $time_window = 10; // in seconds
+
+    if (!isset($_SESSION['post_timestamps'])) {
+        $_SESSION['post_timestamps'] = [];
+    }
+
+    $current_time = time();
+    
+    // Remove timestamps older than the time window
+    $_SESSION['post_timestamps'] = array_filter($_SESSION['post_timestamps'], function($timestamp) use ($current_time, $time_window) {
+        return ($current_time - $timestamp) < $time_window;
+    });
+
+    if (count($_SESSION['post_timestamps']) >= $rate_limit) {
+        http_response_code(429);
+        
+        // Check if the request expects JSON (like API calls)
+        $is_json = (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false) || 
+                   (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false);
+                   
+        if ($is_json) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Too many requests. Please slow down.']);
+        } else {
+            // For regular form submissions, display a styled message or just a simple die
+            die('<div style="font-family: sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; text-align: center;"><h2>Too Many Requests</h2><p>You are submitting forms too quickly. Please slow down and try again in a few seconds.</p><button onclick="window.history.back()" style="padding: 10px 20px; background: #330066; color: white; border: none; border-radius: 5px; cursor: pointer;">Go Back</button></div>');
+        }
+        exit;
+    }
+
+    $_SESSION['post_timestamps'][] = $current_time;
+}
+
 // Google Sign-In settings (set GOOGLE_CLIENT_ID in environment for production)
 if (!defined('GOOGLE_CLIENT_ID')) {
     define('GOOGLE_CLIENT_ID', trim((string)(getenv('GOOGLE_CLIENT_ID') ?: '')));
