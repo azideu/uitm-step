@@ -38,6 +38,10 @@ UiTM STEP is a centralized, "Fiverr-style" marketplace exclusively for the **34 
 - **Lifecycle Management:** Gigs move from *Active* → *Delivered* → *Completed* with verified status tracking.
 - **Admin Oversight:** Centralized moderation dashboard for conflict resolution.
 
+### Compliance & Performance
+- **Legal Compliance:** Integrated, legally-compliant Terms of Service and Privacy Policy pages aligned with international standards (GDPR & PDPA compliance).
+- **Client-Side Image Optimization:** Real-time client-side image compression using canvas scaling to minimize network load and optimize server-side storage.
+
 ---
 
 ## Tech Stack & Infrastructure
@@ -93,15 +97,14 @@ UiTM STEP is a centralized, "Fiverr-style" marketplace exclusively for the **34 
 
 ---
 
-asdasdasdasd
-
-
 ## Security Protocol
 
 - **Universal PDO:** 100% protection against SQL Injection via prepared statements.
 - **XSS Mitigation:** Comprehensive HTML escaping for all user-generated content.
 - **OAuth 2.0 & OTP:** Secure Google Authentication with domain-level filtering and manual OTP flows.
-- **File Integrity:** MIME-type validation and restricted execution permissions on `/uploads`.
+- **POST Rate Limiting:** Global rate limiter restricting POST submissions to a maximum of 10 requests per 10 seconds to prevent brute-force attacks and form spam.
+- **Secure Session Management:** Database-backed sessions utilizing custom Save Handler and secure cookies (`httponly`, `secure`, `samesite=Lax`) to prevent session hijacking.
+- **File Integrity & Verification:** Strict server-side MIME-type checks and size validation alongside client-side image compression to ensure uploaded file integrity.
 - **Centralized Routing:** Secure subdirectory resolution and pathing via `.htaccess` and `ROOT_URL` configurations.
 
 ---
