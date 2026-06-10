@@ -13,6 +13,7 @@ if (class_exists('Aws\S3\S3Client')) {
 
 class Storage {
     private static $isSpacesConfigured = false;
+    /** @var \Aws\S3\S3Client|null */
     private static $s3 = null;
     
     public static function init() {
