@@ -19,7 +19,7 @@
                     <ul class="space-y-3 text-sm">
                         <li><a href="marketplace" class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> Marketplace</a></li>
                         <li><a href="register" class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> Join as Student</a></li>
-                        <li><a href="#" class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> How it Works</a></li>
+                        <li><a href="how-it-works" class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> How it Works</a></li>
                     </ul>
                 </div>
                 <div>
