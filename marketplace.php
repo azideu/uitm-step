@@ -1,6 +1,7 @@
 <?php
 // marketplace.php
-require_once 'includes/auth_check.php';
+require_once 'includes/config.php';
+require_once 'includes/functions.php';
 require_once 'includes/db.php';
 
 // Pagination setup
@@ -10,7 +11,8 @@ if ($page < 1) $page = 1;
 $offset = ($page - 1) * $limit;
 
 // Filter setups
-$campus_filter = $_GET['campus'] ?? 'local';
+$is_logged_in = isset($_SESSION['user_id']);
+$campus_filter = $_GET['campus'] ?? ($is_logged_in ? 'local' : 'all');
 $tag_filter = $_GET['tag'] ?? '';
 $search_query = trim($_GET['search'] ?? '');
 
@@ -19,8 +21,12 @@ $where_clauses = ["g.status = 'active'", "u.role = 'student'"];
 
 // National vs Local Campus Filter
 if ($campus_filter === 'local') {
-    $where_clauses[] = "u.campus = ?";
-    $params[] = $_SESSION['campus'];
+    if ($is_logged_in) {
+        $where_clauses[] = "u.campus = ?";
+        $params[] = $_SESSION['campus'];
+    } else {
+        $campus_filter = 'all';
+    }
 }
 
 // Tag filter
@@ -89,6 +95,7 @@ require_once 'includes/header.php';
         <input type="text" name="search" placeholder="Search gigs..." value="<?php echo escape($search_query); ?>" class="px-4 py-2.5 bg-gray-50 dark:bg-slate-800 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white dark:focus:bg-slate-700 text-slate-800 dark:text-slate-200 placeholder-gray-400 dark:placeholder-slate-500 transition-all outline-none w-full sm:w-auto">
         
         <!-- Prominent Toggle for Campus -->
+        <?php if ($is_logged_in): ?>
         <div class="flex items-center bg-gray-100/80 dark:bg-slate-800/50 rounded-xl p-1 shrink-0 border border-gray-200 dark:border-slate-700 transition-colors duration-300">
             <label class="relative cursor-pointer px-4 py-1.5 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $campus_filter === 'local' ? 'bg-white dark:bg-uitmPurple/30 shadow-xl text-uitmPurple dark:text-purple-300 ring-1 ring-gray-200/50 dark:ring-purple-500/20' : 'text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-slate-200'; ?>">
                 <input type="radio" name="campus" value="local" class="sr-only" onchange="this.form.submit()" <?php if($campus_filter === 'local') echo 'checked'; ?>>
@@ -99,6 +106,7 @@ require_once 'includes/header.php';
                 All Campuses
             </label>
         </div>
+        <?php endif; ?>
         
         <select name="tag" class="px-4 py-2.5 bg-gray-50 dark:bg-slate-800 border-transparent rounded-xl focus:ring-2 focus:ring-uitmGold focus:bg-white dark:focus:bg-slate-700 text-slate-800 dark:text-slate-200 transition-all outline-none cursor-pointer max-w-[150px]">
             <option value="">All Tags</option>

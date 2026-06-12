@@ -234,7 +234,7 @@ require_once 'includes/header.php';
     ];
 
     if (!function_exists('render_testimonial_card')) {
-        function render_testimonial_card($t) {
+        function render_testimonial_card(array $t) {
             ?>
             <!-- Card Wrapper with 1px Gradient Border on Hover -->
             <div class="group relative p-[1.5px] rounded-3xl bg-gradient-to-br from-gray-200/60 to-gray-100/60 dark:from-slate-850/60 dark:to-slate-900/40 hover:<?php echo $t['glow_from']; ?> hover:<?php echo $t['glow_to']; ?> transition-all duration-500 hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] hover:-translate-y-2 h-full flex flex-col w-[350px] md:w-[400px] flex-shrink-0">

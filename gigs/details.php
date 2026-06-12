@@ -1,6 +1,7 @@
 <?php
 // details.php
-require_once '../includes/auth_check.php';
+require_once '../includes/config.php';
+require_once '../includes/functions.php';
 require_once '../includes/db.php';
 
 $gig_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -21,13 +22,16 @@ if (!$gig) {
 }
 
 // Ensure the gig is active OR the current user has a relationship to it
-$is_seller = ($gig['seller_id'] == $_SESSION['user_id']);
-$is_admin = ($_SESSION['role'] === 'admin');
+$is_seller = isset($_SESSION['user_id']) && ($gig['seller_id'] == $_SESSION['user_id']);
+$is_admin = isset($_SESSION['role']) && ($_SESSION['role'] === 'admin');
 
 // Check if user is a buyer with an active order for this gig
-$stmt_check = $pdo->prepare("SELECT 1 FROM orders WHERE gig_id = ? AND buyer_id = ? LIMIT 1");
-$stmt_check->execute([$gig_id, $_SESSION['user_id']]);
-$is_buyer = (bool)$stmt_check->fetchColumn();
+$is_buyer = false;
+if (isset($_SESSION['user_id'])) {
+    $stmt_check = $pdo->prepare("SELECT 1 FROM orders WHERE gig_id = ? AND buyer_id = ? LIMIT 1");
+    $stmt_check->execute([$gig_id, $_SESSION['user_id']]);
+    $is_buyer = (bool)$stmt_check->fetchColumn();
+}
 
 if ($gig['status'] !== 'active' && !$is_seller && !$is_admin && !$is_buyer) {
     set_toast('error', 'This gig is no longer active.');
@@ -55,7 +59,7 @@ try {
         $reviews = $stmt_reviews->fetchAll();
 
         // Check if current user (buyer) has a paid, delivered or completed order that can be reviewed
-        if ($_SESSION['role'] === 'student' && !$is_seller) {
+        if (isset($_SESSION['role']) && $_SESSION['role'] === 'student' && !$is_seller) {
             $stmt_my_order = $pdo->prepare("
                 SELECT o.* FROM orders o
                 WHERE o.gig_id = ?
@@ -81,6 +85,10 @@ try {
 
 // Handle Order placement (Purchase)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'buy') {
+    if (!isset($_SESSION['user_id'])) {
+        set_toast('error', 'Please log in to purchase.');
+        redirect('login');
+    }
     // Verify CSRF Token
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         set_toast('error', 'Invalid security token.');
@@ -306,7 +314,21 @@ require_once '../includes/header.php';
                 </div>
                 
                 <div class="p-6">
-                    <?php if($_SESSION['role'] === 'student' && $gig['seller_id'] != $_SESSION['user_id']): ?>
+                    <?php if (!isset($_SESSION['user_id'])): ?>
+                        <div class="space-y-4">
+                            <div class="bg-indigo-50/50 dark:bg-slate-800/80 border border-indigo-100/50 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 p-5 rounded-2xl text-center text-sm leading-relaxed mb-4 transition-colors duration-300">
+                                Interested in hiring <span class="font-bold text-uitmPurple dark:text-purple-300"><?php echo escape($gig['seller_name']); ?></span>? Sign in to place an order or contact this seller.
+                            </div>
+                            <a href="<?php echo ROOT_URL; ?>login?redirect=gigs/details?id=<?php echo $gig_id; ?>" class="w-full bg-uitmPurple text-white font-bold py-4 px-6 rounded-2xl shadow-xl hover:bg-purple-900 transition-all duration-300 text-base flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                                Login to Hire Seller
+                            </a>
+                            <a href="<?php echo ROOT_URL; ?>login?redirect=gigs/details?id=<?php echo $gig_id; ?>" class="w-full border-2 border-uitmPurple/30 dark:border-purple-500/30 text-uitmPurple dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                                Contact Seller
+                            </a>
+                        </div>
+                    <?php elseif(isset($_SESSION['role']) && $_SESSION['role'] === 'student' && $gig['seller_id'] != $_SESSION['user_id']): ?>
                         <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 transition-colors duration-300">Place your order</h3>
                         <form action="details?id=<?php echo $gig_id; ?>" method="POST" enctype="multipart/form-data" class="space-y-4">
                             <input type="hidden" name="action" value="buy">
@@ -336,7 +358,7 @@ require_once '../includes/header.php';
                                 Contact Seller
                             </a>
                         </div>
-                    <?php elseif($gig['seller_id'] == $_SESSION['user_id']): ?>
+                    <?php elseif(isset($_SESSION['user_id']) && $gig['seller_id'] == $_SESSION['user_id']): ?>
                         <div class="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 px-4 py-4 rounded-2xl text-center font-medium flex flex-col items-center gap-2 transition-colors duration-300">
                             <svg class="w-8 h-8 text-blue-400 dark:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             This is your own gig.
@@ -400,9 +422,6 @@ require_once '../includes/header.php';
             <!-- Review Form (always show, but conditionally enabled) -->
             <div class="mb-10 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-2xl">
                 <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 flex items-center gap-2 transition-colors duration-300">
-                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m0 0h6m-6-6H6m0 0H0"></path>
-                    </svg>
                     Share Your Experience
                 </h3>
 
