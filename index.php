@@ -341,32 +341,32 @@ require_once 'includes/header.php';
 <!-- Category Icons Library (Explore) -->
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-gray-100 dark:border-slate-800 transition-colors duration-300">
     <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-12 font-serif">Explore the marketplace</h2>
-    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-        <a href="marketplace?tag=Programming" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6">
+        <a href="marketplace?tag=Programming" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-full h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
             <div class="bg-gray-50 dark:bg-slate-700 rounded-full p-4 mb-3 group-hover:bg-purple-50 dark:group-hover:bg-uitmPurple/20 transition-colors">
                 <svg class="w-8 h-8 text-gray-500 dark:text-slate-400 group-hover:text-uitmPurple dark:group-hover:text-purple-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
             </div>
             <span class="font-bold text-sm text-center text-gray-700 dark:text-slate-200 group-hover:text-uitmPurple dark:group-hover:text-purple-300">Programming & Tech</span>
         </a>
-        <a href="marketplace?tag=Design" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
+        <a href="marketplace?tag=Design" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-full h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
             <div class="bg-gray-50 dark:bg-slate-700 rounded-full p-4 mb-3 group-hover:bg-purple-50 dark:group-hover:bg-uitmPurple/20 transition-colors">
                 <svg class="w-8 h-8 text-gray-500 dark:text-slate-400 group-hover:text-uitmPurple dark:group-hover:text-purple-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
             </div>
             <span class="font-bold text-sm text-center text-gray-700 dark:text-slate-200 group-hover:text-uitmPurple dark:group-hover:text-purple-300">Graphics & Design</span>
         </a>
-        <a href="marketplace?tag=Writing" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
+        <a href="marketplace?tag=Writing" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-full h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
             <div class="bg-gray-50 dark:bg-slate-700 rounded-full p-4 mb-3 group-hover:bg-purple-50 dark:group-hover:bg-uitmPurple/20 transition-colors">
                 <svg class="w-8 h-8 text-gray-500 dark:text-slate-400 group-hover:text-uitmPurple dark:group-hover:text-purple-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477-4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
             </div>
             <span class="font-bold text-sm text-center text-gray-700 dark:text-slate-200 group-hover:text-uitmPurple dark:group-hover:text-purple-300">Writing & Translation</span>
         </a>
-        <a href="marketplace?tag=Video" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
+        <a href="marketplace?tag=Video" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-full h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
             <div class="bg-gray-50 dark:bg-slate-700 rounded-full p-4 mb-3 group-hover:bg-purple-50 dark:group-hover:bg-uitmPurple/20 transition-colors">
                 <svg class="w-8 h-8 text-gray-500 dark:text-slate-400 group-hover:text-uitmPurple dark:group-hover:text-purple-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
             </div>
-            <span class="font-bold text-sm text-center text-gray-700 dark:text-slate-200 group-hover:text-uitmPurple dark:group-hover:text-purple-300">Video & Animation</span>
+            <span class="font-bold text-sm text-center text-gray-700 dark:text-slate-200 group-hover:text-uitmPurple dark:hover:text-purple-300">Video & Animation</span>
         </a>
-        <a href="marketplace?tag=Tutor" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-40 h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
+        <a href="marketplace?tag=Tutor" class="flex flex-col items-center justify-center p-6 border border-gray-200 dark:border-slate-700 rounded-2xl hover:shadow-xl hover:border-uitmPurple/30 transition-all duration-300 w-full h-40 bg-white dark:bg-slate-800 group hover:-translate-y-2">
             <div class="bg-gray-50 dark:bg-slate-700 rounded-full p-4 mb-3 group-hover:bg-purple-50 dark:group-hover:bg-uitmPurple/20 transition-colors">
                 <svg class="w-8 h-8 text-gray-500 dark:text-slate-400 group-hover:text-uitmPurple dark:group-hover:text-purple-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
             </div>
