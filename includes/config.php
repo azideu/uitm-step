@@ -1,7 +1,7 @@
 <?php
 // includes/config.php
 $base_dir = dirname($_SERVER['SCRIPT_NAME']);
-if (strpos($base_dir, '/admin') !== false || strpos($base_dir, '/api') !== false || strpos($base_dir, '/gigs') !== false) {
+if (strpos($base_dir, '/admin') !== false || strpos($base_dir, '/api') !== false || strpos($base_dir, '/gigs') !== false || strpos($base_dir, '/guides') !== false) {
     $base_dir = dirname($base_dir);
 }
 define('ROOT_URL', rtrim($base_dir, '/') . '/');

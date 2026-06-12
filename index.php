@@ -385,7 +385,7 @@ require_once 'includes/header.php';
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Article 1 -->
-            <a href="#" class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition block border border-gray-100 dark:border-slate-700">
+            <a href="guides/portfolio" class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition block border border-gray-100 dark:border-slate-700">
                 <div class="h-48 overflow-hidden">
                     <img src="assets/img/guide_portfolio.jpg" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
                 </div>
@@ -396,7 +396,7 @@ require_once 'includes/header.php';
             </a>
 
             <!-- Article 2 -->
-            <a href="#" class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition block border border-gray-100 dark:border-slate-700">
+            <a href="guides/pricing" class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition block border border-gray-100 dark:border-slate-700">
                 <div class="h-48 overflow-hidden bg-gray-100 dark:bg-slate-700 flex items-center justify-center p-6">
                     <div class="w-full h-full rounded shadow-xl bg-uitmPurple relative">
                         <div class="absolute inset-2 bg-white dark:bg-slate-800 rounded flex items-center justify-center">
@@ -411,7 +411,7 @@ require_once 'includes/header.php';
             </a>
 
             <!-- Article 3 -->
-            <a href="#" class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition block border border-gray-100 dark:border-slate-700">
+            <a href="guides/time" class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition block border border-gray-100 dark:border-slate-700">
                 <div class="h-48 overflow-hidden">
                     <img src="assets/img/guide_time.jpg" class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
                 </div>
