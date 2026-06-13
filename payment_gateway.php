@@ -3,26 +3,18 @@
 require_once 'includes/auth_check.php';
 require_once 'includes/db.php';
 
-// Dynamically verify/create the transactions table on the fly to avoid setup friction
-try {
-    $pdo->query("SELECT 1 FROM transactions LIMIT 1");
-} catch (\Exception $e) {
-    try {
-        $pdo->exec("
-            CREATE TABLE IF NOT EXISTS transactions (
-                transaction_id INT AUTO_INCREMENT PRIMARY KEY,
-                order_id INT NOT NULL,
-                reference_number VARCHAR(50) UNIQUE NOT NULL,
-                bank_name VARCHAR(100) NOT NULL,
-                amount DECIMAL(10,2) NOT NULL,
-                status ENUM('success', 'failed', 'pending') DEFAULT 'pending',
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        ");
-    } catch (\Exception $db_err) {
-        error_log("Failed to auto-create transactions table: " . $db_err->getMessage());
-    }
-}
+// NOTE: The `transactions` table must be created via your DB migration/setup script.
+// Run the following SQL once in your database before using this page:
+//
+// CREATE TABLE IF NOT EXISTS transactions (
+//     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+//     order_id INT NOT NULL,
+//     reference_number VARCHAR(50) UNIQUE NOT NULL,
+//     bank_name VARCHAR(100) NOT NULL,
+//     amount DECIMAL(10,2) NOT NULL,
+//     status ENUM('success', 'failed', 'pending') DEFAULT 'pending',
+//     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+// );
 
 $order_id = isset($_GET['order_id']) ? (int)$_GET['order_id'] : 0;
 $is_demo = ($order_id <= 0);
@@ -73,8 +65,8 @@ if (!$is_demo) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'complete_payment') {
     header('Content-Type: application/json');
 
-    // CSRF verification
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+    // CSRF verification — check both the session token AND the posted token exist before comparing
+    if (!isset($_SESSION['csrf_token'], $_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         echo json_encode(['success' => false, 'message' => 'Invalid security token.']);
         exit;
     }
@@ -218,7 +210,7 @@ require_once 'includes/header.php';
                     <div>
                         <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Card Number</label>
                         <div class="relative">
-                            <input type="text" id="card_number" maxlength="16" placeholder="4111111111111111" class="w-full pl-12 pr-4 py-3 bg-white dark:bg-slate-850 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
+                            <input type="text" id="card_number" maxlength="19" placeholder="4111 1111 1111 1111" class="w-full pl-12 pr-4 py-3 bg-white dark:bg-slate-850 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all tracking-widest">
                             <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-450">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
                             </div>
@@ -478,7 +470,7 @@ require_once 'includes/header.php';
         const reqs = document.getElementById('order_requirements').value.trim();
 
         if (!phone) {
-            alert('Please input a valid WhatsApp Contact Number to proceed.');
+            alert('Please input a valid Contact Number to proceed.');
             document.getElementById('contact_phone').focus();
             return;
         }
@@ -542,7 +534,7 @@ require_once 'includes/header.php';
         // Perform AJAX request to update orders on the server
         const formData = new FormData();
         formData.append('action', 'complete_payment');
-        formData.append('csrf_token', '<?= $_SESSION['csrf_token'] ?>');
+        formData.append('csrf_token', '<?= htmlspecialchars($_SESSION['csrf_token'] ?? '', ENT_QUOTES, 'UTF-8') ?>');
         formData.append('payment_method', activeTab);
         if (activeTab === 'fpx') {
             formData.append('fpx_bank', finalBankName);
@@ -628,7 +620,8 @@ require_once 'includes/header.php';
             if (digits.length > 16) {
                 digits = digits.substring(0, 16);
             }
-            this.value = digits;
+            // Format as groups of 4 digits: 4111 1111 1111 1111
+            this.value = digits.match(/.{1,4}/g)?.join(' ') ?? digits;
         });
     }
 
