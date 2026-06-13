@@ -98,7 +98,7 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
     <div class="pointer-events-none fixed inset-0 z-[100] h-full w-full bg-noise opacity-[0.03] mix-blend-overlay"></div>
     <div class="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300 relative z-10">
     <!-- Navbar -->
-    <nav class="bg-uitmPurple border-b border-uitmPurple/30 text-white sticky top-0 z-50 shadow-2xl transition-colors duration-300">
+    <nav id="main-navbar" class="bg-uitmPurple border-b border-uitmPurple/30 text-white sticky top-0 z-50 shadow-2xl transition-all duration-300 transform">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -191,4 +191,33 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
                 localStorage.theme = 'dark';
             }
         }
+
+        // Semi-sticky Smart Header behavior
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('main-navbar');
+            if (!navbar) return;
+
+            let lastScrollY = window.scrollY;
+            const threshold = 10; // minimum scroll distance to trigger hiding/showing
+
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+
+                // Prevent negative scroll values (like mobile bounce)
+                if (currentScrollY < 0) return;
+
+                // Check threshold
+                if (Math.abs(currentScrollY - lastScrollY) < threshold) return;
+
+                if (currentScrollY > lastScrollY && currentScrollY > 80) {
+                    // Scrolling down - hide navbar
+                    navbar.classList.add('-translate-y-full', 'shadow-none');
+                } else {
+                    // Scrolling up - show navbar
+                    navbar.classList.remove('-translate-y-full', 'shadow-none');
+                }
+
+                lastScrollY = currentScrollY;
+            });
+        });
     </script>
