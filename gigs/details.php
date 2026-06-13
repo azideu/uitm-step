@@ -89,74 +89,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         set_toast('error', 'Please log in to purchase.');
         redirect('login');
     }
+
     // Verify CSRF Token
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         set_toast('error', 'Invalid security token.');
         redirect("details?id=$gig_id");
     }
+
     if ($_SESSION['role'] !== 'student') {
         set_toast('error', 'Only students can buy gigs.');
+        redirect("details?id=$gig_id");
     } elseif ($gig['seller_id'] == $_SESSION['user_id']) {
         set_toast('error', 'You cannot buy your own gig.');
+        redirect("details?id=$gig_id");
     } else {
-        // Handle File Upload
-        if (isset($_FILES['payment_proof']) && $_FILES['payment_proof']['error'] === UPLOAD_ERR_OK) {
-            try {
-                $tmp_path = $_FILES['payment_proof']['tmp_name'];
-                $file_size = $_FILES['payment_proof']['size'];
-                
-                // 2MB Limit
-                $max_size = 2 * 1024 * 1024;
-                if ($file_size > $max_size) {
-                    set_toast('error', 'File size exceeds 2MB limit.');
-                    redirect("details?id=$gig_id");
-                }
-                
-                // MIME Type Check
-                $finfo = new finfo(FILEINFO_MIME_TYPE);
-                $mime_type = $finfo->file($tmp_path);
-                
-                $allowed_mimes = ['image/jpeg', 'image/png', 'application/pdf'];
-                if (!in_array($mime_type, $allowed_mimes)) {
-                    set_toast('error', 'Invalid file type. Only JPG, PNG, and PDF allowed.');
-                    redirect("details?id=$gig_id");
-                }
-                
-                // File extension
-                $ext = 'jpg';
-                if ($mime_type === 'image/png') $ext = 'png';
-                if ($mime_type === 'application/pdf') $ext = 'pdf';
-                
-                // Safe rename
-                $new_filename = uniqid('receipt_', true) . '.' . $ext;
-                require_once '../includes/storage.php';
-                $uploaded_path = Storage::upload($tmp_path, 'receipts/' . $new_filename, $mime_type);
-                
-                if ($uploaded_path) {
-                    // Insert Order
-                    $stmt = $pdo->prepare("INSERT INTO orders (buyer_id, gig_id, status, payment_proof_path) VALUES (?, ?, 'paid', ?)");
-                    try {
-                        $stmt->execute([$_SESSION['user_id'], $gig_id, $uploaded_path]);
-                        set_toast('success', 'Order placed successfully!');
-                        redirect('dashboard?mode=buying');
-                    } catch (\Exception $e) {
-                        error_log("Order insertion error: " . $e->getMessage());
-                        error_log("Stack trace: " . $e->getTraceAsString());
-                        set_toast('error', 'Error creating order: ' . $e->getMessage());
-                        redirect("details?id=$gig_id");
-                    }
-                } else {
-                    set_toast('error', 'Failed to save uploaded file.');
-                    redirect("details?id=$gig_id");
-                }
-            } catch (\Exception $e) {
-                error_log("File upload error: " . $e->getMessage());
-                error_log("Stack trace: " . $e->getTraceAsString());
-                set_toast('error', 'Error processing file upload.');
-                redirect("details?id=$gig_id");
+        $existing_stmt = $pdo->prepare("SELECT order_id, status FROM orders WHERE gig_id = ? AND buyer_id = ? AND status IN ('pending', 'paid', 'delivered', 'complete') LIMIT 1");
+        $existing_stmt->execute([$gig_id, $_SESSION['user_id']]);
+        $existing_order = $existing_stmt->fetch();
+
+        if ($existing_order) {
+            if ($existing_order['status'] === 'pending') {
+                redirect("payment_gateway?order_id=" . $existing_order['order_id']);
             }
-        } else {
-            set_toast('error', 'Please upload a valid payment proof.');
+            set_toast('info', 'You already have an active order for this gig.');
+            redirect('dashboard?mode=buying');
+        }
+
+        try {
+            $create_stmt = $pdo->prepare("INSERT INTO orders (buyer_id, gig_id, status) VALUES (?, ?, 'pending')");
+            $create_stmt->execute([$_SESSION['user_id'], $gig_id]);
+            $new_order_id = $pdo->lastInsertId();
+            redirect("payment_gateway?order_id=" . $new_order_id);
+        } catch (\Exception $e) {
+            error_log("Order creation error: " . $e->getMessage());
+            set_toast('error', 'Unable to create your order. Please try again.');
             redirect("details?id=$gig_id");
         }
     }
@@ -329,26 +295,16 @@ require_once '../includes/header.php';
                             </a>
                         </div>
                     <?php elseif(isset($_SESSION['role']) && $_SESSION['role'] === 'student' && $gig['seller_id'] != $_SESSION['user_id']): ?>
-                        <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 transition-colors duration-300">Place your order</h3>
-                        <form action="details?id=<?php echo $gig_id; ?>" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 transition-colors duration-300">Proceed to secure payment</h3>
+                        <form action="details?id=<?php echo $gig_id; ?>" method="POST" class="space-y-4">
                             <input type="hidden" name="action" value="buy">
                             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                            <div>
-                                <label class="block text-sm text-gray-700 dark:text-slate-300 font-bold mb-2 flex items-center gap-1.5 transition-colors duration-300">
-                                    <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                                    Secure Upload Payment Proof
-                                </label>
-                                <div class="border-2 border-dashed border-gray-200 dark:border-slate-700 rounded-2xl p-5 text-center bg-gray-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:border-uitmPurple dark:hover:border-purple-500 transition-all cursor-pointer group relative">
-                                    <input type="file" id="payment_proof_input" name="payment_proof" accept=".jpg,.jpeg,.png,.pdf" required class="block w-full text-sm text-gray-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-purple-100 dark:file:bg-purple-900/30 file:text-uitmPurple dark:file:text-purple-300 hover:file:bg-purple-200 dark:hover:file:bg-purple-900/50 transition-all cursor-pointer relative z-10">
-                                    <div class="mt-3 text-xs text-gray-400 dark:text-slate-500 flex items-center justify-center gap-1">
-                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                                        Bank transfer receipt (JPG, PNG, PDF · Max 2MB)
-                                    </div>
-                                </div>
+                            <div class="rounded-2xl p-5 border-2 border-dashed border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/50 text-sm text-gray-600 dark:text-slate-400 transition-colors duration-300">
+                                Click continue to open the secure STEP payment portal. Your order will be created in pending status and payment completed there.
                             </div>
                             <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-4 px-6 rounded-md shadow-xl hover:bg-purple-900 transition-all duration-300 text-base flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                Verify & Submit Order
+                                Continue to Payment Gateway
                             </button>
                         </form>
                         
