@@ -33,7 +33,7 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
 }
 ?>
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth md:overscroll-y-none">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,7 +94,7 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
     <link rel="icon" type="image/svg+xml" href="<?php echo ROOT_URL; ?>assets/img/STEP.svg?v=<?php echo $logo_version; ?>">
     <link rel="stylesheet" href="<?php echo ROOT_URL; ?>assets/css/style.css?v=<?php echo $style_version; ?>">
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 flex flex-col min-h-screen text-slate-800 dark:text-slate-200 font-sans selection:bg-uitmPurple selection:text-white transition-colors duration-300 relative">
+<body class="bg-slate-50 dark:bg-slate-900 flex flex-col min-h-screen text-slate-800 dark:text-slate-200 font-sans selection:bg-uitmPurple selection:text-white transition-colors duration-300 relative md:overscroll-y-none">
     <div class="pointer-events-none fixed inset-0 z-[100] h-full w-full bg-noise opacity-[0.03] mix-blend-overlay"></div>
     <div class="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300 relative z-10">
     <!-- Navbar -->
