@@ -295,16 +295,13 @@ require_once '../includes/header.php';
                             </a>
                         </div>
                     <?php elseif(isset($_SESSION['role']) && $_SESSION['role'] === 'student' && $gig['seller_id'] != $_SESSION['user_id']): ?>
-                        <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 transition-colors duration-300">Proceed to secure payment</h3>
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 transition-colors duration-300">Proceed to payment</h3>
                         <form action="details?id=<?php echo $gig_id; ?>" method="POST" class="space-y-4">
                             <input type="hidden" name="action" value="buy">
                             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                            <div class="rounded-2xl p-5 border-2 border-dashed border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/50 text-sm text-gray-600 dark:text-slate-400 transition-colors duration-300">
-                                Click continue to open the secure STEP payment portal. Your order will be created in pending status and payment completed there.
-                            </div>
                             <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-4 px-6 rounded-md shadow-xl hover:bg-purple-900 transition-all duration-300 text-base flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                Continue to Payment Gateway
+                                Continue to Payment
                             </button>
                         </form>
                         

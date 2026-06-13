@@ -146,24 +146,14 @@ require_once 'includes/header.php';
     <!-- State 1: Active Checkout Form & Details -->
     <div id="checkout-view" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
+        <!-- Page Title & Subtitle (matching design language of other pages) -->
+        <div class="lg:col-span-3 mb-2">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-uitmPurple dark:text-white font-serif mb-2 transition-colors duration-300">Checkout</h1>
+            <p class="text-gray-500 dark:text-slate-400 transition-colors duration-300">Complete your campus order securely.</p>
+        </div>
+
         <!-- Left 2 Columns: Checkout Steps -->
         <div class="lg:col-span-2 space-y-6">
-            
-            <!-- Branding Header -->
-            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-800 shadow-xl flex items-center justify-between transition-colors">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-uitmPurple rounded-2xl flex items-center justify-center border border-white/10 shadow-lg">
-                        <span class="text-white font-bold text-2xl font-serif">S</span>
-                    </div>
-                    <div>
-                        <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white font-serif tracking-tight">Checkout</h1>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Complete your campus order securely.</p>
-                    </div>
-                </div>
-                <span class="text-xs font-bold uppercase tracking-widest bg-purple-100 dark:bg-purple-900/40 text-uitmPurple dark:text-purple-300 px-3 py-1.5 rounded-full border border-purple-200/30 dark:border-purple-800/30">
-                    STEP-Pay Portal
-                </span>
-            </div>
 
             <!-- Step 1: Contact Information -->
             <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-slate-800 shadow-xl transition-colors">
@@ -178,8 +168,8 @@ require_once 'includes/header.php';
                         <input type="email" disabled value="<?= htmlspecialchars($user_email) ?>" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800/50 text-slate-500 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none cursor-not-allowed">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">WhatsApp Contact Number <span class="text-red-500">*</span></label>
-                        <input type="tel" id="contact_phone" placeholder="+60 12-345 6789" required class="w-full px-4 py-3 bg-white dark:bg-slate-850 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Contact Number <span class="text-red-500">*</span></label>
+                        <input type="tel" id="contact_phone" placeholder="012-345 6789" required class="w-full px-4 py-3 bg-white dark:bg-slate-850 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
                     </div>
                 </div>
             </div>
@@ -358,7 +348,7 @@ require_once 'includes/header.php';
             <!-- Primary Action Button -->
             <button type="button" onclick="startVerification()" class="w-full bg-uitmPurple hover:bg-purple-900 text-white font-bold py-4 px-6 rounded-2xl shadow-xl transition-all flex items-center justify-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                Complete Payment Securely
+                Complete Payment
             </button>
 
             <a href="<?= $is_demo ? 'marketplace' : 'dashboard?mode=buying' ?>" class="flex items-center justify-center gap-2 text-xs text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 font-bold transition-colors">
@@ -594,12 +584,39 @@ require_once 'includes/header.php';
         window.location.href = redirectUrl || 'dashboard';
     }
 
-    // Auto-prefix phone number with '+' and restrict to digits only
+    // Format phone number dynamically based on prefix (011 -> 11 digits, others -> 10 digits)
     const contactPhoneInput = document.getElementById('contact_phone');
     if (contactPhoneInput) {
         contactPhoneInput.addEventListener('input', function() {
             let digits = this.value.replace(/\D/g, '');
-            this.value = digits.length > 0 ? '+' + digits : '';
+            const is011 = digits.startsWith('011');
+            const maxLen = is011 ? 11 : 10;
+            
+            if (digits.length > maxLen) {
+                digits = digits.substring(0, maxLen);
+            }
+            
+            let formatted = '';
+            if (digits.length > 0) {
+                if (is011) {
+                    if (digits.length <= 3) {
+                        formatted = digits;
+                    } else if (digits.length <= 7) {
+                        formatted = digits.substring(0, 3) + '-' + digits.substring(3);
+                    } else {
+                        formatted = digits.substring(0, 3) + '-' + digits.substring(3, 7) + ' ' + digits.substring(7);
+                    }
+                } else {
+                    if (digits.length <= 3) {
+                        formatted = digits;
+                    } else if (digits.length <= 6) {
+                        formatted = digits.substring(0, 3) + '-' + digits.substring(3);
+                    } else {
+                        formatted = digits.substring(0, 3) + '-' + digits.substring(3, 6) + ' ' + digits.substring(6);
+                    }
+                }
+            }
+            this.value = formatted;
         });
     }
 
@@ -612,6 +629,26 @@ require_once 'includes/header.php';
                 digits = digits.substring(0, 16);
             }
             this.value = digits;
+        });
+    }
+
+    // Format card expiry to "MM/YY" (xx/xx)
+    const cardExpiryInput = document.getElementById('card_expiry');
+    if (cardExpiryInput) {
+        cardExpiryInput.addEventListener('input', function() {
+            let digits = this.value.replace(/\D/g, '');
+            if (digits.length > 4) {
+                digits = digits.substring(0, 4);
+            }
+            let formatted = '';
+            if (digits.length > 0) {
+                if (digits.length <= 2) {
+                    formatted = digits;
+                } else {
+                    formatted = digits.substring(0, 2) + '/' + digits.substring(2);
+                }
+            }
+            this.value = formatted;
         });
     }
 </script>
