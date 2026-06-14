@@ -49,7 +49,7 @@ body{
 
 <div style="display:flex; justify-content:center; align-items:center; width:100%; height:100%; position:relative; z-index:2;">
 
-    <!-- glass panel style from your CSS -->
+    
     <div class="card glass-panel animate-on-scroll visible" style="padding:40px; border-radius:20px;">
 
         <!-- icon -->

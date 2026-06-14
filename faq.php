@@ -161,15 +161,13 @@ require_once 'includes/header.php';
         }
 
 
-        /* =============================================================
-           ====================== LIGHT MODE FIX =======================
-           ============================================================= */
+        /* light mode */
         body.light {
             background: #f4f6fb;
             color: #1e293b;
         }
 
-        /* Header Mod Terang */
+        
         body.light .header h1 {
             color: #4b0082 !important;
         }
@@ -177,7 +175,6 @@ require_once 'includes/header.php';
             color: #64748b !important;
         }
 
-        /* Butang Kategori Mod Terang */
         body.light .tab-btn {
             background: #ffffff;
             color: #475569;
@@ -195,7 +192,7 @@ require_once 'includes/header.php';
             box-shadow: 0 4px 12px rgba(75, 0, 130, 0.15);
         }
 
-        /* Box FAQ Timbul Mod Terang */
+      
         body.light .faq-item {
             background: #ffffff !important;
             border: none !important;
@@ -208,21 +205,20 @@ require_once 'includes/header.php';
                         0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        /* Pembetulan Warna Teks Mod Terang */
+        
         body.light .faq-question {
-            color: #1e293b !important; /* Kekal gelap & jelas */
+            color: #1e293b !important; 
         }
 
         body.light .faq-answer {
             border-top: 1px solid #f1f5f9 !important;
-            color: #475569 !important; /* Kekal gelap & jelas */
+            color: #475569 !important; 
         }
 
         body.light .faq-question span {
-            color: #4b0082 !important; /* Ikon bertukar warna korporat UiTM */
+            color: #4b0082 !important; 
         }
 
-        /* Box FAQ Aktif Mod Terang */
         body.light .faq-item.active {
             border: 1px solid #4b0082 !important;
             box-shadow: 0 10px 15px -3px rgba(75, 0, 130, 0.08);
@@ -378,7 +374,7 @@ require_once 'includes/header.php';
 </div>
 
 <script>
-    // 1. Logik Buka/Tutup Setiap Soalan (Accordion)
+    
     document.querySelectorAll(".faq-question").forEach(item => {
         item.addEventListener("click", () => {
             const parent = item.parentElement;
@@ -386,17 +382,17 @@ require_once 'includes/header.php';
         });
     });
 
-    // 2. Logik Tukar Kategori (Tabs)
+  
     document.querySelectorAll(".tab-btn").forEach(button => {
         button.addEventListener("click", () => {
-            // Tutup semua soalan yang sedang terbuka sebelum tukar tab (Pilihan - supaya kemas)
+            
             document.querySelectorAll(".faq-item").forEach(item => item.classList.remove("active"));
 
-            // Buang class active dari butang & grup lama
+            
             document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
             document.querySelectorAll(".faq-group").forEach(group => group.classList.remove("active"));
 
-            // Tambah class active pada yang baru diklik
+            
             button.classList.add("active");
             const targetId = button.getAttribute("data-target");
             document.getElementById(targetId).classList.add("active");
