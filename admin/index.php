@@ -88,6 +88,31 @@ $reports = $stmt_reports->fetchAll();
 $pending_reports = array_filter($reports, fn($r) => $r['status'] === 'pending');
 $pending_count   = count($pending_reports);
 
+// Fetch feedback entries with filters
+$feedback_search = trim($_GET['feedback_search'] ?? '');
+$feedback_nature = trim($_GET['feedback_nature'] ?? '');
+
+$sql_feedback = "SELECT * FROM feedback WHERE 1=1";
+$params_feedback = [];
+
+if (!empty($feedback_search)) {
+    $sql_feedback .= " AND (name LIKE ? OR email LIKE ? OR message LIKE ? OR campus LIKE ?)";
+    $params_feedback[] = "%$feedback_search%";
+    $params_feedback[] = "%$feedback_search%";
+    $params_feedback[] = "%$feedback_search%";
+    $params_feedback[] = "%$feedback_search%";
+}
+
+if (!empty($feedback_nature)) {
+    $sql_feedback .= " AND nature = ?";
+    $params_feedback[] = $feedback_nature;
+}
+
+$sql_feedback .= " ORDER BY created_at DESC";
+$stmt_feedback = $pdo->prepare($sql_feedback);
+$stmt_feedback->execute($params_feedback);
+$feedbacks = $stmt_feedback->fetchAll();
+
 // Helper: return Tailwind badge classes for each status
 function status_badge(string $status): string {
     return match($status) {
@@ -119,6 +144,15 @@ function reason_label(string $reason): string {
         'inappropriate_content' => 'Inappropriate Content',
         'other'                 => 'Other',
         default                 => ucfirst(str_replace('_', ' ', $reason)),
+    };
+}
+
+function feedback_nature_badge(string $nature): string {
+    return match($nature) {
+        'Complaint'  => 'bg-rose-100 dark:bg-rose-900/30 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800/50',
+        'Suggestion' => 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/50',
+        'Compliment' => 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50',
+        default      => 'bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-400',
     };
 }
 
@@ -707,6 +741,112 @@ require_once '../includes/header.php';
         <div class="px-6 py-16 text-center text-gray-400">
             <svg class="w-12 h-12 mx-auto mb-4 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
             <p class="font-medium">No account appeals to display.</p>
+        </div>
+    <?php endif; ?>
+</div>
+
+<!-- =====================================================================
+     SECTION 5: STUDENT FEEDBACK (NEW)
+     ===================================================================== -->
+<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mb-10">
+    <div class="h-1 bg-gradient-to-r from-teal-400 to-emerald-500"></div>
+    <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+            </svg>
+            Student Feedback
+        </h2>
+        <span class="bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 font-bold text-xs px-3 py-1 rounded-md border border-teal-100 dark:border-teal-800/50 sm:self-center"><?php echo count($feedbacks); ?> submissions</span>
+    </div>
+
+    <!-- Feedback Filters -->
+    <div class="px-6 py-4 bg-gray-50/50 dark:bg-slate-800/30 border-b border-gray-100 dark:border-slate-850">
+        <form method="GET" class="flex flex-col md:flex-row gap-4">
+            <!-- Retain other section parameters to not clear their filters -->
+            <input type="hidden" name="order_search" value="<?php echo escape($order_search); ?>">
+            <input type="hidden" name="order_status" value="<?php echo escape($order_status_filter); ?>">
+            <input type="hidden" name="user_search" value="<?php echo escape($user_search); ?>">
+            <input type="hidden" name="role_filter" value="<?php echo escape($role_filter); ?>">
+            
+            <div class="flex-grow relative w-full">
+                <input type="text" name="feedback_search" value="<?php echo escape($feedback_search); ?>" placeholder="Search feedback by student name, email, message or campus..." class="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 transition text-sm">
+                <svg class="absolute left-3.5 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+            <div class="w-full md:w-48">
+                <select name="feedback_nature" class="w-full px-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 transition text-sm">
+                    <option value="">All Natures</option>
+                    <option value="Complaint" <?php if ($feedback_nature === 'Complaint') echo 'selected'; ?>>Complaint</option>
+                    <option value="Suggestion" <?php if ($feedback_nature === 'Suggestion') echo 'selected'; ?>>Suggestion</option>
+                    <option value="Compliment" <?php if ($feedback_nature === 'Compliment') echo 'selected'; ?>>Compliment</option>
+                </select>
+            </div>
+            <div class="flex w-full md:w-auto gap-2">
+                <button type="submit" class="w-full md:w-auto bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-6 rounded-xl transition text-sm border-0 cursor-pointer">Filter</button>
+                <?php if (!empty($feedback_search) || !empty($feedback_nature)): ?>
+                    <a href="?order_search=<?php echo urlencode($order_search); ?>&order_status=<?php echo urlencode($order_status_filter); ?>&user_search=<?php echo urlencode($user_search); ?>&role_filter=<?php echo urlencode($role_filter); ?>" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-850 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-xl transition text-sm inline-block">Clear</a>
+                <?php endif; ?>
+            </div>
+        </form>
+    </div>
+
+    <?php if (count($feedbacks) > 0): ?>
+        <div class="overflow-x-auto">
+            <table class="min-w-full">
+                <thead>
+                    <tr class="bg-gray-50/70 dark:bg-slate-800/50 transition-colors duration-300">
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Student Info</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Campus</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Contact Phone</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Nature</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Message</th>
+                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Submitted At</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-50 dark:divide-slate-800">
+                    <?php foreach ($feedbacks as $fb): ?>
+                        <tr class="hover:bg-gray-50/80 dark:hover:bg-slate-800/50 transition-colors duration-200">
+                            <!-- Student Info -->
+                            <td class="px-6 py-4 text-sm text-gray-600 dark:text-slate-400 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                                        <?php echo strtoupper(substr($fb['name'], 0, 1)); ?>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-gray-900 dark:text-white"><?php echo escape($fb['name']); ?></p>
+                                        <p class="text-xs text-gray-400 dark:text-slate-500"><?php echo escape($fb['email']); ?></p>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Campus -->
+                            <td class="px-6 py-4 text-sm text-gray-600 dark:text-slate-400 max-w-[150px] truncate"><?php echo escape($fb['campus']); ?></td>
+
+                            <!-- Phone -->
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-white font-medium"><?php echo escape($fb['phone']); ?></td>
+
+                            <!-- Nature -->
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <span class="px-2.5 py-0.5 inline-flex text-[10px] font-bold rounded-md <?php echo feedback_nature_badge($fb['nature']); ?>">
+                                    <?php echo escape($fb['nature']); ?>
+                                </span>
+                            </td>
+
+                            <!-- Message Content -->
+                            <td class="px-6 py-4 text-sm text-gray-600 dark:text-slate-400 max-w-[250px] truncate" title="<?php echo escape($fb['message']); ?>">
+                                <?php echo escape($fb['message']); ?>
+                            </td>
+
+                            <!-- Submitted At -->
+                            <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400 dark:text-slate-500 font-medium"><?php echo date('d M Y, H:i', strtotime($fb['created_at'])); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php else: ?>
+        <div class="px-6 py-16 text-center">
+            <p class="text-gray-550 dark:text-slate-500 font-medium transition-colors duration-300">No feedback submissions found matching your filters.</p>
         </div>
     <?php endif; ?>
 </div>
