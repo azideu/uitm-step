@@ -60,6 +60,19 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREIGN KEY (gig_id) REFERENCES gigs(gig_id) ON DELETE CASCADE
 );
 
+-- Transactions Table
+CREATE TABLE IF NOT EXISTS transactions (
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    reference_number VARCHAR(50) UNIQUE NOT NULL,
+    bank_name VARCHAR(100) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    status ENUM('success', 'failed', 'pending') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
+);
+
+
 -- Reports Table
 CREATE TABLE IF NOT EXISTS reports (
     report_id INT AUTO_INCREMENT PRIMARY KEY,

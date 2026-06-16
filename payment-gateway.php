@@ -100,8 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $pdo->commit();
             
             // Set toast success for when they redirect back to dashboard
-            $_SESSION['toast_type'] = 'success';
-            $_SESSION['toast_message'] = 'Payment verified! Your order is active.';
+            set_toast('success', 'Payment verified! Your order is active.');
+
 
             echo json_encode([
                 'success' => true,

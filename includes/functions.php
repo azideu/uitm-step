@@ -47,15 +47,67 @@ function display_toast() {
         $type = $toast['type'];
         $msg = $toast['message'];
         
-        $color = 'bg-blue-500';
+        $bgColor = 'bg-sky-600/95 dark:bg-sky-900/95 border-sky-500/30';
+        $iconSvg = '<svg class="w-5 h-5 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
+        
         if ($type === 'success') {
-            $color = 'bg-green-500';
+            $bgColor = 'bg-emerald-600/95 dark:bg-emerald-900/95 border-emerald-500/30';
+            $iconSvg = '<svg class="w-5 h-5 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>';
         } elseif ($type === 'error') {
-            $color = 'bg-red-500';
+            $bgColor = 'bg-rose-600/95 dark:bg-rose-900/95 border-rose-500/30';
+            $iconSvg = '<svg class="w-5 h-5 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 17c-.77 1.333.192 3 1.732 3z"></path></svg>';
         }
         
-        echo "<div id='toast' class='fixed bottom-5 right-5 text-white px-6 py-3 rounded shadow-2xl $color transition-opacity duration-300 z-[9999]'>$msg</div>";
-        echo "<script>setTimeout(() => { document.getElementById('toast').style.opacity = '0'; setTimeout(()=> {document.getElementById('toast').remove();}, 300); }, 3000);</script>";
+        echo "
+        <div id='toast' class='fixed bottom-5 right-5 flex items-center gap-3 text-white px-5 py-3.5 rounded-2xl shadow-2xl border backdrop-blur-md $bgColor translate-x-[120%] transition-transform duration-500 ease-out z-[9999] max-w-sm sm:max-w-md'>
+            $iconSvg
+            <div class='text-sm font-semibold flex-1 leading-snug'>$msg</div>
+            <button onclick='dismissToast()' class='text-white/70 hover:text-white hover:scale-110 active:scale-95 transition-all p-1 rounded-lg hover:bg-white/10 shrink-0 cursor-pointer border-0 bg-transparent'>
+                <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 18L18 6M6 6l12 12'></path></svg>
+            </button>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const toast = document.getElementById('toast');
+                if (!toast) return;
+                
+                // Animate entrance
+                requestAnimationFrame(() => {
+                    toast.style.transform = 'translateX(0)';
+                });
+                
+                let timeoutId;
+                let startTime = Date.now();
+                let remainingTime = 4000;
+                
+                function startTimer() {
+                    startTime = Date.now();
+                    timeoutId = setTimeout(dismissToast, remainingTime);
+                }
+                
+                function pauseTimer() {
+                    clearTimeout(timeoutId);
+                    remainingTime -= Date.now() - startTime;
+                }
+                
+                toast.addEventListener('mouseenter', pauseTimer);
+                toast.addEventListener('mouseleave', () => {
+                    if (remainingTime > 0) {
+                        startTimer();
+                    }
+                });
+                
+                startTimer();
+            });
+
+            function dismissToast() {
+                const toast = document.getElementById('toast');
+                if (!toast) return;
+                toast.style.transform = 'translateX(120%)';
+                setTimeout(() => { toast.remove(); }, 500);
+            }
+        </script>
+        ";
         
         unset($_SESSION['toast']);
     }

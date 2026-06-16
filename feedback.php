@@ -44,6 +44,8 @@ if (isset($_SESSION['user_id'])) {
             </h2>
 
             <form action="insert-feedback.php" method="POST" class="space-y-6">
+                <input type="hidden" name="csrf_token" value="<?php echo escape($_SESSION['csrf_token'] ?? ''); ?>">
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="name" class="block text-gray-700 dark:text-slate-300 font-bold mb-2 text-sm">Full Name</label>

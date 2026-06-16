@@ -1,14 +1,7 @@
 <?php
-require_once 'includes/config.php';
 require_once 'includes/db.php';
-require_once 'includes/functions.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'])) {
-        set_toast('error', 'Invalid security token.');
-        header("Location: feedback.php");
-        exit();
-    }
 
     $name = $_POST['name'];
     $email = $_POST['email'];

@@ -14,6 +14,10 @@ if (!empty($_SESSION['campus'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'])) {
+        set_toast('error', 'Invalid security token.');
+        redirect('complete-registration');
+    }
     $campus = trim($_POST['campus'] ?? '');
     
     if (!empty($campus)) {
@@ -40,6 +44,8 @@ require_once 'includes/header.php';
     <p class="text-center text-gray-600 dark:text-slate-400 mb-8">Please select your campus to complete your profile.</p>
 
     <form action="complete-registration" method="POST">
+        <input type="hidden" name="csrf_token" value="<?php echo escape($_SESSION['csrf_token'] ?? ''); ?>">
+
         <div class="mb-6">
             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Your Campus</label>
             <select name="campus" required class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all appearance-none">
