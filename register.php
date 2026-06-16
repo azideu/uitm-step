@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Always show OTP in toast for testing purposes (even on production)
                 set_toast('info', "DEBUG MODE: Your verification code is <b>$otp</b> (This would normally be sent to your email).");
                 
-                redirect('verify_email');
+                redirect('verify-email');
             } catch (\Exception $e) {
                 set_toast('error', "Registration failed.");
                 error_log($e->getMessage());

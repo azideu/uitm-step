@@ -1,5 +1,5 @@
 <?php
-// complete_registration.php
+// complete-registration.php
 require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
@@ -39,7 +39,7 @@ require_once 'includes/header.php';
     <h2 class="text-2xl font-bold mb-2 text-center text-uitmPurple dark:text-purple-300 font-serif">One Last Step!</h2>
     <p class="text-center text-gray-600 dark:text-slate-400 mb-8">Please select your campus to complete your profile.</p>
 
-    <form action="complete_registration" method="POST">
+    <form action="complete-registration" method="POST">
         <div class="mb-6">
             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2">Your Campus</label>
             <select name="campus" required class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all appearance-none">

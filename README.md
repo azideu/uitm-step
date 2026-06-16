@@ -111,7 +111,7 @@ UiTM STEP is a centralized, "Fiverr-style" marketplace exclusively for the **34 
 
 ## Google Sign-In Behavior
 - **Account Linking:** Matches existing student emails.
-- **Registration Deferral:** New users are created instantly; campus selection is handled post-login via `complete_registration.php`.
+- **Registration Deferral:** New users are created instantly; campus selection is handled post-login via `complete-registration.php`.
 - **Domain Restricted:** Only `@student.uitm.edu.my` and approved subdomains allowed.
 
 ---

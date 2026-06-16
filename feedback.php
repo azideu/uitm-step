@@ -43,7 +43,7 @@ if (isset($_SESSION['user_id'])) {
                 Send Feedback
             </h2>
 
-            <form action="insert_feedback.php" method="POST" class="space-y-6">
+            <form action="insert-feedback.php" method="POST" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="name" class="block text-gray-700 dark:text-slate-300 font-bold mb-2 text-sm">Full Name</label>

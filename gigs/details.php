@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         if ($existing_order) {
             if ($existing_order['status'] === 'pending') {
-                redirect("payment_gateway?order_id=" . $existing_order['order_id']);
+                redirect("payment-gateway?order_id=" . $existing_order['order_id']);
             }
             set_toast('info', 'You already have an active order for this gig.');
             redirect('dashboard?mode=buying');
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $create_stmt = $pdo->prepare("INSERT INTO orders (buyer_id, gig_id, status) VALUES (?, ?, 'pending')");
             $create_stmt->execute([$_SESSION['user_id'], $gig_id]);
             $new_order_id = $pdo->lastInsertId();
-            redirect("payment_gateway?order_id=" . $new_order_id);
+            redirect("payment-gateway?order_id=" . $new_order_id);
         } catch (\Exception $e) {
             error_log("Order creation error: " . $e->getMessage());
             set_toast('error', 'Unable to create your order. Please try again.');

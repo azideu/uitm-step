@@ -1,5 +1,5 @@
 <?php
-// verify_email.php
+// verify-email.php
 require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
@@ -45,7 +45,7 @@ require_once 'includes/header.php';
         Please enter it below.
     </p>
 
-    <form action="verify_email" method="POST">
+    <form action="verify-email" method="POST">
         <div class="mb-6">
             <label class="block text-gray-700 dark:text-slate-300 font-bold mb-2" for="otp">Verification Code</label>
             <input type="text" name="otp" id="otp" required maxlength="6" pattern="\d{6}" title="6-digit code" placeholder="123456" class="w-full text-center tracking-widest text-xl px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all">

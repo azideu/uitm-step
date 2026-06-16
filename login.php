@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 $_SESSION['verify_email'] = $email;
                 set_toast('info', "Please verify your email. DEBUG: Your code is <b>$otp</b>");
-                redirect('verify_email');
+                redirect('verify-email');
             }
 
             // Check if user is banned

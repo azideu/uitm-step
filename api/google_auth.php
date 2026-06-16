@@ -169,7 +169,7 @@ try {
 
     $redirect = 'home';
     if (empty($user['campus'])) {
-        $redirect = 'complete_registration';
+        $redirect = 'complete-registration';
     }
 
     echo json_encode([

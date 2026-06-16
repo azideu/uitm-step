@@ -27,8 +27,8 @@ if (isset($_SESSION['user_id'])) {
 // Enforce campus selection if missing (exclude banned users)
 if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['role'] ?? '') !== 'banned') {
     $current_page = basename($_SERVER['PHP_SELF']);
-    if ($current_page !== 'complete_registration.php' && $current_page !== 'logout.php') {
-        redirect('complete_registration');
+    if ($current_page !== 'complete-registration.php' && $current_page !== 'logout.php') {
+        redirect('complete-registration');
     }
 }
 ?>

@@ -1,5 +1,5 @@
 <?php
-// payment_gateway.php — Integrated Single-File Checkout & Payment Portal
+// payment-gateway.php — Integrated Single-File Checkout & Payment Portal
 require_once 'includes/auth_check.php';
 require_once 'includes/db.php';
 
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             exit;
         } catch (\Exception $e) {
             $pdo->rollBack();
-            error_log('[payment_gateway.php error] ' . $e->getMessage());
+            error_log('[payment-gateway.php error] ' . $e->getMessage());
             echo json_encode(['success' => false, 'message' => 'Database error processing transaction. Please try again.']);
             exit;
         }
@@ -542,7 +542,7 @@ require_once 'includes/header.php';
             formData.append('e_wallet', finalBankName);
         }
 
-        fetch('payment_gateway.php?order_id=<?= $order_id ?>', {
+        fetch('payment-gateway.php?order_id=<?= $order_id ?>', {
             method: 'POST',
             body: formData
         })
