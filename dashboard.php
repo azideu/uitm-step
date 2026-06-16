@@ -417,7 +417,7 @@ require_once 'includes/header.php';
                             <tr class="bg-gray-50/70 dark:bg-slate-800/70 transition-colors duration-300">
                                 <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Order</th>
                                 <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Buyer</th>
-                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Proof</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Message</th>
                                 <th class="px-6 py-4 text-left text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">Action</th>
                             </tr>
                         </thead>
@@ -434,11 +434,18 @@ require_once 'includes/header.php';
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 text-sm">
-                                        <?php if($io['payment_proof_path']): ?>
-                                            <a href="<?php echo asset_url($io['payment_proof_path']); ?>" target="_blank" class="text-emerald-600 hover:text-emerald-800 font-bold underline underline-offset-2 transition-colors">View</a>
-                                        <?php else: ?>
-                                            <span class="text-gray-300">—</span>
-                                        <?php endif; ?>
+                                        <div class="flex items-center gap-2">
+                                            <a href="<?php echo ROOT_URL; ?>chat?user=<?php echo $io['buyer_id']; ?>" class="inline-flex items-center gap-1.5 bg-uitmPurple text-white font-bold py-1.5 px-3 rounded-lg hover:bg-purple-900 transition-all duration-300 text-xs shadow-md">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                                                Chat
+                                            </a>
+                                            <?php if($io['payment_proof_path']): ?>
+                                                <a href="<?php echo asset_url($io['payment_proof_path']); ?>" target="_blank" class="inline-flex items-center gap-1 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 font-bold py-1.5 px-3 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-950/40 border border-emerald-200/50 dark:border-emerald-800/50 transition-all duration-300 text-xs">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                                    Proof
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium">
                                         <?php if ($io['status'] === 'paid'): ?>
