@@ -299,7 +299,7 @@ require_once '../includes/header.php';
                         <form action="details?id=<?php echo $gig_id; ?>" method="POST" class="space-y-4">
                             <input type="hidden" name="action" value="buy">
                             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                            <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-4 px-6 rounded-md shadow-xl hover:bg-purple-900 transition-all duration-300 text-base flex items-center justify-center gap-2">
+                            <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-4 px-6 rounded-2xl shadow-xl hover:bg-purple-900 transition-all duration-300 text-base flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 Continue to Payment
                             </button>
