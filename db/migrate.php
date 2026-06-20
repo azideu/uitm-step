@@ -68,6 +68,20 @@ CREATE TABLE IF NOT EXISTS reviews (
 )
 ";
 
+// Migration 5: Create feedback table
+$migrations[] = "
+CREATE TABLE IF NOT EXISTS feedback (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    campus VARCHAR(100),
+    nature VARCHAR(50),
+    message TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+";
+
 echo "<h2 style='font-family:monospace'>Running Migrations...</h2><pre>";
 
 

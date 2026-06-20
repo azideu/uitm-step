@@ -2,6 +2,91 @@
 require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/functions.php';
+
+// Handle Form Submission (POST request)
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // 1. CSRF Token Validation
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'])) {
+        set_toast('error', 'Invalid security token.');
+        header("Location: feedback.php");
+        exit();
+    }
+
+    // 2. Retrieve and Sanitize Inputs
+    $name    = trim($_POST['name'] ?? '');
+    $email   = strtolower(trim($_POST['email'] ?? ''));
+    $phone   = trim($_POST['phone'] ?? '');
+    $campus  = trim($_POST['campus'] ?? '');
+    $nature  = trim($_POST['nature'] ?? '');
+    $message = trim($_POST['message'] ?? '');
+
+    // 3. Validation Checks
+    $errors = [];
+
+    // Name check
+    if (empty($name) || strlen($name) < 2 || strlen($name) > 100 || !preg_match('/^[a-zA-Z\s\.\'\-]+$/', $name)) {
+        $errors[] = "Name must be 2-100 characters and contain only letters, spaces, dots, hyphens, or single quotes.";
+    }
+
+    // Email check (UiTM student email)
+    if (!is_uitm_student_email($email)) {
+        $errors[] = "Email must be a valid 10-digit student email (e.g. 2021123456@student.uitm.edu.my).";
+    }
+
+    // Phone format check (011-xxxx xxxx or 01x-xxx xxxx)
+    if (!preg_match('/^011-\d{4}\s\d{4}$|^01[02-9]-\d{3}\s\d{4}$/', $phone)) {
+        $errors[] = "Phone number must be a valid Malaysian format (e.g., 012-345 6789 or 011-1234 5678).";
+    }
+
+    // Campus check
+    if (empty($campus) || strlen($campus) > 100) {
+        $errors[] = "Please select a valid campus.";
+    }
+
+    // Nature check
+    if (!in_array($nature, ['Complaint', 'Suggestion', 'Compliment'], true)) {
+        $errors[] = "Please select a valid nature of feedback.";
+    }
+
+    // Message check
+    if (empty($message) || mb_strlen($message) > 500) {
+        $errors[] = "Message is required and cannot exceed 500 characters.";
+    }
+
+    // 4. Handle Validation Errors
+    if (!empty($errors)) {
+        set_toast('error', implode("<br>", $errors));
+        header("Location: feedback.php");
+        exit();
+    }
+
+    // 5. Database Insertion with Error Handling
+    try {
+        $sql = "INSERT INTO feedback (name, email, phone, campus, nature, message)
+                VALUES (:name, :email, :phone, :campus, :nature, :message)";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            'name'    => $name,
+            'email'   => $email,
+            'phone'   => $phone,
+            'campus'  => $campus,
+            'nature'  => $nature,
+            'message' => $message
+        ]);
+
+        // Success redirection to thank you page
+        header("Location: thank-you.php");
+        exit();
+
+    } catch (PDOException $e) {
+        error_log("Database Error in feedback.php POST: " . $e->getMessage());
+        set_toast('error', 'A database error occurred. Please try again later.');
+        header("Location: feedback.php");
+        exit();
+    }
+}
+
 require_once 'includes/header.php';
 
 // Fetch logged-in user info for pre-filling the form
@@ -43,23 +128,23 @@ if (isset($_SESSION['user_id'])) {
                 Send Feedback
             </h2>
 
-            <form action="insert-feedback.php" method="POST" class="space-y-6">
+            <form action="" method="POST" class="space-y-6">
                 <input type="hidden" name="csrf_token" value="<?php echo escape($_SESSION['csrf_token'] ?? ''); ?>">
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="name" class="block text-gray-700 dark:text-slate-300 font-bold mb-2 text-sm">Full Name</label>
-                        <input type="text" name="name" id="name" required value="<?php echo escape($prefill_name); ?>" placeholder="e.g. Ahmad bin Ali" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all placeholder-gray-400 dark:placeholder-slate-500">
+                        <input type="text" name="name" id="name" required minlength="2" maxlength="100" pattern="^[a-zA-Z\s\.\'\-]+$" title="Full Name can only contain letters, spaces, dots, hyphens, and single quotes." value="<?php echo escape($prefill_name); ?>" placeholder="e.g. Ahmad bin Ali" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all placeholder-gray-400 dark:placeholder-slate-500">
                     </div>
 
                     <div>
                         <label for="email" class="block text-gray-700 dark:text-slate-300 font-bold mb-2 text-sm">Student Email</label>
-                        <input type="email" name="email" id="email" required value="<?php echo escape($prefill_email); ?>" placeholder="e.g. student@student.uitm.edu.my" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all placeholder-gray-400 dark:placeholder-slate-500">
+                        <input type="email" name="email" id="email" required pattern="[0-9]{10}@student\.uitm\.edu\.my" title="Must be a valid 10-digit UiTM student email (e.g. 2021123456@student.uitm.edu.my)" value="<?php echo escape($prefill_email); ?>" placeholder="e.g. 2021123456@student.uitm.edu.my" autocomplete="email" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all placeholder-gray-400 dark:placeholder-slate-500">
                     </div>
 
                     <div>
                         <label for="phone" class="block text-gray-700 dark:text-slate-300 font-bold mb-2 text-sm">Phone Number</label>
-                        <input type="text" name="phone" id="phone" required placeholder="e.g. 0123456789" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all placeholder-gray-400 dark:placeholder-slate-500">
+                        <input type="tel" name="phone" id="phone" required pattern="^011-\d{4}\s\d{4}$|^01[02-9]-\d{3}\s\d{4}$" title="Please enter a valid Malaysian phone number (e.g., 012-345 6789 or 011-1234 5678)" placeholder="e.g. 012-345 6789" autocomplete="tel" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all placeholder-gray-400 dark:placeholder-slate-500">
                     </div>
 
                     <div>
@@ -140,6 +225,9 @@ if (isset($_SESSION['user_id'])) {
                 <div>
                     <label for="message" class="block text-gray-700 dark:text-slate-300 font-bold mb-2 text-sm">Message</label>
                     <textarea name="message" id="message" maxlength="500" required placeholder="Write your message here... (Max 500 characters)" class="w-full h-36 px-4 py-3 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 focus:border-uitmPurple transition-all resize-none placeholder-gray-400 dark:placeholder-slate-500"></textarea>
+                    <div id="char-counter" class="text-right text-xs text-gray-400 dark:text-slate-500 mt-1">
+                        0 / 500 characters
+                    </div>
                 </div>
 
                 <button type="submit" class="w-full bg-uitmPurple hover:bg-purple-900 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-purple-900/10 dark:shadow-none hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer border-0">
@@ -200,5 +288,102 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </div>
 </div>
+
+<style>
+/* Modern CSS validation states styling using :user-invalid and :user-valid */
+input:user-invalid, select:user-invalid, textarea:user-invalid {
+    border-color: #ef4444 !important; /* red-500 */
+    background-color: #fef2f2 !important; /* red-50 */
+}
+.dark input:user-invalid, .dark select:user-invalid, .dark textarea:user-invalid {
+    border-color: #f87171 !important; /* red-400 */
+    background-color: rgba(69, 10, 10, 0.4) !important; /* red-950/40 */
+}
+
+input:user-valid, select:user-valid, textarea:user-valid {
+    border-color: #22c55e !important; /* green-500 */
+}
+.dark input:user-valid, .dark select:user-valid, .dark textarea:user-valid {
+    border-color: #4ade80 !important; /* green-400 */
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Phone number formatter (Malaysia dynamic mobile layout)
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function() {
+            let digits = this.value.replace(/\D/g, '');
+            const is011 = digits.startsWith('011');
+            const maxLen = is011 ? 11 : 10;
+            
+            if (digits.length > maxLen) {
+                digits = digits.substring(0, maxLen);
+            }
+            
+            let formatted = '';
+            if (digits.length > 0) {
+                if (is011) {
+                    if (digits.length <= 3) {
+                        formatted = digits;
+                    } else if (digits.length <= 7) {
+                        formatted = digits.substring(0, 3) + '-' + digits.substring(3);
+                    } else {
+                        formatted = digits.substring(0, 3) + '-' + digits.substring(3, 7) + ' ' + digits.substring(7);
+                    }
+                } else {
+                    if (digits.length <= 3) {
+                        formatted = digits;
+                    } else if (digits.length <= 6) {
+                        formatted = digits.substring(0, 3) + '-' + digits.substring(3);
+                    } else {
+                        formatted = digits.substring(0, 3) + '-' + digits.substring(3, 6) + ' ' + digits.substring(6);
+                    }
+                }
+            }
+            this.value = formatted;
+        });
+    }
+
+    // 2. Textarea Character Counter
+    const messageInput = document.getElementById('message');
+    const charCounter = document.getElementById('char-counter');
+    if (messageInput && charCounter) {
+        const updateCounter = () => {
+            const len = messageInput.value.length;
+            charCounter.textContent = `${len} / 500 characters`;
+            
+            if (len >= 450) {
+                charCounter.classList.remove('text-gray-400', 'dark:text-slate-500');
+                charCounter.classList.add('text-red-500', 'dark:text-red-400');
+            } else {
+                charCounter.classList.remove('text-red-500', 'dark:text-red-400');
+                charCounter.classList.add('text-gray-400', 'dark:text-slate-500');
+            }
+        };
+        messageInput.addEventListener('input', updateCounter);
+        updateCounter(); // Initialize
+    }
+
+    // 3. Accessibility Sync for aria-invalid
+    const syncAria = (el) => {
+        if (el.hasAttribute('required') || el.value.length > 0) {
+            el.setAttribute('aria-invalid', el.matches(':user-invalid') ? 'true' : 'false');
+        }
+    };
+
+    document.addEventListener('blur', (e) => {
+        if (e.target.matches('input, select, textarea')) {
+            syncAria(e.target);
+        }
+    }, true);
+    document.addEventListener('input', (e) => {
+        if (e.target.matches('input, select, textarea') && e.target.hasAttribute('aria-invalid')) {
+            syncAria(e.target);
+        }
+    });
+});
+</script>
 
 <?php require_once 'includes/footer.php'; ?>

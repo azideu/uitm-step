@@ -15,3 +15,9 @@ Stack trace:
 #0 C:\xampp\htdocs\uitm-step\marketplace.php(66): PDO->prepare('SELECT g.*, u.n...')
 #1 {main}
   thrown in C:\xampp\htdocs\uitm-step\marketplace.php on line 66
+[20-Jun-2026 15:24:08 Asia/Kuala_Lumpur] PHP Warning:  Undefined array key "REQUEST_METHOD" in /Applications/XAMPP/xamppfiles/htdocs/STEP/includes/config.php on line 50
+[20-Jun-2026 15:25:47 Asia/Kuala_Lumpur] PHP Warning:  Undefined array key "REQUEST_METHOD" in /Applications/XAMPP/xamppfiles/htdocs/STEP/includes/config.php on line 50
+[20-Jun-2026 15:26:22 Asia/Kuala_Lumpur] PHP Warning:  session_set_save_handler(): Session save handler cannot be changed after headers have already been sent (sent from /Users/Addin/.gemini/antigravity/brain/52f695e9-dc99-45f0-9def-3265962c96d2/scratch/test_feedback.php on line 3) in /Applications/XAMPP/xamppfiles/htdocs/STEP/includes/config.php on line 26
+[20-Jun-2026 15:26:22 Asia/Kuala_Lumpur] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed after headers have already been sent (sent from /Users/Addin/.gemini/antigravity/brain/52f695e9-dc99-45f0-9def-3265962c96d2/scratch/test_feedback.php on line 3) in /Applications/XAMPP/xamppfiles/htdocs/STEP/includes/config.php on line 32
+[20-Jun-2026 15:26:22 Asia/Kuala_Lumpur] PHP Warning:  session_start(): Session cannot be started after headers have already been sent (sent from /Users/Addin/.gemini/antigravity/brain/52f695e9-dc99-45f0-9def-3265962c96d2/scratch/test_feedback.php on line 3) in /Applications/XAMPP/xamppfiles/htdocs/STEP/includes/config.php on line 41
+[20-Jun-2026 15:26:22 Asia/Kuala_Lumpur] PHP Warning:  Undefined array key "REQUEST_METHOD" in /Applications/XAMPP/xamppfiles/htdocs/STEP/includes/config.php on line 50
