@@ -6,12 +6,34 @@
  * This script handles both local development and DigitalOcean production environments.
  */
 
+// Load local .env if it exists
+$env_path = __DIR__ . '/../.env';
+if (file_exists($env_path)) {
+    $lines = file($env_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if ($line === '' || strpos($line, '#') === 0) {
+            continue;
+        }
+        if (strpos($line, '=') !== false) {
+            list($name, $value) = explode('=', $line, 2);
+            $name = trim($name);
+            $value = trim($value);
+            $value = trim($value, '"\''); // strip surrounding quotes
+            
+            putenv("{$name}={$value}");
+            $_ENV[$name] = $value;
+            $_SERVER[$name] = $value;
+        }
+    }
+}
+
 // 1. Default fallback credentials (Local/XAMPP)
-$host = '127.0.0.1';
-$db   = 'uitm_step';
-$user = 'root';
-$pass = ''; 
-$port = '3307';
+$host = getenv('DB_HOST') ?: '127.0.0.1';
+$db   = getenv('DB_DATABASE') ?: 'uitm_step';
+$user = getenv('DB_USERNAME') ?: 'root';
+$pass = getenv('DB_PASSWORD') ?: ''; 
+$port = getenv('DB_PORT') ?: '3307';
 $charset = 'utf8mb4';
 
 // 2. Check for DigitalOcean App Platform DATABASE_URL
