@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Message check
-    if (empty($message) || mb_strlen($message) > 500) {
+    if (empty($message) || strlen($message) > 500) {
         $errors[] = "Message is required and cannot exceed 500 characters.";
     }
 
