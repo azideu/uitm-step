@@ -72,22 +72,20 @@ try {
         redirect('home');
     }
 
-    // Comprehensive cross-check: Verify order is paid, delivered or complete AND payment proof exists and is valid
+    // Comprehensive cross-check: Verify order is paid, delivered or complete
     if (!in_array($order['status'], ['paid', 'delivered', 'complete'], true)) {
         set_toast('error', 'You can only review orders that have been paid for.');
         redirect('home');
     }
 
-    if (empty($order['payment_proof_path']) || trim($order['payment_proof_path']) === '') {
-        set_toast('error', 'Payment proof is required to leave a review.');
-        redirect('home');
-    }
-
-    // Additional validation: Ensure the payment proof file actually exists
-    $proof_path = '../uploads/' . $order['payment_proof_path'];
-    if (!file_exists($proof_path)) {
-        set_toast('error', 'Payment proof file not found. Please contact support.');
-        redirect('home');
+    $proof_path_raw = $order['payment_proof_path'] ?? '';
+    if (trim($proof_path_raw) !== '') {
+        // If a payment proof path is provided, ensure the file actually exists on disk (legacy manual payment flow)
+        $proof_path = '../uploads/' . $order['payment_proof_path'];
+        if (!file_exists($proof_path)) {
+            set_toast('error', 'Payment proof file not found. Please contact support.');
+            redirect('home');
+        }
     }
 
     // Cross-check: Verify the gig_id from the order matches the requested gig_id
