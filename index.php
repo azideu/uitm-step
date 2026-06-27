@@ -13,7 +13,7 @@ require_once 'includes/header.php';
     <div class="absolute inset-0 w-full h-full">
         <div class="absolute inset-0 bg-gradient-to-br from-uitmPurple via-[#1a0033] to-blue-900 bg-moving-gradient"></div>
         <div class="absolute inset-0 bg-noise opacity-30 mix-blend-overlay"></div>
-        <img src="assets/img/hero_bg.png" alt="Student Freelancer" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40 animate-pulse-slow">
+        <img src="assets/img/hero_bg.jpg" alt="Student Freelancer" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40 animate-pulse-slow">
     </div>
     
     <!-- Hero Content -->
