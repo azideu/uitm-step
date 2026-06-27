@@ -189,7 +189,7 @@ require_once 'includes/header.php';
                         <?php
                             $seller_avatar = !empty($gig['profile_picture']) 
                                 ? asset_url($gig['profile_picture']) 
-                                : 'https://ui-avatars.com/api/?name=' . urlencode($gig['seller_name']) . '&background=330066&color=FFD700';
+                                : get_avatar_url($gig['seller_name']);
                         ?>
                         <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold mr-3 overflow-hidden shrink-0 border-2 border-white shadow-xl">
                             <img src="<?php echo $seller_avatar; ?>" alt="<?php echo escape($gig['seller_name']); ?>" class="w-full h-full object-cover">

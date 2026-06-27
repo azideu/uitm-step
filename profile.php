@@ -142,7 +142,7 @@ $user = $stmt->fetch();
 $stored_pic = $user['profile_picture'] ?? '';
 $avatar_path = !empty($stored_pic) 
     ? asset_url($stored_pic) 
-    : 'https://ui-avatars.com/api/?name=' . urlencode($user['name']) . '&background=330066&color=FFD700';
+    : get_avatar_url($user['name']);
 
 require_once 'includes/header.php';
 ?>

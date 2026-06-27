@@ -214,4 +214,84 @@ function verify_google_id_token($idToken, $expectedAud) {
 
     return $payload;
 }
+
+/**
+ * Generates a beautiful local SVG avatar data URI using the user's initials,
+ * a brand-colored gradient backdrop, and a textured vector pattern.
+ *
+ * @param string $name
+ * @return string data URI of the SVG avatar
+ */
+function get_avatar_url($name) {
+    $name = trim((string)$name);
+    $initials = '';
+    $words = explode(' ', preg_replace('/\s+/', ' ', $name));
+    
+    if (count($words) >= 2) {
+        $initials = strtoupper(substr($words[0], 0, 1) . substr($words[1], 0, 1));
+    } else {
+        $initials = strtoupper(substr($name ?? 'U', 0, 2));
+    }
+    if (empty($initials)) {
+        $initials = 'US';
+    }
+
+    // Hash name to get a consistent index
+    $hash = crc32($name);
+    
+    // Premium color palettes matching UiTM brand guidelines and aesthetic guidelines
+    $gradients = [
+        ['#330066', '#6600cc', '#FFD700'], // Purple to Violet (Gold text)
+        ['#1e3a8a', '#3b82f6', '#ffffff'], // Deep Blue to Sky Blue
+        ['#064e3b', '#10b981', '#ffffff'], // Deep Green to Emerald
+        ['#881337', '#f43f5e', '#ffffff'], // Deep Rose to Pink
+        ['#7c2d12', '#f97316', '#ffffff'], // Deep Orange to Amber
+    ];
+    
+    $grad = $gradients[abs($hash) % count($gradients)];
+    $from = $grad[0];
+    $to = $grad[1];
+    $text = $grad[2];
+    
+    // Generate a geometric pattern based on the name hash for texture depth
+    $pattern_type = abs($hash) % 4;
+    $pattern_svg = '';
+    
+    if ($pattern_type === 0) {
+        // Concentric circles
+        $pattern_svg = '<circle cx="50" cy="50" r="45" fill="none" stroke="white" stroke-opacity="0.1" stroke-width="2"/>' .
+                      '<circle cx="50" cy="50" r="30" fill="none" stroke="white" stroke-opacity="0.08" stroke-width="2"/>' .
+                      '<circle cx="50" cy="50" r="15" fill="none" stroke="white" stroke-opacity="0.05" stroke-width="2"/>';
+    } elseif ($pattern_type === 1) {
+        // Intersecting diagonals
+        $pattern_svg = '<line x1="0" y1="0" x2="100" y2="100" stroke="white" stroke-opacity="0.08" stroke-width="3"/>' .
+                      '<line x1="100" y1="0" x2="0" y2="100" stroke="white" stroke-opacity="0.08" stroke-width="3"/>';
+    } elseif ($pattern_type === 2) {
+        // Double grid border
+        $pattern_svg = '<rect x="10" y="10" width="80" height="80" fill="none" stroke="white" stroke-opacity="0.07" stroke-width="2" rx="10"/>' .
+                      '<rect x="25" y="25" width="50" height="50" fill="none" stroke="white" stroke-opacity="0.05" stroke-width="1.5" rx="5"/>';
+    } else {
+        // Polka dots
+        $pattern_svg = '<circle cx="20" cy="20" r="3" fill="white" fill-opacity="0.15"/>' .
+                      '<circle cx="80" cy="20" r="3" fill="white" fill-opacity="0.15"/>' .
+                      '<circle cx="20" cy="80" r="3" fill="white" fill-opacity="0.15"/>' .
+                      '<circle cx="80" cy="80" r="3" fill="white" fill-opacity="0.15"/>' .
+                      '<circle cx="50" cy="50" r="4" fill="white" fill-opacity="0.1"/>';
+    }
+    
+    // Base64 encode the full SVG
+    $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">' .
+           '<defs>' .
+           '<linearGradient id="avatar-grad-' . abs($hash) . '" x1="0%" y1="0%" x2="100%" y2="100%">' .
+           '<stop offset="0%" stop-color="' . $from . '"/>' .
+           '<stop offset="100%" stop-color="' . $to . '"/>' .
+           '</linearGradient>' .
+           '</defs>' .
+           '<rect width="100" height="100" fill="url(#avatar-grad-' . abs($hash) . ')"/>' .
+           $pattern_svg .
+           '<text x="50%" y="54%" font-family="Outfit, Manrope, sans-serif" font-weight="800" font-size="34" fill="' . $text . '" text-anchor="middle" dominant-baseline="middle">' . $initials . '</text>' .
+           '</svg>';
+           
+    return 'data:image/svg+xml;base64,' . base64_encode($svg);
+}
 ?>
