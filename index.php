@@ -288,10 +288,10 @@ require_once 'includes/header.php';
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
         <span class="text-xs text-slate-650 dark:text-slate-400 uppercase tracking-widest font-bold text-center md:text-left">Trusted By Campus Students At:</span>
         <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-slate-800 dark:text-slate-300 text-sm font-bold">
-            <span class="hover:text-uitmPurple dark:hover:text-uitmGold hover:scale-105 transition-all duration-300 cursor-default flex items-center"><span class="w-1.5 h-1.5 mr-2 rounded-full bg-purple-500"></span>UiTM Shah Alam</span>
-            <span class="hover:text-uitmPurple dark:hover:text-uitmGold hover:scale-105 transition-all duration-300 cursor-default flex items-center"><span class="w-1.5 h-1.5 mr-2 rounded-full bg-blue-500"></span>UiTM Kuala Terengganu</span>
-            <span class="hover:text-uitmPurple dark:hover:text-uitmGold hover:scale-105 transition-all duration-300 cursor-default flex items-center"><span class="w-1.5 h-1.5 mr-2 rounded-full bg-pink-500"></span>UiTM Puncak Alam</span>
-            <span class="hover:text-uitmPurple dark:hover:text-uitmGold hover:scale-105 transition-all duration-300 cursor-default flex items-center"><span class="w-1.5 h-1.5 mr-2 rounded-full bg-amber-500"></span>UiTM Seri Iskandar</span>
+            <span class="hover:text-uitmPurple dark:hover:text-uitmGold hover:scale-105 transition-all duration-300 cursor-default">UiTM Shah Alam</span>
+            <span class="hover:text-uitmPurple dark:hover:text-uitmGold hover:scale-105 transition-all duration-300 cursor-default">UiTM Kuala Terengganu</span>
+            <span class="hover:text-uitmPurple dark:hover:text-uitmGold hover:scale-105 transition-all duration-300 cursor-default">UiTM Puncak Alam</span>
+            <span class="hover:text-uitmPurple dark:hover:text-uitmGold hover:scale-105 transition-all duration-300 cursor-default">UiTM Seri Iskandar</span>
         </div>
     </div>
 </div>
