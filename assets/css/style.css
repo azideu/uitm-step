@@ -133,3 +133,143 @@
     vertical-align: middle;
     transition: opacity 0.1s ease;
 }
+
+/* Glassmorphic Hero Redesign Classes */
+
+/* Floating Ambient background glows */
+.bg-glow-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.22;
+    pointer-events: none;
+}
+
+.dark .bg-glow-blob {
+    opacity: 0.35;
+}
+
+.blob-purple {
+    background: radial-gradient(circle, #330066 0%, rgba(51, 0, 102, 0.4) 50%, transparent 80%);
+    width: 550px;
+    height: 550px;
+    animation: drift-blob-1 25s infinite alternate ease-in-out;
+}
+
+.blob-gold {
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, rgba(255, 215, 0, 0.15) 50%, transparent 85%);
+    width: 450px;
+    height: 450px;
+    animation: drift-blob-2 20s infinite alternate ease-in-out;
+}
+
+.blob-blue {
+    background: radial-gradient(circle, rgba(29, 78, 216, 0.45) 0%, rgba(30, 58, 138, 0.2) 60%, transparent 80%);
+    width: 600px;
+    height: 600px;
+    animation: drift-blob-3 30s infinite alternate ease-in-out;
+}
+
+@keyframes drift-blob-1 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(120px, 90px) scale(1.15); }
+    100% { transform: translate(-40px, 140px) scale(0.95); }
+}
+
+@keyframes drift-blob-2 {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-100px, 100px) scale(0.85); }
+    100% { transform: translate(110px, -60px) scale(1.1); }
+}
+
+@keyframes drift-blob-3 {
+    0% { transform: translate(0, 0) scale(1.05); }
+    50% { transform: translate(130px, -110px) scale(0.9); }
+    100% { transform: translate(-90px, -70px) scale(1.15); }
+}
+
+/* Glassmorphic Cards Showcase styling */
+.glass-hero-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .glass-hero-card {
+    background: rgba(15, 10, 25, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-hero-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 40px 80px -10px rgba(255, 215, 0, 0.15), 0 0 50px 5px rgba(51, 0, 102, 0.4);
+    transform: translateY(-8px) scale(1.04) rotate(0deg) !important;
+    animation-play-state: paused;
+}
+
+.animate-float-card-1 {
+    animation: float-card-1 8s infinite ease-in-out;
+}
+
+.animate-float-card-2 {
+    animation: float-card-2 9s infinite ease-in-out;
+}
+
+.animate-float-card-3 {
+    animation: float-card-3 10s infinite ease-in-out;
+}
+
+@keyframes float-card-1 {
+    0%, 100% { transform: translateY(0) rotate(1.5deg); }
+    50% { transform: translateY(-12px) rotate(0deg); }
+}
+
+@keyframes float-card-2 {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-15px) rotate(-0.5deg); }
+}
+
+@keyframes float-card-3 {
+    0%, 100% { transform: translateY(0) rotate(0.5deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+/* Glassmorphic Search Container Focus Glow */
+.search-container-glow {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .search-container-glow {
+    background: rgba(15, 10, 25, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.search-container-glow:focus-within {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 50px 10px rgba(255, 215, 0, 0.18), 0 25px 50px -20px rgba(0, 0, 0, 0.6);
+    transform: translateY(-2px) scale(1.005);
+    border-color: rgba(255, 215, 0, 0.4);
+}
+
+/* Glassmorphic Badge/Tag links */
+.glass-tag {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+.glass-tag:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 215, 0, 0.3);
+    color: #FFD700;
+    transform: translateY(-2px);
+}
+

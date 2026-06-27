@@ -8,52 +8,183 @@ require_once 'includes/header.php';
 ?>
 
 <!-- Hero Section -->
-<div class="relative bg-black text-white h-[650px] flex items-center justify-center pt-16 mt-[-4rem] overflow-hidden">
-    <!-- Animated Gradient Background & Image -->
-    <div class="absolute inset-0 w-full h-full">
-        <div class="absolute inset-0 bg-gradient-to-br from-uitmPurple via-[#1a0033] to-blue-900 bg-moving-gradient"></div>
+<div class="relative bg-slate-950 text-white min-h-[700px] lg:h-[750px] flex items-center pt-16 mt-[-4rem] overflow-hidden">
+    <!-- Ambient Moving Glow Blobs -->
+    <div class="absolute top-[10%] left-[5%] bg-glow-blob blob-purple"></div>
+    <div class="absolute bottom-[10%] right-[10%] bg-glow-blob blob-gold"></div>
+    <div class="absolute top-[30%] right-[30%] bg-glow-blob blob-blue"></div>
+
+    <!-- Background Noise & Image Overlay -->
+    <div class="absolute inset-0 w-full h-full pointer-events-none">
         <div class="absolute inset-0 bg-noise opacity-30 mix-blend-overlay"></div>
-        <img src="assets/img/hero_bg.png" alt="Student Freelancer" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40 animate-pulse-slow">
+        <img src="assets/img/hero_bg.png" alt="Student Freelancer" class="absolute inset-0 w-full h-full object-cover mix-blend-luminosity opacity-15">
+        <!-- Bottom fade to mask transition -->
+        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-950 to-transparent"></div>
     </div>
     
     <!-- Hero Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-center h-full animate-fade-in-up opacity-0" style="animation-fill-mode: forwards;">
-        <div class="max-w-3xl">
-            <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight mb-6 mt-16 text-white tracking-tight font-serif">
-                Student talent,<br> tailored for <span class="text-uitmGold italic">you.</span>
-            </h1>
-            <p class="text-xl md:text-2xl text-gray-200 mb-10 font-medium max-w-2xl">Our freelancers will take it from here. Discover top UiTM talent for your gigs.</p>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-center h-full pt-12 lg:pt-0">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            <!-- Search Bar -->
-            <form action="marketplace" method="GET" class="relative group mt-4 transform transition-all duration-300">
-                <input type="text" name="search" placeholder="Search for any service..." required
-                       class="w-full py-5 pl-6 pr-40 rounded-lg bg-white text-black placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-uitmGold shadow-2xl text-lg">
-                <button type="submit" class="absolute right-2 top-2 bottom-2 bg-uitmGold text-uitmPurple px-8 py-2 rounded-md shadow-xl hover:bg-yellow-400 transition-all duration-300 font-bold text-lg inline-flex items-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    Search
-                </button>
-            </form>
+            <!-- Left Column: Title, Subtitle, Search -->
+            <div class="lg:col-span-7 flex flex-col justify-center text-left animate-fade-in-up opacity-0" style="animation-fill-mode: forwards;">
+                <!-- Official Badge -->
+                <div class="inline-flex items-center space-x-2 bg-uitmPurple/30 border border-uitmGold/20 text-uitmGold px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-6 w-fit">
+                    <svg class="w-4 h-4 text-uitmGold animate-pulse" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    <span>The Official UiTM Freelance Hub</span>
+                </div>
 
-            <!-- Popular Links -->
-            <div class="mt-8 flex flex-wrap items-center gap-3 text-sm text-gray-300 font-medium">
-                <span>Popular:</span>
-                <a href="marketplace?tag=Programming" class="border border-white/50 rounded-full px-4 py-1 hover:bg-white hover:text-black transition-colors">Programming</a>
-                <a href="marketplace?tag=Design" class="border border-white/50 rounded-full px-4 py-1 hover:bg-white hover:text-black transition-colors">Design</a>
-                <a href="marketplace?tag=Writing" class="border border-white/50 rounded-full px-4 py-1 hover:bg-white hover:text-black transition-colors">Writing</a>
-                <a href="marketplace?tag=Video" class="border border-white/50 rounded-full px-4 py-1 hover:bg-white hover:text-black transition-colors">Video Editing</a>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-6 text-white tracking-tight font-serif">
+                    Student talent,<br>tailored for <span class="text-uitmGold italic relative">you.</span>
+                </h1>
+                
+                <p class="text-lg md:text-xl text-slate-300 mb-8 font-medium max-w-xl">
+                    Discover top UiTM student talent for your project, campus assignment, or business needs. Fast, reliable, and peer-to-peer.
+                </p>
+                
+                <!-- Search Bar Container with focus glow styling -->
+                <form action="marketplace" method="GET" class="search-container-glow relative group w-full p-2.5 rounded-2xl flex items-center shadow-2xl max-w-2xl">
+                    <div class="flex items-center pl-3 pr-2 pointer-events-none">
+                        <svg class="w-6 h-6 text-slate-400 group-focus-within:text-uitmGold transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <input type="text" name="search" placeholder="What service do you need today?" required
+                           class="w-full py-3.5 bg-transparent text-white placeholder-slate-400 border-none outline-none focus:ring-0 text-base sm:text-lg">
+                    <button type="submit" class="bg-uitmGold text-uitmPurple hover:bg-yellow-400 px-6 sm:px-8 py-3.5 rounded-xl transition-all duration-300 font-bold text-base sm:text-lg inline-flex items-center hover:scale-[1.03] active:scale-95 shadow-lg shadow-uitmGold/10">
+                        Search
+                    </button>
+                </form>
+
+                <!-- Popular Links -->
+                <div class="mt-8 flex flex-wrap items-center gap-3 text-sm text-slate-400 font-medium">
+                    <span>Popular searches:</span>
+                    <a href="marketplace?tag=Programming" class="glass-tag rounded-full px-4 py-1.5 text-xs font-semibold text-white">Programming</a>
+                    <a href="marketplace?tag=Design" class="glass-tag rounded-full px-4 py-1.5 text-xs font-semibold text-white">Design</a>
+                    <a href="marketplace?tag=Writing" class="glass-tag rounded-full px-4 py-1.5 text-xs font-semibold text-white">Writing</a>
+                    <a href="marketplace?tag=Video" class="glass-tag rounded-full px-4 py-1.5 text-xs font-semibold text-white">Video Editing</a>
+                </div>
+            </div>
+
+            <!-- Right Column: Asymmetric Floating Cards Showcase -->
+            <div class="lg:col-span-5 hidden md:flex relative h-[480px] w-full items-center justify-center animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 0.2s;">
+                
+                <!-- Card 1: Putera Mikhail (Web Dev) -->
+                <div class="glass-hero-card absolute top-2 left-0 z-20 p-5 rounded-2xl w-[280px] sm:w-[310px] animate-float-card-1">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-md">
+                            PM
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-white font-bold text-sm">Putera Mikhail</h4>
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-500/20 text-green-400">
+                                    <span class="w-1.5 h-1.5 mr-1 rounded-full bg-green-400 animate-pulse"></span>
+                                    Online
+                                </span>
+                            </div>
+                            <p class="text-slate-400 text-xs font-medium">Web Developer (Shah Alam)</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-uitmGold font-bold text-xs uppercase tracking-wider">HTML, React, PHP</span>
+                        <span class="text-white font-extrabold text-sm">RM 150<span class="text-slate-400 text-xs font-normal">/project</span></span>
+                    </div>
+                    <div class="mt-3 flex items-center space-x-1.5">
+                        <div class="flex text-amber-400">
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        </div>
+                        <span class="text-white text-xs font-bold">5.0</span>
+                        <span class="text-slate-400 text-xs">(42 reviews)</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Ainun Nadiah (Logo Design) -->
+                <div class="glass-hero-card absolute top-28 right-0 z-10 p-5 rounded-2xl w-[260px] sm:w-[280px] animate-float-card-2">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-pink-500 to-rose-600 flex items-center justify-center text-white font-bold text-sm shadow-md">
+                            AN
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-white font-bold text-sm">Ainun Nadiah</h4>
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-500/20 text-green-400">
+                                    <span class="w-1.5 h-1.5 mr-1 rounded-full bg-green-400 animate-pulse"></span>
+                                    Active
+                                </span>
+                            </div>
+                            <p class="text-slate-400 text-xs font-medium">Brand Designer (Raub)</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-pink-400 font-bold text-xs uppercase tracking-wider">Logo, UX, Canva</span>
+                        <span class="text-white font-extrabold text-sm">RM 80<span class="text-slate-400 text-xs font-normal">/gig</span></span>
+                    </div>
+                    <div class="mt-3 flex items-center space-x-1.5">
+                        <div class="flex text-amber-400">
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-3.5 h-3.5 fill-current opacity-30" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        </div>
+                        <span class="text-white text-xs font-bold">4.9</span>
+                        <span class="text-slate-400 text-xs">(28 reviews)</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Ammar Danish (Video Editing) -->
+                <div class="glass-hero-card absolute bottom-2 left-12 z-30 p-5 rounded-2xl w-[270px] sm:w-[290px] animate-float-card-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-teal-500 flex items-center justify-center text-white font-bold text-sm shadow-md">
+                            AD
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-white font-bold text-sm">Ammar Danish</h4>
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-500/20 text-green-400">
+                                    <span class="w-1.5 h-1.5 mr-1 rounded-full bg-green-400 animate-pulse"></span>
+                                    Online
+                                </span>
+                            </div>
+                            <p class="text-slate-400 text-xs font-medium">Video Editor (Terengganu)</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-blue-400 font-bold text-xs uppercase tracking-wider">Premiere, CapCut, Reels</span>
+                        <span class="text-white font-extrabold text-sm">RM 100<span class="text-slate-400 text-xs font-normal">/video</span></span>
+                    </div>
+                    <div class="mt-3 flex items-center space-x-1.5">
+                        <div class="flex text-amber-400">
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        </div>
+                        <span class="text-white text-xs font-bold">5.0</span>
+                        <span class="text-slate-400 text-xs">(15 reviews)</span>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
 
 <!-- Trusted By Section -->
-<div class="bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 py-6 transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-center gap-8 md:gap-16 text-gray-400 dark:text-slate-500 font-bold text-lg">
-        <span class="text-sm text-gray-400 dark:text-slate-500 uppercase tracking-widest font-semibold mr-4">Trusted By Students At:</span>
-        <span class="hover:text-gray-600 dark:hover:text-slate-300 transition-colors cursor-default">UiTM Shah Alam</span>
-        <span class="hover:text-gray-600 dark:hover:text-slate-300 transition-colors cursor-default">UiTM Kuala Terengganu</span>
-        <span class="hover:text-gray-600 dark:hover:text-slate-300 transition-colors cursor-default">UiTM Puncak Alam</span>
-        <span class="hover:text-gray-600 dark:hover:text-slate-300 transition-colors cursor-default">UiTM Seri Iskandar</span>
+<div class="relative bg-slate-950 border-y border-white/5 py-8 transition-colors duration-300">
+    <div class="absolute inset-0 bg-noise opacity-20 pointer-events-none"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <span class="text-xs text-slate-450 uppercase tracking-widest font-semibold text-center md:text-left">Trusted By Campus Students At:</span>
+        <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12 text-slate-300 text-sm font-bold">
+            <span class="hover:text-uitmGold hover:scale-105 transition-all duration-300 cursor-default flex items-center"><span class="w-1.5 h-1.5 mr-2 rounded-full bg-purple-500"></span>UiTM Shah Alam</span>
+            <span class="hover:text-uitmGold hover:scale-105 transition-all duration-300 cursor-default flex items-center"><span class="w-1.5 h-1.5 mr-2 rounded-full bg-blue-500"></span>UiTM Kuala Terengganu</span>
+            <span class="hover:text-uitmGold hover:scale-105 transition-all duration-300 cursor-default flex items-center"><span class="w-1.5 h-1.5 mr-2 rounded-full bg-pink-500"></span>UiTM Puncak Alam</span>
+            <span class="hover:text-uitmGold hover:scale-105 transition-all duration-300 cursor-default flex items-center"><span class="w-1.5 h-1.5 mr-2 rounded-full bg-amber-500"></span>UiTM Seri Iskandar</span>
+        </div>
     </div>
 </div>
 
