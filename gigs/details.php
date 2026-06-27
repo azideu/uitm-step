@@ -146,9 +146,10 @@ require_once '../includes/header.php';
             <div class="h-2 bg-uitmPurple"></div>
             
             <div class="p-8 md:p-10">
-                <span class="inline-block bg-purple-100 dark:bg-purple-900/30 text-uitmPurple dark:text-purple-300 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6 transition-colors duration-300">
-                    <?php echo escape($gig['category']); ?>
-                </span>
+                <!-- Category Label -->
+                <div class="inline-flex items-center gap-2 border-l-2 border-uitmGold/70 pl-3 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest mb-6">
+                    Category: <?php echo escape($gig['category']); ?>
+                </div>
                 
                 <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-5 leading-tight font-serif transition-colors duration-300"><?php echo escape($gig['title']); ?></h1>
                 
@@ -157,7 +158,7 @@ require_once '../includes/header.php';
                     <?php
                         $seller_avatar = !empty($gig['profile_picture']) 
                             ? asset_url($gig['profile_picture']) 
-                            : 'https://ui-avatars.com/api/?name=' . urlencode($gig['seller_name']) . '&background=330066&color=FFD700';
+                            : get_avatar_url($gig['seller_name']);
                     ?>
                     <div class="w-12 h-12 rounded-full bg-uitmPurple flex items-center justify-center text-white font-extrabold text-lg flex-shrink-0 overflow-hidden border-2 border-white shadow-xl">
                         <img src="<?php echo $seller_avatar; ?>" alt="<?php echo escape($gig['seller_name']); ?>" class="w-full h-full object-cover">
@@ -582,7 +583,7 @@ require_once '../includes/header.php';
                                     <?php
                                         $reviewer_avatar = !empty($review['profile_picture']) 
                                             ? asset_url($review['profile_picture']) 
-                                            : 'https://ui-avatars.com/api/?name=' . urlencode($review['reviewer_name']) . '&background=330066&color=FFD700';
+                                            : get_avatar_url($review['reviewer_name']);
                                     ?>
                                     <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white dark:border-slate-800 shadow-md flex-shrink-0">
                                         <img src="<?php echo $reviewer_avatar; ?>" alt="<?php echo escape($review['reviewer_name']); ?>" class="w-full h-full object-cover">

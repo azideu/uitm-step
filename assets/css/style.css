@@ -50,15 +50,21 @@
     transform: translateY(0);
 }
 
-/* Simplified panel utility */
+/* High-Fidelity Glassmorphism Panel Overrides */
 .glass-panel {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
 }
 
 .dark-glass-panel {
-    background: #1e293b;
-    border: 1px solid #334155;
+    background: rgba(15, 10, 25, 0.6);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 @keyframes chatBubbleInFromLeft {
@@ -143,10 +149,21 @@
     filter: blur(120px);
     opacity: 0.22;
     pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
 .dark .bg-glow-blob {
     opacity: 0.35;
+}
+
+/* Smooth color transitions for hero text, cards, and adaptive elements */
+.glass-hero-card,
+.glass-hero-card *,
+.lg:col-span-7 h1,
+.lg:col-span-7 p,
+.lg:col-span-7 div,
+.glass-tag {
+    transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
 }
 
 .blob-purple {
@@ -190,25 +207,32 @@
 
 /* Glassmorphic Cards Showcase styling */
 .glass-hero-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.1);
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dark .glass-hero-card {
     background: rgba(15, 10, 25, 0.45);
     border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
 }
 
 .glass-hero-card:hover {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 40px 80px -10px rgba(255, 215, 0, 0.15), 0 0 50px 5px rgba(51, 0, 102, 0.15);
+    transform: translateY(-8px) scale(1.04) rotate(0deg) !important;
+    animation-play-state: paused;
+}
+
+.dark .glass-hero-card:hover {
     background: rgba(255, 255, 255, 0.07);
     border-color: rgba(255, 255, 255, 0.2);
     box-shadow: 0 40px 80px -10px rgba(255, 215, 0, 0.15), 0 0 50px 5px rgba(51, 0, 102, 0.4);
-    transform: translateY(-8px) scale(1.04) rotate(0deg) !important;
-    animation-play-state: paused;
 }
 
 .animate-float-card-1 {
@@ -216,11 +240,13 @@
 }
 
 .animate-float-card-2 {
-    animation: float-card-2 9s infinite ease-in-out;
+    animation: float-card-2 8s infinite ease-in-out;
+    animation-delay: -2.6s;
 }
 
 .animate-float-card-3 {
-    animation: float-card-3 10s infinite ease-in-out;
+    animation: float-card-3 8s infinite ease-in-out;
+    animation-delay: -5.3s;
 }
 
 @keyframes float-card-1 {
@@ -240,10 +266,10 @@
 
 /* Glassmorphic Search Container Focus Glow */
 .search-container-glow {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -253,23 +279,116 @@
 }
 
 .search-container-glow:focus-within {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 50px 10px rgba(255, 215, 0, 0.1), 0 25px 50px -20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px) scale(1.005);
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.dark .search-container-glow:focus-within {
     background: rgba(255, 255, 255, 0.08);
     box-shadow: 0 0 50px 10px rgba(255, 215, 0, 0.18), 0 25px 50px -20px rgba(0, 0, 0, 0.6);
-    transform: translateY(-2px) scale(1.005);
     border-color: rgba(255, 215, 0, 0.4);
 }
 
 /* Glassmorphic Badge/Tag links */
 .glass-tag {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     transition: all 0.3s ease;
 }
 
+.dark .glass-tag {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .glass-tag:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 215, 0, 0.3);
-    color: #FFD700;
+    background: rgba(51, 0, 102, 0.05);
+    border-color: rgba(51, 0, 102, 0.2);
+    color: #330066;
     transform: translateY(-2px);
 }
 
+.dark .glass-tag:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 215, 0, 0.3);
+    color: #FFD700;
+}
+
+/* Global Form Overrides: Premium inputs & select dropdowns */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+textarea,
+select {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Dynamic Focus Effects on standard form fields */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+    border-color: rgba(255, 215, 0, 0.6) !important;
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    outline: none !important;
+    transform: translateY(-1px);
+}
+
+.dark input[type="text"]:focus,
+.dark input[type="email"]:focus,
+.dark input[type="password"]:focus,
+.dark input[type="number"]:focus,
+.dark input[type="search"]:focus,
+.dark textarea:focus,
+.dark select:focus {
+    border-color: rgba(255, 215, 0, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.15), 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Button interactive upgrades */
+/* Button interactive upgrades (specifically targeted to buttons and anchors, excluding layout containers) */
+button.bg-uitmPurple, a.bg-uitmPurple {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+button.bg-uitmPurple:hover, a.bg-uitmPurple:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 24px -6px rgba(51, 0, 102, 0.4), 0 0 15px rgba(255, 215, 0, 0.1) !important;
+    background-color: #3e007c !important; /* Slightly elevated light purple */
+}
+
+button.bg-uitmGold, a.bg-uitmGold {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+button.bg-uitmGold:hover, a.bg-uitmGold:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 24px -6px rgba(255, 215, 0, 0.35), 0 0 20px rgba(255, 255, 255, 0.2) !important;
+    background-color: #ffe033 !important;
+}
+
+button.bg-emerald-500, a.bg-emerald-500 {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+button.bg-emerald-500:hover, a.bg-emerald-500:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 24px -6px rgba(16, 185, 129, 0.35) !important;
+    background-color: #10b981 !important;
+}
+
+/* Text drop shadow readability enhancements for busy background overlays */
+.hero-text-readable {
+    text-shadow: 0 1px 4px rgba(255, 255, 255, 0.95), 0 2px 10px rgba(255, 255, 255, 0.75);
+}
+
+.dark .hero-text-readable {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 4px 15px rgba(0, 0, 0, 0.4);
+}

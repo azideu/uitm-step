@@ -34,7 +34,9 @@ require_once 'includes/header.php';
     </div>
 
     <!-- Response Time Badge -->
-    <div class="inline-block bg-purple-50 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900/50 text-uitmPurple dark:text-purple-300 text-xs font-bold px-4 py-2 rounded-full mb-8 transition-colors duration-300">
+    <!-- Response Time Alert Panel -->
+    <div class="flex items-center justify-center gap-2 p-3 bg-purple-500/5 dark:bg-purple-500/10 border border-purple-500/10 dark:border-purple-400/10 rounded-2xl mb-8 text-xs font-bold text-uitmPurple dark:text-purple-300">
+        <svg class="w-4 h-4 shrink-0 text-uitmGold animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         Response time: within 1–3 working days
     </div>
 
