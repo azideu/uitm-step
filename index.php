@@ -255,7 +255,7 @@ require_once 'includes/header.php';
                                 <div class="flex items-center justify-between">
                                     <h4 class="text-slate-900 dark:text-white font-bold text-sm truncate max-w-[180px]"><?php echo escape($card['seller_name']); ?></h4>
                                 </div>
-                                <p class="text-slate-500 dark:text-slate-400 text-xs font-medium truncate max-w-[150px]"><?php echo escape($card['title']); ?> (<?php echo escape($card['campus']); ?>)</p>
+                                <p class="text-slate-500 dark:text-slate-400 text-xs font-medium truncate max-w-[190px]"><?php echo escape($card['title']); ?> (<?php echo escape($card['campus']); ?>)</p>
                             </div>
                         </div>
                         <div class="mt-4 pt-3 border-t border-slate-200/50 dark:border-white/5 flex items-center justify-between">
