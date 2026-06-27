@@ -253,11 +253,7 @@ require_once 'includes/header.php';
                             <?php endif; ?>
                             <div class="flex-grow">
                                 <div class="flex items-center justify-between">
-                                    <h4 class="text-slate-900 dark:text-white font-bold text-sm truncate max-w-[120px]"><?php echo escape($card['seller_name']); ?></h4>
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-500/20 text-green-400">
-                                        <span class="w-1.5 h-1.5 mr-1 rounded-full bg-green-400 animate-pulse"></span>
-                                        <?php echo escape($card['status']); ?>
-                                    </span>
+                                    <h4 class="text-slate-900 dark:text-white font-bold text-sm truncate max-w-[180px]"><?php echo escape($card['seller_name']); ?></h4>
                                 </div>
                                 <p class="text-slate-500 dark:text-slate-400 text-xs font-medium truncate max-w-[150px]"><?php echo escape($card['title']); ?> (<?php echo escape($card['campus']); ?>)</p>
                             </div>
