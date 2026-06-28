@@ -166,12 +166,12 @@ require_once 'includes/header.php';
             <div class="p-6 space-y-6">
                 <?php foreach($orders as $o): ?>
                     <div class="bg-gray-50 dark:bg-slate-800/50 rounded-lg border border-gray-100 dark:border-slate-700 p-6 flex flex-col hover:shadow-2xl transition-all duration-300 animate-fade-in-up">
-                        <div class="flex justify-between items-start mb-6">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-6">
                             <div>
                                 <h3 class="text-lg font-bold text-gray-900 dark:text-white font-serif mb-1"><?php echo escape($o['title']); ?></h3>
                                 <p class="text-sm text-gray-500 dark:text-slate-400 font-medium">Seller: <span class="text-gray-700 dark:text-slate-300"><?php echo escape($o['seller_name']); ?></span></p>
                             </div>
-                            <div class="flex items-center gap-2 flex-wrap">
+                            <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
                                 <!-- Chat with Seller Button -->
                                 <a href="chat?user=<?php echo $o['seller_id']; ?>" class="bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/30 dark:hover:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-900/30 font-bold px-4 py-2 rounded-lg transition-all text-sm flex items-center gap-1.5 cursor-pointer">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
@@ -231,7 +231,7 @@ require_once 'includes/header.php';
                                                 <?php echo $num; ?>
                                             <?php endif; ?>
                                         </div>
-                                        <span class="mt-2 text-xs font-bold <?php echo $is_active ? 'text-indigo-700 dark:text-indigo-400' : ($is_completed ? 'text-gray-700 dark:text-slate-300' : 'text-gray-400 dark:text-slate-500'); ?> transition-colors duration-300"><?php echo $label; ?></span>
+                                        <span class="mt-2 text-[10px] sm:text-xs font-bold <?php echo $is_active ? 'text-indigo-700 dark:text-indigo-400' : ($is_completed ? 'text-gray-700 dark:text-slate-300' : 'text-gray-400 dark:text-slate-500'); ?> transition-colors duration-300"><?php echo $label; ?></span>
                                     </div>
                                 <?php endforeach; ?>
                             </div>

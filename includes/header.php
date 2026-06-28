@@ -101,7 +101,8 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
                         <img src="<?php echo ROOT_URL; ?>assets/img/STEP.svg?v=<?php echo $logo_version; ?>" alt="UiTM Logo" class="h-14 w-14 object-contain">
                     </a>
                 </div>
-                <div class="flex items-center space-x-4">
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center space-x-4">
                     <!-- Dark Mode Toggle -->
                     <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-white/10 transition-colors focus:outline-none" aria-label="Toggle Dark Mode">
                         <!-- Sun Icon (shows in dark mode) -->
@@ -160,12 +161,55 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
                             </a>
                         <?php endif; ?>
                         
+                        <a href="<?php echo ROOT_URL; ?>logout" class="hover:text-red-300 hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors">Logout</a>
                     <?php else: ?>
                         <a href="<?php echo ROOT_URL; ?>login" class="hover:text-uitmGold px-3 py-2 rounded-md font-medium transition-colors">Login</a>
                         <a href="<?php echo ROOT_URL; ?>register" class="bg-uitmGold text-uitmPurple px-5 py-2 rounded-md font-bold shadow-xl hover:bg-yellow-400 hover:scale-105 transition-all duration-300">Register</a>
                     <?php endif; ?>
                 </div>
+
+                <!-- Mobile Navigation Toggle & Dark Mode Toggle -->
+                <div class="flex items-center md:hidden space-x-1">
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-white/10 transition-colors focus:outline-none" aria-label="Toggle Dark Mode">
+                        <!-- Sun Icon (shows in dark mode) -->
+                        <svg class="w-5 h-5 hidden dark:block text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <!-- Moon Icon (shows in light mode) -->
+                        <svg class="w-5 h-5 block dark:hidden text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
+                    
+                    <button onclick="toggleMobileMenu()" class="p-2 rounded-lg hover:bg-white/10 transition-colors focus:outline-none" aria-label="Toggle Menu">
+                        <!-- Hamburger Icon -->
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="hamburger-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <!-- Close Icon -->
+                        <svg class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="close-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="md:hidden bg-uitmPurple border-t border-transparent max-h-0 opacity-0 overflow-hidden transition-all duration-300 ease-in-out">
+            <div class="px-2 pt-2 pb-4 space-y-1">
+                <?php if(isset($_SESSION['user_id'])): ?>
+                    <?php if($_SESSION['role'] === 'student'): ?>
+                        <a href="<?php echo ROOT_URL; ?>dashboard" class="block hover:text-uitmGold hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Dashboard</a>
+                        <a href="<?php echo ROOT_URL; ?>marketplace" class="block hover:text-uitmGold hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Marketplace</a>
+                        <a href="<?php echo ROOT_URL; ?>chat" class="block hover:text-uitmGold hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Chat</a>
+                        <a href="<?php echo ROOT_URL; ?>profile" class="block hover:text-uitmGold hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Profile</a>
+                    <?php elseif($_SESSION['role'] === 'admin'): ?>
+                        <a href="<?php echo ROOT_URL; ?>admin/" class="block hover:text-uitmGold hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Dashboard</a>
+                        <a href="<?php echo ROOT_URL; ?>marketplace" class="block hover:text-uitmGold hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Marketplace</a>
+                        <a href="<?php echo ROOT_URL; ?>profile" class="block hover:text-uitmGold hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Profile</a>
+                    <?php endif; ?>
+                    <a href="<?php echo ROOT_URL; ?>logout" class="block text-red-300 hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Logout</a>
+                <?php else: ?>
+                    <a href="<?php echo ROOT_URL; ?>login" class="block hover:text-uitmGold hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Login</a>
+                    <a href="<?php echo ROOT_URL; ?>register" class="block bg-uitmGold text-uitmPurple hover:bg-yellow-400 px-3 py-2.5 rounded-md font-bold shadow-xl transition-all text-center">Register</a>
+                <?php endif; ?>
         </div>
     </nav>
     <?php $no_container = $no_container ?? false; ?>
@@ -184,6 +228,27 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
             } else {
                 document.documentElement.classList.add('dark');
                 localStorage.theme = 'dark';
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const closeIcon = document.getElementById('close-icon');
+            const isOpen = menu.classList.contains('max-h-[400px]');
+            
+            if (!isOpen) {
+                // Smoothly slide down & fade in
+                menu.classList.remove('max-h-0', 'opacity-0', 'border-transparent');
+                menu.classList.add('max-h-[400px]', 'opacity-100', 'border-uitmPurple/30');
+                hamburgerIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                // Smoothly slide up & fade out
+                menu.classList.remove('max-h-[400px]', 'opacity-100', 'border-uitmPurple/30');
+                menu.classList.add('max-h-0', 'opacity-0', 'border-transparent');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
             }
         }
 

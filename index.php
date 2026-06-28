@@ -169,7 +169,7 @@ require_once 'includes/header.php';
 ?>
 
 <!-- Hero Section -->
-<div class="relative bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white min-h-[700px] lg:h-[750px] flex items-center pt-16 mt-[-4rem] overflow-hidden transition-colors duration-300">
+<div class="relative bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white min-h-[600px] lg:min-h-[680px] flex items-center py-16 lg:py-20 overflow-hidden transition-colors duration-300">
     <!-- Ambient Moving Glow Blobs -->
     <div class="absolute top-[10%] left-[5%] bg-glow-blob blob-purple"></div>
     <div class="absolute bottom-[10%] right-[10%] bg-glow-blob blob-gold"></div>
@@ -179,7 +179,7 @@ require_once 'includes/header.php';
     <div class="absolute inset-0 w-full h-full pointer-events-none">
         <div class="absolute inset-0 bg-noise opacity-30 mix-blend-overlay"></div>
         <!-- Single Background Image (Standard rendering to avoid GPU blend-mode flickering) -->
-        <img src="assets/img/hero_bg.jpg" alt="Student Freelancer" class="absolute inset-0 w-full h-full object-cover opacity-[0.2] dark:opacity-2 transition-opacity duration-300">
+        <img src="assets/img/hero_bg.jpg" alt="Student Freelancer" class="absolute inset-0 w-full h-full object-cover opacity-[0.2] dark:opacity-20 transition-opacity duration-300">
         
         <!-- Light Mode Bottom fade mask -->
         <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-50 to-transparent opacity-100 dark:opacity-0 transition-opacity duration-300"></div>
@@ -189,7 +189,7 @@ require_once 'includes/header.php';
     </div>
     
     <!-- Hero Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-center h-full pt-12 lg:pt-0">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col justify-center h-full">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             <!-- Left Column: Title, Subtitle, Search -->
@@ -400,17 +400,23 @@ require_once 'includes/header.php';
 </div>
 
 <!-- Testimonials Section -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative overflow-hidden">
+<div class="w-full py-24 relative overflow-hidden bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
     <!-- Subtle Section Background Glow -->
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/5 dark:bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="text-center mb-16 relative z-10">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 font-serif tracking-tight">
-            What <span class="text-uitmPurple dark:text-purple-400">Students Love</span> About STEP
-        </h2>
-        <p class="text-gray-500 dark:text-slate-400 text-lg max-w-2xl mx-auto font-medium">
-            Feedback from fellow students on using our platform, its interface, and the quality of gigs.
-        </p>
+    <!-- Gradient Overlays for smooth fading edges (Section Level) -->
+    <div class="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-slate-50 via-slate-50/80 to-transparent dark:from-slate-900 dark:via-slate-900/80 to-transparent z-20 pointer-events-none"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-slate-50 via-slate-50/80 to-transparent dark:from-slate-900 dark:via-slate-900/80 to-transparent z-20 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-30">
+        <div class="text-center mb-16 relative z-10">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 font-serif tracking-tight">
+                What <span class="text-uitmPurple dark:text-purple-400">Students Love</span> About STEP
+            </h2>
+            <p class="text-gray-550 dark:text-slate-400 text-lg max-w-2xl mx-auto font-medium">
+                Feedback from fellow students on using our platform, its interface, and the quality of gigs.
+            </p>
+        </div>
     </div>
 
     <?php
@@ -553,9 +559,6 @@ require_once 'includes/header.php';
     </style>
 
     <div class="relative w-full overflow-hidden mt-8">
-        <!-- Gradient Overlays for smooth fading edges -->
-        <div class="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-slate-50 via-slate-50/80 to-transparent dark:from-slate-900 dark:via-slate-900/80 to-transparent z-20 pointer-events-none"></div>
-        <div class="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-slate-50 via-slate-50/80 to-transparent dark:from-slate-900 dark:via-slate-900/80 to-transparent z-20 pointer-events-none"></div>
 
         <!-- Scrolling Flex Container -->
         <div class="flex gap-6 py-8 w-max animate-marquee relative z-10">

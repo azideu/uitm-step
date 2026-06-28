@@ -57,7 +57,7 @@ require_once 'includes/header.php';
 <div class="px-4 sm:px-6 lg:px-8 py-6 w-full max-w-[96%] xl:max-w-[98%] mx-auto">
     <div class="flex h-[calc(100vh-7rem)] bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-lg shadow-xl border border-white/50 dark:border-slate-700/50 overflow-hidden transition-colors duration-300">
     <!-- Contacts Sidebar -->
-    <div class="w-1/3 md:w-1/4 border-r border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-800/50 flex flex-col transition-colors duration-300">
+    <div class="w-full md:w-1/4 border-r border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-800/50 <?php echo $active_chat > 0 ? 'hidden md:flex' : 'flex'; ?> flex-col transition-colors duration-300">
         <div class="p-5 bg-uitmPurple text-white font-bold text-lg border-b border-purple-900 dark:border-slate-700 shadow-xl flex items-center justify-between">
             <span>Chats</span>
             <svg class="w-5 h-5 text-purple-200 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
@@ -89,11 +89,17 @@ require_once 'includes/header.php';
     </div>
     
     <!-- Chat Window -->
-    <div class="w-2/3 md:w-3/4 flex flex-col relative bg-white dark:bg-slate-900 bg-opacity-90 dark:bg-opacity-90 transition-colors duration-300">
+    <div class="w-full md:w-3/4 <?php echo $active_chat > 0 ? 'flex' : 'hidden md:flex'; ?> flex-col relative bg-white dark:bg-slate-900 bg-opacity-90 dark:bg-opacity-90 transition-colors duration-300">
         <?php if($active_chat > 0 && $active_user_name): ?>
             <!-- Chat Header -->
-            <div class="px-6 py-4 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center z-10 shadow-xl transition-colors duration-300">
-                <div class="flex items-center gap-3">
+            <div class="px-4 sm:px-6 py-4 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center z-10 shadow-xl transition-colors duration-300">
+                <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                    <!-- Back Button on Mobile -->
+                    <a href="chat" class="md:hidden p-1.5 text-gray-500 hover:text-uitmPurple dark:text-slate-400 dark:hover:text-uitmGold transition-colors mr-1" aria-label="Back to contacts">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </a>
                     <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-xl overflow-hidden">
                         <?php if (!empty($active_user_pic)): ?>
                             <img src="<?php echo asset_url($active_user_pic); ?>" alt="" class="w-full h-full object-cover">
@@ -101,8 +107,8 @@ require_once 'includes/header.php';
                             <?php echo strtoupper(substr($active_user_name, 0, 1)); ?>
                         <?php endif; ?>
                     </div>
-                    <div>
-                        <h3 class="font-bold text-gray-900 dark:text-white"><?php echo escape($active_user_name); ?></h3>
+                    <div class="min-w-0">
+                        <h3 class="font-bold text-gray-900 dark:text-white truncate text-sm sm:text-base"><?php echo escape($active_user_name); ?></h3>
                         <span id="chat-status-badge" class="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-slate-400 mt-0.5">
                             <span id="chat-status-dot" class="inline-block w-2 h-2 rounded-full shrink-0 bg-yellow-400 animate-pulse"></span>
                             <span id="chat-status-text">Connecting…</span>
