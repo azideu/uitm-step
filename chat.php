@@ -50,10 +50,12 @@ if ($active_chat > 0) {
     }
 }
 
+$no_container = true;
 require_once 'includes/header.php';
 ?>
 
-<div class="flex h-[calc(100vh-8rem)] bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-3xl shadow-xl border border-white/50 dark:border-slate-700/50 overflow-hidden transition-colors duration-300">
+<div class="px-4 sm:px-6 lg:px-8 py-6 w-full max-w-[96%] xl:max-w-[98%] mx-auto">
+    <div class="flex h-[calc(100vh-7rem)] bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-lg shadow-xl border border-white/50 dark:border-slate-700/50 overflow-hidden transition-colors duration-300">
     <!-- Contacts Sidebar -->
     <div class="w-1/3 md:w-1/4 border-r border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-800/50 flex flex-col transition-colors duration-300">
         <div class="p-5 bg-uitmPurple text-white font-bold text-lg border-b border-purple-900 dark:border-slate-700 shadow-xl flex items-center justify-between">
@@ -63,7 +65,7 @@ require_once 'includes/header.php';
         <div class="overflow-y-auto flex-1 p-2 space-y-1">
             <?php if(count($chatted_users) > 0): ?>
                 <?php foreach($chatted_users as $cu): ?>
-                    <a href="chat?user=<?php echo $cu['user_id']; ?>" class="flex items-center gap-3 p-3 rounded-xl transition-all duration-300 <?php echo ($active_chat == $cu['user_id']) ? 'bg-purple-100/80 dark:bg-slate-700/80 shadow-xl border border-purple-200 dark:border-slate-600' : 'hover:bg-white dark:hover:bg-slate-700 border border-transparent'; ?>">
+                    <a href="chat?user=<?php echo $cu['user_id']; ?>" class="flex items-center gap-3 p-3 rounded-lg transition-all duration-300 <?php echo ($active_chat == $cu['user_id']) ? 'bg-purple-100/80 dark:bg-slate-700/80 shadow-xl border border-purple-200 dark:border-slate-600' : 'hover:bg-white dark:hover:bg-slate-700 border border-transparent'; ?>">
                         <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-inner overflow-hidden">
                             <?php if (!empty($cu['profile_picture'])): ?>
                                 <img src="<?php echo asset_url($cu['profile_picture']); ?>" alt="" class="w-full h-full object-cover">
@@ -126,8 +128,8 @@ require_once 'includes/header.php';
                 
                 <!-- Safety Tip Banner (Hidden by default) -->
                 <div id="safety-tip-banner" class="hidden sticky top-0 z-30 mb-6 animate-fade-in-down">
-                    <div class="bg-yellow-50/90 dark:bg-yellow-900/20 backdrop-blur-md border border-yellow-200/50 dark:border-yellow-800/50 rounded-2xl p-4 shadow-xl flex items-start gap-4">
-                        <div class="w-10 h-10 bg-yellow-400 dark:bg-yellow-600 rounded-xl flex items-center justify-center shrink-0 shadow-lg shadow-yellow-400/20">
+                    <div class="bg-yellow-50/90 dark:bg-yellow-900/20 backdrop-blur-md border border-yellow-200/50 dark:border-yellow-800/50 rounded-lg p-4 shadow-xl flex items-start gap-4">
+                        <div class="w-10 h-10 bg-yellow-400 dark:bg-yellow-600 rounded-lg flex items-center justify-center shrink-0 shadow-lg shadow-yellow-400/20">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 17c-.77 1.333.192 3 1.732 3z"></path></svg>
                         </div>
                         <div class="flex-1">
@@ -155,10 +157,10 @@ require_once 'includes/header.php';
             
             <!-- Input Area -->
             <div class="p-4 bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-800 flex gap-3 items-end transition-colors duration-300 relative z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] dark:shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
-                <div class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl flex items-center overflow-hidden focus-within:ring-2 focus-within:ring-purple-100 dark:focus-within:ring-slate-700 focus-within:border-uitmPurple focus-within:shadow-2xl transition-all">
+                <div class="flex-1 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg flex items-center overflow-hidden focus-within:ring-2 focus-within:ring-purple-100 dark:focus-within:ring-slate-700 focus-within:border-uitmPurple focus-within:shadow-2xl transition-all">
                     <input type="text" id="chat-input" placeholder="Message..." class="w-full bg-transparent px-4 py-3 outline-none text-sm text-gray-700 dark:text-slate-200 placeholder-gray-400 dark:placeholder-slate-500" autocomplete="off" onkeypress="if(event.key === 'Enter') sendMessage()">
                 </div>
-                <button onclick="sendMessage()" class="bg-uitmPurple text-white w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 hover:bg-indigo-700 transition-all">
+                <button onclick="sendMessage()" class="bg-uitmPurple text-white w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 hover:bg-indigo-700 transition-all">
                     <svg class="w-5 h-5 transform rotate-90" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
                 </button>
             </div>
@@ -173,6 +175,7 @@ require_once 'includes/header.php';
             </div>
         <?php endif; ?>
     </div>
+</div>
 </div>
 
 <?php if($active_chat > 0): ?>

@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once 'includes/header.php';
 ?>
 
-<div class="max-w-md mx-auto bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 transition-colors duration-300 mt-10">
+<div class="max-w-md mx-auto bg-white dark:bg-slate-900 p-8 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 transition-colors duration-300 mt-10">
     <h2 class="text-2xl font-bold mb-6 text-center text-uitmPurple dark:text-purple-300 font-serif">Register for UiTM STEP</h2>
     <form action="register" method="POST">
         <div class="mb-4">

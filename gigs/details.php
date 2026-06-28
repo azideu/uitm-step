@@ -154,7 +154,7 @@ require_once '../includes/header.php';
                 <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-5 leading-tight font-serif transition-colors duration-300"><?php echo escape($gig['title']); ?></h1>
                 
                 <!-- Seller Info Card -->
-                <div class="flex items-center gap-4 mb-8 p-4 bg-gray-50 dark:bg-slate-800/50 rounded-2xl border border-gray-100 dark:border-slate-700 transition-colors duration-300">
+                <div class="flex items-center gap-4 mb-8 p-4 bg-gray-50 dark:bg-slate-800/50 rounded-lg border border-gray-100 dark:border-slate-700 transition-colors duration-300">
                     <?php
                         $seller_avatar = !empty($gig['profile_picture']) 
                             ? asset_url($gig['profile_picture']) 
@@ -186,7 +186,7 @@ require_once '../includes/header.php';
 
                 <?php if (!empty($media_items)): ?>
                     <div class="mb-8 relative group">
-                        <div id="gig-media-slider" class="relative w-full aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-gray-100 dark:border-slate-800 transition-colors duration-300">
+                        <div id="gig-media-slider" class="relative w-full aspect-video bg-black rounded-lg overflow-hidden shadow-2xl border border-gray-100 dark:border-slate-800 transition-colors duration-300">
                             <?php foreach ($media_items as $index => $item): ?>
                                 <div class="media-slide absolute inset-0 transition-opacity duration-500 <?php echo $index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'; ?>" data-index="<?php echo $index; ?>">
                                     <?php if ($item['type'] === 'youtube'): ?>
@@ -283,14 +283,14 @@ require_once '../includes/header.php';
                 <div class="p-6">
                     <?php if (!isset($_SESSION['user_id'])): ?>
                         <div class="space-y-4">
-                            <div class="bg-indigo-50/50 dark:bg-slate-800/80 border border-indigo-100/50 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 p-5 rounded-2xl text-center text-sm leading-relaxed mb-4 transition-colors duration-300">
+                            <div class="bg-indigo-50/50 dark:bg-slate-800/80 border border-indigo-100/50 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 p-5 rounded-lg text-center text-sm leading-relaxed mb-4 transition-colors duration-300">
                                 Interested in hiring <span class="font-bold text-uitmPurple dark:text-purple-300"><?php echo escape($gig['seller_name']); ?></span>? Sign in to place an order or contact this seller.
                             </div>
-                            <a href="<?php echo ROOT_URL; ?>login?redirect=gigs/details?id=<?php echo $gig_id; ?>" class="w-full bg-uitmPurple text-white font-bold py-4 px-6 rounded-2xl shadow-xl hover:bg-purple-900 transition-all duration-300 text-base flex items-center justify-center gap-2">
+                            <a href="<?php echo ROOT_URL; ?>login?redirect=gigs/details?id=<?php echo $gig_id; ?>" class="w-full bg-uitmPurple text-white font-bold py-4 px-6 rounded-lg shadow-xl hover:bg-purple-900 transition-all duration-300 text-base flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
                                 Login to Hire Seller
                             </a>
-                            <a href="<?php echo ROOT_URL; ?>login?redirect=gigs/details?id=<?php echo $gig_id; ?>" class="w-full border-2 border-uitmPurple/30 dark:border-purple-500/30 text-uitmPurple dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
+                            <a href="<?php echo ROOT_URL; ?>login?redirect=gigs/details?id=<?php echo $gig_id; ?>" class="w-full border-2 border-uitmPurple/30 dark:border-purple-500/30 text-uitmPurple dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 font-bold py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                                 Contact Seller
                             </a>
@@ -300,25 +300,25 @@ require_once '../includes/header.php';
                         <form action="details?id=<?php echo $gig_id; ?>" method="POST" class="space-y-4">
                             <input type="hidden" name="action" value="buy">
                             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                            <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-4 px-6 rounded-2xl shadow-xl hover:bg-purple-900 transition-all duration-300 text-base flex items-center justify-center gap-2">
+                            <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-4 px-6 rounded-lg shadow-xl hover:bg-purple-900 transition-all duration-300 text-base flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 Continue to Payment
                             </button>
                         </form>
                         
                         <div class="mt-4 border-t border-gray-100 dark:border-slate-800 pt-4 transition-colors duration-300">
-                            <a href="<?php echo ROOT_URL; ?>chat?user=<?php echo $gig['seller_id']; ?>" class="w-full border-2 border-uitmPurple/30 dark:border-purple-500/30 text-uitmPurple dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
+                            <a href="<?php echo ROOT_URL; ?>chat?user=<?php echo $gig['seller_id']; ?>" class="w-full border-2 border-uitmPurple/30 dark:border-purple-500/30 text-uitmPurple dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 font-bold py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                                 Contact Seller
                             </a>
                         </div>
                     <?php elseif(isset($_SESSION['user_id']) && $gig['seller_id'] == $_SESSION['user_id']): ?>
-                        <div class="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 px-4 py-4 rounded-2xl text-center font-medium flex flex-col items-center gap-2 transition-colors duration-300">
+                        <div class="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 px-4 py-4 rounded-lg text-center font-medium flex flex-col items-center gap-2 transition-colors duration-300">
                             <svg class="w-8 h-8 text-blue-400 dark:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             This is your own gig.
                         </div>
                         <div class="mt-4">
-                            <a href="<?php echo ROOT_URL; ?>gigs/edit?id=<?php echo $gig_id; ?>" class="w-full bg-white dark:bg-slate-800 border-2 border-uitmPurple text-uitmPurple dark:text-purple-400 hover:bg-uitmPurple hover:text-white dark:hover:bg-purple-900 font-bold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2">
+                            <a href="<?php echo ROOT_URL; ?>gigs/edit?id=<?php echo $gig_id; ?>" class="w-full bg-white dark:bg-slate-800 border-2 border-uitmPurple text-uitmPurple dark:text-purple-400 hover:bg-uitmPurple hover:text-white dark:hover:bg-purple-900 font-bold py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                 Edit Gig Details
                             </a>
@@ -343,7 +343,7 @@ require_once '../includes/header.php';
                         <button
                             id="open-report-modal-btn"
                             onclick="openReportModal()"
-                            class="w-full flex items-center justify-center gap-2 text-xs text-gray-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 font-medium py-2 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 border border-transparent hover:border-red-200 dark:hover:border-red-800/50 transition-all duration-300 group"
+                            class="w-full flex items-center justify-center gap-2 text-xs text-gray-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 font-medium py-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 border border-transparent hover:border-red-200 dark:hover:border-red-800/50 transition-all duration-300 group"
                         >
                             <svg class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
@@ -375,13 +375,13 @@ require_once '../includes/header.php';
 
             <!-- Review Form (shown only if logged in and has purchased this gig) -->
             <?php if (isset($_SESSION['user_id']) && $is_buyer): ?>
-            <div class="mb-10 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-2xl">
+            <div class="mb-10 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-lg">
                 <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 flex items-center gap-2 transition-colors duration-300">
                     Share Your Experience
                 </h3>
 
                 <?php if (!$completed_order_for_review): ?>
-                <div class="mb-5 p-4 bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-xl">
+                <div class="mb-5 p-4 bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-lg">
                     <div class="flex items-center gap-3">
                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
@@ -431,7 +431,7 @@ require_once '../includes/header.php';
                             minlength="10"
                             maxlength="1000"
                             placeholder="Share your experience with this gig. Was the seller professional? Did they deliver quality work? How was the communication?"
-                            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-blue-400 dark:focus:ring-blue-800/40 dark:focus:border-blue-700 transition-all resize-none"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-blue-400 dark:focus:ring-blue-800/40 dark:focus:border-blue-700 transition-all resize-none"
                             required
                             <?php echo !$completed_order_for_review ? 'disabled' : ''; ?>
                         ></textarea>
@@ -445,7 +445,7 @@ require_once '../includes/header.php';
                     <!-- Submit Button -->
                     <?php if ($completed_order_for_review): ?>
                     <div class="flex gap-3 pt-4">
-                        <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-blue-200 dark:hover:shadow-blue-900/30 flex items-center justify-center gap-2">
+                        <button type="submit" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-blue-200 dark:hover:shadow-blue-900/30 flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                             </svg>
@@ -541,7 +541,7 @@ require_once '../includes/header.php';
                     ?>
                     
                     <!-- Average Rating Summary -->
-                    <div class="mb-8 p-6 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-800/50 rounded-2xl">
+                    <div class="mb-8 p-6 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg">
                         <div class="flex items-center gap-8">
                             <div class="flex flex-col items-center">
                                 <div class="text-4xl font-extrabold text-amber-600 dark:text-amber-400"><?php echo $average_rating; ?></div>
@@ -578,7 +578,7 @@ require_once '../includes/header.php';
                     <!-- Individual Reviews -->
                     <div class="space-y-5">
                         <?php foreach ($reviews as $review): ?>
-                        <div class="p-6 border border-gray-100 dark:border-slate-800 rounded-2xl hover:shadow-md dark:hover:shadow-slate-900 transition-all duration-300">
+                        <div class="p-6 border border-gray-100 dark:border-slate-800 rounded-lg hover:shadow-md dark:hover:shadow-slate-900 transition-all duration-300">
                             <!-- Review Header -->
                             <div class="flex items-start justify-between mb-4">
                                 <div class="flex items-center gap-3 flex-1">
@@ -641,7 +641,7 @@ require_once '../includes/header.php';
 >
     <div
         id="report-modal-panel"
-        class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border-x border-b border-gray-100 dark:border-slate-800 overflow-hidden transform scale-95 transition-all duration-300"
+        class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-lg shadow-2xl border-x border-b border-gray-100 dark:border-slate-800 overflow-hidden transform scale-95 transition-all duration-300"
     >
         <div class="h-1.5 bg-gradient-to-r from-red-500 to-rose-600 rounded-t-2xl border-x border-gray-100 dark:border-slate-800"></div>
 
@@ -649,7 +649,7 @@ require_once '../includes/header.php';
             <!-- Header -->
             <div class="flex items-start justify-between mb-6">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
+                    <div class="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
                         <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
                         </svg>
@@ -659,13 +659,13 @@ require_once '../includes/header.php';
                         <p class="text-sm text-gray-500 dark:text-slate-400">Reporting: <span class="font-bold text-gray-700 dark:text-slate-300"><?php echo escape($gig['seller_name']); ?></span></p>
                     </div>
                 </div>
-                <button onclick="closeReportModal()" class="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-400 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300 transition-colors" aria-label="Close">
+                <button onclick="closeReportModal()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-400 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300 transition-colors" aria-label="Close">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
             <!-- Info banner -->
-            <div class="mb-5 flex gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-2xl p-4">
+            <div class="mb-5 flex gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg p-4">
                 <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
@@ -697,7 +697,7 @@ require_once '../includes/header.php';
                         ];
                         foreach ($reasons as $value => $meta):
                         ?>
-                        <label class="reason-card flex items-center gap-3 p-3 rounded-xl border border-gray-100 dark:border-slate-800 cursor-pointer hover:border-red-300 dark:hover:border-red-700 hover:bg-red-50/50 dark:hover:bg-red-900/10 transition-all duration-200 has-[:checked]:border-red-500 has-[:checked]:bg-red-50 dark:has-[:checked]:bg-red-900/20 dark:has-[:checked]:border-red-600 group">
+                        <label class="reason-card flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-slate-800 cursor-pointer hover:border-red-300 dark:hover:border-red-700 hover:bg-red-50/50 dark:hover:bg-red-900/10 transition-all duration-200 has-[:checked]:border-red-500 has-[:checked]:bg-red-50 dark:has-[:checked]:bg-red-900/20 dark:has-[:checked]:border-red-600 group">
                             <input type="radio" name="reason" value="<?php echo $value; ?>" class="sr-only" required>
                             <span class="w-8 h-8 rounded-lg bg-gray-50 dark:bg-slate-800 flex items-center justify-center text-gray-400 group-hover:text-red-500 transition-colors group-has-[:checked]:bg-red-100 dark:group-has-[:checked]:bg-red-900/40 group-has-[:checked]:text-red-600">
                                 <?php echo $meta['icon']; ?>
@@ -719,17 +719,17 @@ require_once '../includes/header.php';
                         rows="3"
                         maxlength="1000"
                         placeholder="Describe what happened in as much detail as possible..."
-                        class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-red-400/40 focus:border-red-400 dark:focus:ring-red-800/40 dark:focus:border-red-700 transition-all resize-none"
+                        class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-red-400/40 focus:border-red-400 dark:focus:ring-red-800/40 dark:focus:border-red-700 transition-all resize-none"
                     ></textarea>
                     <p class="text-xs text-gray-400 dark:text-slate-500 mt-1 text-right"><span id="report-char-count">0</span>/1000</p>
                 </div>
 
                 <!-- Actions -->
                 <div class="flex gap-3">
-                    <button type="button" onclick="closeReportModal()" class="flex-1 py-3 rounded-xl border-2 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-400 font-bold text-sm hover:bg-gray-50 dark:hover:bg-slate-800 transition-all duration-300">
+                    <button type="button" onclick="closeReportModal()" class="flex-1 py-3 rounded-lg border-2 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-400 font-bold text-sm hover:bg-gray-50 dark:hover:bg-slate-800 transition-all duration-300">
                         Cancel
                     </button>
-                    <button type="submit" class="flex-1 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-bold text-sm shadow-lg hover:shadow-red-200 dark:hover:shadow-red-900/30 transition-all duration-300 flex items-center justify-center gap-2">
+                    <button type="submit" class="flex-1 py-3 rounded-lg bg-red-500 hover:bg-red-600 text-white font-bold text-sm shadow-lg hover:shadow-red-200 dark:hover:shadow-red-900/30 transition-all duration-300 flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
                         </svg>

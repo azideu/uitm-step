@@ -149,7 +149,7 @@ require_once 'includes/header.php';
 
 <div class="max-w-6xl mx-auto space-y-8 animate-fade-in-up pb-12">
     <!-- Hero Header -->
-    <div class="relative bg-uitmPurple rounded-2xl p-8 sm:p-12 overflow-hidden shadow-xl border border-uitmPurple/30">
+    <div class="relative bg-uitmPurple rounded-lg p-8 sm:p-12 overflow-hidden shadow-xl border border-uitmPurple/30">
         <div class="absolute inset-0 bg-noise opacity-10"></div>
         
         <div class="relative z-10 flex flex-col sm:flex-row items-center gap-8">
@@ -178,7 +178,7 @@ require_once 'includes/header.php';
         
         <!-- Profile Settings Form -->
         <div class="lg:col-span-2">
-            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-100 dark:border-slate-800 transition-colors duration-300">
+            <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl overflow-hidden border border-slate-100 dark:border-slate-800 transition-colors duration-300">
                 <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 flex items-center transition-colors duration-300">
                     <h2 class="text-xl font-bold font-serif text-uitmPurple dark:text-purple-300">Profile Settings</h2>
                 </div>
@@ -286,7 +286,7 @@ require_once 'includes/header.php';
 
         <!-- Security / Password Sidebar -->
         <div class="lg:col-span-1 space-y-8">
-            <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-100 dark:border-slate-800 transition-colors duration-300">
+            <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl overflow-hidden border border-slate-100 dark:border-slate-800 transition-colors duration-300">
                 <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 transition-colors duration-300">
                     <h2 class="text-xl font-bold font-serif text-slate-800 dark:text-slate-200 flex items-center space-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-uitmPurple dark:text-purple-400" viewBox="0 0 20 20" fill="currentColor">
@@ -322,7 +322,7 @@ require_once 'includes/header.php';
                 </div>
             </div>
             
-            <div class="bg-yellow-50 dark:bg-yellow-900/30 rounded-2xl shadow-xl p-6 border border-yellow-100 dark:border-yellow-800/50 flex items-start space-x-4 transition-colors duration-300">
+            <div class="bg-yellow-50 dark:bg-yellow-900/30 rounded-lg shadow-xl p-6 border border-yellow-100 dark:border-yellow-800/50 flex items-start space-x-4 transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-600 dark:text-yellow-400 shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -333,7 +333,7 @@ require_once 'includes/header.php';
             </div>
 
             <!-- Danger Zone -->
-            <div class="bg-red-50 dark:bg-red-900/30 rounded-2xl shadow-xl p-6 border border-red-100 dark:border-red-800/50 mt-8 flex flex-col items-center transition-colors duration-300">
+            <div class="bg-red-50 dark:bg-red-900/30 rounded-lg shadow-xl p-6 border border-red-100 dark:border-red-800/50 mt-8 flex flex-col items-center transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-red-500 dark:text-red-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>

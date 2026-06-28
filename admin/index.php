@@ -183,7 +183,7 @@ require_once '../includes/header.php';
 <!-- =====================================================================
      SECTION 1: ORDER MANAGEMENT (with filters)
      ===================================================================== -->
-<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mb-10">
+<div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mb-10">
     <div class="h-1 bg-uitmPurple"></div>
     <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -194,18 +194,18 @@ require_once '../includes/header.php';
     </div>
 
     <!-- Order Filters -->
-    <div class="px-6 py-4 bg-gray-50/50 dark:bg-slate-800/30 border-b border-gray-100 dark:border-slate-850">
+    <div class="px-6 py-4 bg-gray-50/50 dark:bg-slate-800/30 border-b border-gray-100 dark:border-slate-800">
         <form method="GET" class="flex flex-col md:flex-row gap-4">
             <!-- Retain user parameters to not clear User filters -->
             <input type="hidden" name="user_search" value="<?php echo escape($user_search); ?>">
             <input type="hidden" name="role_filter" value="<?php echo escape($role_filter); ?>">
             
             <div class="flex-grow relative w-full">
-                <input type="text" name="order_search" value="<?php echo escape($order_search); ?>" placeholder="Search orders by gig title, buyer, or seller name..." class="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple/30 focus:border-uitmPurple transition text-sm">
+                <input type="text" name="order_search" value="<?php echo escape($order_search); ?>" placeholder="Search orders by gig title, buyer, or seller name..." class="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple/30 focus:border-uitmPurple transition text-sm">
                 <svg class="absolute left-3.5 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
             <div class="w-full md:w-48">
-                <select name="order_status" class="w-full px-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple/30 focus:border-uitmPurple transition text-sm">
+                <select name="order_status" class="w-full px-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple/30 focus:border-uitmPurple transition text-sm">
                     <option value="">All Statuses</option>
                     <?php foreach ($statuses as $st): ?>
                         <option value="<?php echo $st; ?>" <?php if ($order_status_filter === $st) echo 'selected'; ?>><?php echo ucfirst($st); ?></option>
@@ -213,9 +213,9 @@ require_once '../includes/header.php';
                 </select>
             </div>
             <div class="flex w-full md:w-auto gap-2">
-                <button type="submit" class="w-full md:w-auto bg-uitmPurple hover:bg-purple-900 text-white font-bold py-2 px-6 rounded-xl transition text-sm border-0 cursor-pointer">Filter</button>
+                <button type="submit" class="w-full md:w-auto bg-uitmPurple hover:bg-purple-900 text-white font-bold py-2 px-6 rounded-lg transition text-sm border-0 cursor-pointer">Filter</button>
                 <?php if (!empty($order_search) || !empty($order_status_filter)): ?>
-                    <a href="?user_search=<?php echo urlencode($user_search); ?>&role_filter=<?php echo urlencode($role_filter); ?>" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-850 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-xl transition text-sm inline-block">Clear</a>
+                    <a href="?user_search=<?php echo urlencode($user_search); ?>&role_filter=<?php echo urlencode($role_filter); ?>" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-lg transition text-sm inline-block">Clear</a>
                 <?php endif; ?>
             </div>
         </form>
@@ -327,7 +327,7 @@ require_once '../includes/header.php';
 <!-- =====================================================================
      SECTION 2: USER MANAGEMENT (NEW)
      ===================================================================== -->
-<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mb-10">
+<div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mb-10">
     <div class="h-1 bg-emerald-500"></div>
     <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -338,18 +338,18 @@ require_once '../includes/header.php';
     </div>
 
     <!-- User Filters -->
-    <div class="px-6 py-4 bg-gray-50/50 dark:bg-slate-800/30 border-b border-gray-100 dark:border-slate-850">
+    <div class="px-6 py-4 bg-gray-50/50 dark:bg-slate-800/30 border-b border-gray-100 dark:border-slate-800">
         <form method="GET" class="flex flex-col md:flex-row gap-4">
             <!-- Retain order parameters to not clear Order filters -->
             <input type="hidden" name="order_search" value="<?php echo escape($order_search); ?>">
             <input type="hidden" name="order_status" value="<?php echo escape($order_status_filter); ?>">
             
             <div class="flex-grow relative w-full">
-                <input type="text" name="user_search" value="<?php echo escape($user_search); ?>" placeholder="Search users by name, student ID, email, or campus..." class="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition text-sm">
+                <input type="text" name="user_search" value="<?php echo escape($user_search); ?>" placeholder="Search users by name, student ID, email, or campus..." class="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition text-sm">
                 <svg class="absolute left-3.5 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
             <div class="w-full md:w-48">
-                <select name="role_filter" class="w-full px-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition text-sm">
+                <select name="role_filter" class="w-full px-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition text-sm">
                     <option value="">All Roles</option>
                     <option value="student" <?php if ($role_filter === 'student') echo 'selected'; ?>>Student</option>
                     <option value="admin" <?php if ($role_filter === 'admin') echo 'selected'; ?>>Admin</option>
@@ -357,9 +357,9 @@ require_once '../includes/header.php';
                 </select>
             </div>
             <div class="flex w-full md:w-auto gap-2">
-                <button type="submit" class="w-full md:w-auto bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-6 rounded-xl transition text-sm border-0 cursor-pointer">Filter</button>
+                <button type="submit" class="w-full md:w-auto bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg transition text-sm border-0 cursor-pointer">Filter</button>
                 <?php if (!empty($user_search) || !empty($role_filter)): ?>
-                    <a href="?order_search=<?php echo urlencode($order_search); ?>&order_status=<?php echo urlencode($order_status_filter); ?>" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-850 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-xl transition text-sm inline-block">Clear</a>
+                    <a href="?order_search=<?php echo urlencode($order_search); ?>&order_status=<?php echo urlencode($order_status_filter); ?>" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-lg transition text-sm inline-block">Clear</a>
                 <?php endif; ?>
             </div>
         </form>
@@ -416,7 +416,7 @@ require_once '../includes/header.php';
                                 $role_class = match($usr['role']) {
                                     'admin'  => 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800/30',
                                     'banned' => 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800/30',
-                                    default  => 'bg-gray-150 dark:bg-slate-800 text-gray-750 dark:text-slate-350',
+                                    default  => 'bg-gray-150 dark:bg-slate-800 text-gray-750 dark:text-slate-300',
                                 };
                                 ?>
                                 <span class="px-2.5 py-0.5 inline-flex text-[10px] font-bold rounded-md <?php echo $role_class; ?>"><?php echo ucfirst(escape($usr['role'])); ?></span>
@@ -473,7 +473,7 @@ require_once '../includes/header.php';
 <!-- =====================================================================
      SECTION 3: USER REPORTS
      ===================================================================== -->
-<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mb-10">
+<div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mb-10">
     <div class="h-1 bg-gradient-to-r from-red-500 to-rose-600"></div>
     <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -544,7 +544,7 @@ require_once '../includes/header.php';
 
                             <!-- Details -->
                             <?php if ($rep['details']): ?>
-                                <div class="bg-gray-50 dark:bg-slate-800/60 rounded-xl p-3 mb-3 border border-gray-100 dark:border-slate-700">
+                                <div class="bg-gray-50 dark:bg-slate-800/60 rounded-lg p-3 mb-3 border border-gray-100 dark:border-slate-700">
                                     <p class="text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-1">Report details</p>
                                     <p class="text-sm text-gray-700 dark:text-slate-300 leading-relaxed"><?php echo escape($rep['details']); ?></p>
                                 </div>
@@ -552,7 +552,7 @@ require_once '../includes/header.php';
 
                             <!-- Admin note (if previously set) -->
                             <?php if ($rep['admin_note']): ?>
-                                <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-3 border border-blue-100 dark:border-blue-800/50">
+                                <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 border border-blue-100 dark:border-blue-800/50">
                                     <p class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-1">Admin note</p>
                                     <p class="text-sm text-blue-800 dark:text-blue-300"><?php echo escape($rep['admin_note']); ?></p>
                                 </div>
@@ -562,7 +562,7 @@ require_once '../includes/header.php';
                         <!-- Admin Actions (only for non-final statuses) -->
                         <?php if (!in_array($rep['status'], ['banned'])): ?>
                             <div class="lg:w-64 flex-shrink-0">
-                                <form action="report_action" method="POST" class="bg-gray-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-gray-100 dark:border-slate-700 space-y-3"
+                                <form action="report_action" method="POST" class="bg-gray-50 dark:bg-slate-800/60 rounded-lg p-4 border border-gray-100 dark:border-slate-700 space-y-3"
                                       onsubmit="return confirm('Are you sure you want to apply this action?');">
                                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                     <input type="hidden" name="report_id" value="<?php echo $rep['report_id']; ?>">
@@ -570,28 +570,28 @@ require_once '../includes/header.php';
                                     <label class="block text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Admin Note (optional)</label>
                                     <textarea name="admin_note" rows="2" maxlength="500"
                                               placeholder="Internal note about your decision..."
-                                              class="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-uitmPurple/30 transition resize-none"><?php echo escape($rep['admin_note'] ?? ''); ?></textarea>
+                                              class="w-full px-3 py-2 text-xs rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-uitmPurple/30 transition resize-none"><?php echo escape($rep['admin_note'] ?? ''); ?></textarea>
 
                                     <label class="block text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Action</label>
                                     <div class="grid grid-cols-1 gap-2">
                                         <button type="submit" name="action" value="reviewed"
-                                                class="w-full py-2 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/50 text-xs font-bold hover:bg-blue-100 dark:hover:bg-blue-900/40 transition flex items-center justify-center gap-2 border-0 cursor-pointer">
+                                                class="w-full py-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/50 text-xs font-bold hover:bg-blue-100 dark:hover:bg-blue-900/40 transition flex items-center justify-center gap-2 border-0 cursor-pointer">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                                             Mark Reviewed
                                         </button>
                                         <button type="submit" name="action" value="dismissed"
-                                                class="w-full py-2 rounded-xl bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-300 border border-gray-200 dark:border-slate-600 text-xs font-bold hover:bg-gray-200 dark:hover:bg-slate-600 transition flex items-center justify-center gap-2 border-0 cursor-pointer">
+                                                class="w-full py-2 rounded-lg bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-300 border border-gray-200 dark:border-slate-600 text-xs font-bold hover:bg-gray-200 dark:hover:bg-slate-600 transition flex items-center justify-center gap-2 border-0 cursor-pointer">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                             Dismiss Report
                                         </button>
                                         <?php if ($rep['reported_role'] !== 'banned'): ?>
                                             <button type="submit" name="action" value="banned"
-                                                    class="w-full py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow transition flex items-center justify-center gap-2 border-0 cursor-pointer">
+                                                    class="w-full py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow transition flex items-center justify-center gap-2 border-0 cursor-pointer">
                                                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
                                                 Ban User
                                             </button>
                                         <?php else: ?>
-                                            <div class="w-full py-2 rounded-xl bg-rose-900/20 text-rose-400 text-xs font-bold text-center border border-rose-800/50 flex items-center justify-center gap-2">
+                                            <div class="w-full py-2 rounded-lg bg-rose-900/20 text-rose-400 text-xs font-bold text-center border border-rose-800/50 flex items-center justify-center gap-2">
                                                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
                                                 User Already Banned
                                             </div>
@@ -601,7 +601,7 @@ require_once '../includes/header.php';
                             </div>
                         <?php else: ?>
                             <div class="lg:w-64 flex-shrink-0 flex items-center justify-center">
-                                <div class="bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800/50 rounded-2xl p-4 text-center w-full">
+                                <div class="bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-800/50 rounded-lg p-4 text-center w-full">
                                     <div class="w-10 h-10 bg-rose-100 dark:bg-rose-900/40 rounded-full flex items-center justify-center mx-auto mb-2 text-rose-600 dark:text-rose-400">
                                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
                                     </div>
@@ -616,7 +616,7 @@ require_once '../includes/header.php';
         </div>
     <?php else: ?>
         <div class="px-6 py-16 text-center">
-            <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4 text-emerald-600 dark:text-emerald-400 shadow-lg shadow-emerald-500/10">
+            <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center mx-auto mb-4 text-emerald-600 dark:text-emerald-400 shadow-lg shadow-emerald-500/10">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
             </div>
             <p class="text-gray-500 dark:text-slate-500 font-medium transition-colors duration-300">No user reports yet. The platform is clean!</p>
@@ -627,7 +627,7 @@ require_once '../includes/header.php';
 <!-- =====================================================================
      SECTION 4: ACCOUNT APPEALS
      ===================================================================== -->
-<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mt-10">
+<div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mt-10">
     <div class="h-1 bg-gradient-to-r from-indigo-500 to-purple-600"></div>
     <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -692,13 +692,13 @@ require_once '../includes/header.php';
                                 </div>
                             </div>
 
-                            <div class="bg-slate-50 dark:bg-slate-800/40 rounded-2xl p-4 border border-slate-100 dark:border-slate-700 mb-4">
+                            <div class="bg-slate-50 dark:bg-slate-800/40 rounded-lg p-4 border border-slate-100 dark:border-slate-700 mb-4">
                                 <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Student's Statement</p>
                                 <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-line"><?php echo escape($app['content']); ?></p>
                             </div>
 
                             <?php if ($app['admin_note']): ?>
-                                <div class="bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl p-4 border border-indigo-100 dark:border-indigo-800/50">
+                                <div class="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-4 border border-indigo-100 dark:border-indigo-800/50">
                                     <p class="text-xs font-bold text-indigo-500 uppercase tracking-widest mb-2">Admin Response</p>
                                     <p class="text-sm text-indigo-800 dark:text-indigo-300 italic">"<?php echo escape($app['admin_note']); ?>"</p>
                                 </div>
@@ -707,7 +707,7 @@ require_once '../includes/header.php';
 
                         <?php if ($app['status'] === 'pending'): ?>
                             <div class="lg:w-64 flex-shrink-0">
-                                <form action="appeal_action" method="POST" class="bg-gray-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-gray-100 dark:border-slate-700 space-y-4"
+                                <form action="appeal_action" method="POST" class="bg-gray-50 dark:bg-slate-800/60 rounded-lg p-4 border border-gray-100 dark:border-slate-700 space-y-4"
                                       onsubmit="return confirm('Are you sure? Approving will instantly restore this user\'s access.');">
                                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                     <input type="hidden" name="appeal_id" value="<?php echo $app['appeal_id']; ?>">
@@ -716,16 +716,16 @@ require_once '../includes/header.php';
                                         <label class="block text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-2">Response Note</label>
                                         <textarea name="admin_note" rows="3" maxlength="500" 
                                                   placeholder="Explain the decision to the student..."
-                                                  class="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 transition resize-none"></textarea>
+                                                  class="w-full px-3 py-2 text-xs rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/30 transition resize-none"></textarea>
                                     </div>
 
                                     <div class="grid grid-cols-1 gap-2">
                                         <button type="submit" name="action" value="approve"
-                                                class="w-full py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white text-xs font-bold shadow-lg transition border-0 cursor-pointer">
+                                                class="w-full py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white text-xs font-bold shadow-lg transition border-0 cursor-pointer">
                                             Approve & Unban
                                         </button>
                                         <button type="submit" name="action" value="reject"
-                                                class="w-full py-2.5 rounded-xl bg-white dark:bg-slate-700 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800/50 text-xs font-bold hover:bg-red-50 transition border-0 cursor-pointer">
+                                                class="w-full py-2.5 rounded-lg bg-white dark:bg-slate-700 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800/50 text-xs font-bold hover:bg-red-50 transition border-0 cursor-pointer">
                                             Reject Appeal
                                         </button>
                                     </div>
@@ -748,7 +748,7 @@ require_once '../includes/header.php';
 <!-- =====================================================================
      SECTION 5: STUDENT FEEDBACK (NEW)
      ===================================================================== -->
-<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mb-10">
+<div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mb-10">
     <div class="h-1 bg-gradient-to-r from-teal-400 to-emerald-500"></div>
     <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -761,7 +761,7 @@ require_once '../includes/header.php';
     </div>
 
     <!-- Feedback Filters -->
-    <div class="px-6 py-4 bg-gray-50/50 dark:bg-slate-800/30 border-b border-gray-100 dark:border-slate-850">
+    <div class="px-6 py-4 bg-gray-50/50 dark:bg-slate-800/30 border-b border-gray-100 dark:border-slate-800">
         <form method="GET" class="flex flex-col md:flex-row gap-4">
             <!-- Retain other section parameters to not clear their filters -->
             <input type="hidden" name="order_search" value="<?php echo escape($order_search); ?>">
@@ -770,11 +770,11 @@ require_once '../includes/header.php';
             <input type="hidden" name="role_filter" value="<?php echo escape($role_filter); ?>">
             
             <div class="flex-grow relative w-full">
-                <input type="text" name="feedback_search" value="<?php echo escape($feedback_search); ?>" placeholder="Search feedback by student name, email, message or campus..." class="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 transition text-sm">
+                <input type="text" name="feedback_search" value="<?php echo escape($feedback_search); ?>" placeholder="Search feedback by student name, email, message or campus..." class="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 transition text-sm">
                 <svg class="absolute left-3.5 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
             <div class="w-full md:w-48">
-                <select name="feedback_nature" class="w-full px-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 transition text-sm">
+                <select name="feedback_nature" class="w-full px-4 py-2 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 transition text-sm">
                     <option value="">All Natures</option>
                     <option value="Complaint" <?php if ($feedback_nature === 'Complaint') echo 'selected'; ?>>Complaint</option>
                     <option value="Suggestion" <?php if ($feedback_nature === 'Suggestion') echo 'selected'; ?>>Suggestion</option>
@@ -782,9 +782,9 @@ require_once '../includes/header.php';
                 </select>
             </div>
             <div class="flex w-full md:w-auto gap-2">
-                <button type="submit" class="w-full md:w-auto bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-6 rounded-xl transition text-sm border-0 cursor-pointer">Filter</button>
+                <button type="submit" class="w-full md:w-auto bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-6 rounded-lg transition text-sm border-0 cursor-pointer">Filter</button>
                 <?php if (!empty($feedback_search) || !empty($feedback_nature)): ?>
-                    <a href="?order_search=<?php echo urlencode($order_search); ?>&order_status=<?php echo urlencode($order_status_filter); ?>&user_search=<?php echo urlencode($user_search); ?>&role_filter=<?php echo urlencode($role_filter); ?>" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-850 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-xl transition text-sm inline-block">Clear</a>
+                    <a href="?order_search=<?php echo urlencode($order_search); ?>&order_status=<?php echo urlencode($order_status_filter); ?>&user_search=<?php echo urlencode($user_search); ?>&role_filter=<?php echo urlencode($role_filter); ?>" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-lg transition text-sm inline-block">Clear</a>
                 <?php endif; ?>
             </div>
         </form>

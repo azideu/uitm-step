@@ -35,14 +35,14 @@ require_once 'includes/header.php';
 
     <!-- Response Time Badge -->
     <!-- Response Time Alert Panel -->
-    <div class="flex items-center justify-center gap-2 p-3 bg-purple-500/5 dark:bg-purple-500/10 border border-purple-500/10 dark:border-purple-400/10 rounded-2xl mb-8 text-xs font-bold text-uitmPurple dark:text-purple-300">
+    <div class="flex items-center justify-center gap-2 p-3 bg-purple-500/5 dark:bg-purple-500/10 border border-purple-500/10 dark:border-purple-400/10 rounded-lg mb-8 text-xs font-bold text-uitmPurple dark:text-purple-300">
         <svg class="w-4 h-4 shrink-0 text-uitmGold animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         Response time: within 1–3 working days
     </div>
 
     <!-- Button -->
     <div class="pt-6 border-t border-gray-100 dark:border-slate-800 transition-colors duration-300">
-        <a href="feedback.php" class="w-full bg-uitmPurple hover:bg-purple-900 text-white font-bold py-3.5 px-6 rounded-2xl shadow-xl transition-all duration-300 flex items-center justify-center gap-2">
+        <a href="feedback.php" class="w-full bg-uitmPurple hover:bg-purple-900 text-white font-bold py-3.5 px-6 rounded-lg shadow-xl transition-all duration-300 flex items-center justify-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>

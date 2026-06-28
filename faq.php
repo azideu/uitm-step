@@ -6,7 +6,7 @@ require_once 'includes/header.php';
 ?>
 
 <div class="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 p-8 md:p-12 transition-colors duration-300">
+    <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 p-8 md:p-12 transition-colors duration-300">
         
         <!-- Header -->
         <div class="text-center mb-10 animate-fade-in-up">
@@ -21,19 +21,19 @@ require_once 'includes/header.php';
         <!-- Category Tabs -->
         <div class="flex flex-wrap gap-2.5 justify-center mb-10 animate-fade-in-up">
             <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-uitmPurple text-white border-uitmPurple dark:bg-purple-600 dark:border-purple-600 shadow-md shadow-uitmPurple/10" data-target="general">1. General</button>
-            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-350 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="account">2. Account</button>
-            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-350 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="products">3. Products & Services</button>
-            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-350 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="ordering">4. Searching & Ordering</button>
-            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-350 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="chat">5. Chat System</button>
-            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-350 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="payment">6. Payment</button>
-            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-350 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="delivery">7. Delivery / Services</button>
-            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-350 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="support">8. Feedback & Support</button>
-            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-350 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="safety">9. Safety</button>
+            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="account">2. Account</button>
+            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="products">3. Products & Services</button>
+            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="ordering">4. Searching & Ordering</button>
+            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="chat">5. Chat System</button>
+            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="payment">6. Payment</button>
+            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="delivery">7. Delivery / Services</button>
+            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="support">8. Feedback & Support</button>
+            <button class="tab-btn px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold border transition-all duration-300 cursor-pointer bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50" data-target="safety">9. Safety</button>
         </div>
 
         <!-- FAQ Content Groups -->
         <div class="faq-group animate-fade-in-up" id="general">
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     What is UiTM STEP?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -42,7 +42,7 @@ require_once 'includes/header.php';
                     UiTM STEP is a student marketplace platform where UiTM students can buy, sell, and offer services in a safe and simple way.
                 </div>
             </div>
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     Is UiTM STEP free to use?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -51,7 +51,7 @@ require_once 'includes/header.php';
                     Yes, the platform is completely free for all UiTM students.
                 </div>
             </div>
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     Do I need to register before using the platform?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -63,7 +63,7 @@ require_once 'includes/header.php';
         </div>
 
         <div class="faq-group hidden" id="account">
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     Can I use UiTM STEP without logging in?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -72,7 +72,7 @@ require_once 'includes/header.php';
                     You can browse products, but you need to log in to chat, buy, or sell.
                 </div>
             </div>
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     Can I change my profile information?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -84,7 +84,7 @@ require_once 'includes/header.php';
         </div>
 
         <div class="faq-group hidden" id="products">
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     What kind of items can be sold?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -93,7 +93,7 @@ require_once 'includes/header.php';
                     Students can sell physical products (books, food, items) and digital services (design, tutoring, printing, etc.).
                 </div>
             </div>
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     Are there any restricted items?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -105,7 +105,7 @@ require_once 'includes/header.php';
         </div>
 
         <div class="faq-group hidden" id="ordering">
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     How do I search for items?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -114,7 +114,7 @@ require_once 'includes/header.php';
                     Use the search bar or filter by category such as food, services, or academic items.
                 </div>
             </div>
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     Can I cancel an order after placing it?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -123,7 +123,7 @@ require_once 'includes/header.php';
                     Orders can only be cancelled if the seller has not confirmed it yet.
                 </div>
             </div>
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     What happens after I place an order?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -135,7 +135,7 @@ require_once 'includes/header.php';
         </div>
 
         <div class="faq-group hidden" id="chat">
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     Why do I need to use chat?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -147,7 +147,7 @@ require_once 'includes/header.php';
         </div>
 
         <div class="faq-group hidden" id="payment">
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     When will the seller receive payment?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -156,7 +156,7 @@ require_once 'includes/header.php';
                     Payment is released to the seller after the order is confirmed as completed.
                 </div>
             </div>
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     What if I pay but don’t receive my item?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -168,7 +168,7 @@ require_once 'includes/header.php';
         </div>
 
         <div class="faq-group hidden" id="delivery">
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     Do sellers provide delivery?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -177,7 +177,7 @@ require_once 'includes/header.php';
                     Yes, depending on the seller. Some offer delivery, while others require meet-up.
                 </div>
             </div>
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     Can I request custom services?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -189,7 +189,7 @@ require_once 'includes/header.php';
         </div>
 
         <div class="faq-group hidden" id="support">
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     How do I report a problem?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -198,7 +198,7 @@ require_once 'includes/header.php';
                     Go to the Feedback page and submit your issue with details.
                 </div>
             </div>
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     What happens after I submit feedback?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -210,7 +210,7 @@ require_once 'includes/header.php';
         </div>
 
         <div class="faq-group hidden" id="safety">
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     How do I stay safe while using UiTM STEP?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -219,7 +219,7 @@ require_once 'includes/header.php';
                     Always communicate through the platform, avoid sharing sensitive personal information, and deal with verified users when possible.
                 </div>
             </div>
-            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-xl mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+            <div class="faq-item border border-slate-100 dark:border-slate-800 rounded-lg mb-4 bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
                 <div class="faq-question w-full text-left px-6 py-4 flex justify-between items-center font-bold text-slate-800 dark:text-slate-100 text-base md:text-lg cursor-pointer transition-colors duration-200">
                     Is my data safe?
                     <span class="text-xl text-uitmPurple dark:text-purple-400 transition-transform duration-300">+</span>
@@ -258,7 +258,7 @@ require_once 'includes/header.php';
 
     // Category Tabs Logic
     const activeClasses = ['bg-uitmPurple', 'text-white', 'border-uitmPurple', 'dark:bg-purple-600', 'dark:border-purple-600', 'shadow-md', 'shadow-uitmPurple/10'];
-    const inactiveClasses = ['bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-350', 'border-slate-200', 'dark:border-slate-800', 'hover:bg-slate-50', 'dark:hover:bg-slate-700/50'];
+    const inactiveClasses = ['bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300', 'border-slate-200', 'dark:border-slate-800', 'hover:bg-slate-50', 'dark:hover:bg-slate-700/50'];
 
     document.querySelectorAll(".tab-btn").forEach(button => {
         button.addEventListener("click", () => {

@@ -92,9 +92,9 @@ $active_topic = $topics[$active_topic_key];
         <!-- Left Column: Sidebar (Topics & Popular) -->
         <div class="lg:w-64 flex-shrink-0 space-y-6">
             <!-- Topics Panel -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-gray-100 dark:border-slate-800 transition-colors duration-300">
+            <div class="bg-white dark:bg-slate-900 rounded-lg p-6 border border-gray-100 dark:border-slate-800 transition-colors duration-300">
                 <h3 class="text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest mb-4">Choose Your Topic</h3>
-                <ul class="space-y-3.5 text-sm font-bold text-slate-700 dark:text-slate-350">
+                <ul class="space-y-3.5 text-sm font-bold text-slate-700 dark:text-slate-300">
                     <li><a href="<?php echo ROOT_URL; ?>guides/?topic=career" class="transition-colors flex items-center gap-2 <?php echo $active_topic_key === 'career' ? 'text-uitmPurple dark:text-purple-300' : 'hover:text-uitmPurple dark:hover:text-purple-400'; ?>"><span class="w-1.5 h-1.5 rounded-full <?php echo $active_topic_key === 'career' ? 'bg-uitmPurple dark:bg-purple-300' : 'bg-slate-300 dark:bg-slate-700'; ?>"></span> Career Development</a></li>
                     <li><a href="<?php echo ROOT_URL; ?>guides/?topic=finance" class="transition-colors flex items-center gap-2 <?php echo $active_topic_key === 'finance' ? 'text-uitmPurple dark:text-purple-300' : 'hover:text-uitmPurple dark:hover:text-purple-400'; ?>"><span class="w-1.5 h-1.5 rounded-full <?php echo $active_topic_key === 'finance' ? 'bg-uitmPurple dark:bg-purple-300' : 'bg-slate-300 dark:bg-slate-700'; ?>"></span> Financial Tips</a></li>
                     <li><a href="<?php echo ROOT_URL; ?>guides/?topic=student-life" class="transition-colors flex items-center gap-2 <?php echo $active_topic_key === 'student-life' ? 'text-uitmPurple dark:text-purple-300' : 'hover:text-uitmPurple dark:hover:text-purple-400'; ?>"><span class="w-1.5 h-1.5 rounded-full <?php echo $active_topic_key === 'student-life' ? 'bg-uitmPurple dark:bg-purple-300' : 'bg-slate-300 dark:bg-slate-700'; ?>"></span> Student Life</a></li>
@@ -108,9 +108,9 @@ $active_topic = $topics[$active_topic_key];
             </div>
 
             <!-- Popular Panel -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-gray-100 dark:border-slate-800 transition-colors duration-300">
+            <div class="bg-white dark:bg-slate-900 rounded-lg p-6 border border-gray-100 dark:border-slate-800 transition-colors duration-300">
                 <h3 class="text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest mb-4">Most Popular Guides</h3>
-                <ul class="space-y-4 text-xs font-bold text-slate-700 dark:text-slate-350">
+                <ul class="space-y-4 text-xs font-bold text-slate-700 dark:text-slate-300">
                     <li>
                         <a href="<?php echo ROOT_URL; ?>guides/portfolio" class="transition-colors flex flex-col gap-1 hover:text-uitmPurple dark:hover:text-purple-400">
                             <span>How to build a freelance portfolio while studying</span>
@@ -154,7 +154,7 @@ $active_topic = $topics[$active_topic_key];
                     <?php echo escape($active_topic['subtitle']); ?>
                 </h3>
                 
-                <p class="text-slate-550 dark:text-slate-400 text-sm leading-relaxed mb-10 pb-6 border-b border-slate-100 dark:border-slate-800 transition-colors duration-300">
+                <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-10 pb-6 border-b border-slate-100 dark:border-slate-800 transition-colors duration-300">
                     <?php echo escape($active_topic['desc']); ?>
                 </p>
 
@@ -162,7 +162,7 @@ $active_topic = $topics[$active_topic_key];
                 <?php if (count($active_topic['guides']) > 0): ?>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <?php foreach ($active_topic['guides'] as $guide): ?>
-                            <a href="<?php echo ROOT_URL . $guide['url']; ?>" class="group block bg-slate-50 dark:bg-slate-850 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
+                            <a href="<?php echo ROOT_URL . $guide['url']; ?>" class="group block bg-slate-50 dark:bg-slate-800 rounded-lg overflow-hidden border border-slate-100 dark:border-slate-800 shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300">
                                 <!-- Guide Thumbnail -->
                                 <div class="w-full aspect-video bg-slate-200 dark:bg-slate-800 relative overflow-hidden flex items-center justify-center">
                                     <?php if (!empty($guide['img'])): ?>
@@ -191,7 +191,7 @@ $active_topic = $topics[$active_topic_key];
                     </div>
                 <?php else: ?>
                     <!-- Empty State for empty categories -->
-                    <div class="text-center py-16 px-4 bg-slate-50/50 dark:bg-slate-850/30 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 transition-all duration-300">
+                    <div class="text-center py-16 px-4 bg-slate-50/50 dark:bg-slate-800/30 rounded-lg border border-dashed border-slate-200 dark:border-slate-800 transition-all duration-300">
                         <svg class="w-16 h-16 text-gray-300 dark:text-slate-700 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477-4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                         </svg>

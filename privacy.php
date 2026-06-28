@@ -7,7 +7,7 @@ require_once 'includes/header.php';
 ?>
 
 <div class="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 p-8 md:p-12 transition-colors duration-300">
+    <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 p-8 md:p-12 transition-colors duration-300">
         <h1 class="text-3xl md:text-4xl font-bold mb-8 text-uitmPurple dark:text-purple-300 font-serif border-b border-gray-200 dark:border-slate-800 pb-4">Privacy Policy</h1>
         
         <div class="prose prose-slate dark:prose-invert max-w-none">

@@ -13,9 +13,9 @@ $current_guide = 'portfolio';
         <!-- Left Column: Sidebar (Topics & Popular) -->
         <div class="lg:w-64 flex-shrink-0 space-y-6">
             <!-- Topics Panel -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-gray-100 dark:border-slate-800 transition-colors duration-300">
+            <div class="bg-white dark:bg-slate-900 rounded-lg p-6 border border-gray-100 dark:border-slate-800 transition-colors duration-300">
                 <h3 class="text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest mb-4">Choose Your Topic</h3>
-                <ul class="space-y-3.5 text-sm font-bold text-slate-700 dark:text-slate-350">
+                <ul class="space-y-3.5 text-sm font-bold text-slate-700 dark:text-slate-300">
                     <li><a href="<?php echo ROOT_URL; ?>guides/?topic=career" class="hover:text-uitmPurple dark:hover:text-purple-400 transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700"></span> Career Development</a></li>
                     <li><a href="<?php echo ROOT_URL; ?>guides/?topic=finance" class="hover:text-uitmPurple dark:hover:text-purple-400 transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700"></span> Financial Tips</a></li>
                     <li><a href="<?php echo ROOT_URL; ?>guides/?topic=student-life" class="hover:text-uitmPurple dark:hover:text-purple-400 transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700"></span> Student Life</a></li>
@@ -29,9 +29,9 @@ $current_guide = 'portfolio';
             </div>
 
             <!-- Popular Panel -->
-            <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-gray-100 dark:border-slate-800 transition-colors duration-300">
+            <div class="bg-white dark:bg-slate-900 rounded-lg p-6 border border-gray-100 dark:border-slate-800 transition-colors duration-300">
                 <h3 class="text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest mb-4">Most Popular Guides</h3>
-                <ul class="space-y-4 text-xs font-bold text-slate-700 dark:text-slate-350">
+                <ul class="space-y-4 text-xs font-bold text-slate-700 dark:text-slate-300">
                     <li>
                         <a href="<?php echo ROOT_URL; ?>guides/portfolio" class="transition-colors flex flex-col gap-1 <?php echo $current_guide === 'portfolio' ? 'text-uitmPurple dark:text-purple-300' : 'hover:text-uitmPurple dark:hover:text-purple-400'; ?>">
                             <span>How to build a freelance portfolio while studying</span>
@@ -88,27 +88,27 @@ $current_guide = 'portfolio';
                 </div>
 
                 <!-- Hero Image -->
-                <div class="w-full aspect-video bg-slate-50 dark:bg-slate-850 rounded-2xl overflow-hidden mb-10 shadow-md border border-gray-100 dark:border-slate-800">
+                <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 rounded-lg overflow-hidden mb-10 shadow-md border border-gray-100 dark:border-slate-800">
                     <img src="../assets/img/guide_portfolio.jpg" alt="Student Freelancer" class="w-full h-full object-cover">
                 </div>
 
                 <!-- Article Body (Prose) -->
                 <div class="prose prose-slate dark:prose-invert max-w-none">
                     <h2 class="text-2xl font-bold mt-8 mb-4 text-gray-900 dark:text-white">1. Turn Class Assignments into Case Studies</h2>
-                    <p class="mb-4 text-slate-700 dark:text-slate-350 leading-relaxed text-base">
+                    <p class="mb-4 text-slate-700 dark:text-slate-300 leading-relaxed text-base">
                         Don't let your assignments gather dust in your downloads folder. That programming lab project, UI redesign, or academic essay can be converted into a case study. 
                     </p>
-                    <ul class="list-disc pl-6 mb-6 text-slate-700 dark:text-slate-350 space-y-2">
+                    <ul class="list-disc pl-6 mb-6 text-slate-700 dark:text-slate-300 space-y-2">
                         <li>Show the before-and-after of your code or design changes.</li>
                         <li>Write a brief explanation of the problem the assignment solved.</li>
                         <li>Upload the results to GitHub or Behance and link them on your STEP profile.</li>
                     </ul>
 
                     <h2 class="text-2xl font-bold mt-8 mb-4 text-gray-900 dark:text-white">2. Design or Develop for Student Clubs</h2>
-                    <p class="mb-4 text-slate-700 dark:text-slate-350 leading-relaxed text-base">
+                    <p class="mb-4 text-slate-700 dark:text-slate-300 leading-relaxed text-base">
                         UiTM has hundreds of student associations and clubs that constantly need flyers, social media graphics, event websites, and copywriting. 
                     </p>
-                    <p class="mb-6 text-slate-700 dark:text-slate-350 leading-relaxed text-base">
+                    <p class="mb-6 text-slate-700 dark:text-slate-300 leading-relaxed text-base">
                         Reach out to your club committee and offer to design their next event poster or develop a simple landing page. While this might be low-paying or volunteer work, it provides you with invaluable, real-world pieces for your portfolio showing you can work under client instructions.
                     </p>
 
@@ -120,19 +120,19 @@ $current_guide = 'portfolio';
                     </div>
 
                     <h2 class="text-2xl font-bold mt-8 mb-4 text-gray-900 dark:text-white">3. Build Personal "Side Projects"</h2>
-                    <p class="mb-4 text-slate-700 dark:text-slate-350 leading-relaxed text-base">
+                    <p class="mb-4 text-slate-700 dark:text-slate-300 leading-relaxed text-base">
                         If you don't have clients, create them. Invent a hypothetical brand and design their identity, or build a utility web app that solves a problem you face on campus (e.g. a GPA calculator or class schedule organizer).
                     </p>
-                    <p class="mb-6 text-slate-700 dark:text-slate-350 leading-relaxed text-base">
+                    <p class="mb-6 text-slate-700 dark:text-slate-300 leading-relaxed text-base">
                         Personal projects show initiative, creativity, and self-motivation—traits that clients highly value in student freelancers.
                     </p>
 
                     <h2 class="text-2xl font-bold mt-8 mb-4 text-gray-900 dark:text-white">4. Keep it Organized and Relevant</h2>
-                    <p class="mb-4 text-slate-700 dark:text-slate-350 leading-relaxed text-base">
+                    <p class="mb-4 text-slate-700 dark:text-slate-300 leading-relaxed text-base">
                         Quality always beats quantity. Select your top 3 to 5 strongest pieces that represent the services you want to sell. Keep description copy short and highlight the skills you used (e.g. Photoshop, PHP, Video Editing).
                     </p>
 
-                    <div class="mt-10 p-8 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-gray-100 dark:border-slate-800 text-center">
+                    <div class="mt-10 p-8 bg-slate-50 dark:bg-slate-800/40 rounded-lg border border-gray-100 dark:border-slate-800 text-center">
                         <h3 class="text-xl font-bold text-uitmPurple dark:text-purple-300 mb-2">Ready to list your portfolio?</h3>
                         <p class="text-sm text-gray-600 dark:text-slate-400 mb-6">Register your UiTM student account and showcase your talent to clients on campus.</p>
                         <a href="../register" class="bg-uitmPurple text-white px-8 py-3 rounded-lg font-bold hover:bg-opacity-90 transition-colors shadow-md text-base inline-block">Create Seller Profile</a>

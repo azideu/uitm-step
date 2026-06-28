@@ -157,11 +157,11 @@ require_once 'includes/header.php';
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Student Email</label>
-                        <input type="email" disabled value="<?= htmlspecialchars($user_email) ?>" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800/50 text-slate-500 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none cursor-not-allowed">
+                        <input type="email" disabled value="<?= htmlspecialchars($user_email) ?>" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800/50 text-slate-500 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none cursor-not-allowed">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Contact Number <span class="text-red-500">*</span></label>
-                        <input type="tel" id="contact_phone" placeholder="012-345 6789" required class="w-full px-4 py-3 bg-white dark:bg-slate-850 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
+                        <input type="tel" id="contact_phone" placeholder="012-345 6789" required class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
                     </div>
                 </div>
             </div>
@@ -174,7 +174,7 @@ require_once 'includes/header.php';
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Instructions / Project Details <span class="text-red-500">*</span></label>
-                    <textarea id="order_requirements" rows="4" placeholder="Provide any details, links, documents, or guidelines the seller needs to complete your work." required class="w-full px-4 py-3 bg-white dark:bg-slate-850 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all resize-none"></textarea>
+                    <textarea id="order_requirements" rows="4" placeholder="Provide any details, links, documents, or guidelines the seller needs to complete your work." required class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all resize-none"></textarea>
                 </div>
             </div>
 
@@ -205,13 +205,13 @@ require_once 'includes/header.php';
                 <div id="panel-card" class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Cardholder Name</label>
-                        <input type="text" id="card_name" placeholder="John Doe" class="w-full px-4 py-3 bg-white dark:bg-slate-850 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
+                        <input type="text" id="card_name" placeholder="John Doe" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Card Number</label>
                         <div class="relative">
-                            <input type="text" id="card_number" maxlength="19" placeholder="4111 1111 1111 1111" class="w-full pl-12 pr-4 py-3 bg-white dark:bg-slate-850 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all tracking-widest">
-                            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-450">
+                            <input type="text" id="card_number" maxlength="19" placeholder="4111 1111 1111 1111" class="w-full pl-12 pr-4 py-3 bg-white dark:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all tracking-widest">
+                            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
                             </div>
                         </div>
@@ -219,11 +219,11 @@ require_once 'includes/header.php';
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Expiry Date</label>
-                            <input type="text" id="card_expiry" maxlength="5" placeholder="MM/YY" class="w-full px-4 py-3 bg-white dark:bg-slate-850 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
+                            <input type="text" id="card_expiry" maxlength="5" placeholder="MM/YY" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Security Code (CVV)</label>
-                            <input type="text" id="card_cvv" maxlength="3" placeholder="123" class="w-full px-4 py-3 bg-white dark:bg-slate-850 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
+                            <input type="text" id="card_cvv" maxlength="3" placeholder="123" class="w-full px-4 py-3 bg-white dark:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
                         </div>
                     </div>
                 </div>
@@ -232,39 +232,39 @@ require_once 'includes/header.php';
                 <div id="panel-fpx" class="hidden space-y-4">
                     <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Choose your preferred internet banking account:</p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <label class="fpx-bank-btn flex items-center gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-850/50 cursor-pointer transition-all relative">
+                        <label class="fpx-bank-btn flex items-center gap-3 p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 cursor-pointer transition-all relative">
                             <input type="radio" name="fpx_select" value="Maybank2u" checked class="peer sr-only">
-                            <div class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-amber-500 pointer-events-none"></div>
+                            <div class="absolute inset-0 rounded-lg border-2 border-transparent peer-checked:border-amber-500 pointer-events-none"></div>
                             <div class="w-8 h-8 rounded-lg bg-amber-500 text-slate-900 flex items-center justify-center font-bold text-xs select-none">M2U</div>
                             <span class="text-sm font-bold text-slate-700 dark:text-slate-300">Maybank2u</span>
                         </label>
-                        <label class="fpx-bank-btn flex items-center gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-850/50 cursor-pointer transition-all relative">
+                        <label class="fpx-bank-btn flex items-center gap-3 p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 cursor-pointer transition-all relative">
                             <input type="radio" name="fpx_select" value="CIMB Clicks" class="peer sr-only">
-                            <div class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-red-500 pointer-events-none"></div>
+                            <div class="absolute inset-0 rounded-lg border-2 border-transparent peer-checked:border-red-500 pointer-events-none"></div>
                             <div class="w-8 h-8 rounded-lg bg-red-600 text-white flex items-center justify-center font-bold text-xs select-none">CIMB</div>
                             <span class="text-sm font-bold text-slate-700 dark:text-slate-300">CIMB Clicks</span>
                         </label>
-                        <label class="fpx-bank-btn flex items-center gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-850/50 cursor-pointer transition-all relative">
+                        <label class="fpx-bank-btn flex items-center gap-3 p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 cursor-pointer transition-all relative">
                             <input type="radio" name="fpx_select" value="RHB Now" class="peer sr-only">
-                            <div class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-blue-600 pointer-events-none"></div>
+                            <div class="absolute inset-0 rounded-lg border-2 border-transparent peer-checked:border-blue-600 pointer-events-none"></div>
                             <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs select-none">RHB</div>
                             <span class="text-sm font-bold text-slate-700 dark:text-slate-300">RHB Now</span>
                         </label>
-                        <label class="fpx-bank-btn flex items-center gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-850/50 cursor-pointer transition-all relative">
+                        <label class="fpx-bank-btn flex items-center gap-3 p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 cursor-pointer transition-all relative">
                             <input type="radio" name="fpx_select" value="Hong Leong Bank" class="peer sr-only">
-                            <div class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-sky-500 pointer-events-none"></div>
+                            <div class="absolute inset-0 rounded-lg border-2 border-transparent peer-checked:border-sky-500 pointer-events-none"></div>
                             <div class="w-8 h-8 rounded-lg bg-sky-500 text-white flex items-center justify-center font-bold text-xs select-none">HLB</div>
                             <span class="text-sm font-bold text-slate-700 dark:text-slate-300">Hong Leong Bank</span>
                         </label>
-                        <label class="fpx-bank-btn flex items-center gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-850/50 cursor-pointer transition-all relative">
+                        <label class="fpx-bank-btn flex items-center gap-3 p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 cursor-pointer transition-all relative">
                             <input type="radio" name="fpx_select" value="AmBank" class="peer sr-only">
-                            <div class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-red-500 pointer-events-none"></div>
+                            <div class="absolute inset-0 rounded-lg border-2 border-transparent peer-checked:border-red-500 pointer-events-none"></div>
                             <div class="w-8 h-8 rounded-lg bg-red-500 text-white flex items-center justify-center font-bold text-xs select-none">AMB</div>
                             <span class="text-sm font-bold text-slate-700 dark:text-slate-300">AmBank</span>
                         </label>
-                        <label class="fpx-bank-btn flex items-center gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-850/50 cursor-pointer transition-all relative">
+                        <label class="fpx-bank-btn flex items-center gap-3 p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 cursor-pointer transition-all relative">
                             <input type="radio" name="fpx_select" value="Bank Islam" class="peer sr-only">
-                            <div class="absolute inset-0 rounded-xl border-2 border-transparent peer-checked:border-emerald-600 pointer-events-none"></div>
+                            <div class="absolute inset-0 rounded-lg border-2 border-transparent peer-checked:border-emerald-600 pointer-events-none"></div>
                             <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-xs select-none">BI</div>
                             <span class="text-sm font-bold text-slate-700 dark:text-slate-300">Bank Islam</span>
                         </label>
@@ -275,22 +275,22 @@ require_once 'includes/header.php';
                 <div id="panel-wallet" class="hidden space-y-4">
                     <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Select your e-wallet platform:</p>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <label class="wallet-select flex flex-col items-center justify-center p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-850/50 cursor-pointer transition-all relative text-center">
+                        <label class="wallet-select flex flex-col items-center justify-center p-5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 cursor-pointer transition-all relative text-center">
                             <input type="radio" name="wallet_select" value="Touch 'n Go" checked class="peer sr-only">
-                            <div class="absolute inset-0 rounded-2xl border-2 border-transparent peer-checked:border-blue-500 pointer-events-none"></div>
-                            <div class="w-10 h-10 rounded-xl bg-blue-500 text-white flex items-center justify-center font-black text-xs mb-2">TNG</div>
+                            <div class="absolute inset-0 rounded-lg border-2 border-transparent peer-checked:border-blue-500 pointer-events-none"></div>
+                            <div class="w-10 h-10 rounded-lg bg-blue-500 text-white flex items-center justify-center font-black text-xs mb-2">TNG</div>
                             <span class="text-xs font-bold text-slate-700 dark:text-slate-300">Touch 'n Go</span>
                         </label>
-                        <label class="wallet-select flex flex-col items-center justify-center p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-850/50 cursor-pointer transition-all relative text-center">
+                        <label class="wallet-select flex flex-col items-center justify-center p-5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 cursor-pointer transition-all relative text-center">
                             <input type="radio" name="wallet_select" value="MAE" class="peer sr-only">
-                            <div class="absolute inset-0 rounded-2xl border-2 border-transparent peer-checked:border-amber-500 pointer-events-none"></div>
-                            <div class="w-10 h-10 rounded-xl bg-amber-500 text-slate-900 flex items-center justify-center font-extrabold text-xs mb-2">MAE</div>
+                            <div class="absolute inset-0 rounded-lg border-2 border-transparent peer-checked:border-amber-500 pointer-events-none"></div>
+                            <div class="w-10 h-10 rounded-lg bg-amber-500 text-slate-900 flex items-center justify-center font-extrabold text-xs mb-2">MAE</div>
                             <span class="text-xs font-bold text-slate-700 dark:text-slate-300">MAE by Maybank</span>
                         </label>
-                        <label class="wallet-select flex flex-col items-center justify-center p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-850/50 cursor-pointer transition-all relative text-center">
+                        <label class="wallet-select flex flex-col items-center justify-center p-5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 cursor-pointer transition-all relative text-center">
                             <input type="radio" name="wallet_select" value="RHB" class="peer sr-only">
-                            <div class="absolute inset-0 rounded-2xl border-2 border-transparent peer-checked:border-blue-600 pointer-events-none"></div>
-                            <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-xs mb-2">RHB</div>
+                            <div class="absolute inset-0 rounded-lg border-2 border-transparent peer-checked:border-blue-600 pointer-events-none"></div>
+                            <div class="w-10 h-10 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs mb-2">RHB</div>
                             <span class="text-xs font-bold text-slate-700 dark:text-slate-300">RHB</span>
                         </label>
                     </div>
@@ -324,8 +324,8 @@ require_once 'includes/header.php';
 
                     <!-- Discount code input to match checkout inspiration -->
                     <div class="border-t border-slate-100 dark:border-slate-800/60 pt-4 flex gap-2">
-                        <input type="text" placeholder="Promo code (e.g. STEP5)" class="flex-grow px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 text-slate-850 dark:text-white border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none">
-                        <button type="button" class="px-3 py-2 text-xs font-bold text-slate-650 dark:text-slate-300 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-850 transition-colors">Apply</button>
+                        <input type="text" placeholder="Promo code (e.g. STEP5)" class="flex-grow px-3 py-2 text-xs bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none">
+                        <button type="button" class="px-3 py-2 text-xs font-bold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Apply</button>
                     </div>
 
                     <div class="border-t border-slate-100 dark:border-slate-800/60 pt-4 bg-slate-50/50 dark:bg-slate-950/20 -mx-6 -mb-6 p-6 rounded-b-3xl">
@@ -338,7 +338,7 @@ require_once 'includes/header.php';
             </div>
 
             <!-- Primary Action Button -->
-            <button type="button" onclick="startVerification()" class="w-full bg-uitmPurple hover:bg-purple-900 text-white font-bold py-4 px-6 rounded-2xl shadow-xl transition-all flex items-center justify-center gap-2">
+            <button type="button" onclick="startVerification()" class="w-full bg-uitmPurple hover:bg-purple-900 text-white font-bold py-4 px-6 rounded-lg shadow-xl transition-all flex items-center justify-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                 Complete Payment
             </button>
@@ -379,22 +379,22 @@ require_once 'includes/header.php';
                 </div>
 
                 <!-- Bank OTP Simulator Message Banner -->
-                <div id="otp-sms-simulator" class="p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/30 text-amber-800 dark:text-amber-300 rounded-2xl text-left text-xs space-y-1">
+                <div id="otp-sms-simulator" class="p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/30 text-amber-800 dark:text-amber-300 rounded-lg text-left text-xs space-y-1">
                     <div class="flex items-center gap-1.5 font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
                         💬 SMS Simulator (Mock Device)
                     </div>
-                    <p>Verification Code: <strong class="text-sm tracking-widest text-slate-850 dark:text-white ml-1" id="mock-otp-value">------</strong></p>
+                    <p>Verification Code: <strong class="text-sm tracking-widest text-slate-800 dark:text-white ml-1" id="mock-otp-value">------</strong></p>
                     <p class="opacity-80">Valid for 3 minutes. Do not share this authentication pin.</p>
                 </div>
 
                 <div class="space-y-3">
-                    <input type="text" id="otp_input" maxlength="6" placeholder="------" class="w-full text-center tracking-widest font-mono text-2xl font-bold px-4 py-3 bg-slate-50 dark:bg-slate-850 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
+                    <input type="text" id="otp_input" maxlength="6" placeholder="------" class="w-full text-center tracking-widest font-mono text-2xl font-bold px-4 py-3 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple focus:border-uitmPurple transition-all">
                     <p id="otp-error" class="hidden text-xs text-red-500 font-bold">Incorrect verification code. Please check the SMS helper and try again.</p>
                 </div>
 
                 <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="cancelPayment()" class="flex-1 py-3 text-xs font-bold text-slate-500 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-850 transition-colors">Cancel</button>
-                    <button type="button" onclick="submitOTP()" class="flex-1 py-3 text-xs font-bold text-white bg-uitmPurple hover:bg-purple-900 rounded-xl shadow-md transition-colors">Verify & Pay</button>
+                    <button type="button" onclick="cancelPayment()" class="flex-1 py-3 text-xs font-bold text-slate-500 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Cancel</button>
+                    <button type="button" onclick="submitOTP()" class="flex-1 py-3 text-xs font-bold text-white bg-uitmPurple hover:bg-purple-900 rounded-lg shadow-md transition-colors">Verify & Pay</button>
                 </div>
             </div>
         </div>
@@ -412,7 +412,7 @@ require_once 'includes/header.php';
         <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Your mock payment was authorized and registered successfully.</p>
 
         <!-- Receipt Box -->
-        <div class="my-6 p-5 bg-slate-50 dark:bg-slate-950/20 border border-slate-100 dark:border-slate-800/80 rounded-2xl text-left space-y-4 text-xs">
+        <div class="my-6 p-5 bg-slate-50 dark:bg-slate-950/20 border border-slate-100 dark:border-slate-800/80 rounded-lg text-left space-y-4 text-xs">
             <div class="flex justify-between">
                 <span class="text-slate-400">Total Price</span>
                 <span class="font-bold text-slate-800 dark:text-white">RM <?= number_format($order['price'], 2) ?></span>
@@ -423,7 +423,7 @@ require_once 'includes/header.php';
             </div>
             <div class="flex justify-between">
                 <span class="text-slate-400">Verification Ref</span>
-                <span class="font-mono font-bold text-slate-850 dark:text-white" id="success-ref">STEP-TXN-XXXXXX</span>
+                <span class="font-mono font-bold text-slate-800 dark:text-white" id="success-ref">STEP-TXN-XXXXXX</span>
             </div>
             <div class="flex justify-between border-t border-slate-100 dark:border-slate-800 pt-3">
                 <span class="text-slate-400">Status</span>
@@ -431,7 +431,7 @@ require_once 'includes/header.php';
             </div>
         </div>
 
-        <button type="button" onclick="handleFinishRedirect()" class="w-full bg-uitmPurple hover:bg-purple-900 text-white font-bold py-3.5 px-6 rounded-2xl shadow-xl transition-all">
+        <button type="button" onclick="handleFinishRedirect()" class="w-full bg-uitmPurple hover:bg-purple-900 text-white font-bold py-3.5 px-6 rounded-lg shadow-xl transition-all">
             Return to Dashboard
         </button>
     </div>

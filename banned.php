@@ -47,7 +47,7 @@ require_once 'includes/header.php';
                 <p class="text-gray-500 dark:text-slate-400">Notice for <span class="font-bold text-gray-800 dark:text-slate-200"><?php echo escape($user['name']); ?></span></p>
             </div>
 
-            <div class="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 mb-8 border border-slate-100 dark:border-slate-700/50">
+            <div class="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 mb-8 border border-slate-100 dark:border-slate-700/50">
                 <h2 class="text-sm font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest mb-3">Why am I seeing this?</h2>
                 <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
                     Your UiTM STEP account has been suspended by an administrator for violating our community guidelines or trust protocols. This usually involves reports of scams, fake payment proof, or repeated non-delivery of services.
@@ -75,18 +75,18 @@ require_once 'includes/header.php';
                                 required
                                 maxlength="2000"
                                 placeholder="Explain clearly why your account should be reinstated. Provide evidence if applicable..."
-                                class="w-full px-4 py-4 rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 transition-all resize-none"
+                                class="w-full px-4 py-4 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-uitmPurple dark:focus:ring-purple-900/50 transition-all resize-none"
                             ></textarea>
                             <p class="text-xs text-gray-400 mt-2 text-right">Max 2000 characters</p>
                         </div>
-                        <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-4 rounded-xl shadow-xl hover:bg-purple-900 transition-all flex items-center justify-center gap-2">
+                        <button type="submit" class="w-full bg-uitmPurple text-white font-bold py-4 rounded-lg shadow-xl hover:bg-purple-900 transition-all flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                             Send Appeal to Administrators
                         </button>
                     </form>
                 </div>
             <?php elseif ($existing_appeal['status'] === 'pending'): ?>
-                <div class="text-center py-6 bg-indigo-50 dark:bg-indigo-900/20 rounded-2xl border border-indigo-100 dark:border-indigo-800">
+                <div class="text-center py-6 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border border-indigo-100 dark:border-indigo-800">
                     <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/40 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </div>
@@ -94,7 +94,7 @@ require_once 'includes/header.php';
                     <p class="text-sm text-indigo-700/70 dark:text-indigo-400/70 mt-1 px-8">Your appeal was submitted on <?php echo date('d M Y', strtotime($existing_appeal['created_at'])); ?>. Our team will review it shortly. Please check back later.</p>
                 </div>
             <?php else: ?>
-                <div class="text-center py-6 bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-100 dark:border-red-800">
+                <div class="text-center py-6 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-100 dark:border-red-800">
                     <div class="w-12 h-12 bg-red-100 dark:bg-red-900/40 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </div>

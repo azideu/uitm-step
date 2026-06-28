@@ -120,7 +120,7 @@ if (isset($_SESSION['user_id'])) {
     <!-- Main Content Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Form Column (takes 2 cols on desktop) -->
-        <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800/80 p-8 transition-colors duration-300">
+        <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800/80 p-8 transition-colors duration-300">
             <h2 class="text-xl font-bold mb-6 text-gray-900 dark:text-white font-serif flex items-center gap-2">
                 <svg class="w-5 h-5 text-uitmPurple dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
@@ -230,7 +230,7 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-uitmPurple hover:bg-purple-900 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-purple-900/10 dark:shadow-none hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer border-0">
+                <button type="submit" class="w-full bg-uitmPurple hover:bg-purple-900 text-white font-bold py-3.5 px-4 rounded-lg shadow-lg shadow-purple-900/10 dark:shadow-none hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer border-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                     </svg>
@@ -240,7 +240,7 @@ if (isset($_SESSION['user_id'])) {
         </div>
 
         <!-- Support Info Column (takes 1 col on desktop) -->
-        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800/80 p-8 transition-colors duration-300 flex flex-col justify-between">
+        <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800/80 p-8 transition-colors duration-300 flex flex-col justify-between">
             <div class="space-y-6">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white font-serif flex items-center gap-2">
                     <svg class="w-5 h-5 text-uitmPurple dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -253,7 +253,7 @@ if (isset($_SESSION['user_id'])) {
                     For any technical issues, inquiries, or assistance regarding the UiTM STEP system, please contact us directly via email.
                 </p>
 
-                <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800/50 space-y-4">
+                <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-800/50 space-y-4">
                     <div class="flex items-start gap-3">
                         <div class="p-2 bg-uitmPurple/10 rounded-lg text-uitmPurple dark:text-purple-400 mt-0.5">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -281,7 +281,7 @@ if (isset($_SESSION['user_id'])) {
             </div>
 
             <div class="mt-8">
-                <a href="mailto:uitmstep@gmail.com" class="w-full text-center bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-750 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 font-bold py-3.5 px-4 rounded-xl transition-all inline-block hover:scale-[1.01] active:scale-[0.99] cursor-pointer">
+                <a href="mailto:uitmstep@gmail.com" class="w-full text-center bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700 font-bold py-3.5 px-4 rounded-lg transition-all inline-block hover:scale-[1.01] active:scale-[0.99] cursor-pointer">
                     Drop Email
                 </a>
             </div>

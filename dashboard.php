@@ -43,7 +43,7 @@ require_once 'includes/header.php';
             </a>
         <?php endif; ?>
         <?php $toggle_mode = ($mode === 'buying' ? 'selling' : 'buying'); ?>
-        <a href="?mode=<?php echo $toggle_mode; ?>" class="bg-gray-100 dark:bg-slate-800 p-1 rounded-xl flex items-center shadow-inner hover:opacity-80 transition-opacity">
+        <a href="?mode=<?php echo $toggle_mode; ?>" class="bg-gray-100 dark:bg-slate-800 p-1 rounded-lg flex items-center shadow-inner hover:opacity-80 transition-opacity">
             <span class="px-4 py-2 rounded-lg text-sm font-bold transition-all duration-300 <?php echo $mode === 'buying' ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow' : 'text-gray-500 dark:text-slate-400'; ?>">
                 Buying
             </span>
@@ -71,7 +71,7 @@ require_once 'includes/header.php';
 
     // Fetch user's orders with search & status filters applied
     $sql_orders = "
-        SELECT o.*, g.title, u.name as seller_name 
+        SELECT o.*, g.title, g.seller_id, u.name as seller_name 
         FROM orders o
         JOIN gigs g ON o.gig_id = g.gig_id
         JOIN users u ON g.seller_id = u.user_id
@@ -95,8 +95,8 @@ require_once 'includes/header.php';
 
     <!-- Stats Section -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 75ms;">
-        <div class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl p-6 shadow-md flex items-center gap-4 transition-colors duration-300">
-            <div class="p-3.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-xl">
+        <div class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-lg p-6 shadow-md flex items-center gap-4 transition-colors duration-300">
+            <div class="p-3.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-lg">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
             </div>
             <div>
@@ -105,8 +105,8 @@ require_once 'includes/header.php';
             </div>
         </div>
 
-        <div class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl p-6 shadow-md flex items-center gap-4 transition-colors duration-300">
-            <div class="p-3.5 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 rounded-xl">
+        <div class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-lg p-6 shadow-md flex items-center gap-4 transition-colors duration-300">
+            <div class="p-3.5 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 rounded-lg">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
             <div>
@@ -115,8 +115,8 @@ require_once 'includes/header.php';
             </div>
         </div>
 
-        <div class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl p-6 shadow-md flex items-center gap-4 transition-colors duration-300">
-            <div class="p-3.5 bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 rounded-xl">
+        <div class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-lg p-6 shadow-md flex items-center gap-4 transition-colors duration-300">
+            <div class="p-3.5 bg-green-50 dark:bg-green-950/40 text-green-600 dark:text-green-400 rounded-lg">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
             </div>
             <div>
@@ -127,14 +127,14 @@ require_once 'includes/header.php';
     </div>
 
     <!-- Search & Filter Controls -->
-    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-800/80 p-5 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between transition-colors duration-300 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 150ms;">
+    <div class="bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-gray-100 dark:border-slate-800/80 p-5 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between transition-colors duration-300 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 150ms;">
         <form method="GET" class="flex flex-col md:flex-row w-full gap-4">
             <div class="flex-grow relative w-full">
-                <input type="text" name="search" value="<?php echo escape($search); ?>" placeholder="Search purchases by gig title or seller..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple/30 focus:border-uitmPurple transition-all placeholder-gray-400 dark:placeholder-slate-550 text-sm">
+                <input type="text" name="search" value="<?php echo escape($search); ?>" placeholder="Search purchases by gig title or seller..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple/30 focus:border-uitmPurple transition-all placeholder-gray-400 dark:placeholder-slate-500 text-sm">
                 <svg class="absolute left-3.5 top-3 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
             <div class="w-full md:w-48">
-                <select name="status" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-uitmPurple/30 focus:border-uitmPurple transition-all text-sm">
+                <select name="status" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-uitmPurple/30 focus:border-uitmPurple transition-all text-sm">
                     <option value="">All Statuses</option>
                     <option value="pending" <?php if ($status_filter === 'pending') echo 'selected'; ?>>Pending</option>
                     <option value="paid" <?php if ($status_filter === 'paid') echo 'selected'; ?>>Paid</option>
@@ -144,11 +144,11 @@ require_once 'includes/header.php';
                 </select>
             </div>
             <div class="flex w-full md:w-auto gap-2">
-                <button type="submit" class="flex-grow md:flex-grow-0 bg-uitmPurple hover:bg-purple-900 text-white font-bold py-2.5 px-6 rounded-xl transition-all duration-300 text-sm cursor-pointer border-0">
+                <button type="submit" class="flex-grow md:flex-grow-0 bg-uitmPurple hover:bg-purple-900 text-white font-bold py-2.5 px-6 rounded-lg transition-all duration-300 text-sm cursor-pointer border-0">
                     Filter
                 </button>
                 <?php if (!empty($search) || !empty($status_filter)): ?>
-                    <a href="dashboard" class="flex-grow md:flex-grow-0 text-center bg-gray-100 dark:bg-slate-800 hover:opacity-85 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2.5 px-4 rounded-xl transition-all text-sm inline-block">
+                    <a href="dashboard" class="flex-grow md:flex-grow-0 text-center bg-gray-100 dark:bg-slate-800 hover:opacity-85 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2.5 px-4 rounded-lg transition-all text-sm inline-block">
                         Clear
                     </a>
                 <?php endif; ?>
@@ -156,7 +156,7 @@ require_once 'includes/header.php';
         </form>
     </div>
     
-    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards; animation-delay: 225ms;">
+    <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards; animation-delay: 225ms;">
         <div class="h-1 bg-indigo-500"></div>
         <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between transition-colors duration-300">
             <h2 class="text-xl font-bold text-gray-900 dark:text-white">My Purchases</h2>
@@ -165,26 +165,38 @@ require_once 'includes/header.php';
         <?php if (count($orders) > 0): ?>
             <div class="p-6 space-y-6">
                 <?php foreach($orders as $o): ?>
-                    <div class="bg-gray-50 dark:bg-slate-800/50 rounded-2xl border border-gray-100 dark:border-slate-700 p-6 flex flex-col hover:shadow-2xl transition-all duration-300 animate-fade-in-up">
+                    <div class="bg-gray-50 dark:bg-slate-800/50 rounded-lg border border-gray-100 dark:border-slate-700 p-6 flex flex-col hover:shadow-2xl transition-all duration-300 animate-fade-in-up">
                         <div class="flex justify-between items-start mb-6">
                             <div>
                                 <h3 class="text-lg font-bold text-gray-900 dark:text-white font-serif mb-1"><?php echo escape($o['title']); ?></h3>
                                 <p class="text-sm text-gray-500 dark:text-slate-400 font-medium">Seller: <span class="text-gray-700 dark:text-slate-300"><?php echo escape($o['seller_name']); ?></span></p>
                             </div>
-                            <div class="flex-shrink-0">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <!-- Chat with Seller Button -->
+                                <a href="chat?user=<?php echo $o['seller_id']; ?>" class="bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/30 dark:hover:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-900/30 font-bold px-4 py-2 rounded-lg transition-all text-sm flex items-center gap-1.5 cursor-pointer">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                    Chat with Seller
+                                </a>
+
                                 <?php if ($o['status'] === 'delivered'): ?>
                                     <form action="api/order_action" method="POST" class="inline">
                                         <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
                                         <input type="hidden" name="action" value="complete">
                                         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-xl transition-all shadow-xl text-sm flex items-center gap-2 border-0 cursor-pointer"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Mark Complete</button>
+                                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg transition-all shadow-xl text-sm flex items-center gap-2 border-0 cursor-pointer"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Mark Complete</button>
                                     </form>
                                 <?php elseif ($o['status'] === 'pending'): ?>
+                                    <!-- Continue Payment Button -->
+                                    <a href="payment-gateway?order_id=<?php echo $o['order_id']; ?>" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-lg transition-all shadow-md text-sm flex items-center gap-1.5 cursor-pointer">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                                        Continue Payment
+                                    </a>
+
                                     <form action="api/order_action" method="POST" class="inline" onsubmit="return confirm('Cancel this order?');">
                                         <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
                                         <input type="hidden" name="action" value="cancel">
                                         <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                                        <button type="submit" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold px-4 py-2 rounded-xl transition-all text-sm border-0 cursor-pointer">Cancel Order</button>
+                                        <button type="submit" class="bg-red-50 hover:bg-red-100 dark:bg-red-950/30 dark:hover:bg-red-950/50 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/30 font-bold px-4 py-2 rounded-lg transition-all text-sm cursor-pointer">Cancel Order</button>
                                     </form>
                                 <?php endif; ?>
                             </div>
@@ -224,7 +236,7 @@ require_once 'includes/header.php';
                                 <?php endforeach; ?>
                             </div>
                         <?php else: ?>
-                            <div class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-xl p-4 flex items-center gap-3 text-red-700 dark:text-red-300 font-bold transition-colors duration-300">
+                            <div class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg p-4 flex items-center gap-3 text-red-700 dark:text-red-300 font-bold transition-colors duration-300">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 This order has been cancelled.
                             </div>
@@ -235,8 +247,8 @@ require_once 'includes/header.php';
         <?php else: ?>
             <div class="px-6 py-16 text-center">
                 <svg class="w-12 h-12 text-gray-200 dark:text-slate-600 mx-auto mb-4 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                <p class="text-gray-500 dark:text-slate-450 font-medium transition-colors duration-300">No purchases found matching your query.</p>
-                <a href="marketplace" class="mt-4 inline-block bg-uitmPurple text-white font-bold px-6 py-2.5 rounded-xl hover:bg-purple-900 transition-all duration-300 text-sm">Browse Marketplace</a>
+                <p class="text-gray-500 dark:text-slate-400 font-medium transition-colors duration-300">No purchases found matching your query.</p>
+                <a href="marketplace" class="mt-4 inline-block bg-uitmPurple text-white font-bold px-6 py-2.5 rounded-lg hover:bg-purple-900 transition-all duration-300 text-sm">Browse Marketplace</a>
             </div>
         <?php endif; ?>
     </div>
@@ -292,8 +304,8 @@ require_once 'includes/header.php';
 
     <!-- Stats Section -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 75ms;">
-        <div class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl p-6 shadow-md flex items-center gap-4 transition-colors duration-300">
-            <div class="p-3.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-xl">
+        <div class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-lg p-6 shadow-md flex items-center gap-4 transition-colors duration-300">
+            <div class="p-3.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-lg">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
             <div>
@@ -302,8 +314,8 @@ require_once 'includes/header.php';
             </div>
         </div>
 
-        <div class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl p-6 shadow-md flex items-center gap-4 transition-colors duration-300">
-            <div class="p-3.5 bg-teal-50 dark:bg-teal-950/40 text-teal-600 dark:text-teal-400 rounded-xl">
+        <div class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-lg p-6 shadow-md flex items-center gap-4 transition-colors duration-300">
+            <div class="p-3.5 bg-teal-50 dark:bg-teal-950/40 text-teal-600 dark:text-teal-400 rounded-lg">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h5a2 2 0 012 2v10a2 2 0 01-2 2H5z"></path></svg>
             </div>
             <div>
@@ -312,8 +324,8 @@ require_once 'includes/header.php';
             </div>
         </div>
 
-        <div class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl p-6 shadow-md flex items-center gap-4 transition-colors duration-300">
-            <div class="p-3.5 bg-orange-50 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400 rounded-xl">
+        <div class="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-lg p-6 shadow-md flex items-center gap-4 transition-colors duration-300">
+            <div class="p-3.5 bg-orange-50 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400 rounded-lg">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
             </div>
             <div>
@@ -324,14 +336,14 @@ require_once 'includes/header.php';
     </div>
 
     <!-- Search & Filter Controls -->
-    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-800/80 p-5 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between transition-colors duration-300 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 150ms;">
+    <div class="bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-gray-100 dark:border-slate-800/80 p-5 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between transition-colors duration-300 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 150ms;">
         <form method="GET" class="flex flex-col md:flex-row w-full gap-4">
             <div class="flex-grow relative w-full">
-                <input type="text" name="search" value="<?php echo escape($search); ?>" placeholder="Search incoming orders by gig title or buyer..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all placeholder-gray-400 dark:placeholder-slate-550 text-sm">
+                <input type="text" name="search" value="<?php echo escape($search); ?>" placeholder="Search incoming orders by gig title or buyer..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all placeholder-gray-400 dark:placeholder-slate-500 text-sm">
                 <svg class="absolute left-3.5 top-3 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
             <div class="w-full md:w-48">
-                <select name="status" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all text-sm">
+                <select name="status" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all text-sm">
                     <option value="">All Statuses</option>
                     <option value="pending" <?php if ($status_filter === 'pending') echo 'selected'; ?>>Pending</option>
                     <option value="paid" <?php if ($status_filter === 'paid') echo 'selected'; ?>>Paid</option>
@@ -341,11 +353,11 @@ require_once 'includes/header.php';
                 </select>
             </div>
             <div class="flex w-full md:w-auto gap-2">
-                <button type="submit" class="flex-grow md:flex-grow-0 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 px-6 rounded-xl transition-all duration-300 text-sm cursor-pointer border-0">
+                <button type="submit" class="flex-grow md:flex-grow-0 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 px-6 rounded-lg transition-all duration-300 text-sm cursor-pointer border-0">
                     Filter
                 </button>
                 <?php if (!empty($search) || !empty($status_filter)): ?>
-                    <a href="dashboard" class="flex-grow md:flex-grow-0 text-center bg-gray-100 dark:bg-slate-800 hover:opacity-85 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2.5 px-4 rounded-xl transition-all text-sm inline-block">
+                    <a href="dashboard" class="flex-grow md:flex-grow-0 text-center bg-gray-100 dark:bg-slate-800 hover:opacity-85 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2.5 px-4 rounded-lg transition-all text-sm inline-block">
                         Clear
                     </a>
                 <?php endif; ?>
@@ -355,7 +367,7 @@ require_once 'includes/header.php';
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- My Gigs -->
-        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards; animation-delay: 225ms;">
+        <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards; animation-delay: 225ms;">
             <div class="h-1 bg-emerald-500"></div>
             <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between transition-colors duration-300">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white">My Active Gigs</h2>
@@ -397,14 +409,14 @@ require_once 'includes/header.php';
             <?php else: ?>
                 <div class="px-6 py-16 text-center">
                     <svg class="w-12 h-12 text-gray-200 dark:text-slate-600 mx-auto mb-4 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                    <p class="text-gray-500 dark:text-slate-450 font-medium transition-colors duration-300">You don't have any active gigs yet.</p>
-                    <a href="<?php echo ROOT_URL; ?>gigs/create" class="mt-4 inline-block bg-emerald-500 text-white font-bold px-6 py-2.5 rounded-xl hover:bg-emerald-600 transition-all duration-300 text-sm">Create your first gig</a>
+                    <p class="text-gray-500 dark:text-slate-400 font-medium transition-colors duration-300">You don't have any active gigs yet.</p>
+                    <a href="<?php echo ROOT_URL; ?>gigs/create" class="mt-4 inline-block bg-emerald-500 text-white font-bold px-6 py-2.5 rounded-lg hover:bg-emerald-600 transition-all duration-300 text-sm">Create your first gig</a>
                 </div>
             <?php endif; ?>
         </div>
         
         <!-- Incoming Orders -->
-        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards; animation-delay: 300ms;">
+        <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards; animation-delay: 300ms;">
             <div class="h-1 bg-emerald-500"></div>
             <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex items-center justify-between transition-colors duration-300">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white">Incoming Orders</h2>
@@ -453,7 +465,7 @@ require_once 'includes/header.php';
                                                 <input type="hidden" name="order_id" value="<?php echo $io['order_id']; ?>">
                                                 <input type="hidden" name="action" value="deliver">
                                                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                                                <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-1.5 rounded-xl transition-all duration-300 hover:shadow-2xl text-xs border-0 cursor-pointer">Mark Delivered</button>
+                                                <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-1.5 rounded-lg transition-all duration-300 hover:shadow-2xl text-xs border-0 cursor-pointer">Mark Delivered</button>
                                             </form>
                                         <?php else: ?>
                                             <?php
@@ -479,7 +491,7 @@ require_once 'includes/header.php';
             <?php else: ?>
                 <div class="px-6 py-16 text-center">
                     <svg class="w-12 h-12 text-gray-200 dark:text-slate-600 mx-auto mb-4 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
-                    <p class="text-gray-500 dark:text-slate-450 font-medium transition-colors duration-300">No incoming orders found matching your query.</p>
+                    <p class="text-gray-500 dark:text-slate-400 font-medium transition-colors duration-300">No incoming orders found matching your query.</p>
                 </div>
             <?php endif; ?>
         </div>

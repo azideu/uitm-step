@@ -7,7 +7,7 @@ require_once 'includes/header.php';
 ?>
 
 <div class="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-800 p-8 md:p-12 transition-colors duration-300">
+    <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 p-8 md:p-12 transition-colors duration-300">
         <h1 class="text-3xl md:text-4xl font-bold mb-8 text-uitmPurple dark:text-purple-300 font-serif border-b border-gray-200 dark:border-slate-800 pb-4">How It Works</h1>
         
         <div class="prose prose-slate dark:prose-invert max-w-none">
@@ -21,7 +21,7 @@ require_once 'includes/header.php';
 
             <!-- Quick Path Selection -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8 pb-8 border-b border-gray-200 dark:border-slate-800">
-                <div class="p-6 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-100 dark:border-slate-800/80">
+                <div class="p-6 bg-slate-50 dark:bg-slate-800/40 rounded-lg border border-slate-100 dark:border-slate-800/80">
                     <h3 class="text-xl font-bold text-uitmPurple dark:text-purple-300 mb-2 flex items-center gap-2">
                         <svg class="w-6 h-6 text-uitmPurple dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
                         For Student Freelancers
@@ -35,7 +35,7 @@ require_once 'includes/header.php';
                     </a>
                 </div>
                 
-                <div class="p-6 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-100 dark:border-slate-800/80">
+                <div class="p-6 bg-slate-50 dark:bg-slate-800/40 rounded-lg border border-slate-100 dark:border-slate-800/80">
                     <h3 class="text-xl font-bold text-uitmPurple dark:text-purple-300 mb-2 flex items-center gap-2">
                         <svg class="w-6 h-6 text-uitmPurple dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                         For Clients & Gigs
@@ -102,7 +102,7 @@ require_once 'includes/header.php';
             </p>
 
             <!-- Call To Action Card -->
-            <div class="mt-10 p-8 bg-uitmPurple/5 dark:bg-slate-800/60 rounded-2xl border border-uitmPurple/10 dark:border-slate-800 text-center transition-colors duration-300">
+            <div class="mt-10 p-8 bg-uitmPurple/5 dark:bg-slate-800/60 rounded-lg border border-uitmPurple/10 dark:border-slate-800 text-center transition-colors duration-300">
                 <h3 class="text-2xl font-bold text-uitmPurple dark:text-purple-300 mb-2 font-serif">Ready to get started?</h3>
                 <p class="text-slate-600 dark:text-slate-400 mb-6 text-base max-w-lg mx-auto leading-relaxed">Join thousands of UiTM students and begin showcasing your talent or finding local services today.</p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">

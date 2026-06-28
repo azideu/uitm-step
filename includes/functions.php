@@ -60,7 +60,7 @@ function display_toast() {
         }
         
         echo "
-        <div id='toast' class='fixed bottom-5 right-5 flex items-center gap-3 text-white px-5 py-3.5 rounded-2xl shadow-2xl border backdrop-blur-md $bgColor translate-x-[120%] transition-transform duration-500 ease-out z-[9999] max-w-sm sm:max-w-md'>
+        <div id='toast' class='fixed bottom-5 right-5 flex items-center gap-3 text-white px-5 py-3.5 rounded-lg shadow-2xl border backdrop-blur-md $bgColor translate-x-[120%] transition-transform duration-500 ease-out z-[9999] max-w-sm sm:max-w-md'>
             $iconSvg
             <div class='text-sm font-semibold flex-1 leading-snug'>$msg</div>
             <button onclick='dismissToast()' class='text-white/70 hover:text-white hover:scale-110 active:scale-95 transition-all p-1 rounded-lg hover:bg-white/10 shrink-0 cursor-pointer border-0 bg-transparent'>
