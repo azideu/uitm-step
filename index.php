@@ -193,7 +193,7 @@ require_once 'includes/header.php';
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             <!-- Left Column: Title, Subtitle, Search -->
-            <div class="lg:col-span-7 flex flex-col justify-center text-left animate-fade-in-up opacity-0" style="animation-fill-mode: forwards;">
+            <div class="lg:col-span-7 flex flex-col justify-center text-left animate-fade-in-up">
                 <!-- Editorial Brand Label -->
                 <div class="pl-4 border-l-2 border-uitmPurple/70 dark:border-uitmGold/70 text-slate-700 dark:text-slate-400 text-xs font-bold uppercase tracking-widest mb-6">
                     UiTM Student Talent Exchange Platform
@@ -231,7 +231,7 @@ require_once 'includes/header.php';
             </div>
 
             <!-- Right Column: Asymmetric Floating Cards Showcase -->
-            <div class="lg:col-span-5 hidden md:flex relative h-[480px] w-full items-center justify-center animate-fade-in-up opacity-0" style="animation-fill-mode: forwards;">
+            <div class="lg:col-span-5 hidden md:flex relative h-[480px] w-full items-center justify-center animate-fade-in-up">
                 <?php foreach ($display_hero_cards as $index => $card): ?>
                     <?php
                         $pos = $positions[$index];
