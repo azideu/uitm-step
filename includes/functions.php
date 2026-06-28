@@ -24,6 +24,7 @@ function asset_url($path) {
  * Redirect and exit
  */
 function redirect($url) {
+    session_write_close();
     header("Location: " . asset_url($url));
     exit;
 }

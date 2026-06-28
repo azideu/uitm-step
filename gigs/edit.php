@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $pdo->commit();
             set_toast('success', "Gig updated successfully!");
-            redirect("details?id=$gig_id");
+            redirect("gigs/details?id=$gig_id");
         } catch (\Exception $e) {
             $pdo->rollBack();
             error_log("Gig Update Error: " . $e->getMessage());

@@ -93,15 +93,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     // Verify CSRF Token
     if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         set_toast('error', 'Invalid security token.');
-        redirect("details?id=$gig_id");
+        redirect("gigs/details?id=$gig_id");
     }
 
     if ($_SESSION['role'] !== 'student') {
         set_toast('error', 'Only students can buy gigs.');
-        redirect("details?id=$gig_id");
+        redirect("gigs/details?id=$gig_id");
     } elseif ($gig['seller_id'] == $_SESSION['user_id']) {
         set_toast('error', 'You cannot buy your own gig.');
-        redirect("details?id=$gig_id");
+        redirect("gigs/details?id=$gig_id");
     } else {
         $existing_stmt = $pdo->prepare("SELECT order_id, status FROM orders WHERE gig_id = ? AND buyer_id = ? AND status IN ('pending', 'paid', 'delivered', 'complete') LIMIT 1");
         $existing_stmt->execute([$gig_id, $_SESSION['user_id']]);
@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         } catch (\Exception $e) {
             error_log("Order creation error: " . $e->getMessage());
             set_toast('error', 'Unable to create your order. Please try again.');
-            redirect("details?id=$gig_id");
+            redirect("gigs/details?id=$gig_id");
         }
     }
 }
