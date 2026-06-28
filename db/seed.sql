@@ -13,18 +13,18 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 -- Insert Admins
 INSERT INTO users (student_id, name, email, password, campus, role) VALUES
-('2024801742', 'Addin Zidane', '2024801742@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin'),
-('2024236824', 'Muhammad Zahin Shah', '2024236824@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin'),
-('2024244864', 'Danish Daniel', '2024244864@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin'),
-('2024419672', 'Awin Amani', '2024419672@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin');
+('2024000001', 'Admin Alpha', '2024000001@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin'),
+('2024000002', 'Admin Beta', '2024000002@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin'),
+('2024000003', 'Admin Gamma', '2024000003@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin'),
+('2024000004', 'Admin Delta', '2024000004@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Kuala Terengganu', 'admin');
 
 -- Insert Students (Password is 'password')
 INSERT INTO users (student_id, name, email, password, campus, role) VALUES
-('2024663124', 'Ahmad Zaidan', '2024663124@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Shah Alam', 'student'),
-('2024237928', 'Amanda Saffieya', '2024237928@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Puncak Alam', 'student'),
-('2024284386', 'Ainun Nadiah', '2024284386@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Jengka', 'student'),
-('2024288856', 'Adam Khairi', '2024288856@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Shah Alam', 'student'),
-('2024285674', 'Muhammad Ridhuan', '2024285674@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Seri Iskandar', 'student');
+('2024000005', 'Student One', '2024000005@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Shah Alam', 'student'),
+('2024000006', 'Student Two', '2024000006@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Puncak Alam', 'student'),
+('2024000007', 'Student Three', '2024000007@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Jengka', 'student'),
+('2024000008', 'Student Four', '2024000008@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Shah Alam', 'student'),
+('2024000009', 'Student Five', '2024000009@student.uitm.edu.my', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Seri Iskandar', 'student');
 
 -- Insert Tags
 INSERT INTO tags (name) VALUES ('Programming'), ('Design'), ('Writing'), ('Tutor'), ('Video');

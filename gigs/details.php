@@ -154,23 +154,23 @@ require_once '../includes/header.php';
                 <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-5 leading-tight font-serif transition-colors duration-300"><?php echo escape($gig['title']); ?></h1>
                 
                 <!-- Seller Info Card -->
-                <div class="flex items-center gap-4 mb-8 p-4 bg-gray-50 dark:bg-slate-800/50 rounded-lg border border-gray-100 dark:border-slate-700 transition-colors duration-300">
+                <a href="<?php echo ROOT_URL; ?>profile?id=<?php echo $gig['seller_id']; ?>" class="flex items-center gap-4 mb-8 p-4 bg-gray-50 dark:bg-slate-800/50 rounded-lg border border-gray-100 dark:border-slate-700 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-slate-800 hover:shadow-md group block">
                     <?php
                         $seller_avatar = !empty($gig['profile_picture']) 
                             ? asset_url($gig['profile_picture']) 
                             : get_avatar_url($gig['seller_name']);
                     ?>
-                    <div class="w-12 h-12 rounded-full bg-uitmPurple flex items-center justify-center text-white font-extrabold text-lg flex-shrink-0 overflow-hidden border-2 border-white shadow-xl">
+                    <div class="w-12 h-12 rounded-full bg-uitmPurple flex items-center justify-center text-white font-extrabold text-lg flex-shrink-0 overflow-hidden border-2 border-white shadow-xl group-hover:scale-105 transition-transform duration-300">
                         <img src="<?php echo $seller_avatar; ?>" alt="<?php echo escape($gig['seller_name']); ?>" class="w-full h-full object-cover">
                     </div>
                     <div>
-                        <p class="font-bold text-gray-900 dark:text-white transition-colors duration-300"><?php echo escape($gig['seller_name']); ?></p>
+                        <p class="font-bold text-gray-900 dark:text-white transition-colors duration-300 group-hover:text-uitmPurple dark:group-hover:text-purple-400"><?php echo escape($gig['seller_name']); ?></p>
                         <p class="text-sm text-gray-500 dark:text-slate-400 transition-colors duration-300"><?php echo escape(str_replace(['UiTM Kampus ', 'UiTM '], '', $gig['campus'])); ?></p>
                     </div>
                     <div class="ml-auto">
                         <span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-bold px-3 py-1 rounded-full transition-colors duration-300">Available</span>
                     </div>
-                </div>
+                </a>
                 
                 <?php 
                 $media_items = [];

@@ -6,7 +6,7 @@ require_once 'includes/functions.php';
 // Fetch random student cards for the Hero section showcase
 $mock_hero_cards = [
     [
-        'seller_name' => 'Putera Mikhail',
+        'seller_name' => 'Akari Asagiri',
         'title' => 'Web Developer',
         'campus' => 'Shah Alam',
         'price' => 150,
@@ -16,12 +16,12 @@ $mock_hero_cards = [
         'reviews' => 42,
         'status' => 'Online',
         'color' => 'from-purple-500 to-indigo-600',
-        'initials' => 'PM'
+        'initials' => 'AA'
     ],
     [
         'seller_name' => 'Ainun Nadiah',
         'title' => 'Brand Designer',
-        'campus' => 'Raub',
+        'campus' => 'Puncak Alam',
         'price' => 80,
         'price_unit' => '/gig',
         'tags' => 'Logo, UX, Canva',
@@ -32,9 +32,9 @@ $mock_hero_cards = [
         'initials' => 'AN'
     ],
     [
-        'seller_name' => 'Ammar Danish',
+        'seller_name' => 'Ahmad Zaidan',
         'title' => 'Video Editor',
-        'campus' => 'Terengganu',
+        'campus' => 'Kota Kinabalu',
         'price' => 100,
         'price_unit' => '/video',
         'tags' => 'Premiere, CapCut, Reels',
@@ -42,12 +42,12 @@ $mock_hero_cards = [
         'reviews' => 15,
         'status' => 'Online',
         'color' => 'from-blue-500 to-teal-500',
-        'initials' => 'AD'
+        'initials' => 'AZ'
     ],
     [
-        'seller_name' => 'Siti Aliya',
+        'seller_name' => 'Amanda Saffieya',
         'title' => 'Content Writer',
-        'campus' => 'Puncak Alam',
+        'campus' => 'Kuala Pilah',
         'price' => 50,
         'price_unit' => '/article',
         'tags' => 'SEO, Editing, Blog',
@@ -55,12 +55,12 @@ $mock_hero_cards = [
         'reviews' => 19,
         'status' => 'Available',
         'color' => 'from-emerald-500 to-teal-600',
-        'initials' => 'SA'
+        'initials' => 'AS'
     ],
     [
-        'seller_name' => 'Firas Faiq',
+        'seller_name' => 'Muhammad Ridhuan',
         'title' => 'UI/UX Designer',
-        'campus' => 'Seri Iskandar',
+        'campus' => 'Bertam',
         'price' => 120,
         'price_unit' => '/design',
         'tags' => 'Figma, Mobile, Web',
@@ -68,7 +68,7 @@ $mock_hero_cards = [
         'reviews' => 24,
         'status' => 'Online',
         'color' => 'from-amber-500 to-orange-600',
-        'initials' => 'FF'
+        'initials' => 'MR'
     ]
 ];
 
@@ -424,8 +424,8 @@ require_once 'includes/header.php';
         [
             'rating' => 5,
             'review_text' => 'The interface of this website is incredibly clean and modern! Navigating between gigs is fast and seamless. Easily the best student portal I have ever used.',
-            'name' => 'Ammar Danish',
-            'role' => 'Student Freelancer (Kuala Terengganu)',
+            'name' => 'Ahmad Zaidan',
+            'role' => 'Student Freelancer (Kota Kinabalu)',
             'glow_from' => 'from-purple-500',
             'glow_to' => 'to-indigo-500',
             'text_hover' => 'group-hover:text-purple-600 dark:group-hover:text-purple-400'
@@ -434,7 +434,7 @@ require_once 'includes/header.php';
             'rating' => 5,
             'review_text' => 'I love the dark mode option! The design looks very premium, especially with the subtle micro-animations and smooth transitions. Incredible user experience!',
             'name' => 'Ainun Nadiah',
-            'role' => 'Client / Student (Raub)',
+            'role' => 'Client / Student (Puncak Alam)',
             'glow_from' => 'from-pink-500',
             'glow_to' => 'to-rose-500',
             'text_hover' => 'group-hover:text-pink-600 dark:group-hover:text-pink-400'
@@ -442,7 +442,7 @@ require_once 'includes/header.php';
         [
             'rating' => 5,
             'review_text' => 'Creating my freelance profile and showcasing my programming services was super easy. The step-by-step onboarding and styling options are top-tier.',
-            'name' => 'Putera Mikhail Fallon',
+            'name' => 'Akari Asagiri',
             'role' => 'Web Developer Student (Shah Alam)',
             'glow_from' => 'from-blue-500',
             'glow_to' => 'to-teal-500',
@@ -452,7 +452,7 @@ require_once 'includes/header.php';
             'rating' => 5,
             'review_text' => 'As a student seller, this platform has changed my life. I was able to secure 5 local programming projects within my campus during finals week alone!',
             'name' => 'Adam Khairi',
-            'role' => 'Freelancer Student (Jasin)',
+            'role' => 'Freelancer Student (Mukah)',
             'glow_from' => 'from-amber-500',
             'glow_to' => 'to-orange-500',
             'text_hover' => 'group-hover:text-amber-600 dark:group-hover:text-amber-400'
@@ -460,8 +460,8 @@ require_once 'includes/header.php';
         [
             'rating' => 5,
             'review_text' => 'Ordering a logo for my student association was incredibly fast. The seller was friendly, local, and knew exactly what our faculty guidelines required. Highly recommended!',
-            'name' => 'Siti Aliya',
-            'role' => 'Client / Student (Puncak Alam)',
+            'name' => 'Amanda Saffieya',
+            'role' => 'Client / Student (Kuala Pilah)',
             'glow_from' => 'from-emerald-500',
             'glow_to' => 'to-teal-500',
             'text_hover' => 'group-hover:text-emerald-600 dark:group-hover:text-emerald-400'
@@ -469,8 +469,8 @@ require_once 'includes/header.php';
         [
             'rating' => 5,
             'review_text' => 'STEP makes peer-to-peer transactions within campus super secure. No more worrying about payment issues or scams. Every transaction is fast and transparent.',
-            'name' => 'Firas Faiq',
-            'role' => 'Video Editor (Seri Iskandar)',
+            'name' => 'Muhammad Ridhuan',
+            'role' => 'Video Editor (Bertam)',
             'glow_from' => 'from-rose-500',
             'glow_to' => 'to-purple-600',
             'text_hover' => 'group-hover:text-rose-600 dark:group-hover:text-rose-400'

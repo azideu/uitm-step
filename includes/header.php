@@ -248,33 +248,5 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
                 closeIcon.classList.add('hidden');
             }
         }
-
-        // Semi-sticky Smart Header behavior
-        document.addEventListener('DOMContentLoaded', () => {
-            const navbar = document.getElementById('main-navbar');
-            if (!navbar) return;
-
-            let lastScrollY = window.scrollY;
-            const threshold = 10; // minimum scroll distance to trigger hiding/showing
-
-            window.addEventListener('scroll', () => {
-                const currentScrollY = window.scrollY;
-
-                // Prevent negative scroll values (like mobile bounce)
-                if (currentScrollY < 0) return;
-
-                // Check threshold
-                if (Math.abs(currentScrollY - lastScrollY) < threshold) return;
-
-                if (currentScrollY > lastScrollY && currentScrollY > 80) {
-                    // Scrolling down - hide navbar
-                    navbar.classList.add('-translate-y-full', 'shadow-none');
-                } else {
-                    // Scrolling up - show navbar
-                    navbar.classList.remove('-translate-y-full', 'shadow-none');
-                }
-
-                lastScrollY = currentScrollY;
-            });
-        });
     </script>
+

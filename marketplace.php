@@ -12,6 +12,7 @@ $offset = ($page - 1) * $limit;
 
 // Filter setups
 $is_logged_in = isset($_SESSION['user_id']);
+$campus_is_explicit = isset($_GET['campus']);
 $campus_filter = $_GET['campus'] ?? ($is_logged_in ? 'local' : 'all');
 $tag_filter = $_GET['tag'] ?? '';
 $search_query = trim($_GET['search'] ?? '');
@@ -19,32 +20,57 @@ $search_query = trim($_GET['search'] ?? '');
 $params = [];
 $where_clauses = ["g.status = 'active'", "u.role = 'student'"];
 
-// National vs Local Campus Filter
-if ($campus_filter === 'local') {
-    if ($is_logged_in) {
-        $where_clauses[] = "u.campus = ?";
-        $params[] = $_SESSION['campus'];
-    } else {
+// Helper function to build query clauses based on campus setting
+function build_marketplace_query($campus, $is_logged_in, $tag, $search) {
+    $clauses = ["g.status = 'active'", "u.role = 'student'"];
+    $p = [];
+    
+    if ($campus === 'local') {
+        if ($is_logged_in) {
+            $clauses[] = "u.campus = ?";
+            $p[] = $_SESSION['campus'];
+        }
+    }
+    
+    $join = "";
+    if (!empty($tag)) {
+        $join = "JOIN gig_tags gt ON g.gig_id = gt.gig_id JOIN tags t ON gt.tag_id = t.tag_id";
+        $clauses[] = "t.name = ?";
+        $p[] = $tag;
+    }
+    
+    if (!empty($search)) {
+        $clauses[] = "(g.title LIKE ? OR g.description LIKE ?)";
+        $p[] = "%$search%";
+        $p[] = "%$search%";
+    }
+    
+    return [
+        'where_sql' => implode(' AND ', $clauses),
+        'params' => $p,
+        'join_tags' => $join
+    ];
+}
+
+// Build initial query configuration
+$query_config = build_marketplace_query($campus_filter, $is_logged_in, $tag_filter, $search_query);
+
+// Fallback logic: If showing local by default and there are no listings, automatically show all campuses.
+if ($campus_filter === 'local' && !$campus_is_explicit) {
+    $count_sql = "SELECT COUNT(DISTINCT g.gig_id) FROM gigs g JOIN users u ON g.seller_id = u.user_id {$query_config['join_tags']} WHERE {$query_config['where_sql']}";
+    $stmt = $pdo->prepare($count_sql);
+    $stmt->execute($query_config['params']);
+    $total_gigs_local = (int)$stmt->fetchColumn();
+    
+    if ($total_gigs_local === 0) {
         $campus_filter = 'all';
+        $query_config = build_marketplace_query($campus_filter, $is_logged_in, $tag_filter, $search_query);
     }
 }
 
-// Tag filter
-$join_tags = "";
-if (!empty($tag_filter)) {
-    $join_tags = "JOIN gig_tags gt ON g.gig_id = gt.gig_id JOIN tags t ON gt.tag_id = t.tag_id";
-    $where_clauses[] = "t.name = ?";
-    $params[] = $tag_filter;
-}
-
-// Text Search
-if (!empty($search_query)) {
-    $where_clauses[] = "(g.title LIKE ? OR g.description LIKE ?)";
-    $params[] = "%$search_query%";
-    $params[] = "%$search_query%";
-}
-
-$where_sql = implode(' AND ', $where_clauses);
+$where_sql = $query_config['where_sql'];
+$params = $query_config['params'];
+$join_tags = $query_config['join_tags'];
 
 // Count total for pagination
 $count_sql = "SELECT COUNT(DISTINCT g.gig_id) FROM gigs g JOIN users u ON g.seller_id = u.user_id $join_tags WHERE $where_sql";
@@ -184,7 +210,7 @@ require_once 'includes/header.php';
                 <!-- Info / Card Body -->
                 <div class="p-3 sm:p-4 flex-grow flex flex-col">
                     <!-- Seller Row -->
-                    <div class="flex items-center gap-2 mb-2">
+                    <a href="<?php echo ROOT_URL; ?>profile?id=<?php echo $gig['seller_id']; ?>" class="flex items-center gap-2 mb-2 group/seller hover:opacity-80 transition-opacity duration-200">
                         <?php
                             $seller_avatar = !empty($gig['profile_picture']) 
                                 ? asset_url($gig['profile_picture']) 
@@ -193,8 +219,8 @@ require_once 'includes/header.php';
                         <div class="w-5 h-5 sm:w-6 sm:h-6 rounded-full overflow-hidden shrink-0 bg-uitmPurple border border-gray-100 dark:border-slate-800">
                             <img src="<?php echo $seller_avatar; ?>" alt="<?php echo escape($gig['seller_name']); ?>" class="w-full h-full object-cover">
                         </div>
-                        <span class="font-bold text-gray-800 dark:text-slate-200 text-[10px] sm:text-xs truncate hover:underline cursor-pointer"><?php echo escape($gig['seller_name']); ?></span>
-                    </div>
+                        <span class="font-bold text-gray-800 dark:text-slate-200 text-[10px] sm:text-xs truncate group-hover/seller:underline"><?php echo escape($gig['seller_name']); ?></span>
+                    </a>
 
                     <!-- Gig Title -->
                     <a href="<?php echo ROOT_URL; ?>gigs/details?id=<?php echo $gig['gig_id']; ?>" class="text-xs sm:text-sm font-medium text-gray-800 dark:text-slate-200 line-clamp-2 hover:underline hover:text-uitmPurple dark:hover:text-purple-300 leading-snug mb-1 h-[32px] sm:h-[40px] block transition-colors duration-200">
