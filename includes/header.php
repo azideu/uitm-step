@@ -160,8 +160,6 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
                                 <span>Profile</span>
                             </a>
                         <?php endif; ?>
-                        
-                        <a href="<?php echo ROOT_URL; ?>logout" class="hover:text-red-300 hover:bg-white/10 px-3 py-2 rounded-md font-medium transition-colors">Logout</a>
                     <?php else: ?>
                         <a href="<?php echo ROOT_URL; ?>login" class="hover:text-uitmGold px-3 py-2 rounded-md font-medium transition-colors">Login</a>
                         <a href="<?php echo ROOT_URL; ?>register" class="bg-uitmGold text-uitmPurple px-5 py-2 rounded-md font-bold shadow-xl hover:bg-yellow-400 hover:scale-105 transition-all duration-300">Register</a>
@@ -205,7 +203,6 @@ if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['rol
                         <a href="<?php echo ROOT_URL; ?>marketplace" class="block hover:text-uitmGold hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Marketplace</a>
                         <a href="<?php echo ROOT_URL; ?>profile" class="block hover:text-uitmGold hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Profile</a>
                     <?php endif; ?>
-                    <a href="<?php echo ROOT_URL; ?>logout" class="block text-red-300 hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Logout</a>
                 <?php else: ?>
                     <a href="<?php echo ROOT_URL; ?>login" class="block hover:text-uitmGold hover:bg-white/10 px-3 py-2.5 rounded-md font-medium transition-colors">Login</a>
                     <a href="<?php echo ROOT_URL; ?>register" class="block bg-uitmGold text-uitmPurple hover:bg-yellow-400 px-3 py-2.5 rounded-md font-bold shadow-xl transition-all text-center">Register</a>
