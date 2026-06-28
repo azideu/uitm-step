@@ -3,6 +3,7 @@ USE uitm_step;
 SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE TABLE sessions;
 TRUNCATE TABLE gig_tags;
+TRUNCATE TABLE reviews;
 TRUNCATE TABLE orders;
 TRUNCATE TABLE messages;
 TRUNCATE TABLE gigs;
@@ -63,3 +64,69 @@ INSERT INTO gig_tags (gig_id, tag_id) VALUES
 (1, 1), (2, 2), (3, 4), (4, 3), (5, 3), (6, 5), (7, 1), (8, 2),
 (9, 4), (10, 1), (11, 2), (12, 3), (13, 1), (14, 2), (15, 3),
 (16, 2), (17, 2), (18, 1), (19, 2), (20, 4), (21, 3), (22, 5), (23, 1), (24, 3), (25, 3), (26, 1), (27, 2);
+
+-- Insert completed orders for seeding reviews (each gig gets at least one review)
+INSERT INTO orders (buyer_id, gig_id, status) VALUES
+(6, 1, 'complete'),
+(7, 1, 'complete'),
+(8, 2, 'complete'),
+(9, 2, 'complete'),
+(5, 3, 'complete'),
+(6, 4, 'complete'),
+(7, 4, 'complete'),
+(7, 5, 'complete'),
+(8, 6, 'complete'),
+(9, 7, 'complete'),
+(5, 8, 'complete'),
+(6, 9, 'complete'),
+(7, 10, 'complete'),
+(8, 11, 'complete'),
+(9, 12, 'complete'),
+(5, 13, 'complete'),
+(6, 14, 'complete'),
+(7, 15, 'complete'),
+(8, 16, 'complete'),
+(9, 17, 'complete'),
+(5, 18, 'complete'),
+(6, 19, 'complete'),
+(7, 20, 'complete'),
+(8, 21, 'complete'),
+(9, 22, 'complete'),
+(5, 23, 'complete'),
+(6, 24, 'complete'),
+(7, 25, 'complete'),
+(8, 26, 'complete'),
+(9, 27, 'complete');
+
+-- Insert Reviews corresponding to completed orders
+INSERT INTO reviews (order_id, gig_id, buyer_id, seller_id, rating, review_text) VALUES
+(1, 1, 6, 5, 5, 'Excellent service, fixed my HTML/CSS bug in minutes!'),
+(2, 1, 7, 5, 4, 'Good work, very helpful response.'),
+(3, 2, 8, 8, 5, 'Super cool logo design, matches our FYP theme perfectly.'),
+(4, 2, 9, 8, 5, 'Highly creative! The custom illustration is fantastic.'),
+(5, 3, 5, 5, 5, 'Clear explanation on calculus topics, helped with assignment!'),
+(6, 4, 6, 5, 4, 'Accurate data entry, clean work.'),
+(7, 4, 7, 5, 5, 'Super fast delivery of my Excel data entries.'),
+(8, 5, 7, 9, 5, 'Great feedback on my resume. Got selected for interview!'),
+(9, 6, 8, 5, 5, 'Excellent editing, the transitions are very clean and professional.'),
+(10, 7, 9, 8, 5, 'Very robust PHP script, solved our database retrieval issues.'),
+(11, 8, 5, 9, 5, 'Amazing flyer design! Standard is very high.'),
+(12, 9, 6, 5, 5, 'Helped me understand physics concepts so clearly.'),
+(13, 10, 7, 8, 4, 'Simple python scraper, runs perfectly.'),
+(14, 11, 8, 9, 5, 'The Figma prototype is stunning and interactive.'),
+(15, 12, 9, 7, 5, 'Perfect proofreading, corrected all grammatical errors.'),
+(16, 13, 5, 8, 5, 'Helped debug my Java project, very clear explanation.'),
+(17, 14, 6, 9, 5, 'Fabulous illustration, very creative style.'),
+(18, 15, 7, 7, 4, 'Very accurate translation to Malay. Fast delivery.'),
+(19, 16, 8, 6, 5, 'Highly detailed UI design, very professional Figma layout.'),
+(20, 17, 9, 7, 5, 'Slide design is clean, sleek, and matches my topic.'),
+(21, 18, 5, 8, 5, 'Optimized query runs 10x faster now, great work!'),
+(22, 19, 6, 9, 5, 'Beautiful club event posters! Highly satisfied.'),
+(23, 20, 7, 5, 5, 'The literature analysis helped me secure an A.'),
+(24, 21, 8, 6, 5, 'Well-written article, zero plagiarism detected.'),
+(25, 22, 9, 7, 4, 'Sound is balanced and clean. Thanks!'),
+(26, 23, 5, 8, 5, 'Great helper with C++ assignments, very clear logic.'),
+(27, 24, 6, 9, 5, 'Template is easy to use and very comprehensive.'),
+(28, 25, 7, 5, 5, 'Lab report check was meticulous and helpful.'),
+(29, 26, 8, 6, 5, 'The Excel dashboard is fully interactive, beautiful colors.'),
+(30, 27, 9, 7, 5, 'Amazing infographic design, made complex data readable.');

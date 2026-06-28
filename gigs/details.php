@@ -373,7 +373,8 @@ require_once '../includes/header.php';
                 Reviews & Ratings
             </h2>
 
-            <!-- Review Form (always show, but conditionally enabled) -->
+            <!-- Review Form (shown only if logged in and has purchased this gig) -->
+            <?php if (isset($_SESSION['user_id']) && $is_buyer): ?>
             <div class="mb-10 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-2xl">
                 <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 flex items-center gap-2 transition-colors duration-300">
                     Share Your Experience
@@ -526,6 +527,7 @@ require_once '../includes/header.php';
                     });
                 </script>
             </div>
+            <?php endif; ?>
 
             <!-- Reviews Display -->
             <?php if (!empty($reviews)): ?>
