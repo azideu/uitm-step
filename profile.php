@@ -769,9 +769,8 @@ require_once 'includes/header.php';
                                                 $rating_val = number_format($actual_rating, 1);
                                                 $review_cnt = $actual_reviews;
                                             } else {
-                                                // Fallback to beautiful mock ratings if no reviews (keeps layout rich and identical to mockup)
-                                                $rating_val = number_format(4.7 + (($gig['gig_id'] * 13) % 4) * 0.1, 1);
-                                                $review_cnt = (5 + ($gig['gig_id'] * 37) % 590);
+                                                $rating_val = "0.0";
+                                                $review_cnt = 0;
                                             }
                                         ?>
                                         <div class="flex items-center gap-1 text-xs sm:text-sm font-bold mt-1 text-gray-900 dark:text-white">

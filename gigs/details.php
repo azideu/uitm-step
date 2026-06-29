@@ -64,9 +64,6 @@ try {
                 SELECT o.* FROM orders o
                 WHERE o.gig_id = ?
                   AND o.buyer_id = ?
-                  AND o.payment_proof_path IS NOT NULL
-                  AND o.payment_proof_path != ''
-                  AND TRIM(o.payment_proof_path) != ''
                   AND o.status IN ('paid','delivered','complete')
                   AND NOT EXISTS (SELECT 1 FROM reviews WHERE order_id = o.order_id)
                 ORDER BY o.created_at DESC
@@ -387,7 +384,7 @@ require_once '../includes/header.php';
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            You can leave a review after submitting payment proof for your order.
+                            You can leave a review after payment is completed for your order.
                         </p>
                     </div>
                 </div>
