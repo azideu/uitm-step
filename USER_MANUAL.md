@@ -228,7 +228,7 @@ Use this guide to compile an image based version of the manual. It lists exactly
 #### Workspace chat (`chat.php`)
 * Contacts sidebar: Highlight the list showing ongoing chat threads.
 * Safety banner: Highlight the yellow warning banner that appears if external links or phone numbers are shared.
-* Quick action buttons: Highlight the "Upload Proof" and "Deliver Order" buttons at the top of the chat thread.
+* Quick action buttons: Highlight the "Deliver Order" button at the top of the chat thread.
 
 ### F. Administration and appeals
 
