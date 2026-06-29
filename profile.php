@@ -8,7 +8,12 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $profile_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$is_own_profile = ($profile_id === 0 || $profile_id === (int)$_SESSION['user_id']);
+$preview_mode = (isset($_GET['preview']) && $_GET['preview'] === 'true');
+$is_own_profile = ($profile_id === 0 || $profile_id === (int)$_SESSION['user_id']) && !$preview_mode;
+
+if ($preview_mode && $profile_id === 0) {
+    $profile_id = (int)$_SESSION['user_id'];
+}
 
 if ($is_own_profile) {
     $user_id = $_SESSION['user_id'];
@@ -220,7 +225,7 @@ require_once 'includes/header.php';
                     <span class="text-white text-xs font-bold">Edit Below</span>
                 </div>
             </div>
-            <div class="text-center sm:text-left text-white">
+            <div class="text-center sm:text-left text-white flex-grow">
                 <h1 class="text-3xl sm:text-4xl font-bold font-serif mb-2"><?= escape($user['name']) ?></h1>
                 <p class="inline-flex items-center text-uitmGold bg-white/10 px-3 py-1 rounded-md text-sm font-medium border border-white/10">
                     <?= $_SESSION['role'] === 'admin' ? 'Admin ID' : 'Student ID' ?>: <?= escape($user['student_id']) ?>
@@ -228,6 +233,12 @@ require_once 'includes/header.php';
                 <div class="mt-3 text-purple-200">
                     <?= escape($user['campus']) ?>
                 </div>
+            </div>
+            <div class="shrink-0 w-full sm:w-auto mt-4 sm:mt-0">
+                <a href="profile?preview=true" class="bg-uitmGold hover:bg-yellow-600 text-uitmPurple font-bold py-2.5 px-5 rounded-lg transition-all duration-300 shadow-lg flex items-center justify-center gap-2 transform hover:-translate-y-0.5 w-full sm:w-auto text-sm border-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    Live Preview Profile
+                </a>
             </div>
         </div>
     </div>
@@ -547,6 +558,17 @@ require_once 'includes/header.php';
 </style>
 <!-- Public Seller Profile HTML -->
 <div class="max-w-6xl mx-auto space-y-8 animate-fade-in-up pb-12">
+    <?php if (isset($_GET['preview']) && $_GET['preview'] === 'true'): ?>
+        <div class="bg-indigo-600 dark:bg-indigo-950/80 text-white font-semibold py-3 px-6 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg border border-indigo-500/20">
+            <div class="flex items-center gap-2 text-sm">
+                <svg class="w-5 h-5 text-indigo-200 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                <span>You are viewing a live preview of your own profile as buyers see it.</span>
+            </div>
+            <a href="profile" class="bg-white hover:bg-slate-100 text-indigo-700 dark:text-indigo-900 font-bold py-1.5 px-4 rounded-lg text-xs transition-all shadow-md shrink-0 border-0">
+                Exit Preview / Edit Profile
+            </a>
+        </div>
+    <?php endif; ?>
     <!-- Hero Header -->
     <div class="relative bg-gradient-to-r from-uitmPurple via-purple-950 to-purple-900 rounded-lg p-8 sm:p-12 overflow-hidden shadow-2xl border border-uitmPurple/30 animated-hero-bg transition-colors duration-300">
         <div class="absolute inset-0 bg-noise opacity-15"></div>
