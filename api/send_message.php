@@ -17,7 +17,21 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // CSRF Validation
-$csrf_token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+$csrf_token = '';
+if (isset($_SERVER['HTTP_X_CSRF_TOKEN'])) {
+    $csrf_token = $_SERVER['HTTP_X_CSRF_TOKEN'];
+} elseif (isset($_SERVER['X_CSRF_TOKEN'])) {
+    $csrf_token = $_SERVER['X_CSRF_TOKEN'];
+} elseif (function_exists('getallheaders')) {
+    $headers = getallheaders();
+    foreach ($headers as $key => $val) {
+        if (strcasecmp($key, 'X-CSRF-Token') === 0) {
+            $csrf_token = $val;
+            break;
+        }
+    }
+}
+
 if ($csrf_token === '' || !hash_equals($_SESSION['csrf_token'] ?? '', $csrf_token)) {
     echo json_encode(['success' => false, 'error' => 'Invalid security token']);
     exit;
