@@ -16,6 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// CSRF Validation
+$csrf_token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+if ($csrf_token === '' || !hash_equals($_SESSION['csrf_token'] ?? '', $csrf_token)) {
+    echo json_encode(['success' => false, 'error' => 'Invalid security token']);
+    exit;
+}
+
 // Release session lock to prevent blocking concurrent requests
 $sender_id = $_SESSION['user_id'];
 session_write_close();

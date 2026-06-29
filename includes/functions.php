@@ -20,12 +20,23 @@ function asset_url($path) {
     return ROOT_URL . ltrim($path, '/');
 }
 
-/**
- * Redirect and exit
- */
 function redirect($url) {
     session_write_close();
-    header("Location: " . asset_url($url));
+    $resolved_url = asset_url($url);
+    
+    // Open Redirect Prevention: Ensure redirect is on the same host
+    $parsed = parse_url($resolved_url);
+    if (isset($parsed['host'])) {
+        $allowed_host = $_SERVER['HTTP_HOST'] ?? '';
+        if ($allowed_host !== '' && strtolower($parsed['host']) !== strtolower($allowed_host)) {
+            $resolved_url = ROOT_URL;
+        }
+    } elseif (str_starts_with($resolved_url, '//')) {
+        // Protocol-relative URLs (e.g. //attacker.com) are also external redirects
+        $resolved_url = ROOT_URL;
+    }
+
+    header("Location: " . $resolved_url);
     exit;
 }
 

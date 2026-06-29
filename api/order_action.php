@@ -131,7 +131,7 @@ try {
     if ($action === 'admin_update') {
         if ($role !== 'admin') {
             set_toast('error', 'Unauthorized action.');
-            redirect('dashboard_admin');
+            redirect('admin/');
         }
 
         $new_status      = $_POST['status'] ?? '';
@@ -139,14 +139,14 @@ try {
 
         if (!in_array($new_status, $allowed_statuses, true)) {
             set_toast('error', 'Invalid status selected.');
-            redirect('dashboard_admin');
+            redirect('admin/');
         }
 
         // Admins bypass the state machine to resolve disputes
         $pdo->prepare("UPDATE orders SET status = ? WHERE order_id = ?")
             ->execute([$new_status, $order_id]);
         set_toast('success', "Order #$order_id status updated to '$new_status' by admin.");
-        redirect('dashboard_admin');
+        redirect('admin/');
     }
 
 

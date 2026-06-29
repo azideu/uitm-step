@@ -515,7 +515,10 @@ function sendMessage() {
     // 2. POST to server
     fetch('api/send_message', {
         method : 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+        },
         body   : JSON.stringify({ receiver_id: receiverId, content }),
     })
     .then(async res => {
@@ -565,7 +568,10 @@ function markRead() {
     if (!receiverId) return;
     fetch('api/mark_read', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+        },
         body: JSON.stringify({ user: receiverId })
     })
     .then(res => {

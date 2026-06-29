@@ -10,6 +10,13 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+// CSRF Validation
+$csrf_token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+if ($csrf_token === '' || !hash_equals($_SESSION['csrf_token'] ?? '', $csrf_token)) {
+    echo json_encode(['success' => false, 'error' => 'Invalid security token']);
+    exit;
+}
+
 $input = json_decode(file_get_contents('php://input'), true);
 $other_user = isset($input['user']) ? (int)$input['user'] : 0;
 $me = (int)$_SESSION['user_id'];
