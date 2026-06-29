@@ -16,7 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// CSRF Validation
+// Read JSON body first (needed for body-based CSRF fallback)
+$data = json_decode(file_get_contents('php://input'), true);
+
+// CSRF Validation — check header first, then body (body is proxy-safe fallback)
 $csrf_token = '';
 if (isset($_SERVER['HTTP_X_CSRF_TOKEN'])) {
     $csrf_token = $_SERVER['HTTP_X_CSRF_TOKEN'];
@@ -31,6 +34,10 @@ if (isset($_SERVER['HTTP_X_CSRF_TOKEN'])) {
         }
     }
 }
+// Final fallback: CSRF token in JSON body (survives proxy header stripping)
+if ($csrf_token === '' && !empty($data['csrf_token'])) {
+    $csrf_token = $data['csrf_token'];
+}
 
 if ($csrf_token === '' || !hash_equals($_SESSION['csrf_token'] ?? '', $csrf_token)) {
     echo json_encode(['success' => false, 'error' => 'Invalid security token']);
@@ -40,9 +47,6 @@ if ($csrf_token === '' || !hash_equals($_SESSION['csrf_token'] ?? '', $csrf_toke
 // Release session lock to prevent blocking concurrent requests
 $sender_id = $_SESSION['user_id'];
 session_write_close();
-
-// Get JSON input
-$data = json_decode(file_get_contents('php://input'), true);
 
 $receiver_id = (int)($data['receiver_id'] ?? 0);
 $content = trim($data['content'] ?? '');

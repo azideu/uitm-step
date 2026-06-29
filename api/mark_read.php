@@ -10,7 +10,10 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// CSRF Validation
+// Read JSON body first (needed for body-based CSRF fallback)
+$input = json_decode(file_get_contents('php://input'), true);
+
+// CSRF Validation — check header first, then body (body is proxy-safe fallback)
 $csrf_token = '';
 if (isset($_SERVER['HTTP_X_CSRF_TOKEN'])) {
     $csrf_token = $_SERVER['HTTP_X_CSRF_TOKEN'];
@@ -25,13 +28,16 @@ if (isset($_SERVER['HTTP_X_CSRF_TOKEN'])) {
         }
     }
 }
+// Final fallback: CSRF token in JSON body (survives proxy header stripping)
+if ($csrf_token === '' && !empty($input['csrf_token'])) {
+    $csrf_token = $input['csrf_token'];
+}
 
 if ($csrf_token === '' || !hash_equals($_SESSION['csrf_token'] ?? '', $csrf_token)) {
     echo json_encode(['success' => false, 'error' => 'Invalid security token']);
     exit;
 }
 
-$input = json_decode(file_get_contents('php://input'), true);
 $other_user = isset($input['user']) ? (int)$input['user'] : 0;
 $me = (int)$_SESSION['user_id'];
 

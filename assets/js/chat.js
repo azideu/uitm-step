@@ -513,13 +513,14 @@ function sendMessage() {
     scrollToBottom(true);
 
     // 2. POST to server
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
     fetch('api/send_message', {
         method : 'POST',
         headers: { 
             'Content-Type': 'application/json',
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+            'X-CSRF-Token': csrfToken
         },
-        body   : JSON.stringify({ receiver_id: receiverId, content }),
+        body   : JSON.stringify({ receiver_id: receiverId, content, csrf_token: csrfToken }),
     })
     .then(async res => {
         if (!res.ok) {
@@ -566,13 +567,14 @@ window.addEventListener('beforeunload', () => {
 // ---------------------------------------------------------------------------
 function markRead() {
     if (!receiverId) return;
+    const csrfTokenMR = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
     fetch('api/mark_read', {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
-            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+            'X-CSRF-Token': csrfTokenMR
         },
-        body: JSON.stringify({ user: receiverId })
+        body: JSON.stringify({ user: receiverId, csrf_token: csrfTokenMR })
     })
     .then(res => {
         if (!res.ok) {
