@@ -41,6 +41,7 @@ if ($gig['status'] !== 'active' && !$is_seller && !$is_admin && !$is_buyer) {
 // Fetch all reviews for this gig (with error handling for missing table)
 $reviews = [];
 $completed_order_for_review = null;
+$show_review_form = false;
 
 // Check if reviews table exists
 try {
@@ -71,6 +72,25 @@ try {
             ");
             $stmt_my_order->execute([$gig_id, $_SESSION['user_id']]);
             $completed_order_for_review = $stmt_my_order->fetch();
+
+            if ($completed_order_for_review) {
+                $show_review_form = true;
+            } else {
+                // If no paid/complete order to review, check if there is a pending order that isn't reviewed
+                $stmt_pending = $pdo->prepare("
+                    SELECT o.* FROM orders o
+                    WHERE o.gig_id = ?
+                      AND o.buyer_id = ?
+                      AND o.status = 'pending'
+                      AND NOT EXISTS (SELECT 1 FROM reviews WHERE order_id = o.order_id)
+                    ORDER BY o.created_at DESC
+                    LIMIT 1
+                ");
+                $stmt_pending->execute([$gig_id, $_SESSION['user_id']]);
+                if ($stmt_pending->fetch()) {
+                    $show_review_form = true;
+                }
+            }
         }
     }
 } catch (\Exception $e) {
@@ -78,6 +98,7 @@ try {
     error_log("Reviews fetch error (safe to ignore): " . $e->getMessage());
     $reviews = [];
     $completed_order_for_review = null;
+    $show_review_form = false;
 }
 
 // Handle Order placement (Purchase)
@@ -371,7 +392,7 @@ require_once '../includes/header.php';
             </h2>
 
             <!-- Review Form (shown only if logged in and has purchased this gig) -->
-            <?php if (isset($_SESSION['user_id']) && $is_buyer): ?>
+            <?php if (isset($_SESSION['user_id']) && $show_review_form): ?>
             <div class="mb-10 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-lg">
                 <h3 class="text-lg font-bold text-gray-800 dark:text-slate-200 mb-5 flex items-center gap-2 transition-colors duration-300">
                     Share Your Experience
