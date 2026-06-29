@@ -17,11 +17,11 @@
                 <div>
                     <h3 class="text-slate-900 dark:text-white font-bold mb-5 uppercase tracking-widest text-xs">Platform</h3>
                     <ul class="space-y-3 text-sm">
-                        <li><a href="marketplace" class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> Marketplace</a></li>
-                        <li><a href="register" class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> Join as Student</a></li>
-                        <li><a href="how-it-works" class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> How it Works</a></li>
-                        <li><a href="feedback"class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> Feedback and Support</a></li>
-                        <li><a href="faq"class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> Frequently Asked Questions</a></li>
+                        <li><a href="<?php echo ROOT_URL; ?>marketplace" class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> Marketplace</a></li>
+                        <li><a href="<?php echo ROOT_URL; ?>register" class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> Join as Student</a></li>
+                        <li><a href="<?php echo ROOT_URL; ?>how-it-works" class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> How it Works</a></li>
+                        <li><a href="<?php echo ROOT_URL; ?>feedback"class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> Feedback and Support</a></li>
+                        <li><a href="<?php echo ROOT_URL; ?>faq"class="hover:text-uitmPurple dark:hover:text-uitmGold transition-colors flex items-center group"><span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-uitmPurple dark:group-hover:bg-uitmGold mr-2 transition-colors"></span> Frequently Asked Questions</a></li>
                 </div>
                 <div>
                     <h3 class="text-slate-900 dark:text-white font-bold mb-5 uppercase tracking-widest text-xs">Connect</h3>
@@ -57,14 +57,14 @@
             <div class="pt-8 border-t border-slate-200 dark:border-slate-800/80 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 dark:text-slate-500">
                 <p>&copy; <?php echo date('Y'); ?> UiTM STEP. Exclusively for UiTM students. All rights reserved.</p>
                 <div class="mt-4 md:mt-0 flex space-x-6">
-                    <a href="privacy" class="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="terms" class="hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Service</a>
+                    <a href="<?php echo ROOT_URL; ?>privacy" class="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="<?php echo ROOT_URL; ?>terms" class="hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Service</a>
                 </div>
             </div>
         </div>
     </footer>
     </div>
     <?php display_toast(); ?>
-    <script src="assets/js/app.js"></script>
+    <script src="<?php echo ROOT_URL; ?>assets/js/app.js"></script>
 </body>
 </html>
