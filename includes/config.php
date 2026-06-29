@@ -21,6 +21,16 @@ require_once __DIR__ . '/session_db.php';
 
 // 2. Start secure session if not already started
 if (session_status() === PHP_SESSION_NONE) {
+    // Guard: Prevent starting session and generating Set-Cookie on chat API endpoints if no session cookie exists
+    $current_script = basename($_SERVER['SCRIPT_NAME']);
+    $is_chat_api = ($current_script === 'stream_messages.php' || $current_script === 'fetch_messages.php' || $current_script === 'mark_read.php');
+    if ($is_chat_api && !isset($_COOKIE[session_name()])) {
+        header('Content-Type: application/json');
+        http_response_code(401);
+        echo json_encode(['success' => false, 'error' => 'Unauthorized']);
+        exit;
+    }
+
     // Register Database Session Handler
     $handler = new DatabaseSessionHandler($pdo);
     session_set_save_handler($handler, true);

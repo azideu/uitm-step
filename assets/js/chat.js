@@ -328,7 +328,7 @@ function startStream() {
     setStatusBadge('connecting');
 
     const url = `api/stream_messages?user=${receiverId}&last_id=${cursor}`;
-    eventSource = new EventSource(url);
+    eventSource = new EventSource(url, { withCredentials: true });
 
     eventSource.onopen = function () {
         sseState      = 'open';
