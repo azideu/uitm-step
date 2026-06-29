@@ -16,6 +16,9 @@
 require_once '../includes/auth_check.php';
 require_once '../includes/db.php';
 
+$tab = trim($_POST['tab'] ?? '');
+$tab_query = ($tab !== '') ? '?tab=' . urlencode($tab) : '';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect('home');
 }
@@ -131,7 +134,7 @@ try {
     if ($action === 'admin_update') {
         if ($role !== 'admin') {
             set_toast('error', 'Unauthorized action.');
-            redirect('admin/');
+            redirect('admin/' . $tab_query);
         }
 
         $new_status      = $_POST['status'] ?? '';
@@ -139,14 +142,14 @@ try {
 
         if (!in_array($new_status, $allowed_statuses, true)) {
             set_toast('error', 'Invalid status selected.');
-            redirect('admin/');
+            redirect('admin/' . $tab_query);
         }
 
         // Admins bypass the state machine to resolve disputes
         $pdo->prepare("UPDATE orders SET status = ? WHERE order_id = ?")
             ->execute([$new_status, $order_id]);
         set_toast('success', "Order #$order_id status updated to '$new_status' by admin.");
-        redirect('admin/');
+        redirect('admin/' . $tab_query);
     }
 
 

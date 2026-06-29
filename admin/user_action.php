@@ -6,14 +6,17 @@ require_once '../includes/functions.php';
 
 require_admin(); // Ensure only admins can access this page
 
+$tab = trim($_POST['tab'] ?? '');
+$tab_query = ($tab !== '') ? '?tab=' . urlencode($tab) : '';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect('admin/');
+    redirect('admin/' . $tab_query);
 }
 
 // CSRF check
 if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
     set_toast('error', 'Invalid security token.');
-    redirect('admin/');
+    redirect('admin/' . $tab_query);
 }
 
 $target_user_id = (int)($_POST['target_user_id'] ?? 0);
@@ -21,13 +24,13 @@ $action         = $_POST['action'] ?? '';
 
 if ($target_user_id <= 0) {
     set_toast('error', 'Invalid user selected.');
-    redirect('admin/');
+    redirect('admin/' . $tab_query);
 }
 
 // Prevent admins from modifying their own roles/banning themselves
 if ($target_user_id === (int)$_SESSION['user_id']) {
     set_toast('error', 'You cannot change your own account status.');
-    redirect('admin/');
+    redirect('admin/' . $tab_query);
 }
 
 try {
@@ -47,13 +50,13 @@ try {
         
         if (!$target_user) {
             set_toast('error', 'User not found.');
-            redirect('admin/');
+            redirect('admin/' . $tab_query);
         }
 
         // Protect other admins from being modified
         if ($target_user['role'] === 'admin') {
             set_toast('error', 'You cannot modify another administrator\'s account.');
-            redirect('admin/');
+            redirect('admin/' . $tab_query);
         }
 
         if ($new_role === 'banned') {
@@ -84,4 +87,5 @@ try {
     set_toast('error', 'Database error. Please try again.');
 }
 
-redirect('admin/');
+redirect('admin/' . $tab_query);
+?>

@@ -3,17 +3,21 @@
 // =====================================================================
 require_once '../includes/auth_check.php';
 require_once '../includes/db.php';
+require_once '../includes/functions.php';
 
 require_admin();
 
+$tab = trim($_POST['tab'] ?? '');
+$tab_query = ($tab !== '') ? '?tab=' . urlencode($tab) : '';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect('admin/');
+    redirect('admin/' . $tab_query);
 }
 
 // CSRF guard
 if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
     set_toast('error', 'Invalid security token.');
-    redirect('admin/');
+    redirect('admin/' . $tab_query);
 }
 
 $report_id  = (int)($_POST['report_id'] ?? 0);
@@ -24,7 +28,7 @@ $allowed_actions = ['reviewed', 'dismissed', 'banned'];
 
 if ($report_id <= 0 || !in_array($action, $allowed_actions, true)) {
     set_toast('error', 'Invalid request.');
-    redirect('admin/');
+    redirect('admin/' . $tab_query);
 }
 
 // Fetch the report so we know who the reported user is
@@ -34,7 +38,7 @@ $report = $stmt->fetch();
 
 if (!$report) {
     set_toast('error', 'Report not found.');
-    redirect('admin/');
+    redirect('admin/' . $tab_query);
 }
 
 try {
@@ -64,4 +68,5 @@ try {
     set_toast('error', 'Database error. Please try again.');
 }
 
-redirect('admin/');
+redirect('admin/' . $tab_query);
+?>

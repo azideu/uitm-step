@@ -12,6 +12,12 @@ $order_status_filter = trim($_GET['order_status'] ?? '');
 $user_search         = trim($_GET['user_search'] ?? '');
 $role_filter         = trim($_GET['role_filter'] ?? '');
 
+$active_tab = $_GET['tab'] ?? 'orders';
+$allowed_tabs = ['orders', 'users', 'reports', 'appeals', 'feedback'];
+if (!in_array($active_tab, $allowed_tabs)) {
+    $active_tab = 'orders';
+}
+
 $statuses = ['pending', 'paid', 'delivered', 'complete', 'cancelled'];
 
 // Fetch order counts for header badges (independent of current filters)
@@ -180,6 +186,53 @@ require_once '../includes/header.php';
     </div>
 </div>
 
+<?php
+// Helper to build URL preserving filters when switching tabs
+function tab_url(string $tab_name): string {
+    $params = $_GET;
+    $params['tab'] = $tab_name;
+    return '?' . http_build_query($params);
+}
+?>
+
+<!-- Tabbed Navigation Header -->
+<div class="mb-8 border-b border-gray-200 dark:border-slate-800">
+    <nav class="flex flex-wrap gap-2 -mb-px" aria-label="Tabs">
+        <!-- Tab 1: Orders -->
+        <a href="<?php echo tab_url('orders'); ?>" class="px-5 py-3 border-b-2 font-bold text-sm transition-all duration-200 flex items-center gap-2 <?php echo $active_tab === 'orders' ? 'border-uitmPurple text-uitmPurple dark:border-purple-400 dark:text-purple-300' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-350 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:border-slate-700'; ?>">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            Orders
+        </a>
+        <!-- Tab 2: Users -->
+        <a href="<?php echo tab_url('users'); ?>" class="px-5 py-3 border-b-2 font-bold text-sm transition-all duration-200 flex items-center gap-2 <?php echo $active_tab === 'users' ? 'border-uitmPurple text-uitmPurple dark:border-purple-400 dark:text-purple-300' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-350 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:border-slate-700'; ?>">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            Users
+        </a>
+        <!-- Tab 3: Reports -->
+        <a href="<?php echo tab_url('reports'); ?>" class="px-5 py-3 border-b-2 font-bold text-sm transition-all duration-200 flex items-center gap-2 <?php echo $active_tab === 'reports' ? 'border-uitmPurple text-uitmPurple dark:border-purple-400 dark:text-purple-300' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-350 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:border-slate-700'; ?>">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21v12h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>
+            Reports
+            <?php if ($pending_count > 0): ?>
+                <span class="bg-red-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full animate-pulse-slow"><?php echo $pending_count; ?></span>
+            <?php endif; ?>
+        </a>
+        <!-- Tab 4: Appeals -->
+        <a href="<?php echo tab_url('appeals'); ?>" class="px-5 py-3 border-b-2 font-bold text-sm transition-all duration-200 flex items-center gap-2 <?php echo $active_tab === 'appeals' ? 'border-uitmPurple text-uitmPurple dark:border-purple-400 dark:text-purple-300' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-350 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:border-slate-700'; ?>">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+            Appeals
+            <?php if (count($pending_appeals) > 0): ?>
+                <span class="bg-indigo-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full"><?php echo count($pending_appeals); ?></span>
+            <?php endif; ?>
+        </a>
+        <!-- Tab 5: Feedback -->
+        <a href="<?php echo tab_url('feedback'); ?>" class="px-5 py-3 border-b-2 font-bold text-sm transition-all duration-200 flex items-center gap-2 <?php echo $active_tab === 'feedback' ? 'border-uitmPurple text-uitmPurple dark:border-purple-400 dark:text-purple-300' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-350 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:border-slate-700'; ?>">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
+            Feedback
+        </a>
+    </nav>
+</div>
+
+<?php if ($active_tab === 'orders'): ?>
 <!-- =====================================================================
      SECTION 1: ORDER MANAGEMENT (with filters)
      ===================================================================== -->
@@ -196,6 +249,7 @@ require_once '../includes/header.php';
     <!-- Order Filters -->
     <div class="px-6 py-4 bg-gray-50/50 dark:bg-slate-800/30 border-b border-gray-100 dark:border-slate-800">
         <form method="GET" class="flex flex-col md:flex-row gap-4">
+            <input type="hidden" name="tab" value="orders">
             <!-- Retain user parameters to not clear User filters -->
             <input type="hidden" name="user_search" value="<?php echo escape($user_search); ?>">
             <input type="hidden" name="role_filter" value="<?php echo escape($role_filter); ?>">
@@ -215,7 +269,7 @@ require_once '../includes/header.php';
             <div class="flex w-full md:w-auto gap-2">
                 <button type="submit" class="w-full md:w-auto bg-uitmPurple hover:bg-purple-900 text-white font-bold py-2 px-6 rounded-lg transition text-sm border-0 cursor-pointer">Filter</button>
                 <?php if (!empty($order_search) || !empty($order_status_filter)): ?>
-                    <a href="?user_search=<?php echo urlencode($user_search); ?>&role_filter=<?php echo urlencode($role_filter); ?>" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-lg transition text-sm inline-block">Clear</a>
+                    <a href="?user_search=<?php echo urlencode($user_search); ?>&role_filter=<?php echo urlencode($role_filter); ?>&tab=orders" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-lg transition text-sm inline-block">Clear</a>
                 <?php endif; ?>
             </div>
         </form>
@@ -292,6 +346,7 @@ require_once '../includes/header.php';
                             <!-- Admin Status Override -->
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <form action="../api/order_action" method="POST" class="flex gap-2 items-center">
+                                    <input type="hidden" name="tab" value="orders">
                                     <input type="hidden" name="order_id" value="<?php echo $o['order_id']; ?>">
                                     <input type="hidden" name="action"   value="admin_update">
                                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
@@ -323,7 +378,9 @@ require_once '../includes/header.php';
         </div>
     <?php endif; ?>
 </div>
+<?php endif; ?>
 
+<?php if ($active_tab === 'users'): ?>
 <!-- =====================================================================
      SECTION 2: USER MANAGEMENT (NEW)
      ===================================================================== -->
@@ -340,6 +397,7 @@ require_once '../includes/header.php';
     <!-- User Filters -->
     <div class="px-6 py-4 bg-gray-50/50 dark:bg-slate-800/30 border-b border-gray-100 dark:border-slate-800">
         <form method="GET" class="flex flex-col md:flex-row gap-4">
+            <input type="hidden" name="tab" value="users">
             <!-- Retain order parameters to not clear Order filters -->
             <input type="hidden" name="order_search" value="<?php echo escape($order_search); ?>">
             <input type="hidden" name="order_status" value="<?php echo escape($order_status_filter); ?>">
@@ -359,7 +417,7 @@ require_once '../includes/header.php';
             <div class="flex w-full md:w-auto gap-2">
                 <button type="submit" class="w-full md:w-auto bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg transition text-sm border-0 cursor-pointer">Filter</button>
                 <?php if (!empty($user_search) || !empty($role_filter)): ?>
-                    <a href="?order_search=<?php echo urlencode($order_search); ?>&order_status=<?php echo urlencode($order_status_filter); ?>" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-lg transition text-sm inline-block">Clear</a>
+                    <a href="?order_search=<?php echo urlencode($order_search); ?>&order_status=<?php echo urlencode($order_status_filter); ?>&tab=users" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-lg transition text-sm inline-block">Clear</a>
                 <?php endif; ?>
             </div>
         </form>
@@ -433,6 +491,7 @@ require_once '../includes/header.php';
                                     <div class="flex items-center gap-3">
                                         <!-- Verification Toggle -->
                                         <form action="user_action" method="POST" class="inline">
+                                            <input type="hidden" name="tab" value="users">
                                             <input type="hidden" name="target_user_id" value="<?php echo $usr['user_id']; ?>">
                                             <input type="hidden" name="action" value="<?php echo $usr['is_verified'] == 1 ? 'unverify' : 'verify'; ?>">
                                             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
@@ -446,6 +505,7 @@ require_once '../includes/header.php';
                                         <?php else: ?>
                                             <!-- Ban/Unban Action -->
                                             <form action="user_action" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to <?php echo $usr['role'] === 'banned' ? 'unban' : 'ban'; ?> this user?');">
+                                                <input type="hidden" name="tab" value="users">
                                                 <input type="hidden" name="target_user_id" value="<?php echo $usr['user_id']; ?>">
                                                 <input type="hidden" name="action" value="change_role">
                                                 <input type="hidden" name="role" value="<?php echo $usr['role'] === 'banned' ? 'student' : 'banned'; ?>">
@@ -469,7 +529,9 @@ require_once '../includes/header.php';
         </div>
     <?php endif; ?>
 </div>
+<?php endif; ?>
 
+<?php if ($active_tab === 'reports'): ?>
 <!-- =====================================================================
      SECTION 3: USER REPORTS
      ===================================================================== -->
@@ -565,6 +627,7 @@ require_once '../includes/header.php';
                                 <form action="report_action" method="POST" class="bg-gray-50 dark:bg-slate-800/60 rounded-lg p-4 border border-gray-100 dark:border-slate-700 space-y-3"
                                       onsubmit="return confirm('Are you sure you want to apply this action?');">
                                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                                    <input type="hidden" name="tab" value="reports">
                                     <input type="hidden" name="report_id" value="<?php echo $rep['report_id']; ?>">
 
                                     <label class="block text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider">Admin Note (optional)</label>
@@ -623,7 +686,9 @@ require_once '../includes/header.php';
         </div>
     <?php endif; ?>
 </div>
+<?php endif; ?>
 
+<?php if ($active_tab === 'appeals'): ?>
 <!-- =====================================================================
      SECTION 4: ACCOUNT APPEALS
      ===================================================================== -->
@@ -710,6 +775,7 @@ require_once '../includes/header.php';
                                 <form action="appeal_action" method="POST" class="bg-gray-50 dark:bg-slate-800/60 rounded-lg p-4 border border-gray-100 dark:border-slate-700 space-y-4"
                                       onsubmit="return confirm('Are you sure? Approving will instantly restore this user\'s access.');">
                                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                                    <input type="hidden" name="tab" value="appeals">
                                     <input type="hidden" name="appeal_id" value="<?php echo $app['appeal_id']; ?>">
 
                                     <div>
@@ -744,7 +810,9 @@ require_once '../includes/header.php';
         </div>
     <?php endif; ?>
 </div>
+<?php endif; ?>
 
+<?php if ($active_tab === 'feedback'): ?>
 <!-- =====================================================================
      SECTION 5: STUDENT FEEDBACK (NEW)
      ===================================================================== -->
@@ -763,6 +831,7 @@ require_once '../includes/header.php';
     <!-- Feedback Filters -->
     <div class="px-6 py-4 bg-gray-50/50 dark:bg-slate-800/30 border-b border-gray-100 dark:border-slate-800">
         <form method="GET" class="flex flex-col md:flex-row gap-4">
+            <input type="hidden" name="tab" value="feedback">
             <!-- Retain other section parameters to not clear their filters -->
             <input type="hidden" name="order_search" value="<?php echo escape($order_search); ?>">
             <input type="hidden" name="order_status" value="<?php echo escape($order_status_filter); ?>">
@@ -784,7 +853,7 @@ require_once '../includes/header.php';
             <div class="flex w-full md:w-auto gap-2">
                 <button type="submit" class="w-full md:w-auto bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-6 rounded-lg transition text-sm border-0 cursor-pointer">Filter</button>
                 <?php if (!empty($feedback_search) || !empty($feedback_nature)): ?>
-                    <a href="?order_search=<?php echo urlencode($order_search); ?>&order_status=<?php echo urlencode($order_status_filter); ?>&user_search=<?php echo urlencode($user_search); ?>&role_filter=<?php echo urlencode($role_filter); ?>" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-lg transition text-sm inline-block">Clear</a>
+                    <a href="?order_search=<?php echo urlencode($order_search); ?>&order_status=<?php echo urlencode($order_status_filter); ?>&user_search=<?php echo urlencode($user_search); ?>&role_filter=<?php echo urlencode($role_filter); ?>&tab=feedback" class="w-full md:w-auto text-center bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-white border border-gray-200 dark:border-slate-700 font-bold py-2 px-4 rounded-lg transition text-sm inline-block">Clear</a>
                 <?php endif; ?>
             </div>
         </form>
@@ -850,5 +919,6 @@ require_once '../includes/header.php';
         </div>
     <?php endif; ?>
 </div>
+<?php endif; ?>
 
 <?php require_once '../includes/footer.php'; ?>

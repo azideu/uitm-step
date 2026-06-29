@@ -6,14 +6,17 @@ require_once '../includes/functions.php';
 
 require_admin();
 
+$tab = trim($_POST['tab'] ?? '');
+$tab_query = ($tab !== '') ? '?tab=' . urlencode($tab) : '';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    redirect('admin/index');
+    redirect('admin/index' . $tab_query);
 }
 
 // CSRF check
 if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
     set_toast('error', 'Invalid security token.');
-    redirect('admin/index');
+    redirect('admin/index' . $tab_query);
 }
 
 $appeal_id = (int)($_POST['appeal_id'] ?? 0);
@@ -22,7 +25,7 @@ $admin_note = trim($_POST['admin_note'] ?? '');
 
 if (!$appeal_id || !in_array($action, ['approve', 'reject'])) {
     set_toast('error', 'Invalid request parameters.');
-    redirect('admin/index');
+    redirect('admin/index' . $tab_query);
 }
 
 try {
@@ -64,4 +67,5 @@ try {
     set_toast('error', 'Failed to process appeal: ' . $e->getMessage());
 }
 
-redirect('admin/index');
+redirect('admin/index' . $tab_query);
+?>
