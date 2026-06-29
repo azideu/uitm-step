@@ -152,7 +152,7 @@ require_once 'includes/header.php';
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
         <?php $delay = 0; ?>
         <?php foreach ($gigs as $gig): ?>
-            <div class="bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 transition-all duration-300 flex flex-col overflow-hidden group hover:shadow-lg transform hover:-translate-y-1 animate-fade-in-up opacity-0" style="animation-delay: <?php echo $delay; ?>ms; animation-fill-mode: forwards;">
+            <div class="bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-800 transition-all duration-300 flex flex-col overflow-hidden group hover:shadow-lg transform hover:-translate-y-1 animate-fade-in-up" style="animation-delay: <?php echo $delay; ?>ms; animation-fill-mode: forwards;">
                 <!-- Thumbnail / Slider -->
                 <div class="w-full aspect-[16/10] bg-gray-200 dark:bg-slate-800 relative overflow-hidden group">
                     <?php

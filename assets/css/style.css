@@ -409,3 +409,11 @@ button.bg-emerald-500:hover, a.bg-emerald-500:hover {
         transform: translateY(0);
     }
 }
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-fade-in-up {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

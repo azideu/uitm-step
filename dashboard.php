@@ -30,7 +30,7 @@ require_once 'includes/header.php';
 <?php endif; ?>
 
 <!-- Header Section -->
-<div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards;">
+<div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-fade-in-up transition-colors duration-300" style="animation-fill-mode: forwards;">
     <div>
         <h1 class="text-4xl sm:text-5xl font-extrabold <?php echo $mode === 'buying' ? 'text-indigo-700 dark:text-indigo-400' : 'text-emerald-600 dark:text-emerald-400'; ?> font-serif pb-2">
             <?php echo $mode === 'buying' ? 'Buying Dashboard' : 'Selling Dashboard'; ?>
@@ -105,7 +105,7 @@ require_once 'includes/header.php';
     ?>
 
     <!-- Stats Section -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 75ms;">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-fade-in-up" style="animation-fill-mode: forwards; animation-delay: 75ms;">
         <div class="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-5 group">
             <div class="p-4 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-xl group-hover:scale-110 transition-transform duration-350">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
@@ -138,7 +138,7 @@ require_once 'includes/header.php';
     </div>
 
     <!-- Search & Filter Controls -->
-    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-800/80 p-5 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between transition-colors duration-300 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 150ms;">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-800/80 p-5 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between transition-colors duration-300 animate-fade-in-up" style="animation-fill-mode: forwards; animation-delay: 150ms;">
         <form method="GET" class="flex flex-col md:flex-row w-full gap-4">
             <div class="flex-grow relative w-full">
                 <input type="text" name="search" value="<?php echo escape($search); ?>" placeholder="Search purchases by gig title or seller..." class="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-slate-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all placeholder-gray-400 dark:placeholder-slate-500 text-sm">
@@ -168,7 +168,7 @@ require_once 'includes/header.php';
     </div>
     
     <!-- Purchases Container -->
-    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-200 dark:border-slate-800/80 overflow-hidden animate-fade-in-up opacity-0 transition-colors duration-300" style="animation-fill-mode: forwards; animation-delay: 225ms;">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-200 dark:border-slate-800/80 overflow-hidden animate-fade-in-up transition-colors duration-300" style="animation-fill-mode: forwards; animation-delay: 225ms;">
         <div class="h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
         <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800/80 flex items-center justify-between transition-colors duration-300">
             <h2 class="text-xl font-bold text-gray-900 dark:text-white">My Purchases</h2>
@@ -431,7 +431,7 @@ require_once 'includes/header.php';
     ?>
 
     <!-- Advanced Metrics Scorecard Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 75ms;">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in-up" style="animation-fill-mode: forwards; animation-delay: 75ms;">
         <!-- Total Revenue Earnings -->
         <div class="bg-gradient-to-tr from-emerald-500/10 to-teal-500/5 dark:from-emerald-950/20 dark:to-slate-900 border border-emerald-200/40 dark:border-slate-800 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all duration-300 relative overflow-hidden group">
             <div class="absolute right-0 top-0 h-16 w-16 bg-emerald-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500"></div>
@@ -497,7 +497,7 @@ require_once 'includes/header.php';
     </div>
 
     <!-- Charts & Analytics Grid Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 150ms;">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8 animate-fade-in-up" style="animation-fill-mode: forwards; animation-delay: 150ms;">
         <!-- Line Chart: Monthly revenue -->
         <div class="lg:col-span-3 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-2xl p-6 shadow-md relative transition-colors duration-300">
             <h3 class="text-md font-bold text-gray-900 dark:text-white mb-5 flex items-center gap-2">
@@ -529,7 +529,7 @@ require_once 'includes/header.php';
     </div>
 
     <!-- Search & Filter Controls -->
-    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-800/80 p-5 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between transition-colors duration-300 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 200ms;">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-800/80 p-5 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between transition-colors duration-300 animate-fade-in-up" style="animation-fill-mode: forwards; animation-delay: 200ms;">
         <form method="GET" class="flex flex-col md:flex-row w-full gap-4">
             <div class="flex-grow relative w-full">
                 <input type="text" name="search" value="<?php echo escape($search); ?>" placeholder="Search incoming orders by gig title or buyer..." class="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-slate-800/50 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all placeholder-gray-400 dark:placeholder-slate-500 text-sm">
@@ -559,7 +559,7 @@ require_once 'includes/header.php';
     </div>
 
     <!-- Active Gigs & Incoming Orders Columns -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in-up opacity-0" style="animation-fill-mode: forwards; animation-delay: 250ms;">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in-up" style="animation-fill-mode: forwards; animation-delay: 250ms;">
         <!-- My Gigs Column -->
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-gray-200 dark:border-slate-800 overflow-hidden transition-colors duration-300">
             <div class="h-1.5 bg-emerald-500"></div>
