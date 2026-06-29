@@ -748,7 +748,7 @@ require_once '../includes/header.php';
 <!-- =====================================================================
      SECTION 5: STUDENT FEEDBACK (NEW)
      ===================================================================== -->
-<div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mb-10">
+<div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 overflow-hidden transition-colors duration-300 mt-10 mb-10">
     <div class="h-1 bg-gradient-to-r from-teal-400 to-emerald-500"></div>
     <div class="px-6 py-5 border-b border-gray-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
