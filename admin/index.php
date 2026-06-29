@@ -94,6 +94,16 @@ $reports = $stmt_reports->fetchAll();
 $pending_reports = array_filter($reports, fn($r) => $r['status'] === 'pending');
 $pending_count   = count($pending_reports);
 
+// Fetch all appeals for header badges and appeals tab
+$stmt_appeals = $pdo->query("
+    SELECT a.*, u.name, u.email 
+    FROM ban_appeals a 
+    JOIN users u ON a.user_id = u.user_id 
+    ORDER BY a.created_at DESC
+");
+$appeals = $stmt_appeals->fetchAll();
+$pending_appeals = array_filter($appeals, fn($a) => $a['status'] === 'pending');
+
 // Fetch feedback entries with filters
 $feedback_search = trim($_GET['feedback_search'] ?? '');
 $feedback_nature = trim($_GET['feedback_nature'] ?? '');
@@ -701,16 +711,7 @@ function tab_url(string $tab_name): string {
             </svg>
             Account Appeals
         </h2>
-        <?php
-        $stmt_appeals = $pdo->query("
-            SELECT a.*, u.name, u.email 
-            FROM ban_appeals a 
-            JOIN users u ON a.user_id = u.user_id 
-            ORDER BY a.created_at DESC
-        ");
-        $appeals = $stmt_appeals->fetchAll();
-        $pending_appeals = array_filter($appeals, fn($a) => $a['status'] === 'pending');
-        ?>
+        
         <div class="flex items-center gap-3">
             <?php if (count($pending_appeals) > 0): ?>
                 <span class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 font-bold text-xs px-3 py-1 rounded-md border border-indigo-200 dark:border-indigo-800/50">
