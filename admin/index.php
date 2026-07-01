@@ -814,6 +814,33 @@ function tab_url(string $tab_name): string {
 <?php endif; ?>
 
 <?php if ($active_tab === 'feedback'): ?>
+<style>
+    .feedback-message-cell {
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        max-width: 250px;
+    }
+    .feedback-message-cell:not(.expanded) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .feedback-message-cell.expanded {
+        max-width: none;
+        white-space: pre-wrap;
+        word-break: break-word;
+        background-color: rgba(20, 184, 166, 0.05) !important;
+    }
+    .dark .feedback-message-cell.expanded {
+        background-color: rgba(20, 184, 166, 0.15) !important;
+    }
+    .feedback-message-cell:hover {
+        background-color: rgba(20, 184, 166, 0.03);
+    }
+    .dark .feedback-message-cell:hover {
+        background-color: rgba(20, 184, 166, 0.08);
+    }
+</style>
 <!-- =====================================================================
      SECTION 5: STUDENT FEEDBACK (NEW)
      ===================================================================== -->
@@ -903,9 +930,7 @@ function tab_url(string $tab_name): string {
                             </td>
 
                             <!-- Message Content -->
-                            <td class="px-6 py-4 text-sm text-gray-600 dark:text-slate-400 max-w-[250px] truncate" title="<?php echo escape($fb['message']); ?>">
-                                <?php echo escape($fb['message']); ?>
-                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-600 dark:text-slate-400 feedback-message-cell hover:text-teal-600 dark:hover:text-teal-400 transition-colors" onclick="this.classList.toggle('expanded')" title="Click to expand/collapse message"><?php echo escape($fb['message']); ?></td>
 
                             <!-- Submitted At -->
                             <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-400 dark:text-slate-500 font-medium"><?php echo date('d M Y, H:i', strtotime($fb['created_at'])); ?></td>
