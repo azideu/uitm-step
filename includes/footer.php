@@ -57,6 +57,7 @@
             <div class="pt-8 border-t border-slate-200 dark:border-slate-800/80 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 dark:text-slate-500">
                 <p>&copy; <?php echo date('Y'); ?> UiTM STEP. Exclusively for UiTM students. All rights reserved.</p>
                 <div class="mt-4 md:mt-0 flex space-x-6">
+                    <a href="<?php echo ROOT_URL; ?>about" class="hover:text-slate-900 dark:hover:text-white transition-colors">About Us</a>
                     <a href="<?php echo ROOT_URL; ?>privacy" class="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</a>
                     <a href="<?php echo ROOT_URL; ?>terms" class="hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Service</a>
                 </div>
