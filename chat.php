@@ -11,15 +11,18 @@ if ($_SESSION['role'] !== 'student') {
 $user_id = $_SESSION['user_id'];
 $active_chat = isset($_GET['user']) ? (int)$_GET['user'] : 0;
 
-// Fetch unique users the current user has chatted with
+// Fetch unique users the current user has chatted with, ordered by latest message
 $stmt_users = $pdo->prepare("
-    SELECT DISTINCT u.user_id, u.name, u.profile_picture 
-    FROM users u 
-    JOIN messages m ON (u.user_id = m.sender_id OR u.user_id = m.receiver_id) 
+    SELECT u.user_id, u.name, u.profile_picture, MAX(m.timestamp) AS last_msg
+    FROM users u
+    JOIN messages m ON (u.user_id = m.sender_id OR u.user_id = m.receiver_id)
     WHERE (m.sender_id = :uid1 OR m.receiver_id = :uid2) AND u.user_id != :uid3
+    GROUP BY u.user_id, u.name, u.profile_picture
+    ORDER BY last_msg DESC
 ");
 $stmt_users->execute(['uid1' => $user_id, 'uid2' => $user_id, 'uid3' => $user_id]);
 $chatted_users = $stmt_users->fetchAll();
+
 
 // If coming from gig details and no prior chat, ensure they are in the list
 if ($active_chat > 0) {
@@ -65,7 +68,7 @@ require_once 'includes/header.php';
         <div class="overflow-y-auto flex-1 p-2 space-y-1">
             <?php if(count($chatted_users) > 0): ?>
                 <?php foreach($chatted_users as $cu): ?>
-                    <a href="chat?user=<?php echo $cu['user_id']; ?>" class="flex items-center gap-3 p-3 rounded-lg transition-all duration-300 <?php echo ($active_chat == $cu['user_id']) ? 'bg-purple-100/80 dark:bg-slate-700/80 shadow-xl border border-purple-200 dark:border-slate-600' : 'hover:bg-white dark:hover:bg-slate-700 border border-transparent'; ?>">
+                    <a href="chat?user=<?php echo $cu['user_id']; ?>" data-user-id="<?php echo $cu['user_id']; ?>" class="flex items-center gap-3 p-3 rounded-lg transition-all duration-300 <?php echo ($active_chat == $cu['user_id']) ? 'bg-purple-100/80 dark:bg-slate-700/80 shadow-xl border border-purple-200 dark:border-slate-600' : 'hover:bg-white dark:hover:bg-slate-700 border border-transparent'; ?>">
                         <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-inner overflow-hidden">
                             <?php if (!empty($cu['profile_picture'])): ?>
                                 <img src="<?php echo asset_url($cu['profile_picture']); ?>" alt="" class="w-full h-full object-cover">
@@ -182,6 +185,38 @@ require_once 'includes/header.php';
 </div>
 
 <?php if($active_chat > 0): ?>
+
+<!-- Sender safety confirmation modal -->
+<div id="unsafe-send-modal" class="hidden fixed inset-0 z-50 items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-sm w-full p-6 border border-gray-100 dark:border-slate-800 animate-fade-in-down">
+        <!-- Icon -->
+        <div class="flex items-center justify-center w-14 h-14 bg-amber-100 dark:bg-amber-900/40 rounded-full mx-auto mb-4">
+            <svg class="w-7 h-7 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 17c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+        </div>
+        <!-- Title -->
+        <h3 class="text-base font-bold text-gray-900 dark:text-white text-center mb-2">Safety Warning</h3>
+        <!-- Body -->
+        <p class="text-sm text-gray-500 dark:text-slate-400 text-center leading-relaxed mb-6">
+            Your message appears to contain a <span class="font-semibold text-gray-700 dark:text-slate-300">phone number or external link</span>.
+            <br><br>
+            For your protection, please keep all communication and payments <span class="font-semibold text-gray-700 dark:text-slate-300">within UiTM STEP</span>.
+        </p>
+        <!-- Actions -->
+        <div class="flex gap-3">
+            <button id="unsafe-send-cancel"
+                class="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 dark:border-slate-700 text-sm font-semibold text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
+                Cancel
+            </button>
+            <button id="unsafe-send-confirm"
+                class="flex-1 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold transition-colors">
+                Send Anyway
+            </button>
+        </div>
+    </div>
+</div>
+
     <?php
     $chat_js_path = __DIR__ . '/assets/js/chat.js';
     $chat_js_version = is_file($chat_js_path) ? filemtime($chat_js_path) : '1';

@@ -26,6 +26,27 @@
 'use strict';
 
 // ---------------------------------------------------------------------------
+// Safety detection — shared patterns
+// ---------------------------------------------------------------------------
+/** Regex that matches phone numbers or any URL/link in a message. */
+const UNSAFE_CONTENT_RE = /(?:\b(?:https?|ftp|www)\.\S+|\b\d[\d\s()\-+.]{6,}\d\b)/i;
+
+/**
+ * Returns true when the plain-text content looks like it contains
+ * a phone number or an external link.
+ */
+function containsUnsafeContent(text) {
+    // Strip HTML entities that were escaped server-side before testing
+    const plain = text
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#039;/g, "'");
+    return UNSAFE_CONTENT_RE.test(plain);
+}
+
+// ---------------------------------------------------------------------------
 // DOM references
 // ---------------------------------------------------------------------------
 const chatContainer = document.getElementById('chat-messages');
@@ -87,6 +108,24 @@ function fmtTime(date) {
     return `${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
 }
 
+/**
+ * Move the sidebar entry for the given userId to the top of the list.
+ * Uses a brief CSS transition so the jump feels smooth rather than jarring.
+ */
+function bumpToTop(userId) {
+    const list = document.querySelector('.overflow-y-auto.flex-1');
+    if (!list) return;
+    const item = list.querySelector(`[data-user-id="${userId}"]`);
+    if (!item || list.firstElementChild === item) return; // already first
+
+    item.style.transition = 'opacity 0.15s';
+    item.style.opacity    = '0';
+    setTimeout(() => {
+        list.prepend(item);
+        item.style.opacity = '1';
+    }, 150);
+}
+
 // ---------------------------------------------------------------------------
 // DOM: connection status badge
 // ---------------------------------------------------------------------------
@@ -119,17 +158,15 @@ function setStatusBadge(state) {
 function appendMessage(msg) {
     if (msg.id > 0 && document.querySelector(`[data-msg-id="${msg.id}"]`)) return;
 
-    // --- Safety Tip Logic ---
-    const keywords = ['whatsapp', 'telegram', 'discord', 'outside', 'contact', 'number', 'phone', 'wasap', 'ws', 'tele'];
-    const contentLower = msg.content.toLowerCase();
-    const banner = document.getElementById('safety-tip-banner');
-    
-    if (banner && banner.classList.contains('hidden')) {
-        if (keywords.some(k => contentLower.includes(k))) {
+    // --- Recipient safety banner: show on incoming messages with phone/URL ---
+    if (!msg.is_mine) {
+        const banner = document.getElementById('safety-tip-banner');
+        if (banner && containsUnsafeContent(msg.content)) {
             banner.classList.remove('hidden');
+            banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     }
-    // ------------------------
+    // -------------------------------------------------------------------------
 
     // Alignment wrapper — flex row so justify-end/start places the bubble
     // correctly without relying on ml-auto/mr-auto on a w-fit block element.
@@ -373,7 +410,10 @@ function startStream() {
         if (document.querySelector(`[data-msg-id="${msgId}"]`)) return;
 
         // Hide typing indicator when receiver sends a real message
-        if (!msg.is_mine) hideTypingIndicator();
+        if (!msg.is_mine) {
+            hideTypingIndicator();
+            bumpToTop(receiverId);
+        }
 
         const status = msg.is_mine
             ? ((msg.is_read || msg.status === 'delivered') ? 'delivered' : 'sent')
@@ -490,18 +530,14 @@ function closePolling() {
 // ---------------------------------------------------------------------------
 // sendMessage — optimistic UI + delivery tick lifecycle
 // ---------------------------------------------------------------------------
-function sendMessage() {
-    const content = inputField.value.trim();
-    if (!content || !receiverId) return;
-
-    inputField.value = '';
-    inputField.focus();
-
-    const tempId   = -(Date.now()); // negative sentinel
+/**
+ * Core dispatch: escape content, show optimistic bubble, POST to server.
+ * Called either directly (no unsafe content) or after user confirms the modal.
+ */
+function dispatchMessage(content) {
+    const tempId   = -(Date.now());
     const nowStamp = fmtTime(new Date());
 
-    // 1. Show bubble immediately (status: 'sending' → clock icon)
-    // Escape HTML locally to match the server's escape() behavior and prevent self-XSS via innerHTML
     const escapedContent = content
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
@@ -511,47 +547,91 @@ function sendMessage() {
 
     appendMessage({ id: tempId, content: escapedContent, is_mine: true, timestamp: nowStamp, status: 'sending' });
     scrollToBottom(true);
+    bumpToTop(receiverId);
 
-    // 2. POST to server
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
     fetch('api/send_message', {
         method : 'POST',
-        headers: { 
+        headers: {
             'Content-Type': 'application/json',
             'X-CSRF-Token': csrfToken
         },
         body   : JSON.stringify({ receiver_id: receiverId, content, csrf_token: csrfToken }),
     })
     .then(async res => {
-        if (!res.ok) {
-            throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-        }
+        if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         return res.json();
     })
     .then(data => {
-        if (!data.success) {
-            throw new Error(data.error || 'Message failed to send. Please try again.');
-        }
-
-        // 3. Swap temp id -> real message_id so SSE dedup guard fires correctly
+        if (!data.success) throw new Error(data.error || 'Message failed to send. Please try again.');
         const realId = safeCursor(data.message_id);
         const bubble = document.querySelector(`[data-msg-id="${tempId}"]`);
-        
         if (bubble) {
             bubble.dataset.msgId = realId;
             syncOutgoingBubbleState(realId);
         }
-        
         if (realId > lastMessageId) lastMessageId = realId;
     })
     .catch(err => {
         console.error('[chat] Send error:', err);
-        // Show the actual error to help debug online issues
         alert('Chat Error: ' + err.message);
-        
         document.querySelector(`[data-msg-id="${tempId}"]`)?.remove();
         inputField.value = content;
     });
+}
+
+/**
+ * Show the sender-side safety confirmation modal.
+ * Resolves to true (send anyway) or false (cancel).
+ */
+function showSenderWarning(content) {
+    return new Promise(resolve => {
+        const modal = document.getElementById('unsafe-send-modal');
+        if (!modal) { resolve(true); return; } // graceful fallback
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        const confirmBtn = document.getElementById('unsafe-send-confirm');
+        const cancelBtn  = document.getElementById('unsafe-send-cancel');
+
+        function cleanup() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            confirmBtn.removeEventListener('click', onConfirm);
+            cancelBtn.removeEventListener('click', onCancel);
+        }
+        function onConfirm() { cleanup(); resolve(true);  }
+        function onCancel()  { cleanup(); resolve(false); }
+
+        confirmBtn.addEventListener('click', onConfirm);
+        cancelBtn.addEventListener('click',  onCancel);
+    });
+}
+
+function sendMessage() {
+    const content = inputField.value.trim();
+    if (!content || !receiverId) return;
+
+    if (containsUnsafeContent(content)) {
+        // Clear input immediately so it feels responsive
+        inputField.value = '';
+        inputField.focus();
+
+        showSenderWarning(content).then(confirmed => {
+            if (confirmed) {
+                dispatchMessage(content);
+            } else {
+                // Restore the draft so the user can edit it
+                inputField.value = content;
+                inputField.focus();
+            }
+        });
+    } else {
+        inputField.value = '';
+        inputField.focus();
+        dispatchMessage(content);
+    }
 }
 
 // ---------------------------------------------------------------------------
