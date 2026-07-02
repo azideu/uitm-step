@@ -113,7 +113,7 @@ function fmtTime(date) {
  * Uses a brief CSS transition so the jump feels smooth rather than jarring.
  */
 function bumpToTop(userId) {
-    const list = document.querySelector('.overflow-y-auto.flex-1');
+    const list = document.getElementById('chat-list');
     if (!list) return;
     const item = list.querySelector(`[data-user-id="${userId}"]`);
     if (!item || list.firstElementChild === item) return; // already first
