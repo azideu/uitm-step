@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         set_toast('error', 'You cannot buy your own gig.');
         redirect("gigs/details?id=$gig_id");
     } else {
-        $existing_stmt = $pdo->prepare("SELECT order_id, status FROM orders WHERE gig_id = ? AND buyer_id = ? AND status IN ('pending', 'paid', 'delivered', 'complete') LIMIT 1");
+        $existing_stmt = $pdo->prepare("SELECT order_id, status FROM orders WHERE gig_id = ? AND buyer_id = ? AND status IN ('pending', 'paid') LIMIT 1");
         $existing_stmt->execute([$gig_id, $_SESSION['user_id']]);
         $existing_order = $existing_stmt->fetch();
 
