@@ -13,8 +13,9 @@ if (isset($_SESSION['user_id'])) {
 
         // Global ban enforcement (for public pages like index.php that don't use auth_check.php)
         if ($_SESSION['role'] === 'banned') {
-            $current_page = basename($_SERVER['PHP_SELF']);
-            if ($current_page !== 'banned.php' && $current_page !== 'logout.php') {
+            $current_path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+            $current_path = rtrim($current_path, '/');
+            if (!in_array($current_path, ['/banned', '/logout'], true)) {
                 redirect('banned');
             }
         }
@@ -26,8 +27,9 @@ if (isset($_SESSION['user_id'])) {
 
 // Enforce campus selection if missing (exclude banned users)
 if (isset($_SESSION['user_id']) && empty($_SESSION['campus']) && ($_SESSION['role'] ?? '') !== 'banned') {
-    $current_page = basename($_SERVER['PHP_SELF']);
-    if ($current_page !== 'complete-registration.php' && $current_page !== 'logout.php') {
+    $current_path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+    $current_path = rtrim($current_path, '/');
+    if (!in_array($current_path, ['/complete-registration', '/logout'], true)) {
         redirect('complete-registration');
     }
 }

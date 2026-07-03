@@ -10,6 +10,11 @@ if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'error' => 'Unauthorized']);
     exit;
 }
+if (($_SESSION['role'] ?? '') === 'banned') {
+    http_response_code(403);
+    echo json_encode(['success' => false, 'error' => 'Your account has been suspended.']);
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Invalid method']);

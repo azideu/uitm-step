@@ -43,6 +43,7 @@ if ($active_chat > 0) {
 // Fetch active chat user info
 $active_user_name = '';
 $active_user_pic = '';
+$active_order_id = null; // order the chat partner has placed on YOUR gig (paid, awaiting delivery)
 if ($active_chat > 0) {
     $stmt = $pdo->prepare("SELECT name, profile_picture FROM users WHERE user_id = ?");
     $stmt->execute([$active_chat]);
@@ -50,6 +51,20 @@ if ($active_chat > 0) {
     if ($u) {
         $active_user_name = $u['name'];
         $active_user_pic = $u['profile_picture'];
+    }
+
+    // Check if $active_chat has a paid (undelivered) order on any of $user_id's gigs
+    $stmt_order = $pdo->prepare("
+        SELECT o.order_id
+        FROM orders o
+        JOIN gigs g ON o.gig_id = g.gig_id
+        WHERE o.buyer_id = ? AND g.seller_id = ? AND o.status = 'paid'
+        LIMIT 1
+    ");
+    $stmt_order->execute([$active_chat, $user_id]);
+    $pending_order = $stmt_order->fetch();
+    if ($pending_order) {
+        $active_order_id = $pending_order['order_id'];
     }
 }
 
@@ -96,14 +111,14 @@ require_once 'includes/header.php';
         <?php if($active_chat > 0 && $active_user_name): ?>
             <!-- Chat Header -->
             <div class="px-4 sm:px-6 py-4 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center z-10 shadow-xl transition-colors duration-300">
-                <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                <a href="<?php echo ROOT_URL; ?>profile?id=<?php echo $active_chat; ?>" class="flex items-center gap-2 sm:gap-3 min-w-0 group/profile" title="View profile">
                     <!-- Back Button on Mobile -->
-                    <a href="chat" class="md:hidden p-1.5 text-gray-500 hover:text-uitmPurple dark:text-slate-400 dark:hover:text-uitmGold transition-colors mr-1" aria-label="Back to contacts">
+                    <span onclick="event.preventDefault(); window.location='chat'" class="md:hidden p-1.5 text-gray-500 hover:text-uitmPurple dark:text-slate-400 dark:hover:text-uitmGold transition-colors mr-1" aria-label="Back to contacts">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
-                    </a>
-                    <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-xl overflow-hidden">
+                    </span>
+                    <div class="w-10 h-10 rounded-full bg-uitmPurple flex items-center justify-center text-white font-bold text-sm flex-shrink-0 shadow-xl overflow-hidden ring-2 ring-transparent group-hover/profile:ring-uitmPurple/40 transition-all">
                         <?php if (!empty($active_user_pic)): ?>
                             <img src="<?php echo asset_url($active_user_pic); ?>" alt="" class="w-full h-full object-cover">
                         <?php else: ?>
@@ -111,21 +126,28 @@ require_once 'includes/header.php';
                         <?php endif; ?>
                     </div>
                     <div class="min-w-0">
-                        <h3 class="font-bold text-gray-900 dark:text-white truncate text-sm sm:text-base"><?php echo escape($active_user_name); ?></h3>
+                        <h3 class="font-bold text-gray-900 dark:text-white truncate text-sm sm:text-base group-hover/profile:text-uitmPurple dark:group-hover/profile:text-purple-300 transition-colors"><?php echo escape($active_user_name); ?></h3>
                         <span id="chat-status-badge" class="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-slate-400 mt-0.5">
                             <span id="chat-status-dot" class="inline-block w-2 h-2 rounded-full shrink-0 bg-yellow-400 animate-pulse"></span>
                             <span id="chat-status-text">Connecting…</span>
                         </span>
                     </div>
-                </div>
+                </a>
                 
                 <!-- Quick-Action Panel -->
                 <div class="flex gap-2">
 
-                    <a href="dashboard?mode=selling" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-xs font-bold rounded-lg transition-colors border border-emerald-200 dark:border-emerald-800">
+                    <?php if ($active_order_id): ?>
+                    <a href="<?php echo ROOT_URL; ?>dashboard?mode=selling" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 text-xs font-bold rounded-lg transition-colors border border-emerald-200 dark:border-emerald-800">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                         Deliver Order
                     </a>
+                    <?php endif; ?>
+
+                    <button onclick="openChatReportModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/40 text-xs font-bold rounded-lg transition-colors border border-red-200 dark:border-red-800/50">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>
+                        Report
+                    </button>
                 </div>
             </div>
             
@@ -222,6 +244,150 @@ require_once 'includes/header.php';
     $chat_js_version = is_file($chat_js_path) ? filemtime($chat_js_path) : '1';
     ?>
     <script src="assets/js/chat.js?v=<?php echo $chat_js_version; ?>"></script>
+<?php endif; ?>
+
+<?php if ($active_chat > 0): ?>
+<!-- =====================================================================
+     REPORT USER MODAL (Chat)
+     ===================================================================== -->
+<div
+    id="chat-report-modal-overlay"
+    onclick="if(event.target===this) closeChatReportModal()"
+    class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"
+    aria-modal="true"
+    role="dialog"
+    aria-labelledby="chat-report-modal-title"
+>
+    <div
+        id="chat-report-modal-panel"
+        class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-lg shadow-2xl border-x border-b border-gray-100 dark:border-slate-800 overflow-hidden transform scale-95 transition-all duration-300"
+    >
+        <div class="h-1.5 bg-gradient-to-r from-red-500 to-rose-600 rounded-t-2xl border-x border-gray-100 dark:border-slate-800"></div>
+
+        <div class="p-8">
+            <!-- Header -->
+            <div class="flex items-start justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 id="chat-report-modal-title" class="text-lg font-extrabold text-gray-900 dark:text-white">Report User</h2>
+                        <p class="text-sm text-gray-500 dark:text-slate-400">Reporting: <span class="font-bold text-gray-700 dark:text-slate-300"><?php echo escape($active_user_name); ?></span></p>
+                    </div>
+                </div>
+                <button onclick="closeChatReportModal()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-400 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300 transition-colors" aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Info banner -->
+            <div class="mb-5 flex gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg p-4">
+                <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <p class="text-xs text-amber-700 dark:text-amber-300 leading-relaxed font-medium">
+                    Reports are reviewed by UiTM STEP admins within 24–48 hours. False or malicious reports may result in action against your account.
+                </p>
+            </div>
+
+            <!-- Form -->
+            <form action="<?php echo ROOT_URL; ?>api/report_action" method="POST" id="chat-report-form">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                <input type="hidden" name="reported_id" value="<?php echo $active_chat; ?>">
+                <input type="hidden" name="redirect_to" value="<?php echo ROOT_URL; ?>chat?user=<?php echo $active_chat; ?>">
+
+                <!-- Reason -->
+                <div class="mb-5">
+                    <label class="block text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-3">
+                        Reason for report <span class="text-red-500">*</span>
+                    </label>
+                    <div class="grid grid-cols-1 gap-2" id="chat-reason-options">
+                        <?php
+                        $chat_reasons = [
+                            'scam'                  => ['label' => 'Scam / Fraud',                  'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'],
+                            'fake_payment_proof'    => ['label' => 'Fake Payment Proof',            'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>'],
+                            'non_delivery'          => ['label' => 'Did Not Deliver Work',          'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>'],
+                            'harassment'            => ['label' => 'Harassment / Threats',          'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'],
+                            'inappropriate_content' => ['label' => 'Inappropriate Content',         'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636"></path></svg>'],
+                            'other'                 => ['label' => 'Other',                         'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>'],
+                        ];
+                        foreach ($chat_reasons as $value => $meta):
+                        ?>
+                        <label class="chat-reason-card flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-slate-800 cursor-pointer hover:border-red-300 dark:hover:border-red-700 hover:bg-red-50/50 dark:hover:bg-red-900/10 transition-all duration-200 has-[:checked]:border-red-500 has-[:checked]:bg-red-50 dark:has-[:checked]:bg-red-900/20 dark:has-[:checked]:border-red-600 group">
+                            <input type="radio" name="reason" value="<?php echo $value; ?>" class="sr-only" required>
+                            <span class="w-8 h-8 rounded-lg bg-gray-50 dark:bg-slate-800 flex items-center justify-center text-gray-400 group-hover:text-red-500 transition-colors group-has-[:checked]:bg-red-100 dark:group-has-[:checked]:bg-red-900/40 group-has-[:checked]:text-red-600">
+                                <?php echo $meta['icon']; ?>
+                            </span>
+                            <span class="text-sm font-bold text-gray-700 dark:text-slate-300"><?php echo $meta['label']; ?></span>
+                        </label>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div class="mb-6">
+                    <label for="chat-report-details" class="block text-sm font-bold text-gray-700 dark:text-slate-300 mb-2">
+                        Additional details <span class="text-gray-400 font-normal">(optional)</span>
+                    </label>
+                    <textarea
+                        id="chat-report-details"
+                        name="details"
+                        rows="3"
+                        maxlength="1000"
+                        placeholder="Describe what happened in as much detail as possible..."
+                        class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-red-400/40 focus:border-red-400 dark:focus:ring-red-800/40 dark:focus:border-red-700 transition-all resize-none"
+                    ></textarea>
+                    <p class="text-xs text-gray-400 dark:text-slate-500 mt-1 text-right"><span id="chat-report-char-count">0</span>/1000</p>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeChatReportModal()" class="flex-1 py-3 rounded-lg border-2 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-400 font-bold text-sm hover:bg-gray-50 dark:hover:bg-slate-800 transition-all duration-300">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 py-3 rounded-lg bg-red-500 hover:bg-red-600 text-white font-bold text-sm shadow-lg hover:shadow-red-200 dark:hover:shadow-red-900/30 transition-all duration-300 flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
+                        </svg>
+                        Submit Report
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const chatReportOverlay = document.getElementById('chat-report-modal-overlay');
+    const chatReportPanel   = document.getElementById('chat-report-modal-panel');
+    const chatReportTextarea  = document.getElementById('chat-report-details');
+    const chatReportCharCount = document.getElementById('chat-report-char-count');
+
+    function openChatReportModal() {
+        chatReportOverlay.classList.remove('opacity-0', 'pointer-events-none');
+        chatReportPanel.classList.remove('scale-95');
+        chatReportPanel.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeChatReportModal() {
+        chatReportOverlay.classList.add('opacity-0', 'pointer-events-none');
+        chatReportPanel.classList.remove('scale-100');
+        chatReportPanel.classList.add('scale-95');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeChatReportModal();
+    });
+
+    chatReportTextarea.addEventListener('input', function() {
+        chatReportCharCount.textContent = this.value.length;
+    });
+</script>
 <?php endif; ?>
 
 <?php require_once 'includes/footer.php'; ?>

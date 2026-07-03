@@ -21,6 +21,10 @@ if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
     exit;
 }
+if (($_SESSION['role'] ?? '') === 'banned') {
+    http_response_code(403);
+    exit;
+}
 
 $my_id    = (int)$_SESSION['user_id'];
 $other_id = isset($_GET['user']) ? (int)$_GET['user'] : 0;

@@ -33,7 +33,7 @@ require_once 'includes/header.php';
 <div class="min-h-[80vh] flex items-center justify-center p-4">
     <div class="max-w-2xl w-full bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-gray-100 dark:border-slate-800 overflow-hidden animate-fade-in-up">
         <!-- Serious accent bar -->
-        <div class="h-2 bg-gradient-to-r from-slate-700 via-red-600 to-slate-700"></div>
+        <div class="h-2 bg-red-600"></div>
 
         <div class="p-8 md:p-12">
             <!-- Icon & Header -->

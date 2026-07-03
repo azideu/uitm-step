@@ -201,9 +201,8 @@ if ($is_own_profile) {
         $sum_ratings = array_sum(array_column($seller_reviews, 'rating'));
         $overall_rating = $sum_ratings / $overall_reviews_count;
     } else {
-        // Fallback matching mockup if no reviews
-        $overall_rating = 4.7 + (($profile_id * 13) % 4) * 0.1;
-        $overall_reviews_count = (5 + ($profile_id * 37) % 590);
+        $overall_rating = 0;
+        $overall_reviews_count = 0;
     }
 }
 
@@ -670,6 +669,18 @@ require_once 'includes/header.php';
                     <svg class="w-5 h-5 transition-transform duration-300 group-hover/chat:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                     <span>Contact Seller</span>
                 </a>
+
+                <?php if (!$is_own_profile && isset($_SESSION['user_id']) && $_SESSION['role'] === 'student'): ?>
+                <button
+                    onclick="openProfileReportModal()"
+                    class="w-full mt-2 flex items-center justify-center gap-2 text-xs text-gray-400 dark:text-slate-500 hover:text-red-500 dark:hover:text-red-400 font-medium py-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 border border-transparent hover:border-red-200 dark:hover:border-red-800/50 transition-all duration-300 group"
+                >
+                    <svg class="w-3.5 h-3.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
+                    </svg>
+                    Report this user
+                </button>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -918,6 +929,149 @@ require_once 'includes/header.php';
             }
         });
     }
+</script>
+<?php endif; ?>
+<?php if (!$is_own_profile && isset($_SESSION['user_id']) && $_SESSION['role'] === 'student'): ?>
+<!-- =====================================================================
+     REPORT USER MODAL (Profile)
+     ===================================================================== -->
+<div
+    id="profile-report-modal-overlay"
+    onclick="if(event.target===this) closeProfileReportModal()"
+    class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"
+    aria-modal="true"
+    role="dialog"
+    aria-labelledby="profile-report-modal-title"
+>
+    <div
+        id="profile-report-modal-panel"
+        class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-lg shadow-2xl border-x border-b border-gray-100 dark:border-slate-800 overflow-hidden transform scale-95 transition-all duration-300"
+    >
+        <div class="h-1.5 bg-gradient-to-r from-red-500 to-rose-600 rounded-t-2xl border-x border-gray-100 dark:border-slate-800"></div>
+
+        <div class="p-8">
+            <!-- Header -->
+            <div class="flex items-start justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 id="profile-report-modal-title" class="text-lg font-extrabold text-gray-900 dark:text-white">Report User</h2>
+                        <p class="text-sm text-gray-500 dark:text-slate-400">Reporting: <span class="font-bold text-gray-700 dark:text-slate-300"><?= escape($profile_user['name']) ?></span></p>
+                    </div>
+                </div>
+                <button onclick="closeProfileReportModal()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-400 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300 transition-colors" aria-label="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Info banner -->
+            <div class="mb-5 flex gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg p-4">
+                <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <p class="text-xs text-amber-700 dark:text-amber-300 leading-relaxed font-medium">
+                    Reports are reviewed by UiTM STEP admins within 24–48 hours. False or malicious reports may result in action against your account.
+                </p>
+            </div>
+
+            <!-- Form -->
+            <form action="<?php echo ROOT_URL; ?>api/report_action" method="POST" id="profile-report-form">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                <input type="hidden" name="reported_id" value="<?= $profile_user['user_id'] ?>">
+                <input type="hidden" name="redirect_to" value="<?php echo ROOT_URL; ?>profile?id=<?= $profile_user['user_id'] ?>">
+
+                <!-- Reason -->
+                <div class="mb-5">
+                    <label class="block text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-widest mb-3">
+                        Reason for report <span class="text-red-500">*</span>
+                    </label>
+                    <div class="grid grid-cols-1 gap-2">
+                        <?php
+                        $profile_reasons = [
+                            'scam'                  => ['label' => 'Scam / Fraud',                  'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'],
+                            'fake_payment_proof'    => ['label' => 'Fake Payment Proof',            'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>'],
+                            'non_delivery'          => ['label' => 'Did Not Deliver Work',          'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>'],
+                            'harassment'            => ['label' => 'Harassment / Threats',          'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'],
+                            'inappropriate_content' => ['label' => 'Inappropriate Content',         'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636"></path></svg>'],
+                            'other'                 => ['label' => 'Other',                         'icon' => '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>'],
+                        ];
+                        foreach ($profile_reasons as $value => $meta):
+                        ?>
+                        <label class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 dark:border-slate-800 cursor-pointer hover:border-red-300 dark:hover:border-red-700 hover:bg-red-50/50 dark:hover:bg-red-900/10 transition-all duration-200 has-[:checked]:border-red-500 has-[:checked]:bg-red-50 dark:has-[:checked]:bg-red-900/20 dark:has-[:checked]:border-red-600 group">
+                            <input type="radio" name="reason" value="<?php echo $value; ?>" class="sr-only" required>
+                            <span class="w-8 h-8 rounded-lg bg-gray-50 dark:bg-slate-800 flex items-center justify-center text-gray-400 group-hover:text-red-500 transition-colors group-has-[:checked]:bg-red-100 dark:group-has-[:checked]:bg-red-900/40 group-has-[:checked]:text-red-600">
+                                <?php echo $meta['icon']; ?>
+                            </span>
+                            <span class="text-sm font-bold text-gray-700 dark:text-slate-300"><?php echo $meta['label']; ?></span>
+                        </label>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div class="mb-6">
+                    <label for="profile-report-details" class="block text-sm font-bold text-gray-700 dark:text-slate-300 mb-2">
+                        Additional details <span class="text-gray-400 font-normal">(optional)</span>
+                    </label>
+                    <textarea
+                        id="profile-report-details"
+                        name="details"
+                        rows="3"
+                        maxlength="1000"
+                        placeholder="Describe what happened in as much detail as possible..."
+                        class="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-red-400/40 focus:border-red-400 dark:focus:ring-red-800/40 dark:focus:border-red-700 transition-all resize-none"
+                    ></textarea>
+                    <p class="text-xs text-gray-400 dark:text-slate-500 mt-1 text-right"><span id="profile-report-char-count">0</span>/1000</p>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeProfileReportModal()" class="flex-1 py-3 rounded-lg border-2 border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-400 font-bold text-sm hover:bg-gray-50 dark:hover:bg-slate-800 transition-all duration-300">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 py-3 rounded-lg bg-red-500 hover:bg-red-600 text-white font-bold text-sm shadow-lg hover:shadow-red-200 dark:hover:shadow-red-900/30 transition-all duration-300 flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
+                        </svg>
+                        Submit Report
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const profileReportOverlay   = document.getElementById('profile-report-modal-overlay');
+    const profileReportPanel     = document.getElementById('profile-report-modal-panel');
+    const profileReportTextarea  = document.getElementById('profile-report-details');
+    const profileReportCharCount = document.getElementById('profile-report-char-count');
+
+    function openProfileReportModal() {
+        profileReportOverlay.classList.remove('opacity-0', 'pointer-events-none');
+        profileReportPanel.classList.remove('scale-95');
+        profileReportPanel.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeProfileReportModal() {
+        profileReportOverlay.classList.add('opacity-0', 'pointer-events-none');
+        profileReportPanel.classList.remove('scale-100');
+        profileReportPanel.classList.add('scale-95');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeProfileReportModal();
+    });
+
+    profileReportTextarea.addEventListener('input', function() {
+        profileReportCharCount.textContent = this.value.length;
+    });
 </script>
 <?php endif; ?>
 <?php require_once 'includes/footer.php'; ?>

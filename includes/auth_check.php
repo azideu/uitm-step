@@ -27,8 +27,9 @@ $_SESSION['role'] = $user['role'];
 
 if ($user['role'] === 'banned') {
     // User was banned mid-session
-    $current_page = basename($_SERVER['PHP_SELF']);
-    if ($current_page !== 'banned.php' && $current_page !== 'logout.php') {
+    $current_path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+    $current_path = rtrim($current_path, '/');
+    if (!in_array($current_path, ['/banned', '/logout'], true)) {
         set_toast('error', 'Your account has been suspended.');
         redirect('banned');
     }

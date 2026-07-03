@@ -21,6 +21,11 @@ if (!isset($_SESSION['user_id'])) {
     echo json_encode(['error' => 'Unauthorized']);
     exit;
 }
+if (($_SESSION['role'] ?? '') === 'banned') {
+    http_response_code(403);
+    echo json_encode(['error' => 'Your account has been suspended.']);
+    exit;
+}
 
 $user_id    = (int)$_SESSION['user_id'];
 $other_user = isset($_GET['user']) ? (int)$_GET['user'] : 0;
